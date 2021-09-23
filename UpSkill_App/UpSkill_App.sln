@@ -17,13 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiServer", "ApiServer\ApiS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BusinessLogic", "BusinessLogic", "{0E3549DB-157F-4E72-A5E3-5CC63EE97277}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpSkill.Core", "UpSkill.Core\UpSkill.Core.csproj", "{F4C5D70F-F9A7-42B4-B543-3A44896A2846}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpSkill.Core", "UpSkill.Core\UpSkill.Core.csproj", "{F4C5D70F-F9A7-42B4-B543-3A44896A2846}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpSkill.Infrastructure", "UpSkill.Infrastructure\UpSkill.Infrastructure.csproj", "{8BF27BB7-7D7F-487E-B030-A59B65F096BD}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E28F9BBE-4E4B-424A-AC17-6F31CFD695E1}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpSkill_App.IntegrationTests", "UpSkill_App.IntegrationTests\UpSkill_App.IntegrationTests.csproj", "{AE6E5975-3E64-4176-9D03-F16C4F4B2FE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpSkill.Infrastructure", "UpSkill.Infrastructure\UpSkill.Infrastructure.csproj", "{8BF27BB7-7D7F-487E-B030-A59B65F096BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,7 +43,6 @@ Global
 		{8BF27BB7-7D7F-487E-B030-A59B65F096BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BF27BB7-7D7F-487E-B030-A59B65F096BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BF27BB7-7D7F-487E-B030-A59B65F096BD}.Release|Any CPU.Build.0 = Release|Any CPU
-
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
