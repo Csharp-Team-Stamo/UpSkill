@@ -21,6 +21,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpSkill.Core", "UpSkill.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpSkill.Infrastructure", "UpSkill.Infrastructure\UpSkill.Infrastructure.csproj", "{8BF27BB7-7D7F-487E-B030-A59B65F096BD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{84FFA419-221D-4452-865C-04ED21672CA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpSkill_App.IntegrationTests", "UpSkill_App.IntegrationTests\UpSkill_App.IntegrationTests.csproj", "{6A1F0CF0-3C9B-48F3-AF6E-573FAE971739}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +47,10 @@ Global
 		{8BF27BB7-7D7F-487E-B030-A59B65F096BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BF27BB7-7D7F-487E-B030-A59B65F096BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BF27BB7-7D7F-487E-B030-A59B65F096BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A1F0CF0-3C9B-48F3-AF6E-573FAE971739}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A1F0CF0-3C9B-48F3-AF6E-573FAE971739}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A1F0CF0-3C9B-48F3-AF6E-573FAE971739}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A1F0CF0-3C9B-48F3-AF6E-573FAE971739}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -52,7 +60,7 @@ Global
 		{85A84661-7E89-433A-9B25-B4E34FE1D6C0} = {216B1FA2-5971-4BB8-83A2-8E7ECC6F4C84}
 		{F4C5D70F-F9A7-42B4-B543-3A44896A2846} = {0E3549DB-157F-4E72-A5E3-5CC63EE97277}
 		{8BF27BB7-7D7F-487E-B030-A59B65F096BD} = {0E3549DB-157F-4E72-A5E3-5CC63EE97277}
-
+		{6A1F0CF0-3C9B-48F3-AF6E-573FAE971739} = {84FFA419-221D-4452-865C-04ED21672CA3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {85C41334-C3B3-4503-B250-98AF3EE6014D}
