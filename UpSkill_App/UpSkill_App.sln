@@ -17,8 +17,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpSkill.Core", "UpSkill.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpSkill.Infrastructure", "UpSkill.Infrastructure\UpSkill.Infrastructure.csproj", "{8BF27BB7-7D7F-487E-B030-A59B65F096BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary2", "ClassLibrary2\ClassLibrary2.csproj", "{BA86667C-2A99-40AB-9B4F-A69261EC7547}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,10 +35,6 @@ Global
 		{8BF27BB7-7D7F-487E-B030-A59B65F096BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BF27BB7-7D7F-487E-B030-A59B65F096BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BF27BB7-7D7F-487E-B030-A59B65F096BD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BA86667C-2A99-40AB-9B4F-A69261EC7547}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BA86667C-2A99-40AB-9B4F-A69261EC7547}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BA86667C-2A99-40AB-9B4F-A69261EC7547}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BA86667C-2A99-40AB-9B4F-A69261EC7547}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
