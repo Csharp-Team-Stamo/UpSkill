@@ -16,6 +16,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <Folder Include="Data\Migrations\" />
+    <Folder Include="Data\Models\" />
   </ItemGroup>
 
 </Project>
