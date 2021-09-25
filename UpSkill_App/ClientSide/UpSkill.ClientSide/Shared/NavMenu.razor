@@ -1,25 +1,69 @@
 ﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">UpSkill.ClientSide</a>
+    <a class="navbar-brand" href="">UpSkill</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+
+
     <ul class="nav flex-column">
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+            <div class="row m-md-4">
+                <div class="col-md-2">
+                    <i>C</i> 
+                </div>
+                <div class="col-md-2">
+                    <div>
+                        Christo Peev
+                    </div>
+                    <div>
+                        Motion Software
+                    </div>
+                </div>
+            </div>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="Overview">
+                <span class="oi" aria-hidden="true"></span> General Information
             </NavLink>
         </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="Courses">
+                <span class="oi" aria-hidden="true"></span> Courses
+            </NavLink>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="Coaches">
+                <span class="oi" aria-hidden="true"></span> Coaches
+            </NavLink>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="Grades">
+                <span class="oi" aria-hidden="true"></span> Grades
+            </NavLink>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="Employees">
+                <span class="oi" aria-hidden="true"></span> Employees
+            </NavLink>
+        </li>
+
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="Invoice">
+                <span class="oi" aria-hidden="true"></span> Invoice
+            </NavLink>
+        </li>
+
         <li class="nav-item px-3">
             <NavLink class="nav-link" href="counter">
                 <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
             </NavLink>
         </li>
     </ul>

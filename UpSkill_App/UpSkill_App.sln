@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{84FFA419
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpSkill_App.IntegrationTests", "UpSkill_App.IntegrationTests\UpSkill_App.IntegrationTests.csproj", "{6A1F0CF0-3C9B-48F3-AF6E-573FAE971739}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UpSkillApi", "UpSkillApi\UpSkillApi.csproj", "{4E56748C-F088-4843-AB8E-900FB58F5C0A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UpSkillApi", "UpSkillApi\UpSkillApi.csproj", "{4E56748C-F088-4843-AB8E-900FB58F5C0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
