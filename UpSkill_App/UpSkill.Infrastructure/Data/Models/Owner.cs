@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UpSkill.Infrastructure.Data.Models
+﻿namespace UpSkill.Infrastructure.Data.Models
 {
+    using System.Collections.Generic;
+
     public class Owner : ApplicationUser
     {
-        public IQueryable<Employee> Employees { get; set; }
+        public ICollection<Employee> Employees { get; set; }
     }
 }

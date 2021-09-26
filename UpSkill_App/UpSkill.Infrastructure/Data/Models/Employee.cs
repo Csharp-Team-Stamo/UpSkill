@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UpSkill.Infrastructure.Data.Models
+﻿namespace UpSkill.Infrastructure.Data.Models
 {
+    using System.Collections.Generic;
+
     public class Employee : ApplicationUser
     {
-        public IQueryable<Course> Courses { get; set; }
+        public ICollection<StudentCourse> StudentCourses { get; set; }
+
+        public ICollection<Grade> Grades { get; set; }
+
+        public ICollection<Invoice<Employee, Company>> CourseInvoices { get; set; }
+
+        public ICollection<Invoice<Employee, Coach>> LiveSessionInvoices { get; set; }
     }
 }

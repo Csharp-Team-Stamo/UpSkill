@@ -2,7 +2,6 @@
 {
     using Microsoft.AspNetCore.Identity;
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using UpSkill.Infrastructure.Data.Common.Models;
 
@@ -10,16 +9,12 @@
     {
         // TODO: Add company logo property
 
-        public ApplicationUser()
-        {
-            Id = Guid.NewGuid().ToString();
-        }
-
         [Required]
         public string FullName { get; set; }
 
         [Required]
-        public string CompanyName { get; set; }
+        public string CompanyId { get; set; }
+        public Company Company { get; set; }
 
         // Audit info
         public DateTime CreatedOn { get; set; }
