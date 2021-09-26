@@ -6,6 +6,11 @@
 
     public class Course
     {
+        public Course()
+        {
+            this.StudentCourses = new HashSet<StudentCourse>();
+        }
+
         [Key]
         [Required]
         public string Id { get; init; } = Guid.NewGuid().ToString();
@@ -16,8 +21,7 @@
         [Required]
         public string Description { get; set; }
 
-        [Required]
-        public string Category { get; set; }
+        public Category Category { get; set; }
 
         [Required]
         public decimal Price { get; set; }

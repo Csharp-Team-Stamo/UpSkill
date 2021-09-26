@@ -43,28 +43,28 @@
                 .HasOne(c => c.Coach)
                 .WithMany(c => c.Courses)
                 .HasForeignKey(c => c.CoachId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Entity<LiveSession>()
                 .HasOne(ls => ls.Coach)
                 .WithMany(c => c.LiveSessions)
                 .HasForeignKey(ls => ls.CoachId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Entity<Invoice<Company, Coach>>()
                 .HasOne(i => i.Seller)
                 .WithMany(c => c.CourseInvoices)
                 .HasForeignKey(i => i.SellerId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Entity<Invoice<Employee, Coach>>()
                 .HasOne(i => i.Seller)
                 .WithMany(c => c.LiveSessionInvoices)
                 .HasForeignKey(i => i.SellerId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // </Coach relations>
 
@@ -77,21 +77,21 @@
                 .HasOne(e => e.Company)
                 .WithMany(c => c.Employees)
                 .HasForeignKey(e => e.CompanyId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Entity<Invoice<Employee, Company>>()
                 .HasOne(i => i.Seller)
                 .WithMany(c => c.CourseIncomeInvoices)
                 .HasForeignKey(i => i.SellerId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Entity<Invoice<Company, Coach>>()
                 .HasOne(i => i.Buyer)
                 .WithMany(c => c.CoachExpensesInvoices)
                 .HasForeignKey(i => i.BuyerId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // </Company relations>
 
@@ -104,21 +104,21 @@
                 .HasOne(g => g.Student)
                 .WithMany(e => e.Grades)
                 .HasForeignKey(g => g.StudentId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Entity<Invoice<Employee, Company>>()
                 .HasOne(i => i.Buyer)
                 .WithMany(e => e.CourseInvoices)
                 .HasForeignKey(i => i.BuyerId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Entity<Invoice<Employee, Coach>>()
                 .HasOne(i => i.Buyer)
                 .WithMany(e => e.LiveSessionInvoices)
                 .HasForeignKey(i => i.BuyerId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // </Employee relations>
 
@@ -135,14 +135,14 @@
                 .HasOne(sc => sc.Student)
                 .WithMany(e => e.StudentCourses)
                 .HasForeignKey(sc => sc.StudentId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
                 .Entity<StudentCourse>()
                 .HasOne(sc => sc.Course)
                 .WithMany(c => c.StudentCourses)
                 .HasForeignKey(sc => sc.CourseId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             // </StudentCourse relations>
 

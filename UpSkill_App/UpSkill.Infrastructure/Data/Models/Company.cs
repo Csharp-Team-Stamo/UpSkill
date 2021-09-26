@@ -8,6 +8,13 @@
 
     public class Company
     {
+        public Company()
+        {
+            this.Employees = new HashSet<Employee>();
+            this.CourseIncomeInvoices = new HashSet<Invoice<Employee, Company>>();
+            this.CoachExpensesInvoices = new HashSet<Invoice<Company, Coach>>();
+        }
+
         [Key]
         [Required]
         public string Id { get; init; } = Guid.NewGuid().ToString();

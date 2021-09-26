@@ -5,6 +5,15 @@
 
     public class Coach : ApplicationUser
     {
+        public Coach()
+        {
+            this.Courses = new HashSet<Course>();
+            this.LiveSessions = new HashSet<LiveSession>();
+            this.DatesAvailable = new HashSet<DateTime>();
+            this.CourseInvoices = new HashSet<Invoice<Company, Coach>>();
+            this.LiveSessionInvoices = new HashSet<Invoice<Employee, Coach>>();
+        }
+
         public decimal PricePerSession { get; set; }
 
         public ICollection<Course> Courses { get; set; }
