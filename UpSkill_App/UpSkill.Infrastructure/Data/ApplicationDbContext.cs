@@ -27,6 +27,10 @@
 
         // TODO:
         // Can't remember how to make a DBSet of a class that contains T properties
+        // Or maybe I should do a new DbSet for each invoice relation: 
+        // Employee pays company for course
+        // Company pays coach for course
+        // Employee pays coach for live session
         //public DbSet<Invoice<???, ???>> Invoices { get; init; }
 
         public DbSet<LiveSession> LiveSessions { get; init; }
