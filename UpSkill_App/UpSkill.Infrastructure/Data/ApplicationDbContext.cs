@@ -1,156 +1,136 @@
 ﻿namespace UpSkill.Infrastructure.Data
 {
-    using UpSkill.Infrastructure.Data.Models;
-    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore;
+	using UpSkill.Infrastructure.Data.Models;
+	using UpSkill.Infrastructure.Data.Common.Models;
 
-    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-    {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+	using Microsoft.EntityFrameworkCore;
 
-        public DbSet<Administrator> Administrators { get; init; }
+	using System.Reflection;
+	using System.Threading;
+	using System.Threading.Tasks;
+	using System;
+	using System.Linq;
 
-        public DbSet<ApplicationUser> ApplicationUsers { get; init; }
+	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+	{
+		private static readonly MethodInfo SetIsDeletedQueryFilterMethod =
+			typeof(ApplicationDbContext).GetMethod(
+				nameof(SetIsDeletedQueryFilter),
+				BindingFlags.NonPublic | BindingFlags.Static);
 
-        public DbSet<Coach> Coaches { get; init; }
+		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+			: base(options)
+		{
+		}
 
-        public DbSet<Company> Companies { get; init; }
+		public DbSet<Administrator> Administrators { get; init; }
 
-        public DbSet<Course> Courses { get; init; }
+		public DbSet<ApplicationUser> ApplicationUsers { get; init; }
 
-        public DbSet<Employee> Employees { get; init; }
+		public DbSet<Coach> Coaches { get; init; }
 
-        public DbSet<Grade> Grades { get; init; }
+		public DbSet<Company> Companies { get; init; }
 
-        // TODO:
-        // Can't remember how to make a DBSet of a class that contains T properties
-        // Or maybe I should do a new DbSet for each invoice relation: 
-        // Employee pays company for course
-        // Company pays coach for course
-        // Employee pays coach for live session
-        //public DbSet<Invoice<???, ???>> Invoices { get; init; }
+		public DbSet<Course> Courses { get; init; }
 
-        public DbSet<LiveSession> LiveSessions { get; init; }
+		public DbSet<Employee> Employees { get; init; }
 
-        public DbSet<Owner> Owners { get; init; }
+		public DbSet<Grade> Grades { get; init; }
 
-        public DbSet<StudentCourse> StudentCourses { get; init; }
+		// TODO:
+		// Can't remember how to make a DBSet of a class that contains T properties
+		// Or maybe I should do a new DbSet for each invoice relation:
+		// Employee pays company for course
+		// Company pays coach for course
+		// Employee pays coach for live session
+		//public DbSet<Invoice<???, ???>> Invoices { get; init; }
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            // <Coach relations>
-            builder
-                .Entity<Course>()
-                .HasOne(c => c.Coach)
-                .WithMany(c => c.Courses)
-                .HasForeignKey(c => c.CoachId)
-                .OnDelete(DeleteBehavior.Restrict);
+		public DbSet<LiveSession> LiveSessions { get; init; }
 
-            builder
-                .Entity<LiveSession>()
-                .HasOne(ls => ls.Coach)
-                .WithMany(c => c.LiveSessions)
-                .HasForeignKey(ls => ls.CoachId)
-                .OnDelete(DeleteBehavior.Restrict);
+		public DbSet<Owner> Owners { get; init; }
 
-            builder
-                .Entity<Invoice<Company, Coach>>()
-                .HasOne(i => i.Seller)
-                .WithMany(c => c.CourseInvoices)
-                .HasForeignKey(i => i.SellerId)
-                .OnDelete(DeleteBehavior.Restrict);
+		public DbSet<StudentCourse> StudentCourses { get; init; }
 
-            builder
-                .Entity<Invoice<Employee, Coach>>()
-                .HasOne(i => i.Seller)
-                .WithMany(c => c.LiveSessionInvoices)
-                .HasForeignKey(i => i.SellerId)
-                .OnDelete(DeleteBehavior.Restrict);
+		public override int SaveChanges() => this.SaveChanges(true);
 
-            // </Coach relations>
+		public override int SaveChanges(bool acceptAllChangesOnSuccess)
+		{
+			this.ApplyAuditInfoRules();
+			return base.SaveChanges(acceptAllChangesOnSuccess);
+		}
 
+		public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) =>
+			this.SaveChangesAsync(true, cancellationToken);
 
+		public override Task<int> SaveChangesAsync(
+			bool acceptAllChangesOnSuccess,
+			CancellationToken cancellationToken = default)
+		{
+			this.ApplyAuditInfoRules();
+			return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+		}
 
-            // <Company relations>
+		protected override void OnModelCreating(ModelBuilder builder)
+		{
+			// Needed for Identity models configuration
+			base.OnModelCreating(builder);
 
-            builder
-                .Entity<Employee>()
-                .HasOne(e => e.Company)
-                .WithMany(c => c.Employees)
-                .HasForeignKey(e => e.CompanyId)
-                .OnDelete(DeleteBehavior.Restrict);
+			this.ConfigureUserIdentityRelations(builder);
 
-            builder
-                .Entity<Invoice<Employee, Company>>()
-                .HasOne(i => i.Seller)
-                .WithMany(c => c.CourseIncomeInvoices)
-                .HasForeignKey(i => i.SellerId)
-                .OnDelete(DeleteBehavior.Restrict);
+			EntityIndexesConfiguration.Configure(builder);
 
-            builder
-                .Entity<Invoice<Company, Coach>>()
-                .HasOne(i => i.Buyer)
-                .WithMany(c => c.CoachExpensesInvoices)
-                .HasForeignKey(i => i.BuyerId)
-                .OnDelete(DeleteBehavior.Restrict);
+			var entityTypes = builder.Model.GetEntityTypes().ToList();
 
-            // </Company relations>
+			// Set global query filter for not deleted entities only
+			var deletableEntityTypes = entityTypes
+				.Where(et => et.ClrType != null && typeof(IDeletableEntity).IsAssignableFrom(et.ClrType));
+			foreach (var deletableEntityType in deletableEntityTypes)
+			{
+				var method = SetIsDeletedQueryFilterMethod.MakeGenericMethod(deletableEntityType.ClrType);
+				method.Invoke(null, new object[] { builder });
+			}
 
+			// Disable cascade delete
+			var foreignKeys = entityTypes
+				.SelectMany(e => e.GetForeignKeys().Where(f => f.DeleteBehavior == DeleteBehavior.Cascade));
+			foreach (var foreignKey in foreignKeys)
+			{
+				foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+			}
 
+			base.OnModelCreating(builder);
+		}
 
-            // <Employee relations>
+		private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
+		 where T : class, IDeletableEntity
+		{
+			builder.Entity<T>().HasQueryFilter(e => !e.IsDeleted);
+		}
 
-            builder
-                .Entity<Grade>()
-                .HasOne(g => g.Student)
-                .WithMany(e => e.Grades)
-                .HasForeignKey(g => g.StudentId)
-                .OnDelete(DeleteBehavior.Restrict);
+		// Applies configurations
+		private void ConfigureUserIdentityRelations(ModelBuilder builder)
+			 => builder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
 
-            builder
-                .Entity<Invoice<Employee, Company>>()
-                .HasOne(i => i.Buyer)
-                .WithMany(e => e.CourseInvoices)
-                .HasForeignKey(i => i.BuyerId)
-                .OnDelete(DeleteBehavior.Restrict);
+		private void ApplyAuditInfoRules()
+		{
+			var changedEntries = this.ChangeTracker
+				.Entries()
+				.Where(e => e.Entity is IAuditInfo)
+				.Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
-            builder
-                .Entity<Invoice<Employee, Coach>>()
-                .HasOne(i => i.Buyer)
-                .WithMany(e => e.LiveSessionInvoices)
-                .HasForeignKey(i => i.BuyerId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // </Employee relations>
-
-
-
-            // <StudentCourse relations>
-
-            builder
-                .Entity<StudentCourse>()
-                .HasKey(sc => new { sc.StudentId, sc.CourseId });
-
-            builder
-                .Entity<StudentCourse>()
-                .HasOne(sc => sc.Student)
-                .WithMany(e => e.StudentCourses)
-                .HasForeignKey(sc => sc.StudentId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder
-                .Entity<StudentCourse>()
-                .HasOne(sc => sc.Course)
-                .WithMany(c => c.StudentCourses)
-                .HasForeignKey(sc => sc.CourseId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // </StudentCourse relations>
-
-            base.OnModelCreating(builder);
-        }
-    }
+			foreach (var entry in changedEntries)
+			{
+				var entity = (IAuditInfo)entry.Entity;
+				if (entry.State == EntityState.Added && entity.CreatedOn == default)
+				{
+					entity.CreatedOn = DateTime.UtcNow;
+				}
+				else
+				{
+					entity.ModifiedOn = DateTime.UtcNow;
+				}
+			}
+		}
+	}
 }
