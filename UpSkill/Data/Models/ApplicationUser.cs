@@ -1,38 +1,40 @@
-﻿namespace UpSkill.Infrastructure.Data.Models
+﻿namespace UpSkill.Data.Models
 {
-    using Microsoft.AspNetCore.Identity;
-    using System;
-    using System.ComponentModel.DataAnnotations;
-    using UpSkill.Infrastructure.Data.Common.Models;
+	using System;
+	using System.ComponentModel.DataAnnotations;
 
-    public abstract class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
-    {
-        // TODO: Add company logo property
+	using Microsoft.AspNetCore.Identity;
 
-        [Required]
-        public string FullName { get; set; }
+	using UpSkill.Data.Common.Models;
 
-        [Required]
-        public string CompanyId { get; set; }
-        public Company Company { get; set; }
+	public abstract class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
+	{
+		// TODO: Add company logo property
 
-        // Audit info
-        public DateTime CreatedOn { get; set; }
+		[Required]
+		public string FullName { get; set; }
 
-        public DateTime? ModifiedOn { get; set; }
+		[Required]
+		public string CompanyId { get; set; }
+		public Company Company { get; set; }
 
-        // Deletable entity
-        public bool IsDeleted { get; set; }
+		// Audit info
+		public DateTime CreatedOn { get; set; }
 
-        public DateTime? DeletedOn { get; set; }
+		public DateTime? ModifiedOn { get; set; }
+
+		// Deletable entity
+		public bool IsDeleted { get; set; }
+
+		public DateTime? DeletedOn { get; set; }
 
 
 
-        // Can be used at a later time:
-        //public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
+		// Can be used at a later time:
+		//public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
-        //public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
+		//public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
-        //public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
-    }
+		//public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+	}
 }

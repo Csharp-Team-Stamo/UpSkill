@@ -1,11 +1,11 @@
-﻿namespace UpSkill.Infrastructure.Data.Common.Models
+﻿namespace UpSkill.Data.Common.Models
 {
-    using System;
+	using System;
 
-    public interface IDeletableEntity
-    {
-        bool IsDeleted { get; set; }
+	public interface IDeletableEntity
+	{
+		bool IsDeleted { get; set; }
 
-        DateTime? DeletedOn { get; set; }
-    }
+		DateTime? DeletedOn { get; set; }
+	}
 }

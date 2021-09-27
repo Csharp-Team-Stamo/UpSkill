@@ -1,12 +1,12 @@
-namespace UpSkill.Infrastructure.Data.Repositories
+namespace UpSkill.Data.Repositories
 {
 	using System;
 	using System.Linq;
 	using System.Threading.Tasks;
 
-	using UpSkill.Infrastructure.Data.Common.Repositories;
-
 	using Microsoft.EntityFrameworkCore;
+
+	using UpSkill.Data.Common.Repositories;
 
 	public class EfRepository<TEntity> : IRepository<TEntity>
 		where TEntity : class

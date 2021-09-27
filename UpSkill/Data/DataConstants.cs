@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UpSkill.Infrastructure.Data
+﻿namespace UpSkill.Data
 {
-    public class DataConstants
-    {
-        public class Company
-        {
-            public const int UIC_Length = 9;
-        }
+	public class DataConstants
+	{
+		public class Company
+		{
+			public const int UIC_Length = 9;
+		}
 
-    }
+	}
 }

@@ -1,6 +1,6 @@
-﻿namespace UpSkill.Infrastructure.Data.Models
+﻿namespace UpSkill.Data.Models
 {
-    public class Administrator : ApplicationUser
-    {
-    }
+	public class Administrator : ApplicationUser
+	{
+	}
 }

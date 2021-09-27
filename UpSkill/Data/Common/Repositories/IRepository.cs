@@ -1,4 +1,4 @@
-namespace UpSkill.Infrastructure.Data.Common.Repositories
+namespace UpSkill.Data.Common.Repositories
 {
 	using System;
 	using System.Linq;

@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UpSkill.Infrastructure.Data.Models
+﻿namespace UpSkill.Data.Models
 {
-    public class Category
-    {
-        [Key]
-        [Required]
-        public string Id { get; init; } = Guid.NewGuid().ToString();
+	using System;
+	using System.ComponentModel.DataAnnotations;
 
-        [Required]
-        public string Name { get; set; }
-    }
+	public class Category
+	{
+		[Key]
+		[Required]
+		public string Id { get; init; } = Guid.NewGuid().ToString();
+
+		[Required]
+		public string Name { get; set; }
+	}
 }

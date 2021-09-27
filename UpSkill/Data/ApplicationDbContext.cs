@@ -1,16 +1,16 @@
-﻿namespace UpSkill.Infrastructure.Data
+﻿namespace UpSkill.Data
 {
-	using UpSkill.Infrastructure.Data.Models;
-	using UpSkill.Infrastructure.Data.Common.Models;
-
-	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore;
-
 	using System.Reflection;
 	using System.Threading;
 	using System.Threading.Tasks;
 	using System;
 	using System.Linq;
+
+	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+	using Microsoft.EntityFrameworkCore;
+
+	using UpSkill.Data.Models;
+	using UpSkill.Data.Common.Models;
 
 	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 	{

@@ -1,8 +1,8 @@
-namespace UpSkill.Infrastructure.Data.Common.Repositories
+namespace UpSkill.Data.Common.Repositories
 {
 	using System.Linq;
 
-	using UpSkill.Infrastructure.Data.Common.Models;
+	using UpSkill.Data.Common.Models;
 
 	public interface IDeletableEntityRepository<TEntity> : IRepository<TEntity>
 		where TEntity : class, IDeletableEntity

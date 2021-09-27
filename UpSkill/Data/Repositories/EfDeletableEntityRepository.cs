@@ -1,12 +1,12 @@
-namespace UpSkill.Infrastructure.Data.Repositories
+namespace UpSkill.Data.Repositories
 {
 	using System;
 	using System.Linq;
 
-	using UpSkill.Infrastructure.Data.Common.Models;
-	using UpSkill.Infrastructure.Data.Common.Repositories;
-
 	using Microsoft.EntityFrameworkCore;
+
+	using UpSkill.Data.Common.Models;
+	using UpSkill.Data.Common.Repositories;
 
 	public class EfDeletableEntityRepository<TEntity> : EfRepository<TEntity>, IDeletableEntityRepository<TEntity>
 		where TEntity : class, IDeletableEntity
