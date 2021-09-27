@@ -1,12 +1,14 @@
 ﻿namespace UpSkill.Infrastructure.Data
 {
 	using UpSkill.Infrastructure.Data.Models;
+	using UpSkill.Infrastructure.Data.Common.Models;
+
 	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 	using Microsoft.EntityFrameworkCore;
+
 	using System.Reflection;
 	using System.Threading;
 	using System.Threading.Tasks;
-	using UpSkill.Infrastructure.Data.Common.Models;
 	using System;
 	using System.Linq;
 
