@@ -9,8 +9,8 @@
 	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 	using Microsoft.EntityFrameworkCore;
 
-	using UpSkill.Data.Models;
-	using UpSkill.Data.Common.Models;
+	using Models;
+	using Common.Models;
 
 	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 	{
