@@ -25,32 +25,19 @@
 		}
 
 		public DbSet<Administrator> Administrators { get; init; }
-
-		public DbSet<ApplicationUser> ApplicationUsers { get; init; }
-
 		public DbSet<Coach> Coaches { get; init; }
-
 		public DbSet<Company> Companies { get; init; }
-
 		public DbSet<Course> Courses { get; init; }
-
+		public DbSet<CourseCategory> CourseCategories { get; init; }
 		public DbSet<Employee> Employees { get; init; }
-
-		public DbSet<Grade> Grades { get; init; }
-
-		// TODO:
-		// Can't remember how to make a DBSet of a class that contains T properties
-		// Or maybe I should do a new DbSet for each invoice relation:
-		// Employee pays company for course
-		// Company pays coach for course
-		// Employee pays coach for live session
-		//public DbSet<Invoice<???, ???>> Invoices { get; init; }
-
-		public DbSet<LiveSession> LiveSessions { get; init; }
-
-		public DbSet<Owner> Owners { get; init; }
-
 		public DbSet<StudentCourse> StudentCourses { get; init; }
+		public DbSet<Grade> Grades { get; init; }
+		public DbSet<Invoice> Invoices { get; init; }
+		public DbSet<InvoiceStatus> InvoiceStatuses { get; init; }
+		public DbSet<LiveSession> LiveSessions { get; init; }
+		public DbSet<LiveSessionCategory> LiveSessionCategories { get; init; }
+		public DbSet<Owner> Owners { get; init; }
+		public DbSet<SessionSlot> SessionSlots { get; init; }
 
 		public override int SaveChanges() => this.SaveChanges(true);
 

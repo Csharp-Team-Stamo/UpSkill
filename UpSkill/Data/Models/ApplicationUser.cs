@@ -7,7 +7,7 @@
 
 	using UpSkill.Data.Common.Models;
 
-	public abstract class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
+	public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
 	{
 		// TODO: Add company logo property
 
