@@ -2,7 +2,9 @@
 {
 	using System.ComponentModel.DataAnnotations;
 
-	public class StudentCourse
+	using UpSkill.Data.Common.Models;
+
+	public class StudentCourse : BaseModel<int>
 	{
 		[Required]
 		public string StudentId { get; set; }

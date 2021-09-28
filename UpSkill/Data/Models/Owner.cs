@@ -2,7 +2,9 @@
 {
 	using System.Collections.Generic;
 
-	public class Owner : ApplicationUser
+	using UpSkill.Data.Common.Models;
+
+	public class Owner : BaseModel<int>
 	{
 		public Owner()
 		{

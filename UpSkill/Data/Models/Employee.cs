@@ -2,7 +2,9 @@
 {
 	using System.Collections.Generic;
 
-	public class Employee : ApplicationUser
+	using UpSkill.Data.Common.Models;
+
+	public class Employee : BaseModel<string>
 	{
 		public Employee()
 		{

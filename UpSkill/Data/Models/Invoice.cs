@@ -3,14 +3,12 @@
 	using System;
 	using System.ComponentModel.DataAnnotations;
 
-	public class Invoice<T1, T2>
+	using UpSkill.Data.Common.Models;
+
+	public class Invoice<T1, T2> : BaseModel<string>
 		where T1 : class, new()
 		where T2 : class, new()
 	{
-		[Key]
-		[Required]
-		public string Id { get; init; } = Guid.NewGuid().ToString();
-
 		[Required]
 		public string BuyerId { get; set; }
 		public T1 Buyer { get; set; }

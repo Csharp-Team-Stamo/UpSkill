@@ -3,12 +3,10 @@
 	using System;
 	using System.ComponentModel.DataAnnotations;
 
-	public class LiveSession
-	{
-		[Key]
-		[Required]
-		public string Id { get; init; } = Guid.NewGuid().ToString();
+	using UpSkill.Data.Common.Models;
 
+	public class LiveSession : BaseModel<string>
+	{
 		[Required]
 		public string Topic { get; set; }
 

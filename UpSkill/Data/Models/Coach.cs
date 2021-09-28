@@ -3,7 +3,9 @@
 	using System;
 	using System.Collections.Generic;
 
-	public class Coach : ApplicationUser
+	using UpSkill.Data.Common.Models;
+
+	public class Coach : BaseModel<string>
 	{
 		public Coach()
 		{

@@ -1,12 +1,13 @@
 ﻿namespace UpSkill.Data.Models
 {
-	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 
+	using UpSkill.Data.Common.Models;
+
 	using static UpSkill.Data.DataConstants.Company;
 
-	public class Company
+	public class Company : BaseModel<int>
 	{
 		public Company()
 		{
@@ -14,10 +15,6 @@
 			this.CourseIncomeInvoices = new HashSet<Invoice<Employee, Company>>();
 			this.CoachExpensesInvoices = new HashSet<Invoice<Company, Coach>>();
 		}
-
-		[Key]
-		[Required]
-		public string Id { get; init; } = Guid.NewGuid().ToString();
 
 		[Required]
 		public string Name { get; set; }

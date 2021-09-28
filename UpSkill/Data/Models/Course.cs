@@ -4,16 +4,14 @@
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 
-	public class Course
+	using UpSkill.Data.Common.Models;
+
+	public class Course : BaseModel<int>
 	{
 		public Course()
 		{
 			this.StudentCourses = new HashSet<StudentCourse>();
 		}
-
-		[Key]
-		[Required]
-		public string Id { get; init; } = Guid.NewGuid().ToString();
 
 		[Required]
 		public string Name { get; set; }
