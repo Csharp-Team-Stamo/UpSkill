@@ -7,7 +7,7 @@
 	public class Grade : BaseModel<int>
 	{
 		[Required]
-		public decimal Value { get; set; }
+		public float Value { get; set; }
 
 		[Required]
 		public string CourseId { get; set; }
