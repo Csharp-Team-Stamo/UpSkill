@@ -1,15 +1,13 @@
 ﻿namespace UpSkill.Data.Models
 {
-	using System;
 	using System.ComponentModel.DataAnnotations;
 
-	public class Grade
-	{
-		[Key]
-		[Required]
-		public string Id { get; init; } = Guid.NewGuid().ToString();
+	using UpSkill.Data.Common.Models;
 
-		public decimal Value { get; set; }
+	public class Grade : BaseModel<int>
+	{
+		[Required]
+		public float Value { get; set; }
 
 		[Required]
 		public string CourseId { get; set; }

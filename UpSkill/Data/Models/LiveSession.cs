@@ -3,22 +3,21 @@
 	using System;
 	using System.ComponentModel.DataAnnotations;
 
-	public class LiveSession
-	{
-		[Key]
-		[Required]
-		public string Id { get; init; } = Guid.NewGuid().ToString();
+	using UpSkill.Data.Common.Models;
 
+	public class LiveSession : BaseModel<string>
+	{
 		[Required]
 		public string Topic { get; set; }
 
+		[Required]
 		public decimal Price { get; set; }
 
-		public DateTime StartOfSession { get; set; }
+		[Required]
+		public DateTime Start { get; set; }
 
-		public DateTime EndOfSession { get; set; }
-
-		public TimeSpan Duration { get; set; }
+		[Required]
+		public DateTime End { get; set; }
 
 		[Required]
 		public string CoachId { get; set; }
@@ -27,5 +26,7 @@
 		[Required]
 		public string StudentId { get; set; }
 		public Employee Student { get; set; }
+
+		public LiveSessionCategory Category { get; init; }
 	}
 }

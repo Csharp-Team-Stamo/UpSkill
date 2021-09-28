@@ -3,27 +3,28 @@
 	using System;
 	using System.ComponentModel.DataAnnotations;
 
-	public class Invoice<T1, T2>
-		where T1 : class, new()
-		where T2 : class, new()
+	using UpSkill.Data.Common.Models;
+
+	public class Invoice : BaseModel<string>
 	{
-		[Key]
 		[Required]
-		public string Id { get; init; } = Guid.NewGuid().ToString();
+		public int StatusId { get; init; }
+		public InvoiceStatus Status { get; init; }
+
+		[Required]
+		public DateTime DueDate { get; init; }
 
 		[Required]
 		public string BuyerId { get; set; }
-		public T1 Buyer { get; set; }
+		public Owner Buyer { get; set; }
 
 		[Required]
-		public string SellerId { get; set; }
-		public T2 Seller { get; set; }
-
-		public decimal Sum { get; set; }
+		public decimal Price { get; set; }
 
 		[Required]
 		public string Description { get; set; }
 
+		[Required]
 		public DateTime TransactionTime { get; set; }
 	}
 }
