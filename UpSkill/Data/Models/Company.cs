@@ -12,8 +12,7 @@
 		public Company()
 		{
 			this.Employees = new HashSet<Employee>();
-			this.CourseIncomeInvoices = new HashSet<Invoice<Employee, Company>>();
-			this.CoachExpensesInvoices = new HashSet<Invoice<Company, Coach>>();
+			this.Invoices = new HashSet<Invoice>();
 		}
 
 		[Required]
@@ -32,8 +31,6 @@
 
 		public ICollection<Employee> Employees { get; set; }
 
-		public ICollection<Invoice<Employee, Company>> CourseIncomeInvoices { get; set; }
-
-		public ICollection<Invoice<Company, Coach>> CoachExpensesInvoices { get; set; }
+		public ICollection<Invoice> Invoices { get; set; }
 	}
 }

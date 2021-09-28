@@ -1,6 +1,5 @@
 ﻿namespace UpSkill.Data.Models
 {
-	using System;
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 
@@ -19,14 +18,16 @@
 		[Required]
 		public string Description { get; set; }
 
-		public Category Category { get; set; }
+		[Required]
+		public int CategoryId { get; set; }
+		public CourseCategory Category { get; set; }
 
 		[Required]
 		public decimal Price { get; set; }
 
 		// Decide if the video is going to be accessed through a link or not
 		[Required]
-		public string VideoURL { get; set; }
+		public string VideoUrl { get; set; }
 
 		[Required]
 		public string CoachId { get; set; }

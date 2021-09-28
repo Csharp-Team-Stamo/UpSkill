@@ -11,6 +11,12 @@
 			this.Employees = new HashSet<Employee>();
 		}
 
+		public string UserId { get; init; }
+		public ApplicationUser User { get; init; }
+
+		public int CompanyId { get; init; }
+		public Company Company { get; init; }
+
 		public ICollection<Employee> Employees { get; set; }
 	}
 }

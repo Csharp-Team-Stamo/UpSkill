@@ -1,6 +1,7 @@
 ﻿namespace UpSkill.Data.Models
 {
 	using System;
+	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 
 	using UpSkill.Data.Common.Models;
@@ -10,13 +11,14 @@
 		[Required]
 		public string Topic { get; set; }
 
+		[Required]
 		public decimal Price { get; set; }
 
-		public DateTime StartOfSession { get; set; }
+		[Required]
+		public DateTime Start { get; set; }
 
-		public DateTime EndOfSession { get; set; }
-
-		public TimeSpan Duration { get; set; }
+		[Required]
+		public DateTime End { get; set; }
 
 		[Required]
 		public string CoachId { get; set; }
@@ -25,5 +27,7 @@
 		[Required]
 		public string StudentId { get; set; }
 		public Employee Student { get; set; }
+
+		public LiveSessionCategory Category { get; init; }
 	}
 }

@@ -12,8 +12,7 @@
 			this.Courses = new HashSet<Course>();
 			this.LiveSessions = new HashSet<LiveSession>();
 			this.DatesAvailable = new HashSet<DateTime>();
-			this.CourseInvoices = new HashSet<Invoice<Company, Coach>>();
-			this.LiveSessionInvoices = new HashSet<Invoice<Employee, Coach>>();
+			this.Invoices = new HashSet<Invoice>();
 		}
 
 		public decimal PricePerSession { get; set; }
@@ -24,8 +23,6 @@
 
 		public ICollection<DateTime> DatesAvailable { get; set; }
 
-		public ICollection<Invoice<Company, Coach>> CourseInvoices { get; set; }
-
-		public ICollection<Invoice<Employee, Coach>> LiveSessionInvoices { get; set; }
+		public ICollection<Invoice> Invoices { get; set; }
 	}
 }

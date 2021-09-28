@@ -6,6 +6,7 @@
 
 	public class Grade : BaseModel<int>
 	{
+		[Required]
 		public decimal Value { get; set; }
 
 		[Required]

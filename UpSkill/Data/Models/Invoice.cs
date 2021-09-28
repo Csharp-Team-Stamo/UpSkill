@@ -4,24 +4,32 @@
 	using System.ComponentModel.DataAnnotations;
 
 	using UpSkill.Data.Common.Models;
+	using UpSkill.Data.Interfaces;
 
-	public class Invoice<T1, T2> : BaseModel<string>
-		where T1 : class, new()
-		where T2 : class, new()
+	public class Invoice : BaseModel<string>
 	{
 		[Required]
+		public int StatusId { get; init; }
+		public InvoiceStatus Status { get; init; }
+
+		[Required]
+		public DateTime DueDate { get; init; }
+
+		[Required]
 		public string BuyerId { get; set; }
-		public T1 Buyer { get; set; }
+		public Owner Buyer { get; set; }
 
 		[Required]
 		public string SellerId { get; set; }
-		public T2 Seller { get; set; }
+		public ISeller Seller { get; set; }
 
-		public decimal Sum { get; set; }
+		[Required]
+		public decimal Price { get; set; }
 
 		[Required]
 		public string Description { get; set; }
 
+		[Required]
 		public DateTime TransactionTime { get; set; }
 	}
 }
