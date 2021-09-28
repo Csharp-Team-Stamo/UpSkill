@@ -12,12 +12,19 @@
 	using Models;
 	using Common.Models;
 
+	using static UpSkill.Data.DataConstants.PriceContants;
+
 	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
 	{
 		private static readonly MethodInfo SetIsDeletedQueryFilterMethod =
 			typeof(ApplicationDbContext).GetMethod(
 				nameof(SetIsDeletedQueryFilter),
 				BindingFlags.NonPublic | BindingFlags.Static);
+
+		public ApplicationDbContext()
+			: base()
+		{
+		}
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
 			: base(options)
@@ -58,6 +65,14 @@
 			return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 		}
 
+		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+		{
+			if (!optionsBuilder.IsConfigured)
+			{
+				optionsBuilder.UseSqlServer("Server=.;Database=UpSkillTestDB;Trusted_Connection=True;Integrated Security=True;");
+			}
+		}
+
 		protected override void OnModelCreating(ModelBuilder builder)
 		{
 			// Needed for Identity models configuration
@@ -85,6 +100,22 @@
 			{
 				foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
 			}
+
+			builder.Entity<Coach>()
+			.Property(c => c.PricePerSession)
+			.HasPrecision(Precision, Scale);
+
+			builder.Entity<Course>()
+			.Property(c => c.Price)
+			.HasPrecision(Precision, Scale);
+
+			builder.Entity<Invoice>()
+			.Property(c => c.Price)
+			.HasPrecision(Precision, Scale);
+
+			builder.Entity<LiveSession>()
+			.Property(c => c.Price)
+			.HasPrecision(Precision, Scale);
 
 			base.OnModelCreating(builder);
 		}
