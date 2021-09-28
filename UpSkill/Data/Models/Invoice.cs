@@ -20,10 +20,6 @@
 		public Owner Buyer { get; set; }
 
 		[Required]
-		public string SellerId { get; set; }
-		public ISeller Seller { get; set; }
-
-		[Required]
 		public decimal Price { get; set; }
 
 		[Required]

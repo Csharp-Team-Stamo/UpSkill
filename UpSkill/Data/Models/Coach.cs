@@ -11,7 +11,7 @@
 		{
 			this.Courses = new HashSet<Course>();
 			this.LiveSessions = new HashSet<LiveSession>();
-			this.DatesAvailable = new HashSet<DateTime>();
+			this.SessionSlots = new HashSet<SessionSlot>();
 			this.Invoices = new HashSet<Invoice>();
 		}
 
@@ -21,7 +21,7 @@
 
 		public ICollection<LiveSession> LiveSessions { get; set; }
 
-		public ICollection<DateTime> DatesAvailable { get; set; }
+		public ICollection<SessionSlot> SessionSlots { get; set; }
 
 		public ICollection<Invoice> Invoices { get; set; }
 	}
