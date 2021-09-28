@@ -4,7 +4,6 @@
 	using System.ComponentModel.DataAnnotations;
 
 	using UpSkill.Data.Common.Models;
-	using UpSkill.Data.Interfaces;
 
 	public class Invoice : BaseModel<string>
 	{
