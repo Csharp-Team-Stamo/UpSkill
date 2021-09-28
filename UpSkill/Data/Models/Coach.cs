@@ -2,7 +2,8 @@
 {
 	using System;
 	using System.Collections.Generic;
-
+	using System.ComponentModel.DataAnnotations;
+	using System.ComponentModel.DataAnnotations.Schema;
 	using UpSkill.Data.Common.Models;
 
 	public class Coach : BaseModel<string>
@@ -15,6 +16,10 @@
 			this.Invoices = new HashSet<Invoice>();
 		}
 
+		public string UserId { get; init; }
+		public ApplicationUser User { get; init; }
+
+		[Required]
 		public decimal PricePerSession { get; set; }
 
 		public ICollection<Course> Courses { get; set; }

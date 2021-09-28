@@ -4,5 +4,7 @@
 
 	public class Administrator : BaseModel<string>
 	{
+		public string UserId { get; init; }
+		public ApplicationUser User { get; init; }
 	}
 }
