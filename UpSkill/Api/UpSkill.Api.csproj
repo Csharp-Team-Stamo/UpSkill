@@ -28,6 +28,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Data\UpSkill.Data.csproj" />
+    <ProjectReference Include="..\Data\UpSkill.Data.Seeding\UpSkill.Data.Seeding.csproj" />
+    <ProjectReference Include="..\Data\UpSkill.Data\UpSkill.Data.csproj" />
   </ItemGroup>
 
 </Project>

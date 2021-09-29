@@ -10,6 +10,7 @@ namespace UpSkill.Api
 	using Microsoft.Identity.Web;
 	using Microsoft.OpenApi.Models;
 	using UpSkill.Data;
+	using UpSkill.Data.Seeding;
 
 	public class Startup
 	{
@@ -45,6 +46,14 @@ namespace UpSkill.Api
 				app.UseDeveloperExceptionPage();
 				app.UseSwagger();
 				app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "UpSkillApi v1"));
+
+				// Seed data on application startup
+				using var serviceScope = app.ApplicationServices.CreateScope();
+				var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+				new ApplicationDbContextSeeder()
+					.SeedAsync(dbContext, serviceScope.ServiceProvider)
+					.GetAwaiter()
+					.GetResult();
 			}
 
 			app.UseHttpsRedirection();
