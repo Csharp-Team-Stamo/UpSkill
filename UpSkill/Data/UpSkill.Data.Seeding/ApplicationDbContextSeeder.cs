@@ -21,7 +21,7 @@ namespace UpSkill.Data.Seeding
 			var seeders = new List<ISeeder>
 			{
 				// Instantiate your loggers here
-				new UsersSeeder(),
+				// new UsersSeeder(),
 			};
 
 			foreach (var seeder in seeders)
