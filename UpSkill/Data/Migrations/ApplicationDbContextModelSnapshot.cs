@@ -306,11 +306,7 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OwnerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("OwnerId1")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UIC")
                         .IsRequired()
@@ -319,7 +315,7 @@ namespace UpSkill.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId1");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Companies");
                 });
@@ -335,7 +331,6 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CoachId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -405,8 +400,8 @@ namespace UpSkill.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("OwnerId")
-                        .HasColumnType("int");
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -429,11 +424,7 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CourseId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("CourseId1")
+                    b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
@@ -443,7 +434,6 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("StudentId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<float>("Value")
@@ -451,7 +441,7 @@ namespace UpSkill.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId1");
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("StudentId");
 
@@ -464,11 +454,7 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BuyerId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("BuyerId1")
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CoachId")
                         .HasColumnType("nvarchar(450)");
@@ -504,7 +490,7 @@ namespace UpSkill.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BuyerId1");
+                    b.HasIndex("BuyerId");
 
                     b.HasIndex("CoachId");
 
@@ -547,7 +533,6 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CoachId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -567,7 +552,6 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("StudentId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Topic")
@@ -609,10 +593,8 @@ namespace UpSkill.Data.Migrations
 
             modelBuilder.Entity("UpSkill.Data.Models.Owner", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -680,7 +662,6 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("StudentId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
@@ -776,7 +757,7 @@ namespace UpSkill.Data.Migrations
                 {
                     b.HasOne("UpSkill.Data.Models.Owner", "Owner")
                         .WithMany()
-                        .HasForeignKey("OwnerId1");
+                        .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
                 });
@@ -791,9 +772,7 @@ namespace UpSkill.Data.Migrations
 
                     b.HasOne("UpSkill.Data.Models.Coach", "Coach")
                         .WithMany("Courses")
-                        .HasForeignKey("CoachId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("CoachId");
 
                     b.Navigation("Category");
 
@@ -821,13 +800,13 @@ namespace UpSkill.Data.Migrations
                 {
                     b.HasOne("UpSkill.Data.Models.Course", "Course")
                         .WithMany()
-                        .HasForeignKey("CourseId1");
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("UpSkill.Data.Models.Employee", "Student")
                         .WithMany("Grades")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("StudentId");
 
                     b.Navigation("Course");
 
@@ -838,7 +817,7 @@ namespace UpSkill.Data.Migrations
                 {
                     b.HasOne("UpSkill.Data.Models.Owner", "Buyer")
                         .WithMany()
-                        .HasForeignKey("BuyerId1");
+                        .HasForeignKey("BuyerId");
 
                     b.HasOne("UpSkill.Data.Models.Coach", null)
                         .WithMany("Invoices")
@@ -871,15 +850,11 @@ namespace UpSkill.Data.Migrations
 
                     b.HasOne("UpSkill.Data.Models.Coach", "Coach")
                         .WithMany("LiveSessions")
-                        .HasForeignKey("CoachId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("CoachId");
 
                     b.HasOne("UpSkill.Data.Models.Employee", "Student")
                         .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("StudentId");
 
                     b.Navigation("Category");
 
@@ -914,9 +889,7 @@ namespace UpSkill.Data.Migrations
 
                     b.HasOne("UpSkill.Data.Models.Employee", "Student")
                         .WithMany("StudentCourses")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("StudentId");
 
                     b.Navigation("Course");
 
