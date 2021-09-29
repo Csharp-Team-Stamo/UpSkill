@@ -18,7 +18,6 @@
 		[Required]
 		public string Name { get; set; }
 
-		[Required]
 		public string OwnerId { get; set; }
 		public Owner Owner { get; set; }
 

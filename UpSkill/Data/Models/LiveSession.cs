@@ -19,11 +19,9 @@
 		[Required]
 		public DateTime End { get; set; }
 
-		[Required]
 		public string CoachId { get; set; }
 		public Coach Coach { get; set; }
 
-		[Required]
 		public string StudentId { get; set; }
 		public Employee Student { get; set; }
 
