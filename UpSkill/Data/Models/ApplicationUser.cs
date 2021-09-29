@@ -14,8 +14,7 @@
 		[Required]
 		public string FullName { get; set; }
 
-		[Required]
-		public string CompanyId { get; set; }
+		public int CompanyId { get; set; }
 		public Company Company { get; set; }
 
 		// Audit info
@@ -27,8 +26,6 @@
 		public bool IsDeleted { get; set; }
 
 		public DateTime? DeletedOn { get; set; }
-
-
 
 		// Can be used at a later time:
 		//public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }

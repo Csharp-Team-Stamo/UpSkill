@@ -16,9 +16,6 @@
 		public string UserId { get; init; }
 		public ApplicationUser User { get; init; }
 
-		public int CompanyId { get; init; }
-		public Company Company { get; init; }
-
 		public ICollection<StudentCourse> StudentCourses { get; set; }
 
 		public ICollection<Grade> Grades { get; set; }
