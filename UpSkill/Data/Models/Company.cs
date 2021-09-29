@@ -21,11 +21,9 @@
 		public string OwnerId { get; set; }
 		public Owner Owner { get; set; }
 
-		[Required]
 		[StringLength(UIC_Length)]
 		public string UIC { get; set; }
 
-		[Required]
 		public string Address { get; set; }
 
 		public ICollection<Employee> Employees { get; set; }

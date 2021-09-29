@@ -3,15 +3,17 @@ namespace UpSkill.Api
 	using Microsoft.AspNetCore.Authentication.JwtBearer;
 	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Hosting;
-	using Microsoft.EntityFrameworkCore;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.Hosting;
 	using Microsoft.Identity.Web;
 	using Microsoft.OpenApi.Models;
 	using UpSkill.Data;
+    using UpSkill.Data.Models;
 
-	public class Startup
+    public class Startup
 	{
 		public Startup(IConfiguration configuration)
 		{
@@ -26,6 +28,21 @@ namespace UpSkill.Api
 			services
 				.AddDbContext<ApplicationDbContext>(options => options
 				.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+			services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+			{
+				options.Password.RequireDigit = false;
+				options.Password.RequireLowercase = false;
+				options.Password.RequireNonAlphanumeric = false;
+				options.Password.RequireUppercase = false;
+				options.Password.RequiredLength = 1;
+				options.Password.RequiredUniqueChars = 0;
+
+				options.SignIn.RequireConfirmedEmail = false;
+				options.SignIn.RequireConfirmedAccount = false;
+				options.SignIn.RequireConfirmedPhoneNumber = false;
+			})
+				.AddEntityFrameworkStores<ApplicationDbContext>();
 
 			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 				.AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
