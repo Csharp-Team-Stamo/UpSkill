@@ -18,7 +18,6 @@
 		[Required]
 		public string Description { get; set; }
 
-		[Required]
 		public int CategoryId { get; set; }
 		public CourseCategory Category { get; set; }
 
@@ -29,7 +28,6 @@
 		[Required]
 		public string VideoUrl { get; set; }
 
-		[Required]
 		public string CoachId { get; set; }
 		public Coach Coach { get; set; }
 

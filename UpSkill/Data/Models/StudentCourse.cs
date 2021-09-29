@@ -6,11 +6,9 @@
 
 	public class StudentCourse : BaseModel<int>
 	{
-		[Required]
 		public string StudentId { get; set; }
 		public Employee Student { get; set; }
 
-		[Required]
 		public int CourseId { get; set; }
 		public Course Course { get; set; }
 	}
