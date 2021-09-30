@@ -11,7 +11,11 @@ namespace UpSkill.Api
 	using Microsoft.Identity.Web;
 	using Microsoft.OpenApi.Models;
 	using UpSkill.Data;
+    using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
+    using UpSkill.Data.Repositories;
+    using UpSkill.Services.Data;
+    using UpSkill.Services.Data.Contracts;
 
     public class Startup
 	{
@@ -52,6 +56,15 @@ namespace UpSkill.Api
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "UpSkillApi", Version = "v1" });
 			});
+
+			// Data repositories
+			services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
+			services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
+			services.AddScoped<IDbQueryRunner, DbQueryRunner>();
+
+			//Business logic services
+
+			services.AddTransient<IAccountsService, AccountsService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

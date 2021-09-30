@@ -11,19 +11,19 @@ using System.Collections.Generic;
     using UpSkill.Data;
     using UpSkill.Data.Models;
     using UpSkill.Infrastructure.Models.Account;
+    using UpSkill.Services.Data;
+    using UpSkill.Services.Data.Contracts;
 
     [Route("/[controller]")]
     [ApiController]
     public class AccountsController : ControllerBase
     {
+        private readonly IAccountsService accountService;
 
-        private readonly UserManager<ApplicationUser> _userManager;
-        private readonly ApplicationDbContext dbContext;
-
-        public AccountsController(UserManager<ApplicationUser> userManager, ApplicationDbContext dbContext)
+        public AccountsController(IAccountsService accountService)
         {
-            _userManager = userManager;
-            this.dbContext = dbContext;
+
+            this.accountService = accountService;
         }
 
         [HttpPost("Register")]
@@ -34,31 +34,14 @@ using System.Collections.Generic;
                 return BadRequest();
             }
 
-            //TODO
-            // Check if email is available
-
-            Company company = this.dbContext.Companies.FirstOrDefault(x => x.Name == input.CompanyName);
-
-            if (company == null)
+            if (!this.accountService.IsEmailAvailable(input.Email))
             {
-                company = new Company
-                {
-                    Name = input.CompanyName,
-                };
+                return BadRequest("This email is already taken!");
             }
 
-            this.dbContext.Add(company);
-            this.dbContext.SaveChanges();
 
-            var user = new ApplicationUser 
-            {
-                UserName = input.Email,
-                Email = input.Email,
-                FullName = input.FullName,
-                Company = company,
-            };
+            var result = await this.accountService.Register(input.FullName, input.Email, input.Password, input.CompanyName);
 
-            var result = await _userManager.CreateAsync(user, input.Password);
             if (!result.Succeeded)
             {
                 var errors = result.Errors.Select(e => e.Description);
