@@ -4,7 +4,7 @@
 
 	using UpSkill.Data.Common.Models;
 
-	public class Owner : BaseModel<int>
+	public class Owner : BaseModel<string>
 	{
 		public Owner()
 		{
