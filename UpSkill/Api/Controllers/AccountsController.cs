@@ -5,7 +5,7 @@ namespace UpSkill.Api.Controllers
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using UpSkill.Data;
@@ -22,7 +22,6 @@ using System.Collections.Generic;
 
         public AccountsController(IAccountsService accountService)
         {
-
             this.accountService = accountService;
         }
 
@@ -52,6 +51,29 @@ using System.Collections.Generic;
         }
 
 
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginDto user)
+        {
+            if (user == null || !ModelState.IsValid)
+            {
+                return BadRequest();
+            }
 
+            if (!this.accountService.UserExists(user.Email))
+            {
+                return BadRequest("Wrong username or password.");
+            }
+
+            var isPasswordCorrect = await accountService.IsPasswordCorrect(user.Email, user.Password);
+
+            if (!isPasswordCorrect)
+            {
+                return BadRequest("Wrong username or password.");
+            }
+
+            var loggingInUserProcess = await accountService.Login(user.Email);
+
+            return StatusCode(200, "Login Successful");
+        }
     }
 }

@@ -10,11 +10,13 @@
     public class AccountsService : IAccountsService
     {
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly SignInManager<ApplicationUser> signInManager;
         private readonly IRepository<Company> companyRepo;
 
-        public AccountsService(UserManager<ApplicationUser> userManager, IRepository<Company> companyRepo)
+        public AccountsService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IRepository<Company> companyRepo)
         {
             this.userManager = userManager;
+            this.signInManager = signInManager;
             this.companyRepo = companyRepo;
         }
 
@@ -52,6 +54,29 @@
             };
 
             return await this.userManager.CreateAsync(user, password);
+        }
+
+        public bool UserExists(string email)
+        {
+            return this.userManager.Users.Any(x => x.Email == email);
+        }
+
+        public async Task<bool> IsPasswordCorrect(string email, string password)
+        {
+            var getUser = await this.userManager.FindByEmailAsync(email);
+
+            var result = await this.userManager.CheckPasswordAsync(getUser, password);
+
+            return result;
+        }
+
+        public async Task<bool> Login(string email)
+        {
+            var loggedInUser = await this.userManager.FindByEmailAsync(email);
+
+            await this.signInManager.SignInAsync(loggedInUser, true);
+
+            return true;
         }
     }
 }
