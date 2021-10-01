@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UpSkill.Data;
 
 namespace UpSkill.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210929135218_RemoveUICRequiredAttribute")]
+    partial class RemoveUICRequiredAttribute
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -305,16 +307,18 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(max)");
 
-                        .HasColumnType("nvarchar(450)");
-                        
+                    b.Property<int?>("OwnerId1")
+                        .HasColumnType("int");
+
                     b.Property<string>("UIC")
                         .HasMaxLength(9)
                         .HasColumnType("nvarchar(9)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("OwnerId1");
 
                     b.ToTable("Companies");
                 });
@@ -399,8 +403,8 @@ namespace UpSkill.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("OwnerId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("OwnerId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -423,8 +427,10 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("CourseId")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CourseId")
+                    b.Property<int?>("CourseId1")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedOn")
@@ -441,7 +447,7 @@ namespace UpSkill.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
+                    b.HasIndex("CourseId1");
 
                     b.HasIndex("StudentId");
 
@@ -454,8 +460,10 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BuyerId")
+                        .HasColumnType("nvarchar(max)");
 
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int?>("BuyerId1")
+                        .HasColumnType("int");
 
                     b.Property<string>("CoachId")
                         .HasColumnType("nvarchar(450)");
@@ -491,7 +499,7 @@ namespace UpSkill.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BuyerId");
+                    b.HasIndex("BuyerId1");
 
                     b.HasIndex("CoachId");
 
@@ -594,8 +602,10 @@ namespace UpSkill.Data.Migrations
 
             modelBuilder.Entity("UpSkill.Data.Models.Owner", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
@@ -758,7 +768,7 @@ namespace UpSkill.Data.Migrations
                 {
                     b.HasOne("UpSkill.Data.Models.Owner", "Owner")
                         .WithMany()
-                        .HasForeignKey("OwnerId");
+                        .HasForeignKey("OwnerId1");
 
                     b.Navigation("Owner");
                 });
@@ -801,9 +811,7 @@ namespace UpSkill.Data.Migrations
                 {
                     b.HasOne("UpSkill.Data.Models.Course", "Course")
                         .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("CourseId1");
 
                     b.HasOne("UpSkill.Data.Models.Employee", "Student")
                         .WithMany("Grades")
@@ -818,7 +826,7 @@ namespace UpSkill.Data.Migrations
                 {
                     b.HasOne("UpSkill.Data.Models.Owner", "Buyer")
                         .WithMany()
-                        .HasForeignKey("BuyerId");
+                        .HasForeignKey("BuyerId1");
 
                     b.HasOne("UpSkill.Data.Models.Coach", null)
                         .WithMany("Invoices")
