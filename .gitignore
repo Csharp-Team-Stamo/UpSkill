@@ -351,3 +351,6 @@ MigrationBackup/
 
 # VS Code config
 .vscode/
+# Custom ignores
+appsettings.Production.json
+appsettings.Development.json
