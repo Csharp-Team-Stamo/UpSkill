@@ -1,4 +1,4 @@
-﻿namespace UpSkill.Data
+namespace UpSkill.Data
 {
 	using System.Reflection;
 	using System.Threading;
@@ -31,7 +31,6 @@
 		{
 		}
 
-		public DbSet<Administrator> Administrators { get; init; }
 		public DbSet<Coach> Coaches { get; init; }
 		public DbSet<Company> Companies { get; init; }
 		public DbSet<Course> Courses { get; init; }
