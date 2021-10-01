@@ -20,8 +20,8 @@ using System.Threading.Tasks;
 			var builder = WebAssemblyHostBuilder.CreateDefault(args);
 			builder.RootComponents.Add<App>("#app");
 
-			builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+			builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001") });
+            builder.Services.AddScoped<IRegistrationService, RegistrationService>();
 
             builder.Services.AddOidcAuthentication(options =>
 			{

@@ -10,7 +10,7 @@ using UpSkill.Data;
 namespace UpSkill.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210929141526_InitialCreate")]
+    [Migration("20211001190819_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -294,7 +294,6 @@ namespace UpSkill.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -311,7 +310,6 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("UIC")
-                        .IsRequired()
                         .HasMaxLength(9)
                         .HasColumnType("nvarchar(9)");
 

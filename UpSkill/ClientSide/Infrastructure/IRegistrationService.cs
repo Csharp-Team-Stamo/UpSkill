@@ -3,7 +3,7 @@ using UpSkill.Infrastructure.Models.Account;
 
 namespace UpSkill.ClientSide.Infrastructure
 {
-    public interface IAuthenticationService
+    public interface IRegistrationService
     {
         Task<RegistrationResponseDto> RegisterUser(UserRegistrationDto userForRegistration);
     }

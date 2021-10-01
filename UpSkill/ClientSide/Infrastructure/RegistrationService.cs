@@ -8,12 +8,12 @@
     using System.Threading.Tasks;
     using UpSkill.Infrastructure.Models.Account;
 
-    public class AuthenticationService : IAuthenticationService
+    public class RegistrationService : IRegistrationService
     {
         private readonly HttpClient client;
         private readonly JsonSerializerOptions _options;
 
-        public AuthenticationService(HttpClient client)
+        public RegistrationService(HttpClient client)
         {
             this.client = client;
             _options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };

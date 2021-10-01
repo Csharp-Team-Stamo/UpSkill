@@ -366,8 +366,8 @@ namespace UpSkill.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    UIC = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: false),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UIC = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
