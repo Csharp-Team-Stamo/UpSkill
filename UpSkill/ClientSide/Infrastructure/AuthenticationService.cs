@@ -23,7 +23,7 @@
         {
             var content = JsonSerializer.Serialize(input);
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var registrationResult = await client.PostAsync("accounts/registration", bodyContent);
+            var registrationResult = await client.PostAsync("accounts/register", bodyContent);
             var registrationContent = await registrationResult.Content.ReadAsStringAsync();
 
             if (!registrationResult.IsSuccessStatusCode)
