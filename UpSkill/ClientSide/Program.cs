@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.Authorization;
+﻿using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,6 +30,7 @@ namespace UpSkill.ClientSide
 			});
 
             builder.Services.AddScoped<AuthenticationStateProvider, UpSkillAuthStateProvider>();
+            builder.Services.AddBlazoredLocalStorage();
 
             await builder.Build().RunAsync();
 		}
