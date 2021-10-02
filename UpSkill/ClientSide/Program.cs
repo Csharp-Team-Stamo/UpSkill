@@ -1,3 +1,4 @@
+﻿using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +8,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using UpSkill.ClientSide.Authentication;
 
 namespace UpSkill.ClientSide
 {
@@ -26,7 +28,9 @@ namespace UpSkill.ClientSide
 				builder.Configuration.Bind("Local", options.ProviderOptions);
 			});
 
-			await builder.Build().RunAsync();
+            builder.Services.AddScoped<AuthenticationStateProvider, UpSkillAuthStateProvider>();
+
+            await builder.Build().RunAsync();
 		}
 	}
 }
