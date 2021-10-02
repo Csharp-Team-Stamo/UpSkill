@@ -6,7 +6,7 @@
                     <text>Please wait, while UpSkill authorizes you.</text>
                 </Authorizing>
                 <NotAuthorized>
-                    @if (!context.User.Identity.IsAuthenticated)
+                    @if (context.User.Identity.IsAuthenticated is false)
                     {
                         <RedirectToLogin />
                     }
