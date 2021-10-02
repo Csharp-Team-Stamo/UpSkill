@@ -1,32 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 
 namespace UpSkill.ClientSide.Authentication
 {
     public class UpSkillAuthStateProvider : AuthenticationStateProvider
     {
-        private readonly ICollection<Claim> claims = new List<Claim>
+        private readonly HttpClient httpClient;
+        private readonly ILocalStorageService localStorage;
+        private readonly AuthenticationState anonymous;
+        public UpSkillAuthStateProvider(HttpClient httpClient, ILocalStorageService localStorage)
         {
-            new Claim(ClaimTypes.Name, "John Doe"),
-            new Claim(ClaimTypes.Role, "Administrator")
-        };
-
-        // For test purposes
-        private readonly ClaimsPrincipal anonymousUser = new ();
-
+            this.httpClient = httpClient;
+            this.localStorage = localStorage;
+            this.anonymous = new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+        }
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
-            // But why?
-            await Task.Delay(1500);
+            var token = await this.localStorage.GetItemAsync<string>("authToken");
 
-            var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(this.claims, "testAuthType"));
+            if (string.IsNullOrWhiteSpace(token))
+            {
+                return this.anonymous;
+            }
+                
+            this.httpClient.DefaultRequestHeaders.Authorization = 
+                new AuthenticationHeaderValue("bearer", token);
 
-
-            return await Task.FromResult(new AuthenticationState(new ClaimsPrincipal(authenticatedUser)));
+            return new AuthenticationState(
+                new ClaimsPrincipal(
+                    new ClaimsIdentity(
+                        JwtParser.ParseClaimsFromJwt(token), "jwtAuthType")));
+        }
+        public void NotifyUserAuthentication(string email)
+        {
+            var authenticatedUser = new ClaimsPrincipal(new ClaimsIdentity(new[] { new Claim(ClaimTypes.Name, email) }, "jwtAuthType"));
+            var authState = Task.FromResult(new AuthenticationState(authenticatedUser));
+            NotifyAuthenticationStateChanged(authState);
+        }
+        public void NotifyUserLogout()
+        {
+            var authState = Task.FromResult(this.anonymous);
+            NotifyAuthenticationStateChanged(authState);
         }
     }
 }
