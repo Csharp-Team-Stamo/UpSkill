@@ -26,7 +26,6 @@ namespace UpSkill.Api.Controllers
     {
         private readonly IAccountsService accountService;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IConfiguration configuration;
         private readonly IConfigurationSection jwtSettings;
 
         public AccountsController(
@@ -37,7 +36,6 @@ namespace UpSkill.Api.Controllers
 
             this.accountService = accountService;
             this.userManager = userManager;
-            this.configuration = configuration;
             this.jwtSettings = configuration.GetSection("JWTSettings");
         }
 
@@ -89,9 +87,9 @@ namespace UpSkill.Api.Controllers
         private List<Claim> GetClaims(IdentityUser user)
         {
             var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.Name, user.Email)
-        };
+            {
+                new Claim(ClaimTypes.Name, user.Email)
+            };
 
             return claims;
         }
