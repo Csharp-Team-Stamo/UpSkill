@@ -9,6 +9,8 @@
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using UpSkill.ClientSide.Authentication.Services;
+    using UpSkill.ClientSide.Authentication.Services.Contracts;
 
     public class Program
 	{
@@ -26,7 +28,9 @@
 				builder.Configuration.Bind("Local", options.ProviderOptions);
 			});
 
+            // Shouldn't scoped be singleton?
             builder.Services.AddScoped<AuthenticationStateProvider, UpSkillAuthStateProvider>();
+            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
             builder.Services.AddBlazoredLocalStorage();
 
             await builder.Build().RunAsync();

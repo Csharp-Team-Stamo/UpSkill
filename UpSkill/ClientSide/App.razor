@@ -3,7 +3,7 @@
         <Found Context="routeData">
             <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
                 <Authorizing>
-                    <text>Please wait, while UpSkill authorizes you.</text>
+                    <text>Please wait, while UpSkill authenticates you.</text>
                 </Authorizing>
                 <NotAuthorized>
                     @if (context.User.Identity.IsAuthenticated is false)

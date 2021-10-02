@@ -22,6 +22,7 @@ namespace UpSkill.Api.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
+        private readonly string unauthorizedErrorMessage = "Either you Email, or your Password were not correct.";
         private readonly IAccountsService accountService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IConfigurationSection jwtSettings;
@@ -50,8 +51,8 @@ namespace UpSkill.Api.Controllers
                 return BadRequest("This email is already taken!");
             }
 
-
-            var result = await this.accountService.Register(input.FullName, input.Email, input.Password, input.CompanyName);
+            var result = await this.accountService
+                                   .Register(input.FullName, input.Email, input.Password, input.CompanyName);
 
             if (!result.Succeeded)
             {
@@ -62,17 +63,43 @@ namespace UpSkill.Api.Controllers
             return StatusCode(201);
         }
 
-        [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody] UserAuthenticationDto userForAuthentication)
+        [HttpPost("api/accounts/login")]
+        public async Task<IActionResult> Login(
+            [FromBody] UserAuthenticationDto userData)
         {
-            var user = await this.userManager.FindByNameAsync(userForAuthentication.Email);
-            if (user == null || !await this.userManager.CheckPasswordAsync(user, userForAuthentication.Password))
-                return Unauthorized(new AuthenticationResponseDto { ErrorMessage = "Invalid Authentication" });
+            var user = await this.userManager
+                .FindByNameAsync(userData.Email);
+
+            if (user == null || 
+                !await this.userManager
+                           .CheckPasswordAsync(user, userData.Password))
+            {
+                var unauthorizedResponse = new AuthenticationResponseDto
+                {
+                    ErrorMessage = this.unauthorizedErrorMessage
+                };
+
+                return Unauthorized(unauthorizedResponse);
+            }
+
+            var userToken = GetToken(user);
+
+            var authenticationResponse = new AuthenticationResponseDto
+            {
+                AuthIsSuccessful = true,
+                Token = userToken
+            };
+
+            return Ok(authenticationResponse);
+        }
+
+        private string GetToken(ApplicationUser user)
+        {
             var signingCredentials = GetSigningCredentials();
             var claims = GetClaims(user);
             var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
-            var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-            return Ok(new AuthenticationResponseDto { AuthIsSuccessful = true, Token = token });
+
+            return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         }
 
         private SigningCredentials GetSigningCredentials()
@@ -82,25 +109,21 @@ namespace UpSkill.Api.Controllers
 
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
+
         private List<Claim> GetClaims(IdentityUser user)
-        {
-            var claims = new List<Claim>
+            => new ()
             {
                 new Claim(ClaimTypes.Name, user.Email)
             };
 
-            return claims;
-        }
-        private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
-        {
-            var tokenOptions = new JwtSecurityToken(
+        private JwtSecurityToken GenerateTokenOptions(
+            SigningCredentials signingCredentials, 
+            List<Claim> claims)
+            => new JwtSecurityToken(
                 issuer: this.jwtSettings["validIssuer"],
                 audience: this.jwtSettings["validAudience"],
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(Convert.ToDouble(this.jwtSettings["expiryInMinutes"])),
                 signingCredentials: signingCredentials);
-
-            return tokenOptions;
-        }
     }
 }
