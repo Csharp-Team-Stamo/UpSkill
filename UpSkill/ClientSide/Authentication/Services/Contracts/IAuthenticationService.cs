@@ -5,7 +5,6 @@
 
     public interface IAuthenticationService
     {
-        Task<RegistrationResponseDto> RegisterUser(UserRegistrationDto userForRegistration);
         Task<AuthenticationResponseDto> Login(UserAuthenticationDto userForAuthentication);
         Task Logout();
     }
