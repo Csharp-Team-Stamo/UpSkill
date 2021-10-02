@@ -1,8 +1,5 @@
 ﻿namespace UpSkill.ClientSide.Authentication.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Text;
@@ -10,8 +7,8 @@
     using System.Threading.Tasks;
     using Blazored.LocalStorage;
     using Contracts;
+    using Infrastructure.Models.Account;
     using Microsoft.AspNetCore.Components.Authorization;
-    using UpSkill.Infrastructure.Models.Account;
 
     public class AuthenticationService : IAuthenticationService
     {

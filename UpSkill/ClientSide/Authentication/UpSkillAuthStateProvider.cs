@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Security.Claims;
-using System.Threading.Tasks;
-using Blazored.LocalStorage;
-using Microsoft.AspNetCore.Components.Authorization;
-
-namespace UpSkill.ClientSide.Authentication
+﻿namespace UpSkill.ClientSide.Authentication
 {
+    using System.Net.Http;
+    using System.Net.Http.Headers;
+    using System.Security.Claims;
+    using System.Threading.Tasks;
+    using Blazored.LocalStorage;
+    using Microsoft.AspNetCore.Components.Authorization;
+
     public class UpSkillAuthStateProvider : AuthenticationStateProvider
     {
         private readonly HttpClient httpClient;

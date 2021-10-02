@@ -3,10 +3,6 @@
 
 namespace UpSkill.Api.Controllers
 {
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.IdentityModel.Tokens;
     using System;
     using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
@@ -14,11 +10,13 @@ namespace UpSkill.Api.Controllers
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
-    using UpSkill.Data;
-    using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Account;
-    using UpSkill.Services.Data;
-    using UpSkill.Services.Data.Contracts;
+    using Data.Models;
+    using Infrastructure.Models.Account;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.IdentityModel.Tokens;
+    using Services.Data.Contracts;
 
     [Route("/[controller]")]
     [ApiController]
