@@ -5,8 +5,14 @@ namespace UpSkill.Api.Controllers
 {
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.IdentityModel.Tokens;
+    using System;
+    using System.Collections.Generic;
+    using System.IdentityModel.Tokens.Jwt;
     using System.Linq;
+    using System.Security.Claims;
+    using System.Text;
     using System.Threading.Tasks;
     using UpSkill.Data;
     using UpSkill.Data.Models;
@@ -19,11 +25,20 @@ using System.Collections.Generic;
     public class AccountsController : ControllerBase
     {
         private readonly IAccountsService accountService;
+        private readonly UserManager<ApplicationUser> userManager;
+        private readonly IConfiguration configuration;
+        private readonly IConfigurationSection jwtSettings;
 
-        public AccountsController(IAccountsService accountService)
+        public AccountsController(
+            IAccountsService accountService,
+            UserManager<ApplicationUser> userManager,
+            IConfiguration configuration)
         {
 
             this.accountService = accountService;
+            this.userManager = userManager;
+            this.configuration = configuration;
+            this.jwtSettings = configuration.GetSection("JWTSettings");
         }
 
         [HttpPost("Register")]
@@ -51,7 +66,45 @@ using System.Collections.Generic;
             return StatusCode(201);
         }
 
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] UserAuthenticationDto userForAuthentication)
+        {
+            var user = await this.userManager.FindByNameAsync(userForAuthentication.Email);
+            if (user == null || !await this.userManager.CheckPasswordAsync(user, userForAuthentication.Password))
+                return Unauthorized(new AuthenticationResponseDto { ErrorMessage = "Invalid Authentication" });
+            var signingCredentials = GetSigningCredentials();
+            var claims = GetClaims(user);
+            var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
+            var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+            return Ok(new AuthenticationResponseDto { AuthIsSuccessful = true, Token = token });
+        }
 
+        private SigningCredentials GetSigningCredentials()
+        {
+            var key = Encoding.UTF8.GetBytes(this.jwtSettings["securityKey"]);
+            var secret = new SymmetricSecurityKey(key);
 
+            return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
+        }
+        private List<Claim> GetClaims(IdentityUser user)
+        {
+            var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.Name, user.Email)
+        };
+
+            return claims;
+        }
+        private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCredentials, List<Claim> claims)
+        {
+            var tokenOptions = new JwtSecurityToken(
+                issuer: this.jwtSettings["validIssuer"],
+                audience: this.jwtSettings["validAudience"],
+                claims: claims,
+                expires: DateTime.Now.AddMinutes(Convert.ToDouble(this.jwtSettings["expiryInMinutes"])),
+                signingCredentials: signingCredentials);
+
+            return tokenOptions;
+        }
     }
 }
