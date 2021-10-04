@@ -63,7 +63,8 @@ namespace UpSkill.Api.Controllers
             return StatusCode(201);
         }
 
-        [HttpPost("api/accounts/login")]
+        [HttpPost("Login")]
+        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Login(
             [FromBody] UserAuthenticationDto userData)
         {

@@ -305,9 +305,8 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OwnerId")
-
                         .HasColumnType("nvarchar(450)");
-                        
+
                     b.Property<string>("UIC")
                         .HasMaxLength(9)
                         .HasColumnType("nvarchar(9)");
@@ -423,7 +422,6 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
@@ -454,7 +452,6 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("BuyerId")
-
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CoachId")

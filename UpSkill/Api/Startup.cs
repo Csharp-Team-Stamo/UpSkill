@@ -70,11 +70,25 @@
                 };
             });
 
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-				.AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
+            //services.AddAntiforgery(o =>
+            //{
+            //    o.HeaderName = "X-CSRF-TOKEN";
+            //});
 
-			services.AddControllers();
-			services.AddSwaggerGen(c =>
+            //        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //.AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
+
+            services.AddControllers();
+
+            services.AddCors(policy =>
+            {
+                policy.AddPolicy("CorsPolicy", opt => opt
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            });
+
+            services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "UpSkillApi", Version = "v1" });
 			});
@@ -100,8 +114,8 @@
 			}
 
 			app.UseHttpsRedirection();
-
-			app.UseRouting();
+            app.UseCors("CorsPolicy");
+            app.UseRouting();
 
 			app.UseAuthentication();
 			app.UseAuthorization();

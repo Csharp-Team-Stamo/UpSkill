@@ -12,7 +12,7 @@
 
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly string clientUrl = "api/accounts/login";
+        private readonly string clientUrl = "accounts/login";
         private readonly HttpClient client;
         private readonly JsonSerializerOptions options;
         private readonly AuthenticationStateProvider authStateProvider;
