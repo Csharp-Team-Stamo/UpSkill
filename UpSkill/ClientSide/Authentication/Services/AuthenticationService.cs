@@ -33,9 +33,6 @@
             this.navigationManager = navigationManager;
         }
 
-        //[Inject]
-        //public NavigationManager NavigationManager { get; set; }
-
         public  async Task<AuthenticationResponseDto> Login(
             UserAuthenticationDto userData)
         {
