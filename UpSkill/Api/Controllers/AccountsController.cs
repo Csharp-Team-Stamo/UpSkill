@@ -3,6 +3,10 @@
 
 namespace UpSkill.Api.Controllers
 {
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.IdentityModel.Tokens;
     using System;
     using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
@@ -10,13 +14,9 @@ namespace UpSkill.Api.Controllers
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
-    using Data.Models;
-    using Infrastructure.Models.Account;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.IdentityModel.Tokens;
-    using Services.Data.Contracts;
+    using UpSkill.Data.Models;
+    using UpSkill.Infrastructure.Models.Account;
+    using UpSkill.Services.Data.Contracts;
 
     [Route("/[controller]")]
     [ApiController]
@@ -51,8 +51,8 @@ namespace UpSkill.Api.Controllers
                 return BadRequest("This email is already taken!");
             }
 
-            var result = await this.accountService
-                                   .Register(input.FullName, input.Email, input.Password, input.CompanyName);
+
+            var result = await this.accountService.Register(input.FullName, input.Email, input.Password, input.CompanyName);
 
             if (!result.Succeeded)
             {
@@ -64,14 +64,14 @@ namespace UpSkill.Api.Controllers
         }
 
         [HttpPost("Login")]
-        [AutoValidateAntiforgeryToken]
+        //[AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Login(
             [FromBody] UserAuthenticationDto userData)
         {
             var user = await this.userManager
-                .FindByNameAsync(userData.Email);
+                .FindByEmailAsync(userData.Email);
 
-            if (user == null || 
+            if (user == null ||
                 !await this.userManager
                            .CheckPasswordAsync(user, userData.Password))
             {
@@ -112,13 +112,13 @@ namespace UpSkill.Api.Controllers
         }
 
         private List<Claim> GetClaims(IdentityUser user)
-            => new ()
+            => new()
             {
                 new Claim(ClaimTypes.Name, user.Email)
             };
 
         private JwtSecurityToken GenerateTokenOptions(
-            SigningCredentials signingCredentials, 
+            SigningCredentials signingCredentials,
             List<Claim> claims)
             => new JwtSecurityToken(
                 issuer: this.jwtSettings["validIssuer"],
@@ -126,5 +126,6 @@ namespace UpSkill.Api.Controllers
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(Convert.ToDouble(this.jwtSettings["expiryInMinutes"])),
                 signingCredentials: signingCredentials);
+
     }
 }

@@ -70,10 +70,6 @@
                 };
             });
 
-            //services.AddAntiforgery(o =>
-            //{
-            //    o.HeaderName = "X-CSRF-TOKEN";
-            //});
 
             //        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             //.AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
@@ -93,8 +89,16 @@
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "UpSkillApi", Version = "v1" });
 			});
 
-			// Data repositories
-			services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
+            services.AddCors(policy =>
+            {
+                policy.AddPolicy("CorsPolicy", opt => opt
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            });
+
+            // Data repositories
+            services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
 			services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 			services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 

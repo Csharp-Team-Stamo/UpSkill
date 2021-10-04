@@ -1,7 +1,7 @@
 ﻿namespace UpSkill.ClientSide.Authentication.Services.Contracts
 {
     using System.Threading.Tasks;
-    using Infrastructure.Models.Account;
+    using UpSkill.Infrastructure.Models.Account;
 
     public interface IAuthenticationService
     {

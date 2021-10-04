@@ -1,16 +1,21 @@
-﻿namespace UpSkill.ClientSide
+﻿
+namespace UpSkill.ClientSide
 {
-    using System;
-    using System.Net.Http;
-    using System.Threading.Tasks;
-    using Authentication;
     using Blazored.LocalStorage;
     using Microsoft.AspNetCore.Components.Authorization;
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using System;
+    using System.Collections.Generic;
+    using System.Net.Http;
+    using System.Text;
+    using System.Threading.Tasks;
+    using UpSkill.ClientSide.Authentication;
     using UpSkill.ClientSide.Authentication.Services;
     using UpSkill.ClientSide.Authentication.Services.Contracts;
+    using UpSkill.ClientSide.Infrastructure;
 
     public class Program
 	{
@@ -18,9 +23,10 @@
 		{
 			var builder = WebAssemblyHostBuilder.CreateDefault(args);
 			builder.RootComponents.Add<App>("#app");
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:44383") });
 
-            // builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+			builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001") });
+            builder.Services.AddScoped<IRegistrationService, RegistrationService>();
+            builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
 
             builder.Services.AddOidcAuthentication(options =>
 			{
@@ -29,10 +35,12 @@
 				builder.Configuration.Bind("Local", options.ProviderOptions);
 			});
 
-            // Shouldn't scoped be singleton?
             builder.Services.AddScoped<AuthenticationStateProvider, UpSkillAuthStateProvider>();
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
             builder.Services.AddBlazoredLocalStorage();
+            builder.Services.AddBlazoredLocalStorage();
+
+            builder.Services.AddAuthorizationCore();
 
             await builder.Build().RunAsync();
 		}

@@ -1,9 +1,9 @@
 ﻿namespace UpSkill.ClientSide.Pages
 {
     using System.Threading.Tasks;
-    using Infrastructure.Models.Account;
     using Microsoft.AspNetCore.Components;
     using UpSkill.ClientSide.Authentication.Services.Contracts;
+    using UpSkill.Infrastructure.Models.Account;
 
     public partial class LogIn
     {
