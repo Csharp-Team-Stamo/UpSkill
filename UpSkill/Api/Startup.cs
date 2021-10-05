@@ -1,6 +1,7 @@
 ﻿namespace UpSkill.Api
 {
-	using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using System.Text;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
 	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -9,7 +10,8 @@
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.Hosting;
 	using Microsoft.Identity.Web;
-	using Microsoft.OpenApi.Models;
+    using Microsoft.IdentityModel.Tokens;
+    using Microsoft.OpenApi.Models;
 	using UpSkill.Data;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
@@ -48,11 +50,41 @@
 			})
 				.AddEntityFrameworkStores<ApplicationDbContext>();
 
-			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-				.AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
+            var jwtSettings = Configuration.GetSection("JWTSettings");
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
 
-			services.AddControllers();
-			services.AddSwaggerGen(c =>
+                    ValidIssuer = jwtSettings["validIssuer"],
+                    ValidAudience = jwtSettings["validAudience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["securityKey"]))
+                };
+            });
+
+
+            //        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //.AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
+
+            services.AddControllers();
+
+            services.AddCors(policy =>
+            {
+                policy.AddPolicy("CorsPolicy", opt => opt
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            });
+
+            services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "UpSkillApi", Version = "v1" });
 			});
@@ -87,7 +119,6 @@
 
 			app.UseHttpsRedirection();
             app.UseCors("CorsPolicy");
-
             app.UseRouting();
 
 			app.UseAuthentication();

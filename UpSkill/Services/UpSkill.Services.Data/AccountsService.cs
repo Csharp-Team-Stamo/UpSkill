@@ -29,8 +29,6 @@
                 .All()
                 .FirstOrDefault(x => x.Name == companyName);
 
-
-
             if (company == null)
             {
                 company = new Company
