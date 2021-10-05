@@ -33,6 +33,8 @@
         public string CoachId { get; set; }
         public Coach Coach { get; set; }
 
+        public ICollection<CourseOwner> Owners { get; set; }
+
         public ICollection<CourseVote> Votes { get; set; }
 
         public ICollection<StudentCourse> StudentCourses { get; set; }
