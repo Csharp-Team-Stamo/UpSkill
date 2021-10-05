@@ -20,6 +20,9 @@
         public string UserId { get; init; }
         public ApplicationUser User { get; init; }
 
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
+
         [Required]
         public decimal PricePerSession { get; set; }
 
