@@ -40,6 +40,13 @@
         public DbSet<LiveSession> LiveSessions { get; init; }
         public DbSet<Owner> Owners { get; init; }
         public DbSet<SessionSlot> SessionSlots { get; init; }
+        public DbSet<CoachOwner> CoachOwners { get; init; }
+        public DbSet<CoachLanguage> CoachLanguages { get; init; }
+        public DbSet<CoachEmployee> CoachEmployees { get; init; }
+        public DbSet<CoachVote> CoachVotes { get; init; }
+        public DbSet<CourseOwner> CourseOwners { get; init; }
+        public DbSet<CourseVote> CourseVotes { get; init; }
+        public DbSet<Language> Languages { get; init; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
