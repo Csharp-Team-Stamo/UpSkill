@@ -3,6 +3,8 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
+    using global::Data.Models;
+
     using UpSkill.Data.Common.Models;
 
     public class Course : BaseModel<int>
@@ -30,6 +32,8 @@
 
         public string CoachId { get; set; }
         public Coach Coach { get; set; }
+
+        public ICollection<CourseVote> Votes { get; set; }
 
         public ICollection<StudentCourse> StudentCourses { get; set; }
     }
