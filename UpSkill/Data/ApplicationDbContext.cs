@@ -72,13 +72,13 @@
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseSqlServer("Server=.;Database=UpSkillTestDB;Trusted_Connection=True;Integrated Security=True;");
-            }
-        }
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    if (!optionsBuilder.IsConfigured)
+        //    {
+        //        optionsBuilder.UseSqlServer("Server=.;Database=UpSkillTestDB;Trusted_Connection=True;Integrated Security=True;");
+        //    }
+        //}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
