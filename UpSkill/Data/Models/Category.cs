@@ -1,6 +1,5 @@
 ﻿namespace UpSkill.Data.Models
 {
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using UpSkill.Data.Common.Models;

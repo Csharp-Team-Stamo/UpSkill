@@ -9,6 +9,10 @@ namespace Data.Models
 
         public Coach Coach { get; init; }
 
+        public string UserId { get; init; }
+
+        public ApplicationUser User { get; init; }
+
         public int Value { get; init; }
     }
 }
