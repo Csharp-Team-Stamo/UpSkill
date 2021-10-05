@@ -26,6 +26,8 @@
         [Required]
         public decimal PricePerSession { get; set; }
 
+        public ICollection<CoachEmployee> Students { get; set; }
+
         public ICollection<CoachVote> Votes { get; set; }
 
         public ICollection<Course> Courses { get; set; }
