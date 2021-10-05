@@ -3,7 +3,7 @@ namespace Data.Models
     using UpSkill.Data.Common.Models;
     using UpSkill.Data.Models;
 
-    public class CourseVote : BaseModel<int>
+    public class CourseVote : BaseDeletableModel<int>
     {
         public int CourseId { get; init; }
 

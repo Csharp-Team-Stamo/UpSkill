@@ -5,7 +5,7 @@
 
     using UpSkill.Data.Common.Models;
 
-    public class LiveSession : BaseModel<string>
+    public class LiveSession : BaseDeletableModel<string>
     {
         [Required]
         public string Topic { get; set; }

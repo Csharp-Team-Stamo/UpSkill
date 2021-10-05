@@ -3,7 +3,7 @@ namespace Data.Models
     using UpSkill.Data.Common.Models;
     using UpSkill.Data.Models;
 
-    public class CoachEmployee : BaseModel<int>
+    public class CoachEmployee : BaseDeletableModel<int>
     {
         public string StudentId { get; init; }
         public Employee Student { get; init; }

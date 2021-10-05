@@ -4,7 +4,7 @@
 
     using UpSkill.Data.Common.Models;
 
-    public class Category : BaseModel<int>
+    public class Category : BaseDeletableModel<int>
     {
         [Required]
         public string Name { get; set; }

@@ -7,7 +7,7 @@
 
     using UpSkill.Data.Common.Models;
 
-    public class Course : BaseModel<int>
+    public class Course : BaseDeletableModel<int>
     {
         public Course()
         {

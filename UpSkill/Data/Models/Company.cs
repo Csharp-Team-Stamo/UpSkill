@@ -7,7 +7,7 @@
 
     using static UpSkill.Data.DataConstants.Company;
 
-    public class Company : BaseModel<int>
+    public class Company : BaseDeletableModel<int>
     {
         public Company()
         {

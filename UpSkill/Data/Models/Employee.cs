@@ -5,7 +5,7 @@
     using global::Data.Models;
     using UpSkill.Data.Common.Models;
 
-    public class Employee : BaseModel<string>
+    public class Employee : BaseDeletableModel<string>
     {
         public Employee()
         {

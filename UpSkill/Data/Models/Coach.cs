@@ -7,7 +7,7 @@
 
     using UpSkill.Data.Common.Models;
 
-    public class Coach : BaseModel<string>
+    public class Coach : BaseDeletableModel<string>
     {
         public Coach()
         {
