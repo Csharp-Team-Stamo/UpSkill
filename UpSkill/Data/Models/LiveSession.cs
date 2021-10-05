@@ -7,6 +7,15 @@
 
     public class LiveSession : BaseDeletableModel<string>
     {
+        public string CoachId { get; set; }
+        public Coach Coach { get; set; }
+
+        public string StudentId { get; set; }
+        public Employee Student { get; set; }
+
+        public int CategoryId { get; init; }
+        public Category Category { get; init; }
+
         [Required]
         public string Topic { get; set; }
 
@@ -18,14 +27,5 @@
 
         [Required]
         public DateTime End { get; set; }
-
-        public string CoachId { get; set; }
-        public Coach Coach { get; set; }
-
-        public string StudentId { get; set; }
-        public Employee Student { get; set; }
-
-        public int CategoryId { get; init; }
-        public Category Category { get; init; }
     }
 }

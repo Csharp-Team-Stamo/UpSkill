@@ -13,6 +13,6 @@
         public Employee Student { get; set; }
 
         [Required]
-        public float Value { get; set; }
+        public double Value { get; set; }
     }
 }

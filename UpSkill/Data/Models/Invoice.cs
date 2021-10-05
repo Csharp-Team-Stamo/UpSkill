@@ -10,11 +10,11 @@
         public int StatusId { get; init; }
         public InvoiceStatus Status { get; init; }
 
-        [Required]
-        public DateTime DueDate { get; init; }
-
         public string BuyerId { get; set; }
         public Owner Buyer { get; set; }
+
+        [Required]
+        public DateTime DueDate { get; init; }
 
         [Required]
         public decimal Price { get; set; }
