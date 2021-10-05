@@ -18,6 +18,8 @@
         [Required]
         public decimal PricePerSession { get; set; }
 
+        public ICollection<CoachLanguage> Languages { get; set; } = new HashSet<CoachLanguage>();
+
         public ICollection<CoachOwner> Owners { get; set; } = new HashSet<CoachOwner>();
 
         public ICollection<CoachEmployee> Students { get; set; } = new HashSet<CoachEmployee>();
