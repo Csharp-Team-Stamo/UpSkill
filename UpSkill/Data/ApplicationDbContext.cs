@@ -5,10 +5,15 @@
     using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
-    using Common.Models;
+
+    using global::Data.Models;
+
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
+
+    using Common.Models;
     using Models;
+
     using static UpSkill.Data.DataConstants.PriceContants;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
