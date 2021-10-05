@@ -1,152 +1,149 @@
 ﻿namespace UpSkill.Data
 {
-	using System.Reflection;
-	using System.Threading;
-	using System.Threading.Tasks;
-	using System;
-	using System.Linq;
+    using System;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading;
+    using System.Threading.Tasks;
+    using Common.Models;
+    using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
+    using Models;
+    using static UpSkill.Data.DataConstants.PriceContants;
 
-	using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-	using Microsoft.EntityFrameworkCore;
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+    {
+        private static readonly MethodInfo SetIsDeletedQueryFilterMethod =
+            typeof(ApplicationDbContext).GetMethod(
+                nameof(SetIsDeletedQueryFilter),
+                BindingFlags.NonPublic | BindingFlags.Static);
 
-	using Models;
-	using Common.Models;
+        public ApplicationDbContext()
+            : base()
+        {
+        }
 
-	using static UpSkill.Data.DataConstants.PriceContants;
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options)
+        {
+        }
 
-	public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
-	{
-		private static readonly MethodInfo SetIsDeletedQueryFilterMethod =
-			typeof(ApplicationDbContext).GetMethod(
-				nameof(SetIsDeletedQueryFilter),
-				BindingFlags.NonPublic | BindingFlags.Static);
+        public DbSet<Coach> Coaches { get; init; }
+        public DbSet<Company> Companies { get; init; }
+        public DbSet<Category> Categories { get; init; }
+        public DbSet<Course> Courses { get; init; }
+        public DbSet<Employee> Employees { get; init; }
+        public DbSet<EmployeeCourse> StudentCourses { get; init; }
+        public DbSet<Grade> Grades { get; init; }
+        public DbSet<Invoice> Invoices { get; init; }
+        public DbSet<InvoiceStatus> InvoiceStatuses { get; init; }
+        public DbSet<LiveSession> LiveSessions { get; init; }
+        public DbSet<Owner> Owners { get; init; }
+        public DbSet<SessionSlot> SessionSlots { get; init; }
 
-		public ApplicationDbContext()
-			: base()
-		{
-		}
+        public override int SaveChanges() => this.SaveChanges(true);
 
-		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-			: base(options)
-		{
-		}
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            this.ApplyAuditInfoRules();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
 
-		public DbSet<Coach> Coaches { get; init; }
-		public DbSet<Company> Companies { get; init; }
-		public DbSet<Category> Categories { get; init; }
-		public DbSet<Course> Courses { get; init; }
-		public DbSet<Employee> Employees { get; init; }
-		public DbSet<StudentCourse> StudentCourses { get; init; }
-		public DbSet<Grade> Grades { get; init; }
-		public DbSet<Invoice> Invoices { get; init; }
-		public DbSet<InvoiceStatus> InvoiceStatuses { get; init; }
-		public DbSet<LiveSession> LiveSessions { get; init; }
-		public DbSet<Owner> Owners { get; init; }
-		public DbSet<SessionSlot> SessionSlots { get; init; }
+        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) =>
+            this.SaveChangesAsync(true, cancellationToken);
 
-		public override int SaveChanges() => this.SaveChanges(true);
+        public override Task<int> SaveChangesAsync(
+            bool acceptAllChangesOnSuccess,
+            CancellationToken cancellationToken = default)
+        {
+            this.ApplyAuditInfoRules();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
 
-		public override int SaveChanges(bool acceptAllChangesOnSuccess)
-		{
-			this.ApplyAuditInfoRules();
-			return base.SaveChanges(acceptAllChangesOnSuccess);
-		}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Server=.;Database=UpSkillTestDB;Trusted_Connection=True;Integrated Security=True;");
+            }
+        }
 
-		public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default) =>
-			this.SaveChangesAsync(true, cancellationToken);
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            // Needed for Identity models configuration
+            base.OnModelCreating(builder);
 
-		public override Task<int> SaveChangesAsync(
-			bool acceptAllChangesOnSuccess,
-			CancellationToken cancellationToken = default)
-		{
-			this.ApplyAuditInfoRules();
-			return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-		}
+            this.ConfigureUserIdentityRelations(builder);
 
-		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-		{
-			if (!optionsBuilder.IsConfigured)
-			{
-				optionsBuilder.UseSqlServer("Server=.;Database=UpSkillTestDB;Trusted_Connection=True;Integrated Security=True;");
-			}
-		}
+            EntityIndexesConfiguration.Configure(builder);
 
-		protected override void OnModelCreating(ModelBuilder builder)
-		{
-			// Needed for Identity models configuration
-			base.OnModelCreating(builder);
+            var entityTypes = builder.Model.GetEntityTypes().ToList();
 
-			this.ConfigureUserIdentityRelations(builder);
+            // Set global query filter for not deleted entities only
+            var deletableEntityTypes = entityTypes
+                .Where(et => et.ClrType != null && typeof(IDeletableEntity).IsAssignableFrom(et.ClrType));
+            foreach (var deletableEntityType in deletableEntityTypes)
+            {
+                var method = SetIsDeletedQueryFilterMethod.MakeGenericMethod(deletableEntityType.ClrType);
+                method.Invoke(null, new object[] { builder });
+            }
 
-			EntityIndexesConfiguration.Configure(builder);
+            // Disable cascade delete
+            var foreignKeys = entityTypes
+                .SelectMany(e => e.GetForeignKeys().Where(f => f.DeleteBehavior == DeleteBehavior.Cascade));
+            foreach (var foreignKey in foreignKeys)
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
+            }
 
-			var entityTypes = builder.Model.GetEntityTypes().ToList();
+            builder.Entity<Coach>()
+            .Property(c => c.PricePerSession)
+            .HasPrecision(Precision, Scale);
 
-			// Set global query filter for not deleted entities only
-			var deletableEntityTypes = entityTypes
-				.Where(et => et.ClrType != null && typeof(IDeletableEntity).IsAssignableFrom(et.ClrType));
-			foreach (var deletableEntityType in deletableEntityTypes)
-			{
-				var method = SetIsDeletedQueryFilterMethod.MakeGenericMethod(deletableEntityType.ClrType);
-				method.Invoke(null, new object[] { builder });
-			}
+            builder.Entity<Course>()
+            .Property(c => c.Price)
+            .HasPrecision(Precision, Scale);
 
-			// Disable cascade delete
-			var foreignKeys = entityTypes
-				.SelectMany(e => e.GetForeignKeys().Where(f => f.DeleteBehavior == DeleteBehavior.Cascade));
-			foreach (var foreignKey in foreignKeys)
-			{
-				foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
-			}
+            builder.Entity<Invoice>()
+            .Property(c => c.Price)
+            .HasPrecision(Precision, Scale);
 
-			builder.Entity<Coach>()
-			.Property(c => c.PricePerSession)
-			.HasPrecision(Precision, Scale);
+            builder.Entity<LiveSession>()
+            .Property(c => c.Price)
+            .HasPrecision(Precision, Scale);
 
-			builder.Entity<Course>()
-			.Property(c => c.Price)
-			.HasPrecision(Precision, Scale);
+            base.OnModelCreating(builder);
+        }
 
-			builder.Entity<Invoice>()
-			.Property(c => c.Price)
-			.HasPrecision(Precision, Scale);
+        private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
+         where T : class, IDeletableEntity
+        {
+            builder.Entity<T>().HasQueryFilter(e => !e.IsDeleted);
+        }
 
-			builder.Entity<LiveSession>()
-			.Property(c => c.Price)
-			.HasPrecision(Precision, Scale);
+        // Applies configurations
+        private void ConfigureUserIdentityRelations(ModelBuilder builder)
+             => builder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
 
-			base.OnModelCreating(builder);
-		}
+        private void ApplyAuditInfoRules()
+        {
+            var changedEntries = this.ChangeTracker
+                .Entries()
+                .Where(e => e.Entity is IAuditInfo)
+                .Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
 
-		private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
-		 where T : class, IDeletableEntity
-		{
-			builder.Entity<T>().HasQueryFilter(e => !e.IsDeleted);
-		}
-
-		// Applies configurations
-		private void ConfigureUserIdentityRelations(ModelBuilder builder)
-			 => builder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
-
-		private void ApplyAuditInfoRules()
-		{
-			var changedEntries = this.ChangeTracker
-				.Entries()
-				.Where(e => e.Entity is IAuditInfo)
-				.Where(e => e.State == EntityState.Added || e.State == EntityState.Modified);
-
-			foreach (var entry in changedEntries)
-			{
-				var entity = (IAuditInfo)entry.Entity;
-				if (entry.State == EntityState.Added && entity.CreatedOn == default)
-				{
-					entity.CreatedOn = DateTime.UtcNow;
-				}
-				else
-				{
-					entity.ModifiedOn = DateTime.UtcNow;
-				}
-			}
-		}
-	}
+            foreach (var entry in changedEntries)
+            {
+                var entity = (IAuditInfo)entry.Entity;
+                if (entry.State == EntityState.Added && entity.CreatedOn == default)
+                {
+                    entity.CreatedOn = DateTime.UtcNow;
+                }
+                else
+                {
+                    entity.ModifiedOn = DateTime.UtcNow;
+                }
+            }
+        }
+    }
 }

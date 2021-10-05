@@ -9,7 +9,7 @@
     {
         public Employee()
         {
-            this.StudentCourses = new HashSet<StudentCourse>();
+            this.StudentCourses = new HashSet<EmployeeCourse>();
             this.Grades = new HashSet<Grade>();
             this.Invoices = new HashSet<Invoice>();
         }
@@ -19,7 +19,7 @@
 
         public ICollection<CoachEmployee> Coaches { get; set; }
 
-        public ICollection<StudentCourse> StudentCourses { get; set; }
+        public ICollection<EmployeeCourse> StudentCourses { get; set; }
 
         public ICollection<Grade> Grades { get; set; }
 

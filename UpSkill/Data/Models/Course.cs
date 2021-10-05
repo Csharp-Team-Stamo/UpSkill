@@ -11,7 +11,7 @@
     {
         public Course()
         {
-            this.StudentCourses = new HashSet<StudentCourse>();
+            this.StudentCourses = new HashSet<EmployeeCourse>();
         }
 
         [Required]
@@ -37,6 +37,6 @@
 
         public ICollection<CourseVote> Votes { get; set; }
 
-        public ICollection<StudentCourse> StudentCourses { get; set; }
+        public ICollection<EmployeeCourse> StudentCourses { get; set; }
     }
 }
