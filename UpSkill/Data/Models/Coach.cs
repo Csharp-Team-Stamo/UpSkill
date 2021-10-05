@@ -9,14 +9,6 @@
 
     public class Coach : BaseDeletableModel<string>
     {
-        public Coach()
-        {
-            this.Courses = new HashSet<Course>();
-            this.LiveSessions = new HashSet<LiveSession>();
-            this.SessionSlots = new HashSet<SessionSlot>();
-            this.Invoices = new HashSet<Invoice>();
-        }
-
         public string UserId { get; init; }
         public ApplicationUser User { get; init; }
 
@@ -26,18 +18,18 @@
         [Required]
         public decimal PricePerSession { get; set; }
 
-        public ICollection<CoachOwner> Owners { get; set; }
+        public ICollection<CoachOwner> Owners { get; set; } = new HashSet<CoachOwner>();
 
-        public ICollection<CoachEmployee> Students { get; set; }
+        public ICollection<CoachEmployee> Students { get; set; } = new HashSet<CoachEmployee>();
 
-        public ICollection<CoachVote> Votes { get; set; }
+        public ICollection<CoachVote> Votes { get; set; } = new HashSet<CoachVote>();
 
-        public ICollection<Course> Courses { get; set; }
+        public ICollection<Course> Courses { get; set; } = new HashSet<Course>();
 
-        public ICollection<LiveSession> LiveSessions { get; set; }
+        public ICollection<LiveSession> LiveSessions { get; set; } = new HashSet<LiveSession>();
 
-        public ICollection<SessionSlot> SessionSlots { get; set; }
+        public ICollection<SessionSlot> SessionSlots { get; set; } = new HashSet<SessionSlot>();
 
-        public ICollection<Invoice> Invoices { get; set; }
+        public ICollection<Invoice> Invoices { get; set; } = new HashSet<Invoice>();
     }
 }

@@ -9,11 +9,6 @@
 
     public class Course : BaseDeletableModel<int>
     {
-        public Course()
-        {
-            this.StudentCourses = new HashSet<EmployeeCourse>();
-        }
-
         [Required]
         public string Name { get; set; }
 
@@ -33,10 +28,10 @@
         public string CoachId { get; set; }
         public Coach Coach { get; set; }
 
-        public ICollection<CourseOwner> Owners { get; set; }
+        public ICollection<CourseOwner> Owners { get; set; } = new HashSet<CourseOwner>();
 
-        public ICollection<CourseVote> Votes { get; set; }
+        public ICollection<CourseVote> Votes { get; set; } = new HashSet<CourseVote>();
 
-        public ICollection<EmployeeCourse> StudentCourses { get; set; }
+        public ICollection<EmployeeCourse> Students { get; set; } = new HashSet<EmployeeCourse>();
     }
 }

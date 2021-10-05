@@ -7,22 +7,15 @@
 
     public class Employee : BaseDeletableModel<string>
     {
-        public Employee()
-        {
-            this.StudentCourses = new HashSet<EmployeeCourse>();
-            this.Grades = new HashSet<Grade>();
-            this.Invoices = new HashSet<Invoice>();
-        }
-
         public string UserId { get; init; }
         public ApplicationUser User { get; init; }
 
-        public ICollection<CoachEmployee> Coaches { get; set; }
+        public ICollection<CoachEmployee> Coaches { get; set; } = new HashSet<CoachEmployee>();
 
-        public ICollection<EmployeeCourse> StudentCourses { get; set; }
+        public ICollection<EmployeeCourse> Students { get; set; } = new HashSet<EmployeeCourse>();
 
-        public ICollection<Grade> Grades { get; set; }
+        public ICollection<Grade> Grades { get; set; } = new HashSet<Grade>();
 
-        public ICollection<Invoice> Invoices { get; set; }
+        public ICollection<Invoice> Invoices { get; set; } = new HashSet<Invoice>();
     }
 }

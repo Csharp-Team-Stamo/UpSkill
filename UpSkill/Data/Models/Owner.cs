@@ -7,18 +7,13 @@
 
     public class Owner : BaseDeletableModel<string>
     {
-        public Owner()
-        {
-            this.Employees = new HashSet<Employee>();
-        }
-
         public string UserId { get; init; }
         public ApplicationUser User { get; init; }
 
-        public ICollection<Employee> Employees { get; set; }
+        public ICollection<Employee> Employees { get; set; } = new HashSet<Employee>();
 
-        public ICollection<CoachOwner> Coaches { get; set; }
+        public ICollection<CoachOwner> Coaches { get; set; } = new HashSet<CoachOwner>();
 
-        public ICollection<CourseOwner> Courses { get; set; }
+        public ICollection<CourseOwner> Courses { get; set; } = new HashSet<CourseOwner>();
     }
 }
