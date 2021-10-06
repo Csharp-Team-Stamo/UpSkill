@@ -8,7 +8,9 @@
     using System.Threading.Tasks;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
+    using UpSkill.Infrastructure.Common;
     using UpSkill.Services.Data.Contracts;
+   
 
     public class AccountsService : IAccountsService
     {
@@ -60,7 +62,7 @@
             }
 
             var claims = new List<Claim>();
-            var claimRole = new Claim(ClaimTypes.Role, "");
+            var claimRole = new Claim(ClaimTypes.Role, GlobalConstants.BusinessOwnerRoleName);
             claims.Add(claimRole);
 
             // TODO Add Company Claim ?
