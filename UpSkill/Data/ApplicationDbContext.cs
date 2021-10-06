@@ -12,6 +12,7 @@
     using Microsoft.EntityFrameworkCore;
 
     using Common.Models;
+    using Microsoft.Extensions.Configuration;
     using Models;
 
     using static UpSkill.Data.DataConstants.PriceContants;
@@ -72,13 +73,18 @@
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    if (!optionsBuilder.IsConfigured)
-        //    {
-        //        optionsBuilder.UseSqlServer("Server=.;Database=UpSkillTestDB;Trusted_Connection=True;Integrated Security=True;");
-        //    }
-        //}
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                    .AddJsonFile("appsettings.Development.json")
+                    .Build();
+
+                optionsBuilder.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
