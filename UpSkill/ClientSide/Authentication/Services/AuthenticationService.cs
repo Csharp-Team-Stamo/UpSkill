@@ -47,10 +47,12 @@
                 return authResponse;
             }
 
-            await StoreLocally("authToken", authResponse.Token); 
-            
-            NotifyOfAuthentication(userData.Email);
+            //await StoreLocally("authToken", authResponse.Token);
+            await localStorage.SetItemAsync("authToken", authResponse.Token);
 
+            ((UpSkillAuthStateProvider)authStateProvider).NotifyUserAuthentication(authResponse.Token);
+
+            //NotifyOfAuthentication(userData.Email);
             SetAuthenticationHeaderForClient("bearer", authResponse.Token);
             
             return new AuthenticationResponseDto { AuthIsSuccessful = true };

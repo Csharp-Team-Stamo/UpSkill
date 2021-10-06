@@ -1,7 +1,10 @@
 ﻿namespace UpSkill.Services.Data
 {
     using Microsoft.AspNetCore.Identity;
+
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
@@ -40,7 +43,6 @@
                 await this.companyRepo.SaveChangesAsync();
             }
 
-
             var user = new ApplicationUser
             {
                 Email = email,
@@ -49,7 +51,22 @@
                 Company = company,
             };
 
-            return await this.userManager.CreateAsync(user, password);
+            var result = await this.userManager.CreateAsync(user, password);
+
+            if (!result.Succeeded)
+            {
+                var errors = result.Errors.Select(e => e.Description);
+                return result;
+            }
+
+            var claims = new List<Claim>();
+            var claimRole = new Claim(ClaimTypes.Role, "");
+            claims.Add(claimRole);
+
+            // TODO Add Company Claim ?
+
+            await this.userManager.AddClaimsAsync(user, claims);
+            return result;
         }
     }
 }

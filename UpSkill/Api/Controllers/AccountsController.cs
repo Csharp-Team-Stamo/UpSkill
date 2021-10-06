@@ -7,6 +7,7 @@ namespace UpSkill.Api.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
+
     using System;
     using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
@@ -14,6 +15,7 @@ namespace UpSkill.Api.Controllers
     using System.Security.Claims;
     using System.Text;
     using System.Threading.Tasks;
+
     using UpSkill.Data.Models;
     using UpSkill.Infrastructure.Models.Account;
     using UpSkill.Services.Data.Contracts;
@@ -22,14 +24,10 @@ namespace UpSkill.Api.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        private readonly string unauthorizedErrorMessage = "Either you Email, or your Password were not correct.";
         private readonly IAccountsService accountService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IConfigurationSection jwtSettings;
-
-        public AccountsController(
-            IAccountsService accountService,
-            UserManager<ApplicationUser> userManager,
+        public AccountsController(IAccountsService accountService, UserManager<ApplicationUser> userManager,
             IConfiguration configuration)
         {
 
@@ -51,7 +49,6 @@ namespace UpSkill.Api.Controllers
                 return BadRequest("This email is already taken!");
             }
 
-
             var result = await this.accountService.Register(input.FullName, input.Email, input.Password, input.CompanyName);
 
             if (!result.Succeeded)
@@ -66,7 +63,7 @@ namespace UpSkill.Api.Controllers
         [HttpPost("Login")]
         //[AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Login(
-            [FromBody] UserAuthenticationDto userData)
+        [FromBody] UserAuthenticationDto userData)
         {
             var user = await this.userManager
                 .FindByEmailAsync(userData.Email);
@@ -77,7 +74,7 @@ namespace UpSkill.Api.Controllers
             {
                 var unauthorizedResponse = new AuthenticationResponseDto
                 {
-                    ErrorMessage = this.unauthorizedErrorMessage
+                    ErrorMessage = "unauthorizedErrorMessage"
                 };
 
                 return Unauthorized(unauthorizedResponse);
@@ -111,15 +108,17 @@ namespace UpSkill.Api.Controllers
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
 
-        private List<Claim> GetClaims(IdentityUser user)
-            => new()
-            {
-                new Claim(ClaimTypes.Name, user.Email)
-            };
+        private IList<Claim> GetClaims(ApplicationUser user)
+        {
+            //TODO --- NO IDEA!!!
+            var claims = this.userManager.GetClaimsAsync(user);
+            var claimsAsList = new List<Claim>(claims.Result);
+            return claimsAsList;
+        }
 
         private JwtSecurityToken GenerateTokenOptions(
             SigningCredentials signingCredentials,
-            List<Claim> claims)
+            IList<Claim> claims)
             => new JwtSecurityToken(
                 issuer: this.jwtSettings["validIssuer"],
                 audience: this.jwtSettings["validAudience"],
@@ -128,4 +127,6 @@ namespace UpSkill.Api.Controllers
                 signingCredentials: signingCredentials);
 
     }
+
 }
+
