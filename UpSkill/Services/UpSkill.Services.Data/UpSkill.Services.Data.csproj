@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Data\UpSkill.Data.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\UpSkill.Infrastructure.Common\UpSkill.Infrastructure.Common.csproj" />
   </ItemGroup>
 
 </Project>
