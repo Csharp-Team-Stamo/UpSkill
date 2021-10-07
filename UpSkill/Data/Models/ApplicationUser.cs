@@ -1,7 +1,8 @@
 ﻿namespace UpSkill.Data.Models
 {
 	using System;
-	using System.ComponentModel.DataAnnotations;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
 
 	using Microsoft.AspNetCore.Identity;
 
@@ -27,11 +28,11 @@
 
 		public DateTime? DeletedOn { get; set; }
 
-		// Can be used at a later time:
-		//public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
+        // Can be used at a later time:
+        //public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 
-		//public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
+        public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; } = new HashSet<IdentityUserClaim<string>>();
 
-		//public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
-	}
+        //public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+    }
 }
