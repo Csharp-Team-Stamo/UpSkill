@@ -1,6 +1,7 @@
-namespace UpSkill.Api
+﻿namespace UpSkill.Api
 {
-	using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using System.Text;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
 	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
@@ -9,7 +10,8 @@ namespace UpSkill.Api
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.Hosting;
 	using Microsoft.Identity.Web;
-	using Microsoft.OpenApi.Models;
+    using Microsoft.IdentityModel.Tokens;
+    using Microsoft.OpenApi.Models;
 	using UpSkill.Data;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
@@ -29,9 +31,12 @@ namespace UpSkill.Api
 		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+
+
+            services
 				.AddDbContext<ApplicationDbContext>(options => options
-				.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+				.UseSqlServer(connectionString));
 
 			services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 			{
@@ -48,17 +53,55 @@ namespace UpSkill.Api
 			})
 				.AddEntityFrameworkStores<ApplicationDbContext>();
 
-			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-				.AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
+            var jwtSettings = Configuration.GetSection("JWTSettings");
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
 
-			services.AddControllers();
-			services.AddSwaggerGen(c =>
+                    ValidIssuer = jwtSettings["validIssuer"],
+                    ValidAudience = jwtSettings["validAudience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["securityKey"]))
+                };
+            });
+
+
+            //        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //.AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
+
+            services.AddControllers();
+
+            services.AddCors(policy =>
+            {
+                policy.AddPolicy("CorsPolicy", opt => opt
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            });
+
+            services.AddSwaggerGen(c =>
 			{
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "UpSkillApi", Version = "v1" });
 			});
 
-			// Data repositories
-			services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
+            services.AddCors(policy =>
+            {
+                policy.AddPolicy("CorsPolicy", opt => opt
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            });
+
+            // Data repositories
+            services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
 			services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 			services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
@@ -78,8 +121,8 @@ namespace UpSkill.Api
 			}
 
 			app.UseHttpsRedirection();
-
-			app.UseRouting();
+            app.UseCors("CorsPolicy");
+            app.UseRouting();
 
 			app.UseAuthentication();
 			app.UseAuthorization();

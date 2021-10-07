@@ -4,8 +4,10 @@ namespace UpSkill.Infrastructure.Models.Account
 {
     public class UserRegistrationDto
     {
+        [Required(ErrorMessage = "Full name is required.")]
         public string FullName { get; set; }
 
+        [Required(ErrorMessage = "Company name is required.")]
         public string CompanyName { get; set; }
 
         [Required(ErrorMessage = "Email is required.")]

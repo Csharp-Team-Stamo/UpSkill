@@ -1,4 +1,9 @@
-﻿@page "/counter"
+﻿@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Administrator")]
+
+@*TODO ADD POLICIES*@
+
+@page "/counter"
 
 <h1>Counter</h1>
 

@@ -1,8 +1,8 @@
-namespace UpSkill.Data.Models
+namespace Data.Models
 {
     using UpSkill.Data.Common.Models;
 
-    public class InvoiceStatus : BaseDeletableModel<int>
+    public class Language : BaseDeletableModel<int>
     {
         public string Name { get; init; }
     }

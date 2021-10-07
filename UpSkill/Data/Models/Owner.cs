@@ -1,19 +1,19 @@
 ﻿namespace UpSkill.Data.Models
 {
-	using System.Collections.Generic;
+    using System.Collections.Generic;
 
-	using UpSkill.Data.Common.Models;
+    using global::Data.Models;
+    using UpSkill.Data.Common.Models;
 
-	public class Owner : BaseModel<string>
-	{
-		public Owner()
-		{
-			this.Employees = new HashSet<Employee>();
-		}
+    public class Owner : BaseDeletableModel<string>
+    {
+        public string UserId { get; init; }
+        public ApplicationUser User { get; init; }
 
-		public string UserId { get; init; }
-		public ApplicationUser User { get; init; }
+        public ICollection<Employee> Employees { get; set; } = new HashSet<Employee>();
 
-		public ICollection<Employee> Employees { get; set; }
-	}
+        public ICollection<CoachOwner> Coaches { get; set; } = new HashSet<CoachOwner>();
+
+        public ICollection<CourseOwner> Courses { get; set; } = new HashSet<CourseOwner>();
+    }
 }
