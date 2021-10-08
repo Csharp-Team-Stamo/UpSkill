@@ -112,7 +112,12 @@ namespace UpSkill.Api.Controllers
         {
             //TODO --- NO IDEA!!!
             var claims = this.userManager.GetClaimsAsync(user);
+           
             var claimsAsList = new List<Claim>(claims.Result);
+
+            //var userNameClaim = new Claim(ClaimTypes.Name, user.FullName);
+            //var userEmailClaim = new Claim(ClaimTypes.Email, user.Email);
+
             return claimsAsList;
         }
 

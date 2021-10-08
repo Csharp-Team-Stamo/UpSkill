@@ -7,18 +7,27 @@
     </div>
 
     <div class="main">
-
         <div class="top-row px-4 auth">
-            <div class="">
-                <NavLink>Courses</NavLink>
-            </div>
-            <div class="">
-                <NavLink>Coaches</NavLink>
-            </div>
-            <NavLink>
-                <Avatar></Avatar>
-            </NavLink>
+                <NavLink>
+                    <LoginDisplay></LoginDisplay>
+                </NavLink>
+            <AuthorizeView>
+                <div class="">
+                    <NavLink>
+                        Courses
+                    </NavLink>
+                </div>
+                <div class="">
+                    <NavLink>
+                        Coaches
+                    </NavLink>
+                </div>
+                <NavLink>
+                    <Avatar></Avatar>
+                </NavLink>
+            </AuthorizeView>
         </div>
+
 
         <div class="content px-4">
             @Body
