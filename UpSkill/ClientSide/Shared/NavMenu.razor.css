@@ -27,10 +27,17 @@ a > div {
     color: #E84855;
 }
 
-a > div:hover {
-    color: white;
-    cursor: pointer;
+    a > div:hover {
+        color: white;
+        cursor: pointer;
+    }
+
+div > div {
+    font-size: 16px;
+    font-family: Montserrat-Medium;
+    font-weight: 500;
 }
+
 
 .nav-item {
     font-size: 0.9rem;
