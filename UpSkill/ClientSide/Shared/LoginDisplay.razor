@@ -7,10 +7,10 @@
 @inject SignOutSessionStateManager SignOutManager
 
 <AuthorizeView>
-    <Authorized>
+    @*<Authorized>
         Hello, @context.User.Identity.Name!
         <button class="nav-link btn btn-link" @onclick="AuthenticationService.Logout">Log out</button>
-    </Authorized>
+    </Authorized>*@
     <NotAuthorized>
         <a href="Registration">Register</a>
         <a href="Login">Log in</a>

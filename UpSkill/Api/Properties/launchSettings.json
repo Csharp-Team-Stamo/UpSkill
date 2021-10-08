@@ -1,22 +1,5 @@
 {
-  //"iisSettings": {
-  //  "windowsAuthentication": false,
-  //  "anonymousAuthentication": true,
-  //  "iisExpress": {
-  //    "applicationUrl": "http://localhost:55394",
-  //    "sslPort": 44383
-  //  }
-  //},
-  //"$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    //"IIS Express": {
-    //  "commandName": "IISExpress",
-    //  "launchBrowser": true,
-    //  "launchUrl": "swagger",
-    //  "environmentVariables": {
-    //    "ASPNETCORE_ENVIRONMENT": "Development"
-    //  }
-    //},
     "UpSkillApi": {
       "commandName": "Project",
       "launchBrowser": true,

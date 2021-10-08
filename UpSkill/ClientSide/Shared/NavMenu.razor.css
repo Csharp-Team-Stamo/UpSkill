@@ -1,11 +1,15 @@
 .navbar-toggler {
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: #296CFB;
+    border-color: black;
+    border: 2px;
 }
 
 .top-row {
     height: 3.5rem;
     background-color: white;
+    box-shadow: 0px 3px 6px #00000029;
 }
+
 
 .navbar-brand {
     font-size: 1.1rem;
@@ -19,10 +23,20 @@
     top: -2px;
 }
 
+a > div {
+    color: #E84855;
+}
+
+a > div:hover {
+    color: white;
+    cursor: pointer;
+}
 
 .nav-item {
     font-size: 0.9rem;
     padding-bottom: 0.5rem;
+    border-bottom: 1px solid;
+    border-bottom-color: darkgray;
 }
 
     .nav-item:first-of-type {
@@ -47,15 +61,31 @@
 
         .nav-item ::deep a.active {
             background-color: none;
-            font-family: ;
+            font-family: Montserrat-Medium;
             font-weight: bold;
             color: #296CFB;
         }
 
-.nav-item ::deep a:hover {
-    background-color: rgba(255,255,255,0.1);
+        .nav-item ::deep a:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+div i {
+    text-align: center;
+    border-radius: 50%;
+    background-color: #16D696;
     color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 3px;
+    height: 50px;
+    width: 50px;
+    font-style: normal;
+    vertical-align: middle;
+    display: inline-block;
 }
+
 
 @media (min-width: 641px) {
     .navbar-toggler {
@@ -66,22 +96,4 @@
         /* Never collapse the sidebar for wide screens */
         display: block;
     }
-
-
-
-    div i {
-        text-align: center;
-        border-radius: 50%;
-        background-color: #16D696;
-        color: white;
-        font-size: 1rem;
-        font-weight: bold;
-        padding: 3px;
-        height: 50px;
-        width: 50px;
-        font-style: normal;
-        vertical-align:middle;
-        display: inline-block;
-    }
-
 }
