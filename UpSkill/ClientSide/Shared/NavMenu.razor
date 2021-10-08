@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using UpSkill.ClientSide.Authentication.Services.Contracts
-
+@using UpSkill.ClientSide.Controls
 
 @inject IAuthenticationService AuthenticationService
 
@@ -19,9 +19,7 @@
     <ul class="nav flex-column">
         <li class="nav-item px-3">
                 <div class="d-inline-flex p-3 align-content-center">
-                    <div class="">
-                        <i class="my-2">C</i>
-                    </div>
+                    <Avatar></Avatar>
                     <div class="ml-2">
                         <div class=" mt-1 pb-1">
                             Christo Peev
@@ -34,8 +32,8 @@
             </li>
 
         <li class="nav-item px-3">
-            <NavLink class="nav-link" href="Overview">
-                General Information
+            <NavLink class="nav-link" href="Dashboard">
+                Dashboard
             </NavLink>
         </li>
 
@@ -78,6 +76,8 @@
 </div>
 
 @code {
+
+
     private bool collapseNavMenu = true;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
