@@ -1,5 +1,12 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
+@font-face {
+    font-family: 'Montserrat', sans-serif;
+    src: url('open-iconic/font/fonts/montserrat-v18-latin-regular.woff');
+    src: url('open-iconic/font/fonts/Montserrat-Medium.ttf');
+    src: url('open-iconic/font/fonts/Montserrat-Bold.ttf');
+}
+
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -48,3 +55,8 @@ a, .btn-link {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+
+.logout-button:hover {
+    cursor: pointer;
+}

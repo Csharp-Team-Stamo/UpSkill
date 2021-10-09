@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using UpSkill.ClientSide.Controls
+@inherits LayoutComponentBase
 
 <div class="page">
     <div class="sidebar">
@@ -6,11 +7,27 @@
     </div>
 
     <div class="main">
-
         <div class="top-row px-4 auth">
-            <LoginDisplay />
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+                <NavLink>
+                    <LoginDisplay></LoginDisplay>
+                </NavLink>
+            <AuthorizeView>
+                <div class="">
+                    <NavLink>
+                        Courses
+                    </NavLink>
+                </div>
+                <div class="">
+                    <NavLink>
+                        Coaches
+                    </NavLink>
+                </div>
+                <NavLink>
+                    <Avatar></Avatar>
+                </NavLink>
+            </AuthorizeView>
         </div>
+
 
         <div class="content px-4">
             @Body
