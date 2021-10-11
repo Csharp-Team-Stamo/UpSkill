@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <Content Include="Controls\Avatar.razor.css" />
-    <Content Include="Controls\CoachCardComponent.razor.css" />
+    <Content Include="Controls\CoachCard.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
