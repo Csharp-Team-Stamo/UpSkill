@@ -1,0 +1,19 @@
+﻿
+
+.stats {
+    box-shadow: 0px 3px 10px #00000029;
+    font-size: 1em;
+    font-family: Montserrat, sans-serif;
+}
+.value {
+    font-size: 2em;
+    font-weight: 700;
+}
+
+.coaches {
+    color: #16D696;
+}
+
+.courses {
+    color: #296CFB;
+}

@@ -9,10 +9,12 @@
 
   <ItemGroup>
     <None Remove="Controls\Avatar.razor.css" />
+    <None Remove="Controls\OwnerDashboardStatistics.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Controls\Avatar.razor.css" />
+    <Content Include="Controls\OwnerDashboardStatistics.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
