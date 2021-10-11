@@ -8,10 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Controls\Avatar.razor.css" />
     <None Remove="Controls\CoachCardComponent.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Controls\Avatar.razor.css" />
     <Content Include="Controls\CoachCardComponent.razor.css" />
   </ItemGroup>
 

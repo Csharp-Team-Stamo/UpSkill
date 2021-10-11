@@ -1,76 +1,47 @@
-﻿.coach-card {
-    width: 450px;
-    height: 450px;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    box-shadow: 0px 3px 10px #00000029;
-    opacity: 1;
+﻿.coach-company-logo {
+    max-width: 80%;
+    max-height: 80%;
 }
 
-.coach-img {
-    width: 409px;
-    height: 284px;
-    background: transparent url('img/Mask Group 2.png') 0% 0% no-repeat padding-box;
-    opacity: 1;
-}
-
-.coach-title {
-    width: 134px;
-    height: 22px;
-    text-align: center;
-    font: normal normal bold 18px/22px Montserrat;
-    letter-spacing: 0.9px;
+.coach-profession {
+    font: normal bold 95% Montserrat;
+    letter-spacing: 0.7px;
     color: #000000;
-    opacity: 1;
-}
-
-.coach-price {
-    width: 154px;
-    height: 22px;
-    text-align: center;
-    font: normal normal medium 18px/22px Montserrat;
-    letter-spacing: 0.9px;
-    color: #296CFB;
     opacity: 1;
 }
 
 .coach-name {
-    top: 1001px;
-    left: 405px;
-    width: 150px;
-    height: 22px;
-    text-align: center;
-    font: normal normal medium 18px/22px Montserrat;
-    letter-spacing: 0.9px;
+    font: 95% Montserrat;
+    letter-spacing: 0.7px;
     color: #000000;
     opacity: 1;
 }
 
-.coach-comp-logo {
-    top: 1025px;
-    left: 504px;
-    width: 51px;
-    height: 29px;
-    background: transparent url('img/Image 2.png') 0% 0% no-repeat padding-box;
+.coah-price {
+    font: 87% Montserrat;
+    letter-spacing: 0.7px;
+    color: #296CFB;
     opacity: 1;
 }
 
 .coach-btn {
-    top: 1077px;
-    left: 300px;
-    width: 150px;
-    height: 50px;
     background: #296CFB 0% 0% no-repeat padding-box;
     opacity: 1;
 }
 
-.btn-text {
-    top: 1661px;
-    left: 910px;
-    width: 100px;
-    height: 27px;
-    text-align: left;
-    font: normal normal bold 22px/27px Montserrat;
+.coach-btn-text {
+    font: 95% Montserrat;
     letter-spacing: 1.1px;
     color: #FFFFFF;
+    opacity: 1;
+}
+
+.coach-card {
+    box-shadow: 0px 3px 10px #00000029;
+}
+
+.img-background {
+    height: 90%;
+    background: #1CC18A 0% 0% no-repeat padding-box;
     opacity: 1;
 }
