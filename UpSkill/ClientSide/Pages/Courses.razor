@@ -1,6 +1,15 @@
 ﻿@page "/Courses"
+@using UpSkill.ClientSide.Controls
 
 <h3>Courses</h3>
+
+
+<div class="row">
+    @for (int i = 1; i < 10; i++)
+    {
+        <CourseCardComponent></CourseCardComponent>
+    }
+</div>
 
 @code {
 
