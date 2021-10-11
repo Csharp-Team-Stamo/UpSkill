@@ -1,4 +1,4 @@
- /* Specicifity issues  */
+﻿ /* Specicifity issues  */
 
  article.card {
      font: normal normal medium 18px/22px Montserrat;
@@ -12,6 +12,7 @@
  }
 
  p.resource-price {
+     color: var(--color-blue-primary);
  }
 
  img.resource-image {
@@ -19,4 +20,5 @@
  }
 
  button.btn.remove {
+     font-size: 1.3em;
  }
