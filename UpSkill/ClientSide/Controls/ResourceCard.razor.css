@@ -1,14 +1,21 @@
 ﻿ /* Specicifity issues  */
 
  article.card {
-     font: normal normal medium 18px/22px Montserrat;
+     font: normal normal medium 1.5em/2em Montserrat;
      text-align: center;
      letter-spacing: 0.9px;
-     color: #000000;
  }
 
  p.resource-name {
-     /* font-weight: bold; */
+     font-weight: bold;
+ }
+
+ p.resource-title {
+     color: var(--color-white-primary);
+     font-weight: bold;
+     font-size: 3em;
+     /* font-weight: 300;*/
+     line-height: 1.2;
  }
 
  p.resource-price {
@@ -20,5 +27,9 @@
  }
 
  button.btn.remove {
+     color: var(--color-white-primary);
+     background-color: var(--color-blue-primary);
+     border-radius: 0;
      font-size: 1.3em;
+     font-weight: bold;
  }
