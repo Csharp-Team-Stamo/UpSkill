@@ -33,7 +33,7 @@ a > div {
 
 div > div {
     font-size: 16px;
-    font-family: Montserrat-Medium;
+    font-family: Montserrat;
     font-weight: 500;
 }
 
@@ -55,7 +55,7 @@ div > div {
     .nav-item ::deep a {
         color: #000;
         font-size: 16px;
-        font-family: Montserrat-Medium;
+        font-family: Montserrat;
         font-weight: 500;
         border-radius: 4px;
         height: 2rem;
@@ -66,8 +66,8 @@ div > div {
 
         .nav-item ::deep a.active {
             background-color: none;
-            font-family: Montserrat-Medium;
-            font-weight: bold;
+            font-family: Montserrat;
+            font-weight: 500;
             color: #296CFB;
         }
 
