@@ -1,0 +1,11 @@
+﻿@page "/welcomePage"
+@inject NavigationManager NavigationManager
+<h3>WelcomePage</h3>
+
+@code {
+    protected override void OnInitialized()
+    {
+        NavigationManager.NavigateTo("/login");
+    }
+
+}

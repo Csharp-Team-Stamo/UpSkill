@@ -1,36 +1,50 @@
 ﻿@using UpSkill.ClientSide.Controls
+@using UpSkill.ClientSide.Pages
 @inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<AuthorizeView>
+    <NotAuthorized>
+        <div>
+            <WelcomePage></WelcomePage>
+            <div>
+                @Body
+            </div>
+        </div>
+    </NotAuthorized>
+    
+    <Authorized>
+        <div class="page">
+            <div class="sidebar">
+                <NavMenu/>
+            </div>
 
-    <div class="main">
-        <div class="top-row px-4 auth">
-                <NavLink>
-                    <LoginDisplay></LoginDisplay>
-                </NavLink>
-            <AuthorizeView>
-                <div class="">
+            <div class="main">
+                <div class="top-row px-4 auth">
                     <NavLink>
-                        Courses
+                        <LoginDisplay></LoginDisplay>
+                    </NavLink>
+                    <div class="">
+                        <NavLink>
+                            Courses
+                        </NavLink>
+                    </div>
+                    <div class="">
+                        <NavLink href="Coaches">
+                            Coaches
+                        </NavLink>
+                    </div>
+                    <NavLink>
+                        <Avatar></Avatar>
                     </NavLink>
                 </div>
-                <div class="">
-                    <NavLink href="Coaches">
-                        Coaches
-                    </NavLink>
+
+
+                <div class="content px-4">
+                    @Body
                 </div>
-                <NavLink>
-                    <Avatar></Avatar>
-                </NavLink>
-            </AuthorizeView>
+            </div>
         </div>
 
+    </Authorized>
 
-        <div class="content px-4">
-            @Body
-        </div>
-    </div>
-</div>
+</AuthorizeView>
