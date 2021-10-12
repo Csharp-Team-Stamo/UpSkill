@@ -6,23 +6,37 @@
      letter-spacing: 0.9px;
  }
 
- p.resource-name {
-     font-weight: bold;
- }
-
  p.resource-title {
      color: var(--color-white-primary);
-     font-weight: bold;
-     font-size: 3em;
-     /* font-weight: 300;*/
+     /* font: normal normal 800 40px/152px Montserrat; */
+     font: normal normal 800 3em/9.5em Montserrat;
      line-height: 1.2;
+     letter-spacing: 0px;
+     text-align: right;
  }
 
- p.resource-price {
+ span.resource {
+     vertical-align: bottom;
+ }
+
+ span.resource>p.resource-name {
+     font-weight: bold;
+     margin-bottom: 0;
+ }
+
+ span.resource>p.resource-price {
      color: var(--color-blue-primary);
  }
 
- img.resource-image {
+ span.author {
+     vertical-align: top;
+ }
+
+ span.author>p.resource-author {
+     margin-bottom: 0;
+ }
+
+ span.author>img.resource-image {
      filter: brightness(70%);
  }
 
@@ -30,6 +44,7 @@
      color: var(--color-white-primary);
      background-color: var(--color-blue-primary);
      border-radius: 0;
-     font-size: 1.3em;
-     font-weight: bold;
+     text-align: left;
+     font: normal normal bold 22px/27px Montserrat;
+     letter-spacing: 1.1px;
  }
