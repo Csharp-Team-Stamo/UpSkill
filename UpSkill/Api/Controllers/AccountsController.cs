@@ -37,7 +37,7 @@ namespace UpSkill.Api.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationDto input)
+        public async Task<IActionResult> Register([FromBody] UserRegistrationDto input)
         {
             if (input == null || !ModelState.IsValid)
             {
