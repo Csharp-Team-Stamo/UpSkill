@@ -1,0 +1,47 @@
+﻿.coach-company-logo {
+    max-width: 80%;
+    max-height: 80%;
+}
+
+.coach-profession {
+    font: normal bold 95% Montserrat;
+    letter-spacing: 0.7px;
+    color: #000000;
+    opacity: 1;
+}
+
+.coach-name {
+    font: 95% Montserrat;
+    letter-spacing: 0.7px;
+    color: #000000;
+    opacity: 1;
+}
+
+.coah-price {
+    font: 87% Montserrat;
+    letter-spacing: 0.7px;
+    color: #296CFB;
+    opacity: 1;
+}
+
+.coach-btn {
+    background: #296CFB 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.coach-btn-text {
+    font: 95% Montserrat;
+    letter-spacing: 1.1px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.custom-coach-card {
+    box-shadow: 0px 3px 10px #00000029;
+}
+
+.img-background {
+    height: 90%;
+    background: #1CC18A 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
