@@ -1,19 +1,14 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
-@font-face {
-    font-family: 'Montserrat', sans-serif;
-    src: url('open-iconic/font/fonts/montserrat-v18-latin-regular.woff');
-}
-@font-face{
-    font-family: 'Montserrat-Bold', san-serif;
-    src: url('open-iconic/font/fonts/Montserrat-Bold.woff');
-}
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-html, body {
+html,
+body {
     font-family: Montserrat, sans-serif;
 }
 
-a, .btn-link {
+a,
+.btn-link {
     color: #0366d6;
 }
 
@@ -51,12 +46,12 @@ a, .btn-link {
     z-index: 1000;
 }
 
-    #blazor-error-ui .dismiss {
-        cursor: pointer;
-        position: absolute;
-        right: 0.75rem;
-        top: 0.5rem;
-    }
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
 
 
 .logout-button:hover {
