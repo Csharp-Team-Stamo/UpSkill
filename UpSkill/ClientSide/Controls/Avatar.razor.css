@@ -1,5 +1,6 @@
 ﻿div i {
     text-align: center;
+    font-family:Montserrat,sans-serif;
     border-radius: 50%;
     background-color: #16D696;
     color: white;
@@ -11,7 +12,6 @@
     font-style: normal;
     vertical-align: middle;
     display: inline-block;
-    font-family: Montserrat-Bold;
 }
 
 div {
