@@ -11,7 +11,7 @@
         private UserRegistrationDto userForRegistration = new UserRegistrationDto();
 
         [Inject]
-        public IRegistrationService AuthenticationService { get; set; }
+        public IRegistrationService RegistrationService { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
