@@ -1,9 +1,33 @@
 ﻿@page "/Dashboard"
+@using System.Security.Claims
+
 
 <h3>Dashboard</h3>
 
+<div>@isOwner.ToString()</div>
 <OwnerDashboardStatistics></OwnerDashboardStatistics>
 
 @code {
+
+    [CascadingParameter]
+    public Task<AuthenticationState> authenticationState { get; set; }
+
+    ClaimsPrincipal user;
+
+    [Parameter]
+    public string userName { get; set; }
+
+    bool isOwner;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = (await authenticationState).User;
+
+        if (user.FindFirst(x => x.Value == "Owner") != null)
+        {
+            isOwner = true;
+        }
+
+    }
 
 }
