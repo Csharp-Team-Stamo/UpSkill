@@ -7,7 +7,6 @@ namespace UpSkill.Api.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Configuration;
     using Microsoft.IdentityModel.Tokens;
-
     using System;
     using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
@@ -27,7 +26,9 @@ namespace UpSkill.Api.Controllers
         private readonly IAccountsService accountService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IConfigurationSection jwtSettings;
-        public AccountsController(IAccountsService accountService, UserManager<ApplicationUser> userManager,
+        public AccountsController(
+            IAccountsService accountService, 
+            UserManager<ApplicationUser> userManager,
             IConfiguration configuration)
         {
 
@@ -37,7 +38,7 @@ namespace UpSkill.Api.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody] UserRegistrationDto input)
+        public async Task<IActionResult> Register([FromBody] UserRegisterIM input)
         {
             if (input == null || !ModelState.IsValid)
             {
@@ -49,21 +50,22 @@ namespace UpSkill.Api.Controllers
                 return BadRequest("This email is already taken!");
             }
 
-            var result = await this.accountService.Register(input.FullName, input.Email, input.Password, input.CompanyName);
+            var result = await this.accountService
+                .Register(input.FullName, input.Email, input.Password, input.CompanyName);
 
             if (!result.Succeeded)
             {
                 var errors = result.Errors.Select(e => e.Description);
-                return BadRequest(new RegistrationResponseDto { Errors = errors });
+                return BadRequest(new RegisterResponseModel { Errors = errors });
             }
 
             return StatusCode(201);
         }
 
         [HttpPost("Login")]
-        //[AutoValidateAntiforgeryToken]
+        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Login(
-        [FromBody] UserAuthenticationDto userData)
+        [FromBody] UserLoginIM userData)
         {
             var user = await this.userManager
                 .FindByEmailAsync(userData.Email);
@@ -72,7 +74,7 @@ namespace UpSkill.Api.Controllers
                 !await this.userManager
                            .CheckPasswordAsync(user, userData.Password))
             {
-                var unauthorizedResponse = new AuthenticationResponseDto
+                var unauthorizedResponse = new LoginResponseModel
                 {
                     ErrorMessage = "unauthorizedErrorMessage"
                 };
@@ -82,7 +84,7 @@ namespace UpSkill.Api.Controllers
 
             var userToken = GetToken(user);
 
-            var authenticationResponse = new AuthenticationResponseDto
+            var authenticationResponse = new LoginResponseModel
             {
                 AuthIsSuccessful = true,
                 Token = userToken
@@ -124,7 +126,7 @@ namespace UpSkill.Api.Controllers
         private JwtSecurityToken GenerateTokenOptions(
             SigningCredentials signingCredentials,
             IList<Claim> claims)
-            => new JwtSecurityToken(
+            => new (
                 issuer: this.jwtSettings["validIssuer"],
                 audience: this.jwtSettings["validAudience"],
                 claims: claims,

@@ -2,7 +2,7 @@
 {
 
 using System.Collections.Generic;
-    public class RegistrationResponseDto
+    public class RegisterResponseModel
     {
         public bool IsSuccessfulRegistration { get; set; }
 

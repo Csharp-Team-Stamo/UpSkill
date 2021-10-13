@@ -19,7 +19,7 @@
             options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
-        public async Task<RegistrationResponseDto> RegisterUser(UserRegistrationDto input)
+        public async Task<RegisterResponseModel> RegisterUser(UserRegisterIM input)
         {
             var content = JsonSerializer.Serialize(input);
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
@@ -28,11 +28,11 @@
             if (!registrationResult.IsSuccessStatusCode)
             {
                 var registrationContent = await registrationResult.Content.ReadAsStringAsync();
-                var result = JsonSerializer.Deserialize<RegistrationResponseDto>(registrationContent, options);
+                var result = JsonSerializer.Deserialize<RegisterResponseModel>(registrationContent, options);
                 return result;
             }
 
-            return new RegistrationResponseDto { IsSuccessfulRegistration = true };
+            return new RegisterResponseModel { IsSuccessfulRegistration = true };
         }
     }
 }

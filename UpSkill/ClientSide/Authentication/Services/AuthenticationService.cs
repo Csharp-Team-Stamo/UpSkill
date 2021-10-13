@@ -33,8 +33,8 @@
             this.navigationManager = navigationManager;
         }
 
-        public  async Task<AuthenticationResponseDto> Login(
-            UserAuthenticationDto userData)
+        public  async Task<LoginResponseModel> Login(
+            UserLoginIM userData)
         {
             var bodyContent = GetBodyContent(userData);
 
@@ -55,7 +55,7 @@
             //NotifyOfAuthentication(userData.Email);
             SetAuthenticationHeaderForClient("bearer", authResponse.Token);
             
-            return new AuthenticationResponseDto { AuthIsSuccessful = true };
+            return new LoginResponseModel { AuthIsSuccessful = true };
         }
 
         public async Task Logout()
@@ -69,7 +69,7 @@
             this.navigationManager.NavigateTo("/");
         }
 
-        private async Task<AuthenticationResponseDto> GetDeserializedAuthResult(
+        private async Task<LoginResponseModel> GetDeserializedAuthResult(
             HttpResponseMessage authResult)
         {
             var authContent = await authResult.Content.ReadAsStringAsync();
@@ -77,10 +77,10 @@
             return DeserializeAuthContent(authContent, this.options);
         }
 
-        private AuthenticationResponseDto DeserializeAuthContent(
+        private LoginResponseModel DeserializeAuthContent(
             string authContent, JsonSerializerOptions options)
             => JsonSerializer
-                .Deserialize<AuthenticationResponseDto>(authContent, options);
+                .Deserialize<LoginResponseModel>(authContent, options);
 
         private async Task<HttpResponseMessage> PostToHttpClient(
             string url, StringContent bodyContent)
@@ -98,7 +98,7 @@
             => ((UpSkillAuthStateProvider)this.authStateProvider)
                                               .NotifyUserAuthentication(emailAddress);
 
-        private StringContent GetBodyContent(UserAuthenticationDto userData)
+        private StringContent GetBodyContent(UserLoginIM userData)
         {
             var content = JsonSerializer.Serialize(userData);
             return new StringContent(content, Encoding.UTF8, "application/json");

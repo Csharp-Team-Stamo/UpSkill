@@ -8,7 +8,7 @@
 
     public partial class Registration
     {
-        private UserRegistrationDto userForRegistration = new UserRegistrationDto();
+        private readonly UserRegisterIM registerInput = new ();
 
         [Inject]
         public IRegistrationService RegistrationService { get; set; }
@@ -22,19 +22,17 @@
         {
             ShowRegistrationErrors = false;
 
-            var result = await AuthenticationService.RegisterUser(userForRegistration);
-            if (!result.IsSuccessfulRegistration)
+            var result = await RegistrationService.RegisterUser(registerInput);
+
+            if (result.IsSuccessfulRegistration == false)
             {
                 Errors = result.Errors;
                 ShowRegistrationErrors = true;
             }
             else
             {
-                //TODO Redirect to login page when available
-
-                NavigationManager.NavigateTo("/");
+                NavigationManager.NavigateTo("/login");
             }
         }
-
     }
 }

@@ -7,7 +7,7 @@
 
     public partial class LogIn
     {
-        private readonly UserAuthenticationDto userAuthentication = new ();
+        private readonly UserLoginIM userAuthentication = new ();
 
         [Inject]
         public IAuthenticationService AuthenticationService { get; set; }

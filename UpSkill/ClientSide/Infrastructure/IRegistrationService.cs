@@ -5,6 +5,6 @@ namespace UpSkill.ClientSide.Infrastructure
 {
     public interface IRegistrationService
     {
-        Task<RegistrationResponseDto> RegisterUser(UserRegistrationDto userForRegistration);
+        Task<RegisterResponseModel> RegisterUser(UserRegisterIM registerInput);
     }
 }
