@@ -11,7 +11,7 @@
     using Microsoft.AspNetCore.Components.Authorization;
     using UpSkill.Infrastructure.Models.Account;
 
-    public class AuthenticationService : IAuthenticationService
+    public class AccountService : IAccountService
     {
         private readonly string clientUrl = "accounts/login";
         private readonly HttpClient client;
@@ -20,7 +20,7 @@
         private readonly NavigationManager navigationManager;
         private readonly ILocalStorageService localStorage;
 
-        public AuthenticationService(
+        public AccountService(
             HttpClient client, 
             AuthenticationStateProvider authStateProvider, 
             ILocalStorageService localStorage,
@@ -31,6 +31,22 @@
             this.authStateProvider = authStateProvider;
             this.localStorage = localStorage;
             this.navigationManager = navigationManager;
+        }
+
+        public async Task<RegisterResponseModel> RegisterUser(UserRegisterIM input)
+        {
+            var content = JsonSerializer.Serialize(input);
+            var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+            var registrationResult = await client.PostAsync("accounts/register", bodyContent);
+
+            if (!registrationResult.IsSuccessStatusCode)
+            {
+                var registrationContent = await registrationResult.Content.ReadAsStringAsync();
+                var result = JsonSerializer.Deserialize<RegisterResponseModel>(registrationContent, options);
+                return result;
+            }
+
+            return new RegisterResponseModel { IsSuccessfulRegistration = true };
         }
 
         public  async Task<LoginResponseModel> Login(
@@ -47,12 +63,11 @@
                 return authResponse;
             }
 
-            //await StoreLocally("authToken", authResponse.Token);
-            await localStorage.SetItemAsync("authToken", authResponse.Token);
+            await StoreLocally("authToken", authResponse.Token);
 
             ((UpSkillAuthStateProvider)authStateProvider).NotifyUserAuthentication(authResponse.Token);
 
-            //NotifyOfAuthentication(userData.Email);
+            NotifyOfAuthentication(userData.Email);
             SetAuthenticationHeaderForClient("bearer", authResponse.Token);
             
             return new LoginResponseModel { AuthIsSuccessful = true };

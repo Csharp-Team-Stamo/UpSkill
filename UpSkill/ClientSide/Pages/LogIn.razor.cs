@@ -7,10 +7,10 @@
 
     public partial class LogIn
     {
-        private readonly UserLoginIM userAuthentication = new ();
+        private readonly UserLoginIM loginInput = new ();
 
         [Inject]
-        public IAuthenticationService AuthenticationService { get; set; }
+        public IAccountService AccountService { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
@@ -23,8 +23,8 @@
         {
             AuthErrorExists = false;
 
-            var result = await AuthenticationService
-                .Login(this.userAuthentication);
+            var result = await AccountService
+                .Login(this.loginInput);
 
             if (result.AuthIsSuccessful == false)
             {

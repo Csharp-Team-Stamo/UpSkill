@@ -26,7 +26,7 @@ namespace UpSkill.ClientSide
 
 			builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001") });
             builder.Services.AddScoped<IRegistrationService, RegistrationService>();
-            builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
+            builder.Services.AddSingleton<IAccountService, AccountService>();
 
             builder.Services.AddOidcAuthentication(options =>
 			{
@@ -36,7 +36,7 @@ namespace UpSkill.ClientSide
 			});
 
             builder.Services.AddScoped<AuthenticationStateProvider, UpSkillAuthStateProvider>();
-            builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+            builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddBlazoredLocalStorage();
 

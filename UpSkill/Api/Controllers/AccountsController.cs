@@ -16,6 +16,7 @@ namespace UpSkill.Api.Controllers
     using System.Threading.Tasks;
 
     using UpSkill.Data.Models;
+    using UpSkill.Infrastructure.Common;
     using UpSkill.Infrastructure.Models.Account;
     using UpSkill.Services.Data.Contracts;
 
@@ -45,25 +46,34 @@ namespace UpSkill.Api.Controllers
                 return BadRequest();
             }
 
-            if (!this.accountService.IsEmailAvailable(input.Email))
+            if (this.accountService.EmailIsUnavailable(input.Email))
             {
                 return BadRequest("This email is already taken!");
             }
 
-            var result = await this.accountService
-                .Register(input.FullName, input.Email, input.Password, input.CompanyName);
+            var company = await this.accountService.GetCompany(input.CompanyName);
+
+            var user = CreateUser(input, company);
+
+            AddClaims(user);
+
+            var result = await this.userManager.CreateAsync(user, input.Password);
 
             if (!result.Succeeded)
             {
-                var errors = result.Errors.Select(e => e.Description);
-                return BadRequest(new RegisterResponseModel { Errors = errors });
+                var negativeResponse = new RegisterResponseModel
+                {
+                    Errors = result.Errors.Select(e => e.Description)
+                };
+                
+                return BadRequest(negativeResponse);
             }
 
             return StatusCode(201);
         }
 
         [HttpPost("Login")]
-        [AutoValidateAntiforgeryToken]
+        //[AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Login(
         [FromBody] UserLoginIM userData)
         {
@@ -92,6 +102,35 @@ namespace UpSkill.Api.Controllers
 
             return Ok(authenticationResponse);
         }
+
+        private void AddClaims(ApplicationUser user)
+        {
+            var roleClaim = new IdentityUserClaim<string>
+            {
+                UserId = user.Id,
+                ClaimType = ClaimTypes.Role,
+                ClaimValue = GlobalConstants.BusinessOwnerRoleName
+            };
+
+            var companyNameClaim = new IdentityUserClaim<string>
+            {
+                UserId = user.Id,
+                ClaimType = "CompanyName",
+                ClaimValue = user.Company.Name
+            };
+
+            user.Claims.Add(roleClaim);
+            user.Claims.Add(companyNameClaim);
+        }
+
+        private ApplicationUser CreateUser(UserRegisterIM input, Company company)
+            => new ()
+            {
+                Email = input.Email,
+                UserName = input.Email,
+                FullName = input.FullName,
+                Company = company,
+            };
 
         private string GetToken(ApplicationUser user)
         {

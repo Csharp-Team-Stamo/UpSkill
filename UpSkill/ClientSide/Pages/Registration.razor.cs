@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
+    using UpSkill.ClientSide.Authentication.Services.Contracts;
     using UpSkill.ClientSide.Infrastructure;
     using UpSkill.Infrastructure.Models.Account;
 
@@ -11,7 +12,7 @@
         private readonly UserRegisterIM registerInput = new ();
 
         [Inject]
-        public IRegistrationService RegistrationService { get; set; }
+        public IAccountService AccountService { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
@@ -22,7 +23,7 @@
         {
             ShowRegistrationErrors = false;
 
-            var result = await RegistrationService.RegisterUser(registerInput);
+            var result = await AccountService.RegisterUser(registerInput);
 
             if (result.IsSuccessfulRegistration == false)
             {

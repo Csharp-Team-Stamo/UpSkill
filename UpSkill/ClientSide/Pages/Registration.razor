@@ -1,5 +1,4 @@
-﻿
-@page "/registration"
+﻿@page "/registration"
 
 <h3>Registration</h3>
 
@@ -13,30 +12,30 @@
     </div>
 }
 
-<EditForm Model="userForRegistration" OnValidSubmit="Register" class="card card-body bg-light mt-5">
+<EditForm Model="registerInput" OnValidSubmit="Register" class="card card-body bg-light mt-5">
     <DataAnnotationsValidator />
 
     <div class="form-group row">
         <label for="email" class="col-md-2 col-form-label">Full name:</label>
         <div class="col-md-10">
-            <InputText id="email" class="form-control" @bind-Value="userForRegistration.FullName" />
-            <ValidationMessage For="@(() => userForRegistration.FullName)" />
+            <InputText id="email" class="form-control" @bind-Value="registerInput.FullName" />
+            <ValidationMessage For="@(() => registerInput.FullName)" />
         </div>
     </div>
 
     <div class="form-group row">
         <label for="email" class="col-md-2 col-form-label">Email:</label>
         <div class="col-md-10">
-            <InputText id="email" class="form-control" @bind-Value="userForRegistration.Email" />
-            <ValidationMessage For="@(() => userForRegistration.Email)" />
+            <InputText id="email" class="form-control" @bind-Value="registerInput.Email" />
+            <ValidationMessage For="@(() => registerInput.Email)" />
         </div>
     </div>
 
     <div class="form-group row">
         <label for="email" class="col-md-2 col-form-label">Company name:</label>
         <div class="col-md-10">
-            <InputText id="email" class="form-control" @bind-Value="userForRegistration.CompanyName" />
-            <ValidationMessage For="@(() => userForRegistration.CompanyName)" />
+            <InputText id="email" class="form-control" @bind-Value="registerInput.CompanyName" />
+            <ValidationMessage For="@(() => registerInput.CompanyName)" />
         </div>
     </div>
 
@@ -44,16 +43,16 @@
     <div class="form-group row">
         <label for="password" class="col-md-2 col-form-label">Password:</label>
         <div class="col-md-10">
-            <InputText type="password" id="password" class="form-control" @bind-Value="userForRegistration.Password" />
-            <ValidationMessage For="@(() => userForRegistration.Password)" />
+            <InputText type="password" id="password" class="form-control" @bind-Value="registerInput.Password" />
+            <ValidationMessage For="@(() => registerInput.Password)" />
         </div>
     </div>
 
     <div class="form-group row">
         <label for="confirm" class="col-md-2 col-form-label">Confirm Password:</label>
         <div class="col-md-10">
-            <InputText type="password" id="confirm" class="form-control" @bind-Value="userForRegistration.ConfirmPassword" />
-            <ValidationMessage For="@(() => userForRegistration.ConfirmPassword)" />
+            <InputText type="password" id="confirm" class="form-control" @bind-Value="registerInput.ConfirmPassword" />
+            <ValidationMessage For="@(() => registerInput.ConfirmPassword)" />
         </div>
     </div>
 

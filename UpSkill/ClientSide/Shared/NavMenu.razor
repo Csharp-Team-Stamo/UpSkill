@@ -3,7 +3,7 @@
 @using UpSkill.ClientSide.Authentication.Services.Contracts
 @using UpSkill.ClientSide.Controls
 
-@inject IAuthenticationService AuthenticationService
+@inject IAccountService AccountService
 
 
 <div class="top-row pl-4 navbar navbar-dark">
@@ -68,7 +68,7 @@
         <AuthorizeView>
             <Authorized>
                 <li class="nav-item px-3">
-                    <NavLink class="logout-button nav-link " @onclick="AuthenticationService.Logout"><div>Log Out</div></NavLink>
+                    <NavLink class="logout-button nav-link " @onclick="AccountService.Logout"><div>Log Out</div></NavLink>
                 </li>
             </Authorized>
         </AuthorizeView>

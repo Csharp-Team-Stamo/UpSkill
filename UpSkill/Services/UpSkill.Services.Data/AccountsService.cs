@@ -23,12 +23,12 @@
             this.companyRepo = companyRepo;
         }
 
-        public bool IsEmailAvailable(string email)
+        public bool EmailIsUnavailable(string email)
         {
-            return !this.userManager.Users.Any(x => x.Email == email) == true;
+            return this.userManager.Users.Any(x => x.Email == email);
         }
 
-        public async Task<IdentityResult> Register(string fullName, string email, string password, string companyName)
+        public async Task<Company> GetCompany(string companyName)
         {
             var company = this.companyRepo
                 .All()
@@ -45,30 +45,7 @@
                 await this.companyRepo.SaveChangesAsync();
             }
 
-            var user = new ApplicationUser
-            {
-                Email = email,
-                UserName = email,
-                FullName = fullName,
-                Company = company,
-            };
-
-            var result = await this.userManager.CreateAsync(user, password);
-
-            if (!result.Succeeded)
-            {
-                var errors = result.Errors.Select(e => e.Description);
-                return result;
-            }
-
-            var claims = new List<Claim>();
-            var claimRole = new Claim(ClaimTypes.Role, GlobalConstants.BusinessOwnerRoleName);
-            claims.Add(claimRole);
-
-            // TODO Add Company Claim ?
-
-            await this.userManager.AddClaimsAsync(user, claims);
-            return result;
+            return company;
         }
     }
 }

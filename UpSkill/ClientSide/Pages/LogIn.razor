@@ -8,20 +8,20 @@
         <p>@Error</p>
     </div>
 }
-<EditForm Model="userAuthentication" OnValidSubmit="ExecuteLogin" class="card card-body bg-light mt-5">
+<EditForm Model="loginInput" OnValidSubmit="ExecuteLogin" class="card card-body bg-light mt-5">
     <DataAnnotationsValidator />
     <div class="form-group row">
         <label for="email" class="col-md-2 col-form-label">Email:</label>
         <div class="col-md-10">
-            <InputText id="email" class="form-control" @bind-Value="userAuthentication.Email" />
-            <ValidationMessage For="@(() => userAuthentication.Email)" />
+            <InputText id="email" class="form-control" @bind-Value="loginInput.Email" />
+            <ValidationMessage For="@(() => loginInput.Email)" />
         </div>
     </div>
     <div class="form-group row">
         <label for="password" class="col-md-2 col-form-label">Password:</label>
         <div class="col-md-10">
-            <InputText type="password" id="password" class="form-control" @bind-Value="userAuthentication.Password" />
-            <ValidationMessage For="@(() => userAuthentication.Password)" />
+            <InputText type="password" id="password" class="form-control" @bind-Value="loginInput.Password" />
+            <ValidationMessage For="@(() => loginInput.Password)" />
         </div>
     </div>
     <div class="row">

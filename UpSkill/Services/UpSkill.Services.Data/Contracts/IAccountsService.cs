@@ -2,11 +2,12 @@
 {
     using Microsoft.AspNetCore.Identity;
     using System.Threading.Tasks;
+    using UpSkill.Data.Models;
 
     public interface IAccountsService
     {
-        public Task<IdentityResult> Register(string fullName, string email, string password, string companyName);
+        public Task<Company> GetCompany(string companyName);
 
-        public bool IsEmailAvailable(string email);
+        public bool EmailIsUnavailable(string email);
     }
 }
