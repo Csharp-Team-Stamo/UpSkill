@@ -66,7 +66,7 @@
 
             this.client.DefaultRequestHeaders.Authorization = null;
 
-            this.navigationManager.NavigateTo("/welcomePage");
+            this.navigationManager.NavigateTo("/");
         }
 
         private async Task<AuthenticationResponseDto> GetDeserializedAuthResult(
