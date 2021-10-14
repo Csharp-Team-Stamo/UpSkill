@@ -4,15 +4,29 @@
     border: 2px;
 }
 
-.top-row {
-    height: 5rem;
-    background-color: white;
-    box-shadow: 0px 3px 6px #00000029;
+.sidebar {
+    background-color: #296CFB1A;
+    max-width: 600px;
 }
 
-.navbar-brand {
-    font-size: 1.1rem;
+.top-row {
+    max-height: 5em;
+    min-height: 5em;
+    background-color: white;
+    box-shadow: 8px 3px 6px #00000029;
+}
+
+.brand {
+    font-size: 30px;
+    font-weight: bold;
+    letter-spacing: 1.5px;
     color: black;
+    text-transform: lowercase;
+    padding-left: 2em;
+    padding-right: 3em;
+}
+.brand:hover{
+    text-decoration:none;
 }
 
 .oi {
@@ -40,8 +54,8 @@ div > div {
 .nav-item {
     font-size: 0.9rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid;
-    border-bottom-color: darkgray;
+    padding-left: 3em;
+    padding-right: 3em;
 }
 
     .nav-item:first-of-type {
@@ -52,16 +66,22 @@ div > div {
         padding-bottom: 1rem;
     }
 
+    .nav-item > a:last-child {
+        border-bottom: none;
+    }
+
     .nav-item ::deep a {
         color: #000;
         font-size: 16px;
         font-family: Montserrat;
         font-weight: 500;
-        border-radius: 4px;
         height: 2rem;
         display: flex;
         align-items: center;
         line-height: 3rem;
+        border-bottom: 1px solid;
+        border-bottom-color: darkgray;
+        padding-left: 0em;
     }
 
         .nav-item ::deep a.active {
@@ -75,8 +95,6 @@ div > div {
             background-color: rgba(255,255,255,0.1);
             color: white;
         }
-
-
 
 @media (min-width: 641px) {
     .navbar-toggler {

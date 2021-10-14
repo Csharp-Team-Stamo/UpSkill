@@ -8,15 +8,12 @@
     flex: 1;
 }
 
-.sidebar {
-    background-color: #296CFB1A;
-}
-
 .top-row {
     background-color: white;
-    box-shadow: 0px 3px 6px #00000029;
+    box-shadow: 8px 3px 6px var(--box-shadow-gray);
     justify-content: flex-end;
-    height: 5rem;
+    max-height: 5em;
+    min-height: 5em;
     display: flex;
     align-items: center;
 }
