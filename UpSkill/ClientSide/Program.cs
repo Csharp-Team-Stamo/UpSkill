@@ -38,7 +38,6 @@ namespace UpSkill.ClientSide
             builder.Services.AddScoped<AuthenticationStateProvider, UpSkillAuthStateProvider>();
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddBlazoredLocalStorage();
-            builder.Services.AddBlazoredLocalStorage();
 
             builder.Services.AddAuthorizationCore();
 

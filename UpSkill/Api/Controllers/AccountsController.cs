@@ -20,7 +20,7 @@ namespace UpSkill.Api.Controllers
     using UpSkill.Infrastructure.Models.Account;
     using UpSkill.Services.Data.Contracts;
 
-    [Route("/[controller]")]
+    [Route("/accounts")]
     [ApiController]
     public class AccountsController : ControllerBase
     {
@@ -74,8 +74,7 @@ namespace UpSkill.Api.Controllers
 
         [HttpPost("Login")]
         //[AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> Login(
-        [FromBody] UserLoginIM userData)
+        public async Task<IActionResult> Login([FromBody] UserLoginIM userData)
         {
             var user = await this.userManager
                 .FindByEmailAsync(userData.Email);

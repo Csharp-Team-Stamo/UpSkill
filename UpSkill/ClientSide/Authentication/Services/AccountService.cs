@@ -13,7 +13,8 @@
 
     public class AccountService : IAccountService
     {
-        private readonly string clientUrl = "accounts/login";
+        private readonly string clientLoginUrl = "accounts/login";
+        private readonly string clientRegisterUrl = "accounts/register";
         private readonly HttpClient client;
         private readonly JsonSerializerOptions options;
         private readonly AuthenticationStateProvider authStateProvider;
@@ -37,7 +38,7 @@
         {
             var content = JsonSerializer.Serialize(input);
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
-            var registrationResult = await client.PostAsync("accounts/register", bodyContent);
+            var registrationResult = await client.PostAsync(this.clientRegisterUrl, bodyContent);
 
             if (!registrationResult.IsSuccessStatusCode)
             {
@@ -49,12 +50,11 @@
             return new RegisterResponseModel { IsSuccessfulRegistration = true };
         }
 
-        public  async Task<LoginResponseModel> Login(
-            UserLoginIM userData)
+        public  async Task<LoginResponseModel> Login(UserLoginIM userData)
         {
             var bodyContent = GetBodyContent(userData);
 
-            var authResult = await PostToHttpClient(this.clientUrl, bodyContent);
+            var authResult = await PostToHttpClient(this.clientLoginUrl, bodyContent);
 
             var authResponse = await GetDeserializedAuthResult(authResult);
 
