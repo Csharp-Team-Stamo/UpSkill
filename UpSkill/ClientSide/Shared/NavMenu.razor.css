@@ -4,16 +4,14 @@
     border: 2px;
 }
 
-
-
 .sidebar {
     background-color: #296CFB1A;
     max-width: 600px;
 }
 
 .top-row {
-    max-height: 160px;
-    min-height: 4.1em;
+    max-height: 5em;
+    min-height: 5em;
     background-color: white;
     box-shadow: 8px 3px 6px #00000029;
 }
@@ -24,7 +22,8 @@
     letter-spacing: 1.5px;
     color: black;
     text-transform: lowercase;
-    padding-left: 0.5em
+    padding-left: 2em;
+    padding-right: 3em;
 }
 .brand:hover{
     text-decoration:none;
@@ -65,7 +64,6 @@ div > div {
 
     .nav-item:last-of-type {
         padding-bottom: 1rem;
-        
     }
 
     .nav-item > a:last-child {
@@ -97,8 +95,6 @@ div > div {
             background-color: rgba(255,255,255,0.1);
             color: white;
         }
-
-
 
 @media (min-width: 641px) {
     .navbar-toggler {

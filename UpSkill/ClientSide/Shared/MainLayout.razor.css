@@ -12,7 +12,8 @@
     background-color: white;
     box-shadow: 8px 3px 6px var(--box-shadow-gray);
     justify-content: flex-end;
-    max-height: 160px;
+    max-height: 5em;
+    min-height: 5em;
     display: flex;
     align-items: center;
 }

@@ -5,7 +5,7 @@
 @inject IAuthenticationService AuthenticationService
 
 
-<div class="top-row pl-4 navbar navbar-dark" >
+<div class="top-row px-3 navbar navbar-dark" >
     <a href="">
         <svg alt="upskill_logo" xmlns="http://www.w3.org/2000/svg" width="60.282" height="24.283" viewBox="0 0 60.282 24.283">
             <g id="Group_5" data-name="Group 5" transform="translate(-218.902 -339.173)">
@@ -21,6 +21,8 @@
     </button>
 </div>
 
+        <AuthorizeView>
+            <Authorized>
 <div class="@NavMenuCssClass sidebar" @onclick="ToggleNavMenu">
 
     <ul class="nav flex-column align-content-start">
@@ -49,6 +51,7 @@
                 Courses
             </NavLink>
         </li>
+
         <li class="nav-item">
             <NavLink class="nav-link" href="Coaches">
                 Coaches
@@ -72,15 +75,13 @@
                 Invoice
             </NavLink>
         </li>
-        <AuthorizeView>
-            <Authorized>
                 <li class="nav-item">
                     <NavLink class="logout-button nav-link " @onclick="AuthenticationService.Logout"><div>Log Out</div></NavLink>
                 </li>
-            </Authorized>
-        </AuthorizeView>
     </ul>
 </div>
+            </Authorized>
+        </AuthorizeView>
 
 @code {
 
