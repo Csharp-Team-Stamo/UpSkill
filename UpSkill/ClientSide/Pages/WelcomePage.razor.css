@@ -16,6 +16,16 @@
 }
 
 .get-started-img-background {
-    height: 500px;
+    height: 650px;
     background: transparent url('/images/welcomePage/get started background.png') 0% 100% no-repeat padding-box;
+}
+
+.get-started-img {
+    margin-right: 13%;
+    margin-left: 15%;
+    margin-bottom: 15%;
+    margin-top: 27%;
+    float: right;
+    width: 40%;
+    height: auto;
 }
