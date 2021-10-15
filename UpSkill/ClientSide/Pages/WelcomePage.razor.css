@@ -4,9 +4,8 @@
 }
 
 .get-started-title {
-    height: 256px;
     text-align: left;
-    font: bold 50px Montserrat;
+    font: bold 300% Montserrat;
     letter-spacing: 0px;
     color: #000000;
 }
@@ -18,30 +17,28 @@
 
 .get-started-img {
     margin-right: 13%;
-    margin-top: 30%;
+    margin-top: 32%;
     float: right;
     width: 40%;
     height: auto;
 }
 
 .get-started-content {
-    text-align: left;
-    font: normal normal 18px/30px Montserrat;
-    letter-spacing: 0px;
+    margin-top: 8%;
+    letter-spacing: 0;
     color: #000000;
 }
 
 .get-started-btn {
     margin-top: 13%;
-    width: 220px;
-    height: 55px;
-    background: #296CFB 0% 0% no-repeat padding-box;
+    width: 22%;
+    height: 6%;
+    background: #296CFB;
 }
 
 .get-started-btn-text {
-    height: 27px;
     text-align: center;
-    font: normal normal bold 15px/28px Montserrat;
+    font: 90% Montserrat;
     letter-spacing: 1.1px;
     color: #FFFFFF;
 }
