@@ -4,13 +4,14 @@
 }
 /*#region row 1 */
 .get-started-title {
+    margin-top: 15%;
     font: bold 300% Montserrat;
     letter-spacing: 0px;
     color: #000000;
 }
 
 .get-started-img-background {
-    height: 650px;
+    height: 600px;
     background: transparent url('/images/welcomePage/get started background.svg') 0% 100% no-repeat padding-box;
 }
 
@@ -29,8 +30,8 @@
 }
 
 .get-started-btn {
-    margin-top: 13%;
-    width: 22%;
+    margin-top: 18%;
+    width: 30%;
     height: 6%;
     background: #296CFB;
 }
@@ -44,7 +45,7 @@
 }
 
 .explore-courses-background {
-    height: 650px;
+    height: 550px;
     background: transparent url('/images/welcomePage/explore courses background.svg') 100% 0% no-repeat padding-box;
 }
 
@@ -56,7 +57,7 @@
     height: auto;
 }
 .explore-courses-title {
-    margin-top: 10%;
+    margin-top: 15%;
     font: bold 280% Montserrat;
     letter-spacing: 0px;
     color: #000000;
@@ -67,4 +68,22 @@
     margin-top: 8%;
     letter-spacing: 0;
     color: #000000;
+}
+.explore-courses-btn {
+    margin-top: 18%;
+    width: 65%;
+    height: 52%;
+    background: #296CFB;
+}
+.find-coaches-btn {
+    margin-top: 18%;
+    width: 65%;
+    height: 52%;
+    border: 2px solid #296CFB;
+    background-color: #ffffff
+}
+.find-coaches-btn-text {
+    font: bold 90% Montserrat;
+    letter-spacing: 1.1px;
+    color: #296CFB;
 }
