@@ -12,7 +12,7 @@
 
 .get-started-img-background {
     height: 600px;
-    background: transparent url('/images/welcomePage/get started background.svg') 0% 100% no-repeat padding-box;
+    background: transparent url('/images/welcomePage/get-started-background.svg') 0% 100% no-repeat padding-box;
 }
 
 .get-started-img {
@@ -48,7 +48,7 @@
 
 .explore-courses-background {
     height: 550px;
-    background: transparent url('/images/welcomePage/explore courses background.svg') 100% 0% no-repeat padding-box;
+    background: transparent url('/images/welcomePage/explore-courses-background.svg') 100% 0% no-repeat padding-box;
 }
 
 .explore-courses-img {
@@ -97,3 +97,31 @@
 
 
 /*#endregion */
+/*#region row 3 */
+.demo-title {
+    margin-top: 15%;
+    font: bold 300% Montserrat;
+    letter-spacing: 0px;
+    color: #000000;
+}
+
+.demo-content {
+    margin-top: 8%;
+    letter-spacing: 0;
+    color: #000000;
+}
+
+.demo-background {
+    height: 600px;
+    background: transparent url('/images/welcomePage/demo-background.svg') 0% 100% no-repeat padding-box;
+}
+
+.demo-img {
+    margin-right: 20%;
+    margin-top: 32%;
+    float: right;
+    width: 40%;
+    height: auto;
+}
+/*#endregion */
+
