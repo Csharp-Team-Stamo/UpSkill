@@ -11,7 +11,7 @@
             <div class="get-started-content">
                 Upskill gives everyone the opportunity to grow professionally and develop into a specialist in every field. We inspire your people to master their skills and become the best version of themselves. Through our unique, personalised, user-friendly experience, your business is ready to reach new heights.
             </div>
-            <button class="get-started-btn" @onclick="RedirectToRegister">
+            <button class="get-started-btn" @onclick="@(() => RedirectToPage("/registration"))">
                 <div class="get-started-btn-text">
                     Get Started
                 </div>
@@ -36,14 +36,14 @@
             </div>
             <div class="row mt-5">
                 <div class="col text-right">
-                    <button class="explore-courses-btn" @onclick="RedirectToCourses">
+                    <button class="explore-courses-btn" @onclick="@(() => RedirectToPage("/courses"))">
                         <div class="get-started-btn-text">
                             Explore Courses
                         </div>
                     </button>
                 </div>
                 <div class="col text-left">
-                    <button class="find-coaches-btn" @onclick="RedirectToCouches">
+                    <button class="find-coaches-btn" @onclick="@(() => RedirectToPage("/coaches"))">
                         <div class="find-coaches-btn-text">
                             Find Coaches
                         </div>
@@ -83,23 +83,13 @@
 
         if (user.Identity.IsAuthenticated)
         {
-            NavigationManager.NavigateTo("/dashboard");
+            RedirectToPage("/dashboard");
         }
     }
 
-    private void RedirectToCouches()
+    private void RedirectToPage(string pagePath)
     {
-        NavigationManager.NavigateTo("/coaches");
-    }
-
-    private void RedirectToCourses()
-    {
-        NavigationManager.NavigateTo("/courses");
-    }
-
-    private void RedirectToRegister()
-    {
-        NavigationManager.NavigateTo("/registration");
+        NavigationManager.NavigateTo(pagePath);
     }
 
 }
