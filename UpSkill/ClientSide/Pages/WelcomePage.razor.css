@@ -1,5 +1,4 @@
 ﻿.welcome-page-card {
-    height: 3321px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
 }
 /*#region row 1 */
@@ -41,8 +40,9 @@
     font: 90% Montserrat;
     letter-spacing: 1.1px;
     color: #FFFFFF;
-    /*#endregion */
+   
 }
+/*#endregion */
 
 /*#region row 2 */
 
@@ -122,6 +122,18 @@
     float: right;
     width: 40%;
     height: auto;
+}
+
+.input-fild {
+    border: 2px solid #296CFB;
+}
+
+.submit-btn {
+    margin-top: 18%;
+    margin-right: 8%;
+    width: 30%;
+    height: 30%;
+    background: #296CFB;
 }
 /*#endregion */
 

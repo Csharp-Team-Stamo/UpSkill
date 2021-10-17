@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.Components
 @inject NavigationManager NavigationManager
 
 <div class="welcome-page-card container">
@@ -62,6 +63,35 @@
             <div class="demo-content">
                 Don’t find what you are looking for? We would be more than happy to help you and assist you in everything you need! Let us know about your personal requirements by filling our request form:
             </div>
+            <div>
+                <EditForm Model="@RequestDemoFromModel" OnInvalidSubmit="() => { }">
+                    <div class="row mt-5">
+                        <div class="col">
+                            <InputText style="border: 2px solid #296CFB" @bind-Value="RequestDemoFromModel.Name" placeholder="Name*"></InputText>
+                        </div>
+                        <div class="col">
+                            <InputText style="border: 2px solid #296CFB" @bind-Value="RequestDemoFromModel.CompanyName" placeholder="Company Name*"></InputText>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col">
+                            <InputText style="border: 2px solid #296CFB" @bind-Value="RequestDemoFromModel.Email" placeholder="Email Address*"></InputText>
+                        </div>
+                        <div class="col">
+                            <InputText style="border: 2px solid #296CFB" @bind-Value="RequestDemoFromModel.PhoneNumber" placeholder="Phone number*"></InputText>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            <button class="submit-btn">
+                                <div class="get-started-btn-text">
+                                    Submit
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </EditForm>
+            </div>
         </div>
         <div class="col demo-background">
             <img src="/images/welcomePage/demo-img.svg" class="demo-img img-fluid" />
@@ -76,6 +106,8 @@
     public Task<AuthenticationState> authenticationState { get; set; }
 
     ClaimsPrincipal user;
+
+    public RequestDemoFromModel RequestDemoFromModel = new();
 
     protected override async Task OnInitializedAsync()
     {
