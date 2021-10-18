@@ -1,0 +1,125 @@
+﻿/* Container holding the image and the text */
+.everything {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+
+
+/* Sign Up Button */
+.SignUpButton {
+    position: absolute;
+    top: 53%;
+    left: 75%;
+    transform: translate(-50%, -50%);
+}
+
+/* Sign Up Button Mobile */
+.SignUpButtonMobile {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Already Registered Text */
+.AlreadyRegistered {
+    position: absolute;
+    top: 60%;
+    left: 69%;
+    color: #296CFB;
+    transform: translate(-50%, -50%);
+}
+
+/* Already Registered Text Mobile */
+.AlreadyRegisteredMobile {
+    position: absolute;
+    top: 58%;
+    left: 50%;
+    color: #296CFB;
+    transform: translate(-50%, -50%);
+}
+
+/* Login Here */
+.SignInHere {
+    position: absolute;
+    top: 60%;
+    left: 83%;
+    color: #296CFB;
+    transform: translate(-50%, -50%);
+}
+
+/* Login Here Mobile */
+.SignInHereMobile {
+    position: absolute;
+    top: 63%;
+    left: 50%;
+    color: #296CFB;
+    transform: translate(-50%, -50%);
+}
+
+
+/* UpSkill Logo */
+.UpSkillLogo {
+    position: absolute;
+    top: 37%;
+    left: 75%;
+    width: 10%;
+    height: 10%;
+    transform: translate(-50%, -50%);
+}
+
+/* UpSkill Logo Mobile */
+.UpSkillLogoMobile {
+    position: absolute;
+    top: 37%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+
+/* PersonMockup */
+.PersonMockUp {
+    position: absolute;
+    top: 50%;
+    left: 17%;
+    width: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Bottom left text */
+.bottom-left {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+}
+
+/* Top left text */
+.top-left {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+}
+
+/* Top right text */
+.top-right {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+}
+
+/* Bottom right text */
+.bottom-right {
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+}
+
+/* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
