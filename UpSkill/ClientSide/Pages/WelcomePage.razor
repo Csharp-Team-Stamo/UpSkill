@@ -1,26 +1,108 @@
 ﻿@page "/"
+@using Microsoft.AspNetCore.Components
 @inject NavigationManager NavigationManager
 
 <div class="welcome-page-card container">
+    <!-- #region row 1 -->
     <div class="row">
-        <div class="col-6">
+        <div class="col">
             <div class="get-started-title">
                 Do you want to level up the knowledge of your team?
             </div>
             <div class="get-started-content">
                 Upskill gives everyone the opportunity to grow professionally and develop into a specialist in every field. We inspire your people to master their skills and become the best version of themselves. Through our unique, personalised, user-friendly experience, your business is ready to reach new heights.
             </div>
-            <button class="get-started-btn">
+            <button class="get-started-btn" @onclick="@(() => RedirectToPage("/registration"))">
                 <div class="get-started-btn-text">
                     Get Started
                 </div>
             </button>
         </div>
-        <div class="get-started-img-background col-6">
-            <img src="/images/welcomePage/get started img.png" class="get-started-img img-fluid" />
+        <div class="col get-started-img-background">
+            <img src="/images/welcomePage/get-started-img.svg" class="get-started-img img-fluid" />
         </div>
-
     </div>
+    <!-- #endregion -->
+    <!-- #region row 2 -->
+    <div class="row">
+        <div class="col explore-courses-background">
+            <img src="/images/welcomePage/explore-courses-img.svg" class="explore-courses-img img-fluid" />
+        </div>
+        <div class="col">
+            <div class="explore-courses-title">
+                What <span style="color: #296CFB">UpSkill</span> does?
+            </div>
+            <div class="explore-courses-content">
+                We help businesses as well as individuals learn new skills and gain knowledge on various topics while exploring different sources and getting certified. If you need personal time with a specialist, don’t hesitate to book your slot with one of our top coaches.
+            </div>
+            <div class="row mt-5">
+                <div class="col text-right">
+                    <button class="explore-courses-btn" @onclick="@(() => RedirectToPage("/courses"))">
+                        <div class="get-started-btn-text">
+                            Explore Courses
+                        </div>
+                    </button>
+                </div>
+                <div class="col text-left">
+                    <button class="find-coaches-btn" @onclick="@(() => RedirectToPage("/coaches"))">
+                        <div class="find-coaches-btn-text">
+                            Find Coaches
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- #endregion -->
+    <!-- #region row 3 -->
+    <div class="row">
+        <div class="col">
+            <div class="demo-title">
+                Request a Demo
+            </div>
+            <div class="demo-content">
+                Don’t find what you are looking for? We would be more than happy to help you and assist you in everything you need! Let us know about your personal requirements by filling our request form:
+            </div>
+            <div>
+                <EditForm Model="@RequestDemoFromModel" OnInvalidSubmit="() => { }">
+                    <DataAnnotationsValidator />
+                    <div class="row mt-5">
+                        <div class="col">
+                            <InputText  @bind-Value="RequestDemoFromModel.Name" placeholder="Name*"></InputText>
+                            <ValidationMessage For="@(() =>RequestDemoFromModel.Name)"></ValidationMessage>
+                        </div>
+                        <div class="col">
+                            <InputText  @bind-Value="RequestDemoFromModel.CompanyName" placeholder="Company Name*"></InputText>
+                            <ValidationMessage For="@(() =>RequestDemoFromModel.CompanyName)"></ValidationMessage>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <div class="col">
+                            <InputText  @bind-Value="RequestDemoFromModel.Email" placeholder="Email Address*"></InputText>
+                            <ValidationMessage For="@(() =>RequestDemoFromModel.Email)"></ValidationMessage>
+                        </div>
+                        <div class="col">
+                            <InputText  @bind-Value="RequestDemoFromModel.PhoneNumber" placeholder="Phone number*"></InputText>
+                            <ValidationMessage For="@(() =>RequestDemoFromModel.CompanyName)"></ValidationMessage>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            <button type="submit" class="submit-btn">
+                                <div class="get-started-btn-text">
+                                    Submit
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+        <div class="col demo-background">
+            <img src="/images/welcomePage/demo-img.svg" class="demo-img img-fluid" />
+        </div>
+    </div>
+    <!-- #endregion -->
 </div>
 
 @code {
@@ -30,14 +112,21 @@
 
     ClaimsPrincipal user;
 
+    public RequestDemoFromModel RequestDemoFromModel = new();
+
     protected override async Task OnInitializedAsync()
     {
         user = (await authenticationState).User;
 
         if (user.Identity.IsAuthenticated)
         {
-            NavigationManager.NavigateTo("/dashboard");
+            RedirectToPage("/dashboard");
         }
+    }
+
+    private void RedirectToPage(string pagePath)
+    {
+        NavigationManager.NavigateTo(pagePath);
     }
 
 }

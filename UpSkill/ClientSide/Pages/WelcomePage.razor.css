@@ -1,47 +1,147 @@
 ﻿.welcome-page-card {
-    height: 3321px;
     background: #FFFFFF 0% 0% no-repeat padding-box;
 }
-
+/*#region row 1 */
 .get-started-title {
-    height: 256px;
-    text-align: left;
-    font: bold 50px Montserrat;
+    margin-top: 15%;
+    font: bold 300% Montserrat;
     letter-spacing: 0px;
     color: #000000;
 }
 
 .get-started-img-background {
-    height: 650px;
-    background: transparent url('/images/welcomePage/get started background.png') 0% 100% no-repeat padding-box;
+    height: 600px;
+    background: transparent url('/images/welcomePage/get-started-background.svg') 0% 100% no-repeat padding-box;
 }
 
 .get-started-img {
     margin-right: 13%;
-    margin-top: 30%;
+    margin-top: 32%;
     float: right;
     width: 40%;
     height: auto;
 }
 
 .get-started-content {
-    text-align: left;
-    font: normal normal 18px/30px Montserrat;
-    letter-spacing: 0px;
+    margin-top: 8%;
+    letter-spacing: 0;
     color: #000000;
 }
 
 .get-started-btn {
-    margin-top: 13%;
-    width: 220px;
-    height: 55px;
-    background: #296CFB 0% 0% no-repeat padding-box;
+    margin-top: 18%;
+    width: 30%;
+    height: 6%;
+    background: #296CFB;
 }
 
 .get-started-btn-text {
-    height: 27px;
     text-align: center;
-    font: normal normal bold 15px/28px Montserrat;
+    font: 90% Montserrat;
     letter-spacing: 1.1px;
     color: #FFFFFF;
 }
+/*#endregion */
+
+/*#region row 2 */
+
+.explore-courses-background {
+    height: 550px;
+    background: transparent url('/images/welcomePage/explore-courses-background.svg') 100% 0% no-repeat padding-box;
+}
+
+.explore-courses-img {
+    margin-right: 47%;
+    margin-top: 43%;
+    float: right;
+    width: 40%;
+    height: auto;
+}
+
+.explore-courses-title {
+    margin-top: 15%;
+    font: bold 280% Montserrat;
+    letter-spacing: 0px;
+    color: #000000;
+}
+
+.explore-courses-content {
+    width: 83%;
+    text-align: right;
+    margin-top: 8%;
+    letter-spacing: 0;
+    color: #000000;
+}
+
+.explore-courses-btn {
+    margin-top: 18%;
+    width: 65%;
+    height: 52%;
+    background: #296CFB;
+}
+
+.find-coaches-btn {
+    margin-top: 18%;
+    width: 65%;
+    height: 52%;
+    border: 2px solid #296CFB;
+    background-color: #ffffff
+}
+
+.find-coaches-btn-text {
+    font: bold 90% Montserrat;
+    letter-spacing: 1.1px;
+    color: #296CFB;
+}
+
+
+/*#endregion */
+/*#region row 3 */
+.demo-title {
+    margin-top: 15%;
+    font: bold 300% Montserrat;
+    letter-spacing: 0px;
+    color: #000000;
+}
+
+.demo-content {
+    margin-top: 8%;
+    letter-spacing: 0;
+    color: #000000;
+}
+
+.demo-background {
+    height: 600px;
+    background: transparent url('/images/welcomePage/demo-background.svg') 0% 100% no-repeat padding-box;
+}
+
+.demo-img {
+    margin-right: 20%;
+    margin-top: 32%;
+    float: right;
+    width: 40%;
+    height: auto;
+}
+
+.input-fild {
+    border: 2px solid #296CFB;
+}
+
+.submit-btn {
+    margin-top: 18%;
+    margin-right: 8%;
+    width: 30%;
+    height: 30%;
+    background: #296CFB;
+}
+
+input, ::deep input {
+    border: 2px solid #296CFB;
+}
+
+    input, ::deep input::placeholder {
+        color: #296CFB;
+        padding-left: 8%;
+    }
+/*#endregion */
+
