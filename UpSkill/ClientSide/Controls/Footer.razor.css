@@ -1,5 +1,17 @@
-﻿.background-img {
+﻿.footer-card {
+    position: relative
+}
+.background-img {
 
     width: 100%;
+    position: relative
+}
+.upskill-img {
+    position: absolute;
+    top: 30%;
+    left: 5%;
+    width: 5%;
+}
+.upskill-img-text {
     position: absolute
 }
