@@ -1,0 +1,69 @@
+﻿.img-background {
+    background-image: url("/images/registrationPage/background.svg");
+    position: relative;
+    height: 100vh;
+    background-size: contain;
+    background-repeat: no-repeat;
+    border: 1px solid;
+    width: 65vw;
+}
+
+
+.img {
+    height: 60%;
+    width: 40%;
+    position: absolute;
+    left: 9%;
+    bottom: 16%;
+    border: 1px solid;
+}
+
+.wrapper {
+    padding: 0;
+    margin: 0;
+}
+
+
+.fuckyou{
+background-color:forestgreen;
+
+font-size:0.5em;
+
+}
+
+.input_form{
+    border: 1px solid;
+    border-color: #296CFB;
+    margin-bottom: .5em;
+}
+
+.input_form::placeholder {
+    color: blue;
+    font-size: 0.8em;
+}
+
+.input-form{
+border:2px solid #296CFB
+
+}
+
+
+#fullname{
+    border: 1px solid;
+    border-color: #296CFB;
+    margin-bottom: .5em;
+
+}
+
+in
+{
+    color:blue;
+
+}
+
+.input-group {
+
+    position:relative;
+    background-color: transparent;
+    border:none;
+}
