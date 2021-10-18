@@ -1,4 +1,5 @@
-﻿@page "/registration"
+﻿@layout EmptyLayout
+@page "/registration"
 
 @if (ShowRegistrationErrors)
 {
@@ -14,75 +15,74 @@
 <div class="wrapper">
 
     <div class="row">
-        <div class="col">
+        <div class="col-md-7 images">
             <div class="img-background">
-                    <img class="img" src="/images/registrationPage/clipart.svg" />
+                <img class="img-decoration" src="/images/registrationPage/clipart.svg" />
             </div>
 
         </div>
 
-        <div class="col">
+        <div class="col d-flex ml-3 flex-column justify-content-center">
 
-            <div class="brand">
+            <div class="brand align-self-baseline ml-2 mb-2">
                 <img src="/images/registrationPage/logo.svg" />
             </div>
 
-            <div class="input">
-              <EditForm Model="userForRegistration" OnValidSubmit="Register" class="input_group">
-                <DataAnnotationsValidator />
+            <div class="input_group">
+                <EditForm Model="userForRegistration" OnValidSubmit="Register" class="">
+                    <DataAnnotationsValidator />
 
-                <div class=" row">
-                    <div class="col-md-10">
-                        <InputText id="fullname" class="input_form" placeholder="FullName*"  @bind-Value="userForRegistration.FullName" />
-                        <ValidationMessage For="@(() => userForRegistration.FullName)" />
+                    <div class=" row">
+                        <div class="col-md-10">
+                            <InputText id="fullname" class="input_form" placeholder="FullName*" @bind-Value="userForRegistration.FullName" />
+                            <ValidationMessage For="@(() => userForRegistration.FullName)" />
+                        </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-10">
-                        <InputText id="email" class="input_form" placeholder="Email*" @bind-Value="userForRegistration.Email" />
-                        <ValidationMessage For="@(() => userForRegistration.Email)" />
+                    <div class="row">
+                        <div class="col-md-10">
+                            <InputText id="email" class="input_form" placeholder="Email*" @bind-Value="userForRegistration.Email" />
+                            <ValidationMessage For="@(() => userForRegistration.Email)" />
+                        </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-10">
-                        <InputText id="companyname" class="input_form" placeholder="Company name*" @bind-Value="userForRegistration.CompanyName" />
-                        <ValidationMessage For="@(() => userForRegistration.CompanyName)" />
+                    <div class="row">
+                        <div class="col-md-10">
+                            <InputText id="companyname" class="input_form" placeholder="Company name*" @bind-Value="userForRegistration.CompanyName" />
+                            <ValidationMessage For="@(() => userForRegistration.CompanyName)" />
+                        </div>
                     </div>
-                </div>
 
 
-                <div class=" row">
-                    <div class="col-md-10">
-                        <InputText type="password" id="password" class="input_form" placeholder="Password*" @bind-Value="userForRegistration.Password" />
-                        <ValidationMessage For="@(() => userForRegistration.Password)" />
+                    <div class=" row">
+                        <div class="col-md-10">
+                            <InputText type="password" id="password" class="input_form" placeholder="Password*" @bind-Value="userForRegistration.Password" />
+                            <ValidationMessage For="@(() => userForRegistration.Password)" />
+                        </div>
                     </div>
-                </div>
 
-                <div class=" row">
-                    <div class="col-md-10">
-                        <InputText type="password" id="confirm" class="input_form" placeholder="Confirm Password*" @bind-Value="userForRegistration.ConfirmPassword" />
-                        <ValidationMessage For="@(() => userForRegistration.ConfirmPassword)" />
+                    <div class=" row">
+                        <div class="col-md-10">
+                            <InputText type="password" id="confirm" class="input_form" placeholder="Confirm Password*" @bind-Value="userForRegistration.ConfirmPassword" />
+                            <ValidationMessage For="@(() => userForRegistration.ConfirmPassword)" />
+                        </div>
                     </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <button type="submit" class="">Register</button>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <button type="submit" class="button_logout">SignUp</button>
+                        </div>
                     </div>
-                </div>
-            </EditForm>
+                </EditForm>
 
             </div>
 
             <div>
-                <p>
                     Already have an account? <NavLink class="navigation" href="LogIn">LogIn here.</NavLink>
-                </p>
             </div>
 
         </div>
     </div>
 
 </div>
+
