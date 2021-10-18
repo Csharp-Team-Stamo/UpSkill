@@ -5,6 +5,7 @@
 	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.EntityFrameworkCore;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
@@ -108,7 +109,15 @@
 			//Business logic services
 
 			services.AddTransient<IAccountsService, AccountsService>();
-		}
+
+            services.AddTransient<IEmailSender, SendGridEmailSender>();
+            services.Configure<SendGridEmailSenderOptions>(options =>
+            {
+                options.ApiKey = Configuration["ExternalProviders:SendGrid:ApiKey"];
+                options.SenderEmail = Configuration["ExternalProviders:SendGrid:SenderEmail"];
+                options.SenderName = Configuration["ExternalProviders:SendGrid:SenderName"];
+            });
+        }
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
