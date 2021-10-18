@@ -68,21 +68,21 @@
                     <DataAnnotationsValidator />
                     <div class="row mt-5">
                         <div class="col">
-                            <InputText style="border: 2px solid #296CFB" @bind-Value="RequestDemoFromModel.Name" placeholder="Name*"></InputText>
+                            <InputText  @bind-Value="RequestDemoFromModel.Name" placeholder="Name*"></InputText>
                             <ValidationMessage For="@(() =>RequestDemoFromModel.Name)"></ValidationMessage>
                         </div>
                         <div class="col">
-                            <InputText style="border: 2px solid #296CFB" @bind-Value="RequestDemoFromModel.CompanyName" placeholder="Company Name*"></InputText>
+                            <InputText  @bind-Value="RequestDemoFromModel.CompanyName" placeholder="Company Name*"></InputText>
                             <ValidationMessage For="@(() =>RequestDemoFromModel.CompanyName)"></ValidationMessage>
                         </div>
                     </div>
                     <div class="row mt-5">
                         <div class="col">
-                            <InputText style="border: 2px solid #296CFB" @bind-Value="RequestDemoFromModel.Email" placeholder="Email Address*"></InputText>
+                            <InputText  @bind-Value="RequestDemoFromModel.Email" placeholder="Email Address*"></InputText>
                             <ValidationMessage For="@(() =>RequestDemoFromModel.Email)"></ValidationMessage>
                         </div>
                         <div class="col">
-                            <InputText style="border: 2px solid #296CFB" @bind-Value="RequestDemoFromModel.PhoneNumber" placeholder="Phone number*"></InputText>
+                            <InputText  @bind-Value="RequestDemoFromModel.PhoneNumber" placeholder="Phone number*"></InputText>
                             <ValidationMessage For="@(() =>RequestDemoFromModel.CompanyName)"></ValidationMessage>
                         </div>
                     </div>
