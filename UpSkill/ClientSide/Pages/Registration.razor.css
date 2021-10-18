@@ -22,34 +22,39 @@
     text-align: center;
 }
 
-
-brand {
-    margin-bottom: 1em;
-    align-self: baseline;
+.img-logo {
+    width: 30%;
 }
 
-.input_group{
+.brand {
+    margin-bottom: 3em;
 }
 
-.input_form{
-    width: 20%;
+.input_group {
 }
+
+/*.input_form {
+     ;
+}*/
 
 input, ::deep input {
     border: 1px solid;
     border-color: #296CFB;
-    margin-bottom: .5em;
+    margin-bottom: 1em;
+    width: clamp(20rem, 25vw, 30rem);
+    padding: .4em;
 }
 
     input, ::deep input::placeholder {
         color: var(--color-blue-primary);
         font-size: 0.8em;
-        padding-left: 10%;
+        padding-left: 2em;
     }
 
 
         input, ::deep input::placeholder:after {
-            content: "*";
+            font-size: 1rem;
+            content: '*';
             color: red;
         }
 
@@ -57,23 +62,27 @@ input, ::deep input {
     color: white;
     border: none;
     background-color: var(--color-blue-primary);
+    margin-top: 1em;
     padding: 0.25em 1em;
 }
 
 @media (max-width: 750px) {
+    .body {
+        font-size: 4rem;
+    }
+
     .images {
         display: none;
     }
 
-    .input_group{
-    width:100%;
-    flex-direction:column;
+    .input_group {
+        width: 100%;
+        flex-direction: column;
     }
 
-    .brand{
-    display:block;
-    align-self: center;
+    .brand {
+        display: block;
+        align-self: center;
+        width: 100%;
     }
-
-    
 }
