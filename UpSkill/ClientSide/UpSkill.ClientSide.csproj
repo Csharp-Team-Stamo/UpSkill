@@ -11,12 +11,14 @@
     <None Remove="Controls\Avatar.razor.css" />
     <None Remove="Controls\OwnerDashboardStatistics.razor.css" />
     <None Remove="Controls\CoachCard.razor.css" />
+    <None Remove="Pages\SignUp.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="Controls\Avatar.razor.css" />
     <Content Include="Controls\OwnerDashboardStatistics.razor.css" />
     <Content Include="Controls\CoachCard.razor.css" />
+    <Content Include="Pages\SignUp.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
