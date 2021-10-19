@@ -13,5 +13,13 @@
     width: 5%;
 }
 .upskill-img-text {
+    position: absolute;
+    top: 26%;
+    left: 11%;
+    font: normal normal bold 45px/55px Montserrat;
+    letter-spacing: 2.25px;
+    color: #FFFFFF;
+}
+.logo-div {
     position: absolute
 }
