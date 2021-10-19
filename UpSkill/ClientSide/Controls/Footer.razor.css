@@ -1,17 +1,19 @@
 ﻿.footer-card {
     position: relative
 }
-.background-img {
 
+.background-img {
     width: 100%;
     position: relative
 }
+
 .upskill-img {
     position: absolute;
     top: 30%;
     left: 5%;
     width: 5%;
 }
+
 .upskill-img-text {
     position: absolute;
     top: 26%;
@@ -20,13 +22,58 @@
     letter-spacing: 2.25px;
     color: #FFFFFF;
 }
+
 .logo-div {
     position: absolute
 }
+
 .div-info {
     position: absolute;
     top: 41%;
     left: 4%;
     font: 172% Montserrat;
+    color: #FFFFFF;
+}
+
+.footer-get-started-btn {
+    position: absolute;
+    top: 111%;
+    left: 3%;
+    height: 20%;
+    background: #FFFFFF;
+}
+
+.footer-get-started-btn-text {
+    text-align: left;
+    font: normal normal 600 22px/27px Montserrat;
+    letter-spacing: 1.1px;
+    color: #0B2969;
+}
+
+.footer-bottom-background {
+    background-color: #0B2969;
+}
+
+.footer-bottom-text {
+    text-align: center;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+}
+
+.footer-bottom-img-copyright {
+    position: absolute;
+    top: 96%;
+    left: 45%;
+    width: 1%;
+}
+.div-company {
+    position: absolute;
+    top: 41%;
+    left: 54%;
+}
+.div-company-text {
+    text-align: left;
+    font: normal normal bold 22px/27px Montserrat;
+    letter-spacing: 1.1px;
     color: #FFFFFF;
 }
