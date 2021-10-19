@@ -25,11 +25,11 @@
 
             if(requestResult.IsSuccessStatusCode)
             {
-                NavigationManager.NavigateTo("/DemoSuccessfullySent");
+                NavigationManager.NavigateTo("/demoSuccess");
             }
             else
             {
-                NavigationManager.NavigateTo("/DemoNotSent");
+                NavigationManager.NavigateTo("/demoFail");
             }
         }
     }

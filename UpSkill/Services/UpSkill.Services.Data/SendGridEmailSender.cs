@@ -48,7 +48,9 @@
             msg.SetGoogleAnalytics(false);
             msg.SetSubscriptionTracking(false);
 
-            return await client.SendEmailAsync(msg);
+            var resp = await client.SendEmailAsync(msg);
+
+            return resp;
         }
     }
 }
