@@ -1,6 +1,6 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Components
-@inject NavigationManager NavigationManager
+@inject INavigatorService Navigator
 
 <div class="welcome-page-card container">
     <!-- #region row 1 -->
@@ -12,7 +12,7 @@
             <div class="get-started-content">
                 Upskill gives everyone the opportunity to grow professionally and develop into a specialist in every field. We inspire your people to master their skills and become the best version of themselves. Through our unique, personalised, user-friendly experience, your business is ready to reach new heights.
             </div>
-            <button class="get-started-btn" @onclick="@(() => RedirectToPage("/registration"))">
+            <button class="get-started-btn" @onclick="@(() => Navigator.RedirectToPage("/registration"))">
                 <div class="get-started-btn-text">
                     Get Started
                 </div>
@@ -37,14 +37,14 @@
             </div>
             <div class="row mt-5">
                 <div class="col text-right">
-                    <button class="explore-courses-btn" @onclick="@(() => RedirectToPage("/courses"))">
+                    <button class="explore-courses-btn" @onclick="@(() => Navigator.RedirectToPage("/courses"))">
                         <div class="get-started-btn-text">
                             Explore Courses
                         </div>
                     </button>
                 </div>
                 <div class="col text-left">
-                    <button class="find-coaches-btn" @onclick="@(() => RedirectToPage("/coaches"))">
+                    <button class="find-coaches-btn" @onclick="@(() => Navigator.RedirectToPage("/coaches"))">
                         <div class="find-coaches-btn-text">
                             Find Coaches
                         </div>
@@ -68,21 +68,21 @@
                     <DataAnnotationsValidator />
                     <div class="row mt-5">
                         <div class="col">
-                            <InputText  @bind-Value="RequestDemoFromModel.Name" placeholder="Name*"></InputText>
+                            <InputText @bind-Value="RequestDemoFromModel.Name" placeholder="Name*"></InputText>
                             <ValidationMessage For="@(() =>RequestDemoFromModel.Name)"></ValidationMessage>
                         </div>
                         <div class="col">
-                            <InputText  @bind-Value="RequestDemoFromModel.CompanyName" placeholder="Company Name*"></InputText>
+                            <InputText @bind-Value="RequestDemoFromModel.CompanyName" placeholder="Company Name*"></InputText>
                             <ValidationMessage For="@(() =>RequestDemoFromModel.CompanyName)"></ValidationMessage>
                         </div>
                     </div>
                     <div class="row mt-5">
                         <div class="col">
-                            <InputText  @bind-Value="RequestDemoFromModel.Email" placeholder="Email Address*"></InputText>
+                            <InputText @bind-Value="RequestDemoFromModel.Email" placeholder="Email Address*"></InputText>
                             <ValidationMessage For="@(() =>RequestDemoFromModel.Email)"></ValidationMessage>
                         </div>
                         <div class="col">
-                            <InputText  @bind-Value="RequestDemoFromModel.PhoneNumber" placeholder="Phone number*"></InputText>
+                            <InputText @bind-Value="RequestDemoFromModel.PhoneNumber" placeholder="Phone number*"></InputText>
                             <ValidationMessage For="@(() =>RequestDemoFromModel.CompanyName)"></ValidationMessage>
                         </div>
                     </div>
@@ -120,13 +120,7 @@
 
         if (user.Identity.IsAuthenticated)
         {
-            RedirectToPage("/dashboard");
+            Navigator.RedirectToPage("/dashboard");
         }
     }
-
-    private void RedirectToPage(string pagePath)
-    {
-        NavigationManager.NavigateTo(pagePath);
-    }
-
 }

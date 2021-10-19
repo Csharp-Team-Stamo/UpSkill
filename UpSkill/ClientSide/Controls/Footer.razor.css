@@ -23,3 +23,10 @@
 .logo-div {
     position: absolute
 }
+.div-info {
+    position: absolute;
+    top: 41%;
+    left: 4%;
+    font: 172% Montserrat;
+    color: #FFFFFF;
+}

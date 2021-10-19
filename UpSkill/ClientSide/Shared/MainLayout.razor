@@ -3,13 +3,12 @@
 @inherits LayoutComponentBase
 
 <div class="page">
-   
+    <AuthorizeView>
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+    </AuthorizeView>
     <div class="main">
-        <AuthorizeView>
-            <div class="sidebar">
-                <NavMenu />
-            </div>
-        </AuthorizeView>
         <div class="top-row px-4 auth">
             <NavLink>
                 <LoginDisplay></LoginDisplay>

@@ -1,12 +1,18 @@
-﻿<footer class="footer-card">
-    <img src="/images/footer/footer-background.svg" class="background-img"/>
-    <div class="logo-div">
-        <img src="/images/footer/upskill-img.svg" class="upskill-img" />
-        <div class="upskill-img-text">
-            upskill
+﻿@inject INavigatorService Navigator
+
+<footer class="footer-card">
+    <img src="/images/footer/footer-background.svg" class="background-img" />
+    <img src="/images/footer/UpSkill-logo -white.svg" class="upskill-img" />
+    <div class="row">
+        <div class="div-info col-4">
+            Upskill gives everyone the opportunity to grow professionally and develop into a specialist in every field.
+            <button class="get-started-btn" @onclick="@(() => Navigator.RedirectToPage("/registration"))">
+                <div class="get-started-btn-text">
+                    Get Started
+                </div>
+            </button>
         </div>
     </div>
-   
 </footer>
 
 @code {
