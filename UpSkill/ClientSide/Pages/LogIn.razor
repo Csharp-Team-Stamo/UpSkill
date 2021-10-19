@@ -1,6 +1,5 @@
 ﻿@page "/login"
 @layout EmptyLayout
-<h3>Log In</h3>
 
 @if (AuthErrorExists)
 {
@@ -8,30 +7,95 @@
         <p>@Error</p>
     </div>
 }
-<EditForm Model="userAuthentication" OnValidSubmit="ExecuteLogin" class="card card-body bg-light mt-5">
-    <DataAnnotationsValidator />
-    <div class="form-group row">
-        <label for="email" class="col-md-2 col-form-label">Email:</label>
-        <div class="col-md-10">
-            <InputText id="email" class="form-control" @bind-Value="userAuthentication.Email" />
+
+    
+    <EditForm Model="userAuthentication" OnValidSubmit="ExecuteLogin">
+        <DataAnnotationsValidator />
+
+        <div class="everything">
+            <img src="/images/LogInBackground.svg" class="img-background d-none d-sm-block col-6 img-fluid" alt="Responsive Background">
+            <img src="/images/UpSkillArrowLogo.svg" class="UpSkillLogo">
+            <img src="/images/LogInPersonMockUp.svg" class="PersonMockUp">
+
+            <p class="WelcomeMessage col-6">Welcome back!</p>
+
+            <div class="PleaseLogin">
+                Please login to your account.
+            </div>
+
+            <div class="EmailTextBox col-4">
+                <InputText id="email" class="form-control" placeholder="Email*" @bind-Value="userAuthentication.Email" />
+                <ValidationMessage For="@(() => userAuthentication.Email)" />
+            </div>
+
+            <div class="PasswordTextBox col-4">
+                <InputText type="password" id="password" placeholder="Password*" class="form-control" @bind-Value="userAuthentication.Password" />
+                <ValidationMessage For="@(() => userAuthentication.Password)" />
+            </div>
+
+            <div class="form-check RememberMeCheckBox">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Запомни ме
+                </label>
+            </div>
+
+            <a href="/ForgotPassword" class="ForgotPassword">Забравена парола?</a>
+
+            <div class="row">
+                <button @*type="submit" *@ class="btn btn-primary LogInButton">LogIn</button>
+            </div>
+
+            <button @*type="submit" *@ class="btn btn-outline-primary SignUpButton">SignUp</button>
+        </div>
+
+        
+    </EditForm>
+
+
+<!--
+<div class="everything">
+    <img src="/images/LogInBackground.svg" class="img-background d-none d-sm-block col-6 img-fluid" alt="Responsive Background">
+    <img src="/images/UpSkillArrowLogo.svg" class="UpSkillLogo">
+    <img src="/images/LogInPersonMockUp.svg" class="PersonMockUp">
+    <EditForm Model="userAuthentication" OnValidSubmit="ExecuteLogin" class="card card-body bg-light mt-5">
+        <DataAnnotationsValidator />
+
+        <div class="WelcomeMessage">
+            Welcome back!
+        </div>
+
+        <div class="PleaseLogin">
+            Please login to your account.
+        </div>
+
+        <div class="EmailTextBox">
+            <InputText id="email" class="form-control" placeholder="Email*" @bind-Value="userAuthentication.Email" />
             <ValidationMessage For="@(() => userAuthentication.Email)" />
         </div>
-    </div>
-    <div class="form-group row">
-        <label for="password" class="col-md-2 col-form-label">Password:</label>
-        <div class="col-md-10">
-            <InputText type="password" id="password" class="form-control" @bind-Value="userAuthentication.Password" />
+
+        <div class="PasswordTextBox">
+            <InputText type="password" id="password" placeholder="Password*" class="form-control" @bind-Value="userAuthentication.Password" />
             <ValidationMessage For="@(() => userAuthentication.Password)" />
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 text-right">
-            <button @*type="submit"*@ class="btn btn-success">Log In</button>
-        </div>
-    </div>
 
-    <a class="mt-3" href="Register">Register</a>
-</EditForm>
+        <div class="form-check RememberMeCheckBox">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+            <label class="form-check-label" for="flexCheckDefault">
+                Запомни ме
+            </label>
+        </div>
+
+        <a href="/ForgotPassword" class="ForgotPassword">Забравена парола?</a>
+
+        <div class="row">
+            <button @*type="submit" *@ class="btn btn-primary LogInButton">LogIn</button>
+        </div>
+
+        <button @*type="submit" *@ class="btn btn-outline-primary SignUpButton">SignUp</button>
+    </EditForm>
+</div>
+-->
 
 @code {
 

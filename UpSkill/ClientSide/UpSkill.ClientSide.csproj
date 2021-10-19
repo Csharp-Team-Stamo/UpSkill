@@ -18,6 +18,7 @@
     <None Remove="Controls\Avatar.razor.css" />
     <None Remove="Controls\OwnerDashboardStatistics.razor.css" />
     <None Remove="Controls\CoachCard.razor.css" />
+    <None Remove="Pages\LogIn.razor.css" />
     <None Remove="Pages\WelcomePage.razor.css" />
   </ItemGroup>
 
@@ -25,6 +26,7 @@
     <Content Include="Controls\Avatar.razor.css" />
     <Content Include="Controls\OwnerDashboardStatistics.razor.css" />
     <Content Include="Controls\CoachCard.razor.css" />
+    <Content Include="Pages\LogIn.razor.css" />
     <Content Include="Pages\WelcomePage.razor.css" />
   </ItemGroup>
 
