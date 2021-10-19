@@ -71,9 +71,14 @@
     top: 41%;
     left: 54%;
 }
-.div-company-text {
+.div-title-text {
     text-align: left;
     font: normal normal bold 22px/27px Montserrat;
     letter-spacing: 1.1px;
     color: #FFFFFF;
+}
+.div-service {
+    position: absolute;
+    top: 41%;
+    left: 77%;
 }

@@ -1,6 +1,6 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Components
-@inject INavigatorService Navigator
+@inject NavigationManager NavigationManager
 
 <div class="welcome-page-card container">
     <!-- #region row 1 -->
@@ -12,7 +12,7 @@
             <div class="get-started-content">
                 Upskill gives everyone the opportunity to grow professionally and develop into a specialist in every field. We inspire your people to master their skills and become the best version of themselves. Through our unique, personalised, user-friendly experience, your business is ready to reach new heights.
             </div>
-            <button class="get-started-btn" @onclick="@(() => Navigator.RedirectToPage("/registration"))">
+            <button class="get-started-btn" @onclick="@(() => NavigationManager.NavigateTo("/registration"))">
                 <div class="get-started-btn-text">
                     Get Started
                 </div>
@@ -37,14 +37,14 @@
             </div>
             <div class="row mt-5">
                 <div class="col text-right">
-                    <button class="explore-courses-btn" @onclick="@(() => Navigator.RedirectToPage("/courses"))">
+                    <button class="explore-courses-btn" @onclick="@(() => NavigationManager.NavigateTo("/courses"))">
                         <div class="get-started-btn-text">
                             Explore Courses
                         </div>
                     </button>
                 </div>
                 <div class="col text-left">
-                    <button class="find-coaches-btn" @onclick="@(() => Navigator.RedirectToPage("/coaches"))">
+                    <button class="find-coaches-btn" @onclick="@(() => NavigationManager.NavigateTo("/coaches"))">
                         <div class="find-coaches-btn-text">
                             Find Coaches
                         </div>
@@ -120,7 +120,7 @@
 
         if (user.Identity.IsAuthenticated)
         {
-            Navigator.RedirectToPage("/dashboard");
+            NavigationManager.NavigateTo("/dashboard");
         }
     }
 }
