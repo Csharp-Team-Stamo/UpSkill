@@ -19,7 +19,7 @@
 
         public async Task RequestDemo()
         {
-            var content = JsonSerializer.Serialize(input);
+            var content = JsonSerializer.Serialize(this.input);
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
             var requestResult = await client.PostAsync("welcomePage/requestDemo", bodyContent);
 

@@ -5,6 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.11" />
+    <PackageReference Include="SendGrid" Version="9.24.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Data\UpSkill.Data.csproj" />
     <ProjectReference Include="..\..\Infrastructure\UpSkill.Infrastructure.Common\UpSkill.Infrastructure.Common.csproj" />
   </ItemGroup>
