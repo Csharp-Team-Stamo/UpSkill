@@ -103,3 +103,18 @@
     top: 76%;
     left: 54%;
 }
+.div-courses {
+    position: absolute;
+    top: 56%;
+    left: 77%;
+}
+.div-coaches {
+    position: absolute;
+    top: 66%;
+    left: 77%;
+}
+.div-requests {
+    position: absolute;
+    top: 76%;
+    left: 77%;
+}
