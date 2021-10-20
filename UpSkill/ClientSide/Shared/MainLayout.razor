@@ -1,10 +1,15 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page">
-    <div class="">
+    <AuthorizeView>
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+    </AuthorizeView>
+    <div class="main">
         <div class="top-row px-4 auth">
             <div class="logo-container">
-                <div>
+                <div >
                     <img class="logo" src="/images/registrationPage/logo.svg" />
                 </div>
                 <div class="brand">
@@ -30,22 +35,11 @@
             </NavLink>
         </div>
 
-        <div class=".container-fluid">
-            <div class="content row p-0">
-                <div class="col-md-4 p-0 position-fixed">
-                    <AuthorizeView>
-                        <div class="sidebar">
-                            <NavMenu />
-                        </div>
-                    </AuthorizeView>
-                </div>
-                <div class="col-md-8 p-0 main_content">
-                    @Body
-                </div>
-            </div>
-            <Footer></Footer>
-        </div>
 
+        <div class="content px-4">
+            @Body
+        </div>
+        <Footer></Footer>
     </div>
 </div>
 

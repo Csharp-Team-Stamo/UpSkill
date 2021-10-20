@@ -1,11 +1,3 @@
-.main_content {
-    margin-left: 20%;
-    margin-top: 50px;
-    padding: 50px;
-    min-height: 100vh;
-    text-align: center;
-}
-
 .page {
     position: relative;
     display: flex;
@@ -18,7 +10,6 @@
 
 .sidebar {
     background-color: #296CFB1A;
-    position: fixed;
 }
 
 .top-row {
