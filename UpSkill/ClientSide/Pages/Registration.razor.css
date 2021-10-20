@@ -39,7 +39,7 @@
 
 input, ::deep input {
     border: 1px solid;
-    border-color: #296CFB;
+    border-color: var(--color-blue-primary);
     margin-bottom: 1em;
     width: clamp(20rem, 25vw, 30rem);
     padding: .4em;
