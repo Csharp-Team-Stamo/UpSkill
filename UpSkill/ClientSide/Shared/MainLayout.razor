@@ -1,11 +1,17 @@
 ﻿@inherits LayoutComponentBase
 
-    <Header></Header>
+<Header></Header>
 
-    <AuthorizeView>
-        <NavMenu />
-    </AuthorizeView>
+<div class="row">
+    <div class="col-3">
+        <AuthorizeView>
+            <NavMenu />
+        </AuthorizeView>
+    </div>
+    <div class="col-auto">
+        @Body
+    </div>
+</div>
 
-    @Body
-    <Footer></Footer>
+<Footer></Footer>
 
