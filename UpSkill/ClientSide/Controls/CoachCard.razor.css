@@ -4,21 +4,21 @@
 }
 
 .coach-profession {
-    font: normal bold 95% Montserrat;
+    font: normal bold 75% Montserrat;
     letter-spacing: 0.7px;
     color: #000000;
     opacity: 1;
 }
 
 .coach-name {
-    font: 95% Montserrat;
+    font: 75% Montserrat;
     letter-spacing: 0.7px;
     color: #000000;
     opacity: 1;
 }
 
 .coah-price {
-    font: 87% Montserrat;
+    font: 65% Montserrat;
     letter-spacing: 0.7px;
     color: #296CFB;
     opacity: 1;

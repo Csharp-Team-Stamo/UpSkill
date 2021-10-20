@@ -1,31 +1,31 @@
 ﻿@using UpSkill.ClientSide.Controls
+@using UpSkill.ClientSide.Pages
 @inherits LayoutComponentBase
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
+    <AuthorizeView>
+        <div class="sidebar">
+            <NavMenu />
+        </div>
+    </AuthorizeView>
     <div class="main">
         <div class="top-row px-4 auth">
-                <NavLink>
-                    <LoginDisplay></LoginDisplay>
+            <NavLink>
+                <LoginDisplay></LoginDisplay>
+            </NavLink>
+            <div class="">
+                <NavLink href="Courses">
+                    Courses
                 </NavLink>
-            <AuthorizeView>
-                <div class="">
-                    <NavLink>
-                        Courses
-                    </NavLink>
-                </div>
-                <div class="">
-                    <NavLink href="Coaches">
-                        Coaches
-                    </NavLink>
-                </div>
-                <NavLink>
-                    <Avatar></Avatar>
+            </div>
+            <div class="">
+                <NavLink href="Coaches">
+                    Coaches
                 </NavLink>
-            </AuthorizeView>
+            </div>
+            <NavLink>
+                <Avatar></Avatar>
+            </NavLink>
         </div>
 
 
@@ -34,3 +34,4 @@
         </div>
     </div>
 </div>
+
