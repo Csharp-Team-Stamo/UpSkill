@@ -1,15 +1,24 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using UpSkill.ClientSide.Authentication.Services.Contracts
+@using Microsoft.AspNetCore.Components
+
 
 @inject IAuthenticationService AuthenticationService
-@inject NavigationManager Navigation
+@inject NavigationManager NavigationManager
 @inject SignOutSessionStateManager SignOutManager
 
 <AuthorizeView>
     <NotAuthorized>
-        <a href="Registration">Register</a>
-        <a href="Login">Log in</a>
+        <button class="login_button" @onclick=@(() => RedirectToPage("/LogIn"))>LogIn</button>
+        <button href="" class="demo_button" @onclick=@(() => RedirectToPage("/#demo"))>Request a Demo</button>
     </NotAuthorized>
 </AuthorizeView>
+
+@code{
+    private void RedirectToPage(string pagePath)
+    {
+        NavigationManager.NavigateTo(pagePath);
+    }
+}
 
