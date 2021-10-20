@@ -1,45 +1,11 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
+    <Header></Header>
+
     <AuthorizeView>
-        <div class="sidebar">
-            <NavMenu />
-        </div>
+        <NavMenu />
     </AuthorizeView>
-    <div class="main">
-        <div class="top-row px-4 auth">
-            <div class="logo-container">
-                <div >
-                    <img class="logo" src="/images/registrationPage/logo.svg" />
-                </div>
-                <div class="brand">
-                    upskill
-                </div>
-            </div>
-            <div class="">
-                <NavLink href="Courses">
-                    Courses
-                </NavLink>
-            </div>
-            <div class="">
-                <NavLink href="Coaches">
-                    Coaches
-                </NavLink>
-            </div>
-            <NavLink>
-                <LoginDisplay></LoginDisplay>
-            </NavLink>
 
-            <NavLink>
-                <Avatar></Avatar>
-            </NavLink>
-        </div>
-
-
-        <div class="content px-4">
-            @Body
-        </div>
-        <Footer></Footer>
-    </div>
-</div>
+    @Body
+    <Footer></Footer>
 
