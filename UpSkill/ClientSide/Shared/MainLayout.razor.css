@@ -57,6 +57,7 @@ html, body {
 
 .content {
     grid-area: content;
+    padding-left: 2em;
     /* General appearance */
 }
 
