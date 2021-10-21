@@ -4,12 +4,25 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using UpSkill.Data.Models;
+    using UpSkill.Infrastructure.Models.Course;
+    using UpSkill.Services.Data.Contracts;
 
     public class CourseController : AdminController
     {
-        [HttpPost]
-        public async Task<ActionResult> Create()
+        private readonly IAdminCourseService courseService;
+
+        public CourseController(IAdminCourseService courseService)
         {
+            this.courseService = courseService;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Create([FromBody] CourseCreateInputModel input)
+        {
+            if(ModelState.IsValid == false)
+            {
+                return BadRequest("Please fill in all required fields.");
+            }
             // TODO create a CourseCreateInputModel & pass it [FromBody] to the ctor
             return StatusCode(201);
         }

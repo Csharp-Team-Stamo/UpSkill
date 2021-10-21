@@ -8,4 +8,10 @@
     <ProjectReference Include="..\UpSkill.Infrastructure.Common\UpSkill.Infrastructure.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Coach\" />
+    <Folder Include="Company\" />
+    <Folder Include="Category\" />
+  </ItemGroup>
+
 </Project>
