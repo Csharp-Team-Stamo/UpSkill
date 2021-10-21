@@ -23,7 +23,14 @@
             {
                 return BadRequest("Please fill in all required fields.");
             }
-            // TODO create a CourseCreateInputModel & pass it [FromBody] to the ctor
+
+            var createResult = await this.courseService.Create(input);
+
+            if(createResult == null)
+            {
+
+            }
+
             return StatusCode(201);
         }
 

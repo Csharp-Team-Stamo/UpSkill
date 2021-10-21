@@ -11,7 +11,7 @@
         [HttpPost]
         public async Task<ActionResult> Create()
         {
-            return View();
+            return StatusCode(201);
         }
     }
 }
