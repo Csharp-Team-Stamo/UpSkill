@@ -1,16 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-
-namespace UpSkill.Api.Areas.Admin.Controllers
+﻿namespace UpSkill.Api.Areas.Admin.Controllers
 {
-    public class CoachController : Controller
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
+
+    public class CoachController : AdminController
     {
-        public IActionResult Index()
+        public async Task<ActionResult> Create()
         {
-            return View();
+            // TODO create CoachCreateInputModel & pass it [FromBody] to the ctor
+            return StatusCode(201);
         }
     }
 }
