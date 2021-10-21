@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Controls\Avatar.razor.css" />
+    <None Remove="Controls\EmployeesTable.razor.css" />
     <None Remove="Controls\Footer.razor.css" />
     <None Remove="Controls\Header.razor.css" />
     <None Remove="Controls\OwnerDashboardStatistics.razor.css" />
@@ -21,6 +22,7 @@
 
   <ItemGroup>
     <Content Include="Controls\Avatar.razor.css" />
+    <Content Include="Controls\EmployeesTable.razor.css" />
     <Content Include="Controls\Footer.razor.css" />
     <Content Include="Controls\Header.razor.css" />
     <Content Include="Controls\OwnerDashboardStatistics.razor.css" />
