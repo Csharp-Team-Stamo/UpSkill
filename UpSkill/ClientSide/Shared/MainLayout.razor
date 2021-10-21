@@ -1,57 +1,23 @@
-﻿@using UpSkill.ClientSide.Controls
-@using UpSkill.ClientSide.Pages
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="">
-        <div class="top-row px-4 auth">
-            <div class="logo-container">
-                <div>
-                    <img class="logo" src="/images/registrationPage/logo.svg" />
-                </div>
-                <div class="brand">
-                    upskill
-                </div>
-            </div>
-            <div class="">
-                <NavLink href="Courses">
-                    Courses
-                </NavLink>
-            </div>
-            <div class="">
-                <NavLink href="Coaches">
-                    Coaches
-                </NavLink>
-            </div>
-            <NavLink>
-                <LoginDisplay></LoginDisplay>
-            </NavLink>
 
-            <NavLink>
-                <Avatar></Avatar>
-            </NavLink>
-        </div>
-
-        <div class=".container-fluid">
-            <div class="content row p-0">
-                <div class="col-md-4 p-0 position-fixed">
-
-                    <AuthorizeView>
-                        <div class="sidebar">
-                            <NavMenu />
-                        </div>
-                    </AuthorizeView>
-
-                </div>
-
-                <div class="col-md-8 p-0 main_content">
-                    @Body
-                </div>
-
-            </div>
-            <Footer></Footer>
-        </div>
-
+<div class="wrapper">
+    <div class="header">
+        <Header></Header>
     </div>
+    <div class="sidebar-1">
+        <div class="sticky-content">
+            <NavMenu />
+        </div>
+    </div>
+  
+    <div class="content">
+        <div class="sticky-spacer"></div>
+        <div class="sticky-content">
+            @Body
+        </div>
+    </div>
+    <div class="footer">  <Footer></Footer></div>
 </div>
+
 

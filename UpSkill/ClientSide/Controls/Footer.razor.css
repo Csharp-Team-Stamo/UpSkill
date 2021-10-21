@@ -1,4 +1,12 @@
-﻿.footer-card {
+﻿
+.footer {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+}
+
+.footer-card {
     position: relative
 }
 
@@ -102,4 +110,37 @@
     position: absolute;
     top: 76%;
     left: 54%;
+}
+.div-courses {
+    position: absolute;
+    top: 56%;
+    left: 77%;
+}
+.div-coaches {
+    position: absolute;
+    top: 66%;
+    left: 77%;
+}
+.div-requests {
+    position: absolute;
+    top: 76%;
+    left: 76%;
+}
+.facebook-logo-img {
+    position: absolute;
+    top: 56%;
+    left: 97%;
+    width: 2%;
+}
+.instagram-logo-img {
+    position: absolute;
+    top: 66%;
+    left: 97%;
+    width: 2%;
+}
+.linkin-logo-img {
+    position: absolute;
+    top: 76%;
+    left: 97%;
+    width: 2%;
 }

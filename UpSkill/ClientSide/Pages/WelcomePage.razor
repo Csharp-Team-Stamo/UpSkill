@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using Microsoft.AspNetCore.Components
 @inject NavigationManager NavigationManager
+@layout NoMenuLayout
 
 <div class="welcome-page-card container">
     <!-- #region row 1 -->
@@ -57,13 +58,13 @@
     <!-- #region row 3 -->
     <div class="row">
         <div class="col">
-            <div class="demo-title">
+            <div class="demo-title" id="demo">
                 Request a Demo
             </div>
             <div class="demo-content">
                 Don’t find what you are looking for? We would be more than happy to help you and assist you in everything you need! Let us know about your personal requirements by filling our request form:
             </div>
-            <div id="demo">
+            <div >
                 <EditForm Model="@RequestDemoFromModel" OnInvalidSubmit="() => { }">
                     <DataAnnotationsValidator />
                     <div class="row mt-5">

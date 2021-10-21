@@ -1,89 +1,65 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
-@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using UpSkill.ClientSide.Authentication.Services.Contracts
 @using UpSkill.ClientSide.Controls
 
 @inject IAuthenticationService AuthenticationService
 
 
-<div id="toggler" class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">UpSkill</a>
-    <button class="navbar-toggler" @onclick="ToggleNavMenu">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-</div>
-
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-
-
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-                <div class="d-inline-flex p-3 align-content-center">
-                    <Avatar></Avatar>
-                    <div class="ml-2">
-                        <div class=" mt-1 pb-1">
-                            Christo Peev
-                        </div>
-                        <div class="my-1">
-                            Motion Software
-                        </div>
-                    </div>
+<ul class="nav flex-column position-fixed border-light">
+    <li class="nav-item px-3">
+        <div class="d-inline-flex p-3 align-content-center">
+            <Avatar></Avatar>
+            <div class="ml-2">
+                <div class=" mt-1 pb-1">
+                    Christo Peev
                 </div>
+                <div class="my-1">
+                    Motion Software
+                </div>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item px-3">
+        <NavLink class="nav-link" href="Dashboard">
+            Dashboard
+        </NavLink>
+    </li>
+
+    <li class="nav-item px-3">
+        <NavLink class="nav-link" href="Courses">
+            Courses
+        </NavLink>
+    </li>
+    <li class="nav-item px-3">
+        <NavLink class="nav-link" href="Coaches">
+            Coaches
+        </NavLink>
+    </li>
+
+    <li class="nav-item px-3">
+        <NavLink class="nav-link" href="Grades">
+            Grades
+        </NavLink>
+    </li>
+
+    <li class="nav-item px-3">
+        <NavLink class="nav-link" href="Employees">
+            Employees
+        </NavLink>
+    </li>
+
+    <li class="nav-item px-3">
+        <NavLink class="nav-link" href="Invoice">
+            Invoice
+        </NavLink>
+    </li>
+    <AuthorizeView>
+        <Authorized>
+            <li class="nav-item px-3">
+                <NavLink class="logout-button nav-link " @onclick="AuthenticationService.Logout"><div>Log Out</div></NavLink>
             </li>
+        </Authorized>
+    </AuthorizeView>
+</ul>
 
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="Dashboard">
-                Dashboard
-            </NavLink>
-        </li>
-
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="Courses">
-                Courses
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="Coaches">
-                Coaches
-            </NavLink>
-        </li>
-
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="Grades">
-                Grades
-            </NavLink>
-        </li>
-
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="Employees">
-                Employees
-            </NavLink>
-        </li>
-
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="Invoice">
-                Invoice
-            </NavLink>
-        </li>
-        <AuthorizeView>
-            <Authorized>
-                <li class="nav-item px-3">
-                    <NavLink class="logout-button nav-link " @onclick="AuthenticationService.Logout"><div>Log Out</div></NavLink>
-                </li>
-            </Authorized>
-        </AuthorizeView>
-    </ul>
-</div>
-
-@code {
-
-
-    private bool collapseNavMenu = true;
-
-    private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
-
-    private void ToggleNavMenu()
-    {
-        collapseNavMenu = !collapseNavMenu;
-    }
-}
