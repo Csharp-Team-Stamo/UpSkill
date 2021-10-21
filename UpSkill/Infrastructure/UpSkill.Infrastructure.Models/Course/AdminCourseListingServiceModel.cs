@@ -8,5 +8,8 @@ namespace UpSkill.Infrastructure.Models.Course
 {
     public class AdminCourseListingServiceModel
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }
