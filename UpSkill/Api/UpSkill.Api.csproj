@@ -23,6 +23,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.Identity.Web" Version="1.1.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
@@ -30,6 +31,13 @@
     <ProjectReference Include="..\Data\UpSkill.Data.csproj" />
     <ProjectReference Include="..\Infrastructure\UpSkill.Infrastructure.Models\UpSkill.Infrastructure.Models.csproj" />
     <ProjectReference Include="..\Services\UpSkill.Services.Data\UpSkill.Services.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Controllers\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
+    <Folder Include="Areas\Admin\Views\" />
   </ItemGroup>
 
 </Project>
