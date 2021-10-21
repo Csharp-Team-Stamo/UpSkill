@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Components
 @inject NavigationManager NavigationManager
 @layout NoMenuLayout
+@attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
 <div class="welcome-page-card container">
     <!-- #region row 1 -->
@@ -64,7 +65,7 @@
             <div class="demo-content">
                 Don’t find what you are looking for? We would be more than happy to help you and assist you in everything you need! Let us know about your personal requirements by filling our request form:
             </div>
-            <div >
+            <div>
                 <EditForm Model="@RequestDemoFromModel" OnInvalidSubmit="() => { }">
                     <DataAnnotationsValidator />
                     <div class="row mt-5">
