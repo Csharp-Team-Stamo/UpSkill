@@ -1,0 +1,61 @@
+﻿
+
+<div class="">
+    <table class="table table-borderless shadow col-8 mt-4">
+        <thead>
+            <tr class="bg-primary font-weight-bold ">
+                <td  colspan="2" class="border-bottom-0" style="color:white">
+                    <span>
+                        &lt;
+                    </span>
+                    <span>
+                        September
+                    </span>
+                    <span>
+                        &gt;
+                    </span>
+                </td>
+            </tr>
+            <tr class="bg-primary" style="color:white">
+                <th class="font-weight-bold text-left pl-4">
+                    Course Name
+                </th>
+                <th class="text-right font-weight-bold pr-4">
+                    Enrolled
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in courses)
+            {
+                <tr class=" border-bottom-0 underline">
+                    <td class="text-left pl-4 font-weight-bold " style="color: #16D696">
+                        @course.Key
+                    </td>
+                    <td class="text-right pr-4" >
+                        @course.Value
+                    </td>
+                </tr>
+            }
+            <tr class="text-center">
+                <td colspan="2" class="cell" style="color: #16D696">
+                View More
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+@code {
+
+    private Dictionary<string, int> courses = new Dictionary<string, int>()
+
+{
+        { "HTML & CSS", 5 },
+        { "Photoshop", 3},
+        { "C# - Basics", 13 },
+        { "Data Structures", 2 }
+    };
+}
