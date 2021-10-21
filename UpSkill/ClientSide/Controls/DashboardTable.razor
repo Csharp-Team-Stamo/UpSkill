@@ -1,0 +1,61 @@
+﻿
+
+<div class="mx-auto">
+    <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
+        <thead class="border-bottom-0">
+            <tr class="font-weight-bold border-bottom-0" style="color: white; background-color: #296cfb">
+                <th scope="col"  colspan="2" class="border-bottom-0 text-center head-underline">
+                    <span class="previous-month">
+                        &lt;
+                    </span>
+                    <span>
+                        September
+                    </span>
+                    <span class="next-month">
+                        &gt;
+                    </span>
+                </th>
+            </tr>
+            <tr class="" style="color: white; background-color: #296cfb">
+                <th class="font-weight-bold text-left pl-4 cell-header-left">
+                    Course Name
+                </th>
+                <th class="text-right font-weight-bold pr-4 cell-header-right">
+                    Enrolled
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in courses)
+            {
+                <tr class=" border-bottom-0 underline">
+                    <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
+                        @course.Key
+                    </td>
+                    <td class="text-right pr-4 cell-right" >
+                        @course.Value
+                    </td>
+                </tr>
+            }
+            <tr class="text-center">
+                <td colspan="2" class="cell" style="color: #16D696">
+                View More
+
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+@code {
+
+    private Dictionary<string, int> courses = new Dictionary<string, int>()
+
+{
+        { "HTML & CSS", 5 },
+        { "Photoshop", 3},
+        { "C# - Basics", 13 },
+        { "Data Structures", 2 }
+    };
+}
