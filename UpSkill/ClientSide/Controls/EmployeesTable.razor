@@ -1,16 +1,23 @@
-﻿<table class="table table-body container">
+﻿
+<table class="table table-body container">
     <thead class="table-head">
-    <tr>
-        <th scope="col">Employees (64)</th>
-        <th scope="col">Email</th>
-    </tr>
+        <tr>
+            <th scope="col"> </th>
+            <th scope="col">Employees (64)</th>
+            <th scope="col">Email</th>
+            <th scope="col">
+                <div  class="add-btn">+</div>
+            </th>
+        </tr>
     </thead>
     <tbody>
     @for (int i = 0; i < 10; i++)
     {
         <tr>
+            <td></td>
             <td>Mark @i</td>
             <td>EmployeeEmail@epmloyee @i com</td>
+            <td></td>
         </tr>
     }
     </tbody>
