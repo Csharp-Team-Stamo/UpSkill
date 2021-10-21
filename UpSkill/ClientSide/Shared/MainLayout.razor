@@ -1,17 +1,23 @@
 ﻿@inherits LayoutComponentBase
 
-<Header></Header>
 
-<div class="row">
-    <div class="col-3">
-        <AuthorizeView>
+<div class="wrapper">
+    <div class="header">
+        <Header></Header>
+    </div>
+    <div class="sidebar-1">
+        <div class="sticky-content">
             <NavMenu />
-        </AuthorizeView>
+        </div>
     </div>
-    <div class="col-auto">
-        @Body
+  
+    <div class="content">
+        <div class="sticky-spacer"></div>
+        <div class="sticky-content">
+            @Body
+        </div>
     </div>
+    <div class="footer">  <Footer></Footer></div>
 </div>
 
-<Footer></Footer>
 
