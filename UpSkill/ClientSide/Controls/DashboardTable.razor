@@ -1,10 +1,10 @@
 ﻿
 
-<div class="">
-    <table class="table table-borderless shadow col-8 mt-4">
-        <thead>
-            <tr class="bg-primary font-weight-bold ">
-                <td  colspan="2" class="border-bottom-0" style="color:white">
+<div class="mx-auto">
+    <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
+        <thead class="border-bottom-0">
+            <tr class="font-weight-bold border-bottom-0" style="color: white; background-color: #296cfb">
+                <th scope="col"  colspan="2" class="border-bottom-0 text-center head-underline">
                     <span>
                         &lt;
                     </span>
@@ -14,13 +14,13 @@
                     <span>
                         &gt;
                     </span>
-                </td>
+                </th>
             </tr>
-            <tr class="bg-primary" style="color:white">
-                <th class="font-weight-bold text-left pl-4">
+            <tr class="" style="color: white; background-color: #296cfb">
+                <th class="font-weight-bold text-left pl-4 cell-header-left">
                     Course Name
                 </th>
-                <th class="text-right font-weight-bold pr-4">
+                <th class="text-right font-weight-bold pr-4 cell-header-right">
                     Enrolled
                 </th>
             </tr>
@@ -29,10 +29,10 @@
             @foreach (var course in courses)
             {
                 <tr class=" border-bottom-0 underline">
-                    <td class="text-left pl-4 font-weight-bold " style="color: #16D696">
+                    <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
                         @course.Key
                     </td>
-                    <td class="text-right pr-4" >
+                    <td class="text-right pr-4 cell-right" >
                         @course.Value
                     </td>
                 </tr>
