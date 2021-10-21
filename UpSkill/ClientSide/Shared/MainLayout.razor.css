@@ -38,8 +38,8 @@ html, body {
 }
 
 .sidebar-1 {
-    border: 1px solid black;
     grid-area: sidebar_1;
+    background-color: var(--color-light-blue-nav);
 }
 
 .sidebar-2 {
@@ -52,30 +52,22 @@ html, body {
     flex-direction: column;
     position: sticky;
     top: 0;
-    /* Styling to match reference */
-    /*    background-color: #BC514F;
-*/
+
 }
 
 .content {
     grid-area: content;
-    border: 1px solid black;
     /* General appearance */
-    /*    background-color: #99BB5E;
-*/
 }
 
 .footer {
     grid-area: footer;
     z-index: 1;
     /* Stick footer to bottom of grid */
-    /* position: sticky; */
     bottom: 0;
     /* General appearance */
-    /*    background-color: #FCFF34;
-*/
-    text-align: center;
-    font-size: .8rem;
+/*  text-align: center;
+    font-size: .8rem;*/
     line-height: 1.5;
     /*    padding: .5rem;
 */
