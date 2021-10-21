@@ -1,24 +1,33 @@
-﻿
-<table class="table table-body container">
-    <thead class="table-head">
-        <tr>
-            <th scope="col"> </th>
-            <th scope="col">Employees (64)</th>
-            <th scope="col">Email</th>
-            <th scope="col">
-                <div onclick="console.log('Yoo')" class="add-btn">+</div>
+﻿<div class="mx-auto">
+    <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
+        <thead class="border-bottom-0">
+        <tr class="" style="color: white; background-color: #296cfb">
+            <th class="font-weight-bold text-left pl-4 cell-header-left">
+                Employees (64)
+            </th>
+            <th class="text-right font-weight-bold pr-4 cell-header-right">
+                Email
             </th>
         </tr>
-    </thead>
-    <tbody>
-    @for (int i = 0; i < 10; i++)
-    {
-        <tr>
-            <td></td>
-            <td>Mark @i</td>
-            <td>EmployeeEmail@epmloyee @i com</td>
-            <td></td>
+        </thead>
+        <tbody>
+        @for (int i = 0; i < 10; i++)
+        {
+            <tr class=" border-bottom-0 underline">
+                <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
+                    Employee @i
+                </td>
+                <td class="text-right pr-4 cell-right" >
+                    Email@yoo.com @i
+                </td>
+            </tr>
+        }
+        <tr class="text-center">
+            <td colspan="2" class="cell" style="color: #16D696">
+                View More
+
+            </td>
         </tr>
-    }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
