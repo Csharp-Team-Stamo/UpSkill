@@ -1,0 +1,33 @@
+﻿.modal-body {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    height: 308px;
+    margin-top: 30%;
+    width: 90%;
+    position: absolute;
+}
+
+.modal-header-custom {
+    background: #296CFB;
+    height: 39%;
+    position: relative;
+    top: -6%;
+    width: 107.9%;
+    left: -0.46%;
+}
+
+.add-emp-text {
+    font: 93% Montserrat;
+    letter-spacing: 1.4px;
+    color: #FFFFFF;
+    position: absolute;
+    left: 33%;
+    top: 68%;
+}
+
+.header-btn {
+    position: relative;
+    left: 94%;
+    top: -31%;
+    color: white;
+    font-weight: 100;
+}

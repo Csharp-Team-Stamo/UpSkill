@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Controls\AddEmployeeModal.razor.css" />
     <None Remove="Controls\Avatar.razor.css" />
     <None Remove="Controls\EmployeesTable.razor.css" />
     <None Remove="Controls\Footer.razor.css" />
@@ -21,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Controls\AddEmployeeModal.razor.css" />
     <Content Include="Controls\Avatar.razor.css" />
     <Content Include="Controls\EmployeesTable.razor.css" />
     <Content Include="Controls\Footer.razor.css" />
