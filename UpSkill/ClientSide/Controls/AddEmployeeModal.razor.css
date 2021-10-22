@@ -4,6 +4,7 @@
     margin-top: 30%;
     width: 90%;
     position: absolute;
+    pointer-events: auto;
 }
 
 .modal-header-custom {
@@ -27,7 +28,9 @@
 .header-btn {
     position: relative;
     left: 94%;
-    top: -31%;
+    top: 5%;
     color: white;
     font-weight: 100;
+    cursor: pointer;
+
 }
