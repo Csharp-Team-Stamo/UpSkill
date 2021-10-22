@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize(Roles = "Admin, ADMIN")]
+    [Authorize(Roles = "Administrator, ADMINISTRATOR")]
     [Area("Admin")]
     [Route("admin/[controller]")]
     [ApiController]
