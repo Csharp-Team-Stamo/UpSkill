@@ -6,26 +6,43 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using UpSkill.Data.Models;
+    using UpSkill.Infrastructure.Models.Coach;
+    using UpSkill.Services.Data.Contracts;
 
     public class CoachController : AdminController
     {
-        [HttpPost]
-        public async Task<ActionResult> Create()
+        private readonly ICoachService coachService;
+
+        public CoachController(ICoachService coachService)
         {
-            // TODO create CoachCreateInputModel & pass it [FromBody] to the ctor
+            this.coachService = coachService;
+        }
+
+        [HttpPost("Create")]
+        public async Task<ActionResult> Create([FromBody]CoachCreateInputModel input)
+        {
+           var coach = await this.coachService.Create(input);
+
+            if(coach == null)
+            {
+                return StatusCode(500);
+            }
+
             return StatusCode(201);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Coach>>> ListAll()
+        [HttpGet("All")]
+        public async Task<ActionResult<IEnumerable<CoachCreateInputModel>>> All()
         {
             /* TODO create a CoachAdminListingServiceModel &
             * make it the type of the returned collection */
 
-            return new List<Coach>();
+            var coaches = await this.coachService.GetAll();
+
+            return new List<CoachCreateInputModel>(coaches);
         }
 
-        [HttpPut("id")]
+        [HttpPut("Edit/{id}")]
         public async Task<ActionResult> Edit(string id)
         {
             /* TODO create CoachEditInputModel &
@@ -39,7 +56,7 @@
             return StatusCode(200);
         }
 
-        [HttpDelete("id")]
+        [HttpDelete("Delete/{id}")]
         public async Task<ActionResult> Delete(string id)
         {
             if (id == null)

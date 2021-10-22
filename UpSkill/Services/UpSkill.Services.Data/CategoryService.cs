@@ -33,6 +33,20 @@ namespace UpSkill.Services.Data
             return category;
         }
 
+        public async Task<IEnumerable<CategoryCreateInputModel>> GetAll()
+        {
+            var allCategories = await this.categoryRepo
+                .All()
+                .Select(c => new CategoryCreateInputModel
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                })
+                .ToListAsync();
+
+            return allCategories;
+        }
+
         public async Task<Category> GetCategory(CategoryCreateInputModel categoryInput)
         {
             var category = await this.categoryRepo
@@ -45,11 +59,6 @@ namespace UpSkill.Services.Data
             }
 
             return category;
-        }
-
-        public Task<Category> GetCategory(CategoryCreateInputModel categoryInput)
-        {
-            throw new NotImplementedException();
         }
     }
 }

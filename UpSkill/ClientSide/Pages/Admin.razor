@@ -1,11 +1,5 @@
 ﻿@page "/admin"
 
-@using UpSkill.Infrastructure.Models.Course
-@using System.Text;
-@using System.Text.Json;
-
-
-
 <h3>Hello, Admin</h3>
 
 <EditForm Model="courseInput" OnValidSubmit="@(Create)" class="card card-body bg-light mt-5">
@@ -24,11 +18,49 @@
             <ValidationMessage For="@(() => courseInput.Description)" />
         </div>
     </div>
+
+    <div class="form-group row">
+        <label for="Category" class="col-md-2 col-form-label">Category</label>
+        <div class="col-md-10">
+            <InputSelect id="category" class="form-control" @bind-Value="courseInput.Category">
+                <option>---Select Category---</option>
+                @foreach (var category in CategoriesInDb)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </InputSelect>
+
+            <ValidationMessage For="@(() => courseInput.Category)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="Coach" class="col-md-2 col-form-label">Coach</label>
+        <div class="col-md-10">
+            <InputSelect id="coach" class="form-control" @bind-Value="courseInput.Coach">
+                <option>---Select Coach---</option>
+                @foreach (var coach in CoachesInDb)
+                {
+                    <option value="@coach.Id">@coach.FullName</option>
+                }
+            </InputSelect>
+
+            <ValidationMessage For="@(() => courseInput.Coach)" />
+        </div>
+    </div>
+
     <div class="form-group row">
         <label for="@courseInput.AuthorFullName" class="col-md-2 col-form-label">Author Full Name</label>
         <div class="col-md-10">
             <InputText id="authorfullname" class="form-control" @bind-Value="courseInput.AuthorFullName" />
             <ValidationMessage For="@(() => courseInput.AuthorFullName)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="@courseInput.AuthorCompany" class="col-md-2 col-form-label">Author Company</label>
+        <div class="col-md-10">
+            <InputText id="authorcompany" class="form-control" @bind-Value="courseInput.AuthorCompany" />
+            <ValidationMessage For="@(() => courseInput.AuthorCompany)" />
         </div>
     </div>
     <div class="form-group row">
@@ -54,31 +86,5 @@
 
 
 @code {
-    private readonly CourseCreateInputModel courseInput = new();
-
-    [Inject]
-    public HttpClient Client { get; set; }
-
-    [Inject]
-    public NavigationManager NavigationManager { get; set; }
-
-
-
-    public async Task Create()
-    {
-        //NavigationManager.NavigateTo("https://google.com");
-
-        //Console.WriteLine("Hi");
-        //var content = JsonSerializer.Serialize(courseInput);
-        //var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
-
-        var response = await this.Client.PostAsJsonAsync("admin/course/create", courseInput);
-
-        //var response = await this.Client.PostAsync("admin/course/create", bodyContent);
-
-        if (response.IsSuccessStatusCode)
-        {
-            NavigationManager.NavigateTo("/admin/allCourses");
-        }
-    }
+    
 }

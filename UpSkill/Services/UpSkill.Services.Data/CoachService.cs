@@ -8,6 +8,7 @@
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
+    using UpSkill.Infrastructure.Models.Category;
     using UpSkill.Infrastructure.Models.Coach;
     using UpSkill.Services.Data.Contracts;
 
@@ -53,6 +54,27 @@
             var coach = await this.coachRepo.All().FirstOrDefaultAsync(c => c.Id == coachInput.Id);
 
             return coach;
+        }
+
+        public async Task<IEnumerable<CoachCreateInputModel>> GetAll()
+        {
+            var allCoaches = await this.coachRepo
+                .All()
+                .Select(c => new CoachCreateInputModel
+                {
+                    Id = c.Id,
+                    Category = new CategoryCreateInputModel
+                    {
+                        Id = c.Category.Id,
+                        Name = c.Category.Name
+                    },
+                    Company = c.Company,
+                    FullName = c.FullName,
+                    PricePerSession = c.PricePerSession
+                })
+                .ToListAsync();
+
+            return allCoaches;
         }
     }
 }

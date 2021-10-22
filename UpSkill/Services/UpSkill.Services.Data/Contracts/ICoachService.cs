@@ -12,5 +12,6 @@ namespace UpSkill.Services.Data.Contracts
     {
         Task<Coach> Create(CoachCreateInputModel coachInput);
         Task<Coach> GetCoach(CoachCreateInputModel coachInput);
+        Task<IEnumerable<CoachCreateInputModel>> GetAll();
     }
 }

@@ -1,5 +1,6 @@
 ﻿namespace UpSkill.Services.Data.Contracts
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using UpSkill.Data.Models;
     using UpSkill.Infrastructure.Models.Category;
@@ -8,5 +9,6 @@
     {
         Task<Category> GetCategory(CategoryCreateInputModel categoryInput);
         Task<Category> CreateCategory(CategoryCreateInputModel categoryInput);
+        Task<IEnumerable<CategoryCreateInputModel>> GetAll();
     }
 }
