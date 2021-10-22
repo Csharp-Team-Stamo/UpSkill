@@ -1,0 +1,34 @@
+﻿@page "/admin/allCourses"
+
+@using UpSkill.Infrastructure.Models.Course
+
+<h3>AdminAllCourses</h3>
+
+<table>
+    <thead>
+
+    </thead>
+    <tbody>
+        @foreach(var course in allCourses)
+            {
+                <tr>
+                    <td>@course.Id</td>
+                    <td>@course.Name</td>
+                    <td>@course.Description</td>
+                </tr>
+            }
+    </tbody>
+</table>
+
+@code {
+    private IEnumerable<AdminCourseListingServiceModel> allCourses =
+        new List<AdminCourseListingServiceModel>();
+
+    [Inject]
+    public HttpClient Client { get; set; }
+
+    async Task Display()
+    {
+        this.allCourses = await this.Client.GetFromJsonAsync<IEnumerable<AdminCourseListingServiceModel>>("admin/course/all");
+    }
+}

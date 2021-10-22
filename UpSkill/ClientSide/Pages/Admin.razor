@@ -1,0 +1,81 @@
+﻿@page "/admin"
+
+@using UpSkill.Infrastructure.Models.Course
+@using System.Text;
+@using System.Text.Json;
+
+
+
+<h3>Hello, Admin</h3>
+
+<EditForm Model="courseInput" OnValidSubmit="Create" class="card card-body bg-light mt-5">
+    <DataAnnotationsValidator />
+    <div class="form-group row">
+        <label for="name" class="col-md-2 col-form-label">Name</label>
+        <div class="col-md-10">
+            <InputText id="name" class="form-control" @bind-Value="courseInput.Name" />
+            <ValidationMessage For="@(() => courseInput.Name)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="description" class="col-md-2 col-form-label">Description</label>
+        <div class="col-md-10">
+            <InputText id="description" class="form-control" @bind-Value="courseInput.Description" />
+            <ValidationMessage For="@(() => courseInput.Description)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="@courseInput.AuthorFullName" class="col-md-2 col-form-label">Author Full Name</label>
+        <div class="col-md-10">
+            <InputText id="authorfullname" class="form-control" @bind-Value="courseInput.AuthorFullName" />
+            <ValidationMessage For="@(() => courseInput.AuthorFullName)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="@courseInput.Price" class="col-md-2 col-form-label">Price</label>
+        <div class="col-md-10">
+            <InputNumber id="price" class="form-control" @bind-Value="courseInput.Price" />
+            <ValidationMessage For="@(() => courseInput.Price)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="@courseInput.VideoUrl" class="col-md-2 col-form-label">Video URL</label>
+        <div class="col-md-10">
+            <InputText id="videourl" class="form-control" @bind-Value="courseInput.VideoUrl" />
+            <ValidationMessage For="@(() => courseInput.VideoUrl)" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-primary">Create Course</button>
+        </div>
+    </div>
+</EditForm>
+
+
+@code {
+    private readonly CourseCreateInputModel courseInput = new();
+
+    [Inject]
+    public HttpClient Client { get; set; }
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+
+
+    public void Create()
+    {
+        NavigationManager.NavigateTo("https://google.com");
+
+        Console.WriteLine("Hi");
+        //var content = JsonSerializer.Serialize(courseInput);
+        //var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+        //var response = await this.Client.PostAsync("admin/course/create", bodyContent);
+
+        //if (response.IsSuccessStatusCode)
+        //{
+        //    NavigationManager.NavigateTo("/admin/allCourses");
+        //}
+    }
+}

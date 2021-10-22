@@ -1,18 +1,16 @@
 ﻿namespace UpSkill.Infrastructure.Models.Course
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class CourseCreateInputModel
     {
-        public int CategoryId { get; set; }
+        //[Display(Name = "Category Id")]
+        //public int CategoryId { get; set; }
 
-        [Required]
-        public string CoachId { get; set; }
+        //[Required]
+        //[Display(Name = "Coach Id")]
+        //public string CoachId { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -21,9 +19,11 @@
         public string Description { get; set; }
 
         [Required]
+        [Display(Name = "Author Full Name")]
         public string AuthorFullName { get; set; }
 
         [Required]
+        [Display(Name = "Author Company")]
         public string AuthorCompany { get; set; }
 
         [Range(0.00, 1000.00)]
@@ -31,6 +31,7 @@
         public decimal Price { get; set; }
 
         [Required]
+        [Display(Name = "Video URL")]
         public string VideoUrl { get; set; }
     }
 }

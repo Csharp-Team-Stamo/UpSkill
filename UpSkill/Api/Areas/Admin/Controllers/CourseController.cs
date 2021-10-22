@@ -15,7 +15,7 @@
             this.courseService = courseService;
         }
 
-        [HttpPost]
+        [HttpPost("Create")]
         public async Task<ActionResult> Create([FromBody] CourseCreateInputModel input)
         {
             if(ModelState.IsValid == false)
@@ -33,7 +33,7 @@
             return StatusCode(201);
         }
 
-        [HttpGet]
+        [HttpGet("ListAll")]
         public async Task<ActionResult<IEnumerable<AdminCourseListingServiceModel>>> ListAll()
         {
             var allCourses = await this.courseService.All();
