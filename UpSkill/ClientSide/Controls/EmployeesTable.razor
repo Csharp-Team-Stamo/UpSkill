@@ -1,4 +1,10 @@
-﻿<div class="mx-auto">
+﻿@if (show)
+{
+    <AddEmployeeModal SetShow="SetShowValue"></AddEmployeeModal>
+}
+
+
+<div class="mx-auto">
     <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
         <thead class="border-bottom-0">
             <tr class="" style="color: white; background-color: #296cfb">
@@ -9,28 +15,42 @@
                     Email
                 </th>
                 <th>
-                    <div class="add-btn">+</div>
+                    <div class="add-btn" @onclick="ShowPopup">+</div>
                 </th>
             </tr>
         </thead>
         <tbody>
-        @for (int i = 1; i < 10; i++)
-        {
-            <tr class=" border-bottom-0 underline">
-                <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
-                    Employee @i
-                </td>
-                <td class="text-right pr-4 cell-right" >
-                    Email@yoo.com @i
+            @for (int i = 1; i < 10; i++)
+            {
+                <tr class=" border-bottom-0 underline">
+                    <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
+                        Employee @i
+                    </td>
+                    <td class="text-right pr-4 cell-right">
+                        Email@yoo.com @i
+                    </td>
+                </tr>
+            }
+            <tr class="text-center">
+                <td colspan="2" style="color: #16D696">
+                    View More
                 </td>
             </tr>
-        }
-        <tr class="text-center">
-            <td colspan="2" class="cell" style="color: #16D696">
-                View More
-
-            </td>
-        </tr>
         </tbody>
     </table>
 </div>
+
+@code
+{
+    private bool show = false;
+
+    private void ShowPopup()
+    {
+        show = true;
+    }
+
+    private void SetShowValue(bool value)
+    {
+        show = value;
+    }
+}
