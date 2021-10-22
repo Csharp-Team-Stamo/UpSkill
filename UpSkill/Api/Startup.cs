@@ -109,6 +109,8 @@
 
 			services.AddTransient<IAccountsService, AccountsService>();
             services.AddTransient<IAdminCourseService, AdminCourseService>();
+            services.AddTransient<ICategoryService, CategoryService>();
+            services.AddTransient<ICoachService, CoachService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

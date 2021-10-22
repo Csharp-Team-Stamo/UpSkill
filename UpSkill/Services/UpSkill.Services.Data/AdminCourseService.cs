@@ -14,10 +14,17 @@
     public class AdminCourseService : IAdminCourseService
     {
         private readonly IRepository<Course> courseRepo;
+        private readonly ICategoryService categoryService;
+        private readonly ICoachService coachService;
 
-        public AdminCourseService(IRepository<Course> courseRepo)
+        public AdminCourseService(
+            IRepository<Course> courseRepo,
+            ICategoryService categoryService,
+            ICoachService coachService)
         {
             this.courseRepo = courseRepo;
+            this.categoryService = categoryService;
+            this.coachService = coachService;
         }
 
         public async Task<IEnumerable<AdminCourseListingServiceModel>> All()
@@ -36,11 +43,26 @@
 
         public async Task<int?> Create(CourseCreateInputModel input)
         {
-            // TODO logic to retrieve/create the category
-            // TODO logic to retrieve/create the Coach
+            var category = await this.categoryService.GetCategory(input.Category);
+
+            if(category == null)
+            {
+                category = await this.categoryService.CreateCategory(input.Category);
+            }
+
+            var coach = await this.coachService.GetCoach(input.Coach);
+
+            if(coach == null)
+            {
+                coach = await this.coachService.Create(input.Coach);
+            }
 
             var course = new Course
             {
+                Category = category,
+                CategoryId = category.Id,
+                Coach = coach,
+                CoachId = coach.Id,
                 Name = input.Name,
                 Description = input.Description,
                 AuthorFullName = input.AuthorFullName,

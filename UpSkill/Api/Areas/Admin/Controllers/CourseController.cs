@@ -9,10 +9,14 @@
     public class CourseController : AdminController
     {
         private readonly IAdminCourseService courseService;
+        private readonly ICategoryService categoryService;
 
-        public CourseController(IAdminCourseService courseService)
+        public CourseController(
+            IAdminCourseService courseService,
+            ICategoryService categoryService)
         {
             this.courseService = courseService;
+            this.categoryService = categoryService;
         }
 
         [HttpPost("Create")]

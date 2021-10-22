@@ -64,18 +64,21 @@
 
 
 
-    public void Create()
+    public async Task Create()
     {
-        NavigationManager.NavigateTo("https://google.com");
+        //NavigationManager.NavigateTo("https://google.com");
 
-        Console.WriteLine("Hi");
+        //Console.WriteLine("Hi");
         //var content = JsonSerializer.Serialize(courseInput);
         //var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+
+        var response = await this.Client.PostAsJsonAsync("admin/course/create", courseInput);
+
         //var response = await this.Client.PostAsync("admin/course/create", bodyContent);
 
-        //if (response.IsSuccessStatusCode)
-        //{
-        //    NavigationManager.NavigateTo("/admin/allCourses");
-        //}
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/admin/allCourses");
+        }
     }
 }

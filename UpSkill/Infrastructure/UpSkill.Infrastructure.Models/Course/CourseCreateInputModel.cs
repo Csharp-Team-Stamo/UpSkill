@@ -2,11 +2,15 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using UpSkill.Infrastructure.Models.Category;
+    using UpSkill.Infrastructure.Models.Coach;
 
     public class CourseCreateInputModel
     {
         //[Display(Name = "Category Id")]
-        //public int CategoryId { get; set; }
+        public CategoryCreateInputModel Category { get; set; }
+
+        public CoachCreateInputModel Coach { get; set; }
 
         //[Required]
         //[Display(Name = "Coach Id")]
