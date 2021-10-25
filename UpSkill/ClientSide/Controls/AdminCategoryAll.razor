@@ -18,13 +18,20 @@
 </table>
 
 @code {
-    private IEnumerable<AdminCategoryListingServiceModel> allCategories;
+    private IEnumerable<AdminCategoryListingServiceModel> allCategories =
+        new List<AdminCategoryListingServiceModel>();
 
     [Inject]
     public HttpClient Client { get; set; }
 
-    public async Task Display()
+    protected override async Task OnInitializedAsync()
     {
         this.allCategories = await this.Client.GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>("/admin/category/all");
+        // return base.OnInitializedAsync();
+    }
+
+    public async Task Display()
+    {
+
     }
 }
