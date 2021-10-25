@@ -35,8 +35,8 @@
     display:flex;
     flex: content;
     flex-direction: row;
-
 }
+
 
 .logo {
     width: 4em;

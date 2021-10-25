@@ -86,6 +86,7 @@ html, body {
 
 .sticky-content {
     position: sticky;
+    text-align:center;
     bottom: var(--footer-height);
     min-height: calc(100vh - var(--footer-height));
     box-sizing: border-box;
