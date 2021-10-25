@@ -29,15 +29,16 @@
     </div>
 
     <div class="form-group row">
-        <label for="category" class="col-md-2 col-form-label">Category</label>
+        <label for="categoryId" class="col-md-2 col-form-label">Category</label>
         <div class="col-md-10">
-            <InputSelect class="form-control" @bind-Value="coachInput.Category.Id">
-                @foreach(var category in CategoriesInDb)
+            <InputSelect id="categoryId" class="form-control" @bind-Value="coachInput.CategoryId">
+                <option>---Select Category---</option>
+                @foreach (var category in CategoriesInDb)
                 {
                     <option value="@category.Id">@category.Name</option>
                 }
             </InputSelect>
-            <ValidationMessage For="@(() => coachInput.Category)" />
+            <ValidationMessage For="@(() => coachInput.CategoryId)" />
         </div>
     </div>
 

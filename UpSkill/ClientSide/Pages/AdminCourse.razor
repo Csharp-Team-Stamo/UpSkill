@@ -22,22 +22,21 @@
     <div class="form-group row">
         <label for="CategoryId" class="col-md-2 col-form-label">Category Name</label>
         <div class="col-md-10">
-            <InputSelect id="categoryId" class="form-control" @bind-Value="courseInput.Category.Id">
+            <InputSelect id="categoryId" class="form-control" @bind-Value="courseInput.CategoryId">
                 <option>---Select Category---</option>
                 @foreach (var category in CategoriesInDb)
                 {
                     <option value="@category.Id">@category.Name</option>
                 }
             </InputSelect>
-
-            <ValidationMessage For="@(() => courseInput.Category.Id)" />
+            <ValidationMessage For="@(() => courseInput.CategoryId)" />
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="Coach" class="col-md-2 col-form-label">Coach</label>
+        <label for="CoachId" class="col-md-2 col-form-label">Coach</label>
         <div class="col-md-10">
-            <InputSelect id="coach" class="form-control" @bind-Value="courseInput.Coach">
+            <InputSelect id="coachId" class="form-control" @bind-Value="courseInput.CoachId">
                 <option>---Select Coach---</option>
                 @foreach (var coach in CoachesInDb)
                 {
@@ -45,7 +44,7 @@
                 }
             </InputSelect>
 
-            <ValidationMessage For="@(() => courseInput.Coach)" />
+            <ValidationMessage For="@(() => courseInput.CoachId)" />
         </div>
     </div>
 

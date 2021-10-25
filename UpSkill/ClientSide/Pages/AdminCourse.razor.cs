@@ -23,12 +23,11 @@
 
         public IEnumerable<CoachCreateInputModel> CoachesInDb { get; set; }
 
-        //protected override Task OnInitializedAsync()
-        //{
-        //    this.CategoriesInDb = (IEnumerable<CategoryCreateInputModel>)this.Client.GetFromJsonAsync<IEnumerable<CategoryCreateInputModel>>("/admin/category/all");
-        //    this.CoachesInDb = (IEnumerable<CoachCreateInputModel>)this.Client.GetFromJsonAsync<IEnumerable<CoachCreateInputModel>>("/admin/coach/all");
-        //    return base.OnInitializedAsync();
-        //}
+        protected override async Task OnInitializedAsync()
+        {
+            this.CategoriesInDb = await this.Client.GetFromJsonAsync<IEnumerable<CategoryCreateInputModel>>("/admin/category/all");
+            this.CoachesInDb = await this.Client.GetFromJsonAsync<IEnumerable<CoachCreateInputModel>>("/admin/coach/all");
+        }
 
         public async Task Create()
         {

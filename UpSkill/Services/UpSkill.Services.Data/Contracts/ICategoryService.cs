@@ -7,8 +7,8 @@
 
     public interface ICategoryService
     {
-        // Task<Category> GetCategory(int id);
-        Task<Category> GetCategory(CategoryCreateInputModel categoryInput);
+        Task<Category> GetCategory(int id);
+        // Task<Category> GetCategory(CategoryCreateInputModel categoryInput);
         Task<Category> CreateCategory(CategoryCreateInputModel categoryInput);
         Task<IEnumerable<CategoryCreateInputModel>> GetAll();
     }

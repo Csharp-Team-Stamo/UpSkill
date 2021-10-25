@@ -43,7 +43,7 @@
 
         public async Task<int?> Create(CourseCreateInputModel input)
         {
-            var category = await this.categoryService.GetCategory(input.Category);
+            var category = await this.categoryService.GetCategory(input.Category.Id);
 
             if(category == null)
             {

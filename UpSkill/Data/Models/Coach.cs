@@ -1,5 +1,6 @@
 ﻿namespace UpSkill.Data.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
@@ -9,6 +10,11 @@
 
     public class Coach : BaseDeletableModel<string>
     {
+        public Coach()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 

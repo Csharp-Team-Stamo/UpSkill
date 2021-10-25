@@ -8,11 +8,12 @@
     using UpSkill.Infrastructure.Models.Category;
     using UpSkill.Infrastructure.Models.Coach;
 
-    public partial class AdminCoach
+    public partial class AdminCoach : ComponentBase
     {
         private CoachCreateInputModel coachInput = new();
 
-        public IEnumerable<CategoryCreateInputModel> CategoriesInDb { get; set; }
+        public IEnumerable<AdminCategoryListingServiceModel> CategoriesInDb =
+            new List<AdminCategoryListingServiceModel>();
 
         [Inject]
         public HttpClient Client { get; set; }
@@ -20,10 +21,10 @@
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
-        protected override async Task OnParametersSetAsync()
+        protected override async Task OnInitializedAsync()
         {
-            this.CategoriesInDb = await this.Client.GetFromJsonAsync<IEnumerable<CategoryCreateInputModel>>("/admin/category/all");
-            // return base.OnParametersSetAsync();
+            this.CategoriesInDb = await this.Client
+                .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>("/admin/category/all");
         }
 
         public async Task Create()

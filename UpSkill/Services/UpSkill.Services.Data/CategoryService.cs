@@ -47,16 +47,16 @@ namespace UpSkill.Services.Data
             return allCategories;
         }
 
-        public async Task<Category> GetCategory(CategoryCreateInputModel categoryInput)
+        public async Task<Category> GetCategory(int id)
         {
             var category = await this.categoryRepo
                                      .All()
-                                     .FirstOrDefaultAsync(c => c.Id == categoryInput.Id);
+                                     .FirstOrDefaultAsync(c => c.Id == id);
 
-            if (category == null)
-            {
-                category = await this.CreateCategory(categoryInput);
-            }
+            //if (category == null)
+            //{
+            //    category = await this.CreateCategory(categoryInput);
+            //}
 
             return category;
         }

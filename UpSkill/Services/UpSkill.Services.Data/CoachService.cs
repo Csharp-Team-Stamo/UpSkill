@@ -27,12 +27,12 @@
 
         public async Task<Coach> Create(CoachCreateInputModel coachInput)
         {
-            var category = await this.categoryService.GetCategory(coachInput.Category);
+            var category = await this.categoryService.GetCategory(coachInput.CategoryId);
 
-            if(category == null)
-            {
-                category = await this.categoryService.CreateCategory(coachInput.Category);
-            }
+            //if(category == null)
+            //{
+            //    category = await this.categoryService.CreateCategory(coachInput.Category);
+            //}
 
             var coach = new Coach
             {
