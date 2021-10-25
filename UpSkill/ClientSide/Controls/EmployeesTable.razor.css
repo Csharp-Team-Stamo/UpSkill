@@ -72,14 +72,3 @@ td.cell-left {
     padding-left: 5.5em;
 }
 
-.previous-month:hover {
-    cursor: pointer;
-    padding-right: 2em;
-}
-
-.next-month:hover {
-    cursor: pointer;
-    padding-left: 2em;
-}
-
-

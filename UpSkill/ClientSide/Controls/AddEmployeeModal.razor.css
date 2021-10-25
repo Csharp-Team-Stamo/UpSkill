@@ -1,7 +1,7 @@
 ﻿.modal-body {
     background: #FFFFFF 0% 0% no-repeat padding-box;
-    height: 308px;
-    margin-top: 30%;
+    height: 350px;
+    margin-top: 15%;
     width: 90%;
     position: absolute;
     pointer-events: auto;
@@ -71,15 +71,24 @@ input, ::deep input {
     color: #296CFB;
     margin-left: 25%;
     cursor: pointer;
+    position: relative;
+    border: none;
+    padding: 0;
+    background: none;
+    outline: none;
+    left: -18%;
+    margin-bottom: 7%;
 }
 .cancel-btn {
     border: 2px solid #296CFB;
     position: relative;
     width: 20%;
-    height: 9%;
+    height: 7%;
     top: 8%;
     left: 26%;
     cursor: pointer;
+    padding: 0;
+    background: none;
 }
 .cancel-btn-text {
     font: bold 64% Montserrat;
@@ -92,10 +101,11 @@ input, ::deep input {
     background: #296CFB 0% 0% no-repeat padding-box;
     position: relative;
     width: 20%;
-    height: 9%;
+    height: 14%;
     top: -1%;
-    left: 53%;
+    left: 34%;
     cursor: pointer;
+    border: none;
 }
 .save-btn-text {
     font: bold 64% Montserrat;

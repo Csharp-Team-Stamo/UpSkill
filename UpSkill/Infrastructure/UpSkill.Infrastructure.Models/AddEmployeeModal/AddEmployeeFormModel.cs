@@ -15,5 +15,7 @@
         [Required]
         [RegularExpression(EmailRegEx, ErrorMessage = "Not valid email")]
         public string Email { get; set; }
+
+        public bool AddAnotherOneBtn { get; set; } = false;
     }
 }
