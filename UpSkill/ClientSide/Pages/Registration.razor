@@ -1,5 +1,6 @@
 ﻿@layout EmptyLayout
 @page "/registration"
+@attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
 @if (ShowRegistrationErrors)
 {
@@ -78,7 +79,7 @@
             </div>
 
             <div>
-                    Already have an account? <NavLink class="navigation" href="LogIn">LogIn here.</NavLink>
+                Already have an account? <NavLink class="navigation" href="LogIn">LogIn here.</NavLink>
             </div>
 
         </div>

@@ -17,3 +17,7 @@
 div {
     display: inline-block;
 }
+
+.avatar-container:hover {
+    cursor: pointer;
+}
