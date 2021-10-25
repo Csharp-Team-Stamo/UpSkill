@@ -32,5 +32,24 @@
     color: white;
     font-weight: 100;
     cursor: pointer;
+}
 
+.upload-csv-file-btn {
+    border: 2px solid #FFFFFF;
+    position: relative;
+    left: 63%;
+    top: 41%;
+    width: 26%;
+    height: 17%;
+    cursor: pointer;
+}
+
+.upload-csv-file-btn-text {
+    text-align: left;
+    font: bold 50% Montserrat;
+    letter-spacing: 1.1px;
+    color: #FFFFFF;
+    position: relative;
+    left: 17%;
+    top: 18%;
 }
