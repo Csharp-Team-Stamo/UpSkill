@@ -1,0 +1,60 @@
+﻿
+
+<div class="mx-auto">
+    <table class="table table_custom table-borderless">
+        <thead class="head">
+            <tr>
+                <th scope="col" colspan="2" class="text-center head-underline">
+                    <span class="previous-month">
+                        &lt;
+                    </span>
+                    <span>
+                        September
+                    </span>
+                    <span class="next-month">
+                        &gt;
+                    </span>
+                </th>
+            </tr>
+            <tr class="">
+                <th class="cell-header-left">
+                    Coach Name
+                </th>
+                <th class="cell-header-right">
+                    Sessions
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var coach in coaches)
+            {
+                <tr class=" underline">
+                    <td class="cell-left">
+                        @coach.Key
+                    </td>
+                    <td class="cell-right">
+                        @coach.Value
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="2" class="view-more cell ">
+                    View More
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+@code {
+
+    private Dictionary<string, int> coaches = new Dictionary<string, int>()
+
+{
+        { "Nikolay Kostov", 5 },
+        { "Stamo Petkov", 3},
+        { "Ivaylo Papazov", 13 },
+        { "Svetlin Nakov", 2 }
+    };
+}
