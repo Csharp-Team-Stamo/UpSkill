@@ -37,14 +37,14 @@
         }
 
         [HttpGet("All")]
-        public async Task<ActionResult<IEnumerable<CoachCreateInputModel>>> All()
+        public async Task<ActionResult<IEnumerable<AdminCoachListingServiceModel>>> All()
         {
             /* TODO create a CoachAdminListingServiceModel &
             * make it the type of the returned collection */
 
             var coaches = await this.coachService.GetAll();
 
-            return new List<CoachCreateInputModel>(coaches);
+            return new List<AdminCoachListingServiceModel>(coaches);
         }
 
         [HttpPut("Edit/{id}")]

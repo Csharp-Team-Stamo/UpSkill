@@ -26,12 +26,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        this.allCategories = await this.Client.GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>("/admin/category/all");
-        // return base.OnInitializedAsync();
-    }
-
-    public async Task Display()
-    {
-
+        this.allCategories = await this.Client
+            .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>("/admin/category/all");
     }
 }

@@ -8,7 +8,7 @@
 
     public partial class AdminCategory
     {
-        private CategoryCreateInputModel categoryInput = new();
+        private readonly CategoryCreateInputModel categoryInput = new();
 
         [Inject]
         public HttpClient Client { get; set; }

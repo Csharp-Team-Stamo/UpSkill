@@ -10,7 +10,7 @@
 
     public partial class AdminCoach : ComponentBase
     {
-        private CoachCreateInputModel coachInput = new();
+        private readonly CoachCreateInputModel coachInput = new();
 
         public IEnumerable<AdminCategoryListingServiceModel> CategoriesInDb =
             new List<AdminCategoryListingServiceModel>();
@@ -30,10 +30,9 @@
         public async Task Create()
         {
             var response = await this.Client.PostAsJsonAsync<CoachCreateInputModel>("/admin/coach/create", coachInput);
-
             if(response.IsSuccessStatusCode)
             {
-                NavigationManager.NavigateTo("/admin/allCoaches");
+                NavigationManager.NavigateTo("/admin/coaches/all");
             }
         }
     }

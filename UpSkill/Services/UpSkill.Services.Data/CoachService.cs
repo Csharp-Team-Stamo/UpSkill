@@ -56,21 +56,14 @@
             return coach;
         }
 
-        public async Task<IEnumerable<CoachCreateInputModel>> GetAll()
+        public async Task<IEnumerable<AdminCoachListingServiceModel>> GetAll()
         {
             var allCoaches = await this.coachRepo
                 .All()
-                .Select(c => new CoachCreateInputModel
+                .Select(c => new AdminCoachListingServiceModel
                 {
                     Id = c.Id,
-                    Category = new CategoryCreateInputModel
-                    {
-                        Id = c.Category.Id,
-                        Name = c.Category.Name
-                    },
-                    Company = c.Company,
-                    FullName = c.FullName,
-                    PricePerSession = c.PricePerSession
+                    FullName = c.FullName
                 })
                 .ToListAsync();
 

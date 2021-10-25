@@ -1,7 +1,33 @@
 ﻿@page "/admin/coaches/all"
+@using UpSkill.Infrastructure.Models.Coach;
 
 <h3>Admin Coaches All</h3>
 
-@code {
+<table>
+    <thead>
 
+    </thead>
+    <tbody>
+        @foreach(var coach in allCoachesInDb)
+        {
+            <tr>
+                <td>@coach.Id</td>
+                <td>@coach.FullName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private IEnumerable<AdminCoachListingServiceModel> allCoachesInDb =
+        new List<AdminCoachListingServiceModel>();
+
+    [Inject]
+    public HttpClient Client { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.allCoachesInDb = await this.Client
+        .GetFromJsonAsync<IEnumerable<AdminCoachListingServiceModel>>("admin/coach/all");
+    }
 }
