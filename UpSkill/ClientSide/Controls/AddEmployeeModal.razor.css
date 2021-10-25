@@ -53,3 +53,54 @@
     left: 17%;
     top: 18%;
 }
+
+input, ::deep input {
+    border: 2px solid #296CFB;
+    margin-bottom: 3%;
+}
+
+    input, ::deep input::placeholder {
+        color: #296CFB;
+        padding-left: 8%;
+    }
+
+.add-another-one-employee {
+    text-align: left;
+    font: 70% Montserrat;
+    letter-spacing: 1.1px;
+    color: #296CFB;
+    margin-left: 25%;
+    cursor: pointer;
+}
+.cancel-btn {
+    border: 2px solid #296CFB;
+    position: relative;
+    width: 20%;
+    height: 9%;
+    top: 8%;
+    left: 26%;
+    cursor: pointer;
+}
+.cancel-btn-text {
+    font: bold 64% Montserrat;
+    letter-spacing: 1.1px;
+    color: #296CFB;
+    position: relative;
+    top: 17%;
+}
+.save-btn {
+    background: #296CFB 0% 0% no-repeat padding-box;
+    position: relative;
+    width: 20%;
+    height: 9%;
+    top: -1%;
+    left: 53%;
+    cursor: pointer;
+}
+.save-btn-text {
+    font: bold 64% Montserrat;
+    letter-spacing: 1.1px;
+    color: #FFFFFF;
+    position: relative;
+    top: 21%;
+}

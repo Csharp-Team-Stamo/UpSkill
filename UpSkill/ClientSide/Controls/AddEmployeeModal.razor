@@ -12,8 +12,27 @@
                         Upload CSV file
                     </div>
                 </div>
-                <div>
-                    <EditForm Model="@employeeFormModel"></EditForm>
+            </div>
+            <div>
+                <EditForm Model="@EmployeeFormModel" OnValidSubmit="() => { }">
+                    <DataAnnotationsValidator />
+                    <InputText @bind-Value="EmployeeFormModel.FullName" placeholder="Full Name*"></InputText>
+                    <ValidationMessage For="@(() => EmployeeFormModel.FullName)"></ValidationMessage>
+                    <InputText @bind-Value="EmployeeFormModel.Email" placeholder="Email Address*"></InputText>
+                    <ValidationMessage For="@(() => EmployeeFormModel.Email)"></ValidationMessage>
+                </EditForm>
+            </div>
+            <div class="add-another-one-employee">
+                + Add another employee
+            </div>
+            <div class="col-6 cancel-btn">
+                <div class="cancel-btn-text">
+                    Cancel
+                </div>
+            </div>
+            <div class="col-6 save-btn">
+                <div class="save-btn-text">
+                    Save
                 </div>
             </div>
         </div>
@@ -25,7 +44,7 @@
     [Parameter]
     public EventCallback<bool> SetShow { get; set; }
 
-    private AddEmployeeFormModel employeeFormModel = new();
+    private AddEmployeeFormModel EmployeeFormModel = new();
 
     private void ClosePopup()
     {
