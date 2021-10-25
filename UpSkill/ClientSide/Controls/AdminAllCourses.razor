@@ -2,7 +2,7 @@
 
 @using UpSkill.Infrastructure.Models.Course
 
-<h3>AdminAllCourses</h3>
+<h3>Admin All Courses</h3>
 
 <table>
     <thead>
@@ -27,7 +27,7 @@
     [Inject]
     public HttpClient Client { get; set; }
 
-    async Task Display()
+    public async Task Display()
     {
         this.allCourses = await this.Client.GetFromJsonAsync<IEnumerable<AdminCourseListingServiceModel>>("admin/course/all");
     }

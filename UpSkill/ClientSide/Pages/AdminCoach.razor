@@ -1,0 +1,53 @@
+﻿@page "/adminCoach"
+
+<h3>Create Coach</h3>
+
+<EditForm Model="coachInput" OnValidSubmit="Create" class="card card-body bg-light mt-5">
+    <DataAnnotationsValidator />
+    <div class="form-group row">
+        <label for="fullName" class="col-md-2 col-form-label">Full Name</label>
+        <div class="col-md-10">
+            <InputText id="fullName" class="form-control" @bind-Value="coachInput.FullName" />
+            <ValidationMessage For="@(() => coachInput.FullName)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="company" class="col-md-2 col-form-label">Company</label>
+        <div class="col-md-10">
+            <InputText id="company" class="form-control" @bind-Value="coachInput.Company" />
+            <ValidationMessage For="@(() => coachInput.Company)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="pricePerSession" class="col-md-2 col-form-label">Price per Session</label>
+        <div class="col-md-10">
+            <InputNumber id="pricePerSession" class="form-control" @bind-Value="coachInput.PricePerSession" />
+            <ValidationMessage For="@(() => coachInput.PricePerSession)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="category" class="col-md-2 col-form-label">Category</label>
+        <div class="col-md-10">
+            <InputSelect class="form-control" @bind-Value="coachInput.Category.Id">
+                @foreach(var category in CategoriesInDb)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => coachInput.Category)" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-primary">Create Coach</button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+
+}

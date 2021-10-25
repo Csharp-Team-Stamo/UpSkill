@@ -1,0 +1,30 @@
+﻿@page "/admin/category/all"
+@using UpSkill.Infrastructure.Models.Category
+<h3>Admin Category All</h3>
+
+<table>
+    <thead>
+
+    </thead>
+    <tbody>
+        @foreach (var category in allCategories)
+        {
+            <tr>
+                <td>@category.Id</td>
+                <td>@category.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private IEnumerable<AdminCategoryListingServiceModel> allCategories;
+
+    [Inject]
+    public HttpClient Client { get; set; }
+
+    public async Task Display()
+    {
+        this.allCategories = await this.Client.GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>("/admin/category/all");
+    }
+}

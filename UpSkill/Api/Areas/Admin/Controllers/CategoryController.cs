@@ -18,9 +18,28 @@
             this.categoryService = categoryService;
         }
 
-        [HttpGet("All")]
-        public async Task<ActionResult<IEnumerable<CategoryCreateInputModel>>> All()
+        [HttpPost("Create")]
+        public async Task<ActionResult> Create([FromBody]CategoryCreateInputModel input)
         {
+            if(ModelState.IsValid == false)
+            {
+                return BadRequest("Valid category name is required.");
+            }
+
+            var category = await this.categoryService.CreateCategory(input);
+
+            if(category == null)
+            {
+                return StatusCode(500);
+            }
+
+            return StatusCode(201);
+        }
+
+        [HttpGet("All")]
+        public async Task<IEnumerable<CategoryCreateInputModel>> All()
+        {
+            //return await this.categoryService.GetAll();
             var allCategories = await this.categoryService.GetAll();
 
             return new List<CategoryCreateInputModel>(allCategories);

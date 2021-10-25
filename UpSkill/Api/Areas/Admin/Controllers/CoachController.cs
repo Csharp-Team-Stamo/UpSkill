@@ -21,7 +21,12 @@
         [HttpPost("Create")]
         public async Task<ActionResult> Create([FromBody]CoachCreateInputModel input)
         {
-           var coach = await this.coachService.Create(input);
+            if(ModelState.IsValid == false)
+            {
+                return BadRequest("Valid coach data is required.");
+            }
+            
+            var coach = await this.coachService.Create(input);
 
             if(coach == null)
             {
@@ -46,13 +51,16 @@
         public async Task<ActionResult> Edit(string id)
         {
             /* TODO create CoachEditInputModel &
-             * pass it [Fromody] to the ctor */
+             * pass it [FromBody] to the ctor */
 
             if(id == null)
             {
                 return BadRequest("A valid Id is needed.");
             }
 
+            // TODO Add logic to edit coach
+
+            await Task.Delay(0);
             return StatusCode(200);
         }
 
@@ -63,6 +71,9 @@
             {
                 return BadRequest("A valid Id is needed.");
             }
+
+            // TODO add logic to delete coach
+            await Task.Delay(0);
 
             return StatusCode(200);
         }

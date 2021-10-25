@@ -1,0 +1,24 @@
+﻿@page "/adminCategory"
+
+<h3>Create Category</h3>
+
+<EditForm Model="categoryInput" OnValidSubmit="Create" class="card card-body bg-light mt-5">
+    <DataAnnotationsValidator />
+    <div class="form-group row">
+        <label for="name" class="col-md-2 col-form-label">Name</label>
+        <div class="col-md-10">
+            <InputText id="name" class="form-control" @bind-Value="categoryInput.Name" />
+            <ValidationMessage For="@(() => categoryInput.Name)" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-primary">Create Category</button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+
+}

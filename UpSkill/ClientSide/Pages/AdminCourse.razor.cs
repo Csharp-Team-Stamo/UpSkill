@@ -1,17 +1,15 @@
 ﻿namespace UpSkill.ClientSide.Pages
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using UpSkill.Infrastructure.Models.Course;
-    using UpSkill.Infrastructure.Models.Coach;
-    using Microsoft.AspNetCore.Components;
     using System.Net.Http;
     using System.Net.Http.Json;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Components;
     using UpSkill.Infrastructure.Models.Category;
+    using UpSkill.Infrastructure.Models.Coach;
+    using UpSkill.Infrastructure.Models.Course;
 
-    public partial class Admin
+    public partial class AdminCourse : ComponentBase
     {
         private readonly CourseCreateInputModel courseInput = new();
 
@@ -25,13 +23,12 @@
 
         public IEnumerable<CoachCreateInputModel> CoachesInDb { get; set; }
 
-        protected override async Task OnInitializedAsync()
-        {
-            this.CategoriesInDb = await this.Client.GetFromJsonAsync<IEnumerable<CategoryCreateInputModel>>("admin/category/all");
-            this.CoachesInDb = await this.Client.GetFromJsonAsync<IEnumerable<CoachCreateInputModel>>("admin/coach/all");
-
-            // return base.OnInitializedAsync(); 
-        }
+        //protected override Task OnInitializedAsync()
+        //{
+        //    this.CategoriesInDb = (IEnumerable<CategoryCreateInputModel>)this.Client.GetFromJsonAsync<IEnumerable<CategoryCreateInputModel>>("/admin/category/all");
+        //    this.CoachesInDb = (IEnumerable<CoachCreateInputModel>)this.Client.GetFromJsonAsync<IEnumerable<CoachCreateInputModel>>("/admin/coach/all");
+        //    return base.OnInitializedAsync();
+        //}
 
         public async Task Create()
         {

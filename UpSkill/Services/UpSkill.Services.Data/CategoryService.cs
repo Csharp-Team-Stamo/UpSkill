@@ -53,7 +53,7 @@ namespace UpSkill.Services.Data
                                      .All()
                                      .FirstOrDefaultAsync(c => c.Id == categoryInput.Id);
 
-            if(category == null)
+            if (category == null)
             {
                 category = await this.CreateCategory(categoryInput);
             }

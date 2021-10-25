@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UpSkill.Infrastructure.Models.Category;
-
-namespace UpSkill.Infrastructure.Models.Coach
+﻿namespace UpSkill.Infrastructure.Models.Coach
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using UpSkill.Infrastructure.Models.Category;
+
     public class CoachCreateInputModel
     {
         public string Id { get; set; }

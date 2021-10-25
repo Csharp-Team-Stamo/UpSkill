@@ -10,6 +10,8 @@
         //[Display(Name = "Category Id")]
         public CategoryCreateInputModel Category { get; set; }
 
+        // public int CategoryId { get; set; }
+
         public CoachCreateInputModel Coach { get; set; }
 
         //[Required]
