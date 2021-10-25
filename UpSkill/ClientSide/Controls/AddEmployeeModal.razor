@@ -12,6 +12,9 @@
                         Upload CSV file
                     </div>
                 </div>
+                <div>
+                    <EditForm Model="@employeeFormModel"></EditForm>
+                </div>
             </div>
         </div>
     </div>
@@ -22,6 +25,7 @@
     [Parameter]
     public EventCallback<bool> SetShow { get; set; }
 
+    private AddEmployeeFormModel employeeFormModel = new();
 
     private void ClosePopup()
     {

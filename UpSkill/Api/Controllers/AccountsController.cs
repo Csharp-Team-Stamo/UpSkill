@@ -16,8 +16,8 @@ namespace UpSkill.Api.Controllers
     using System.Text;
     using System.Threading.Tasks;
 
-    using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Account;
+    using Data.Models;
+    using Infrastructure.Models.Account;
     using UpSkill.Services.Data.Contracts;
 
     [Route("/[controller]")]

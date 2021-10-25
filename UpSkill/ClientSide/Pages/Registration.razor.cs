@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
-    using UpSkill.ClientSide.Infrastructure;
+    using Infrastructure;
     using UpSkill.Infrastructure.Models.Account;
 
     public partial class Registration
