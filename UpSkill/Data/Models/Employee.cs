@@ -1,5 +1,6 @@
 ﻿namespace UpSkill.Data.Models
 {
+    using System;
     using System.Collections.Generic;
 
     using global::Data.Models;
@@ -7,7 +8,13 @@
 
     public class Employee : BaseDeletableModel<string>
     {
+        public Employee()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         public string UserId { get; init; }
+
         public ApplicationUser User { get; init; }
 
         public ICollection<CoachEmployee> Coaches { get; set; } = new HashSet<CoachEmployee>();
