@@ -1,8 +1,8 @@
 ﻿<div class="mx-auto">
-    <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
-        <thead class="border-bottom-0">
-            <tr class="font-weight-bold border-bottom-0" style="color: white; background-color: #296cfb">
-                <th scope="col"  colspan="2" class="border-bottom-0 text-center head-underline">
+    <table class="table table_custom table-borderless">
+        <thead class="head">
+            <tr>
+                <th scope="col" colspan="2" class="text-center head-underline">
                     <span class="previous-month">
                         &lt;
                     </span>
@@ -14,11 +14,11 @@
                     </span>
                 </th>
             </tr>
-            <tr class="" style="color: white; background-color: #296cfb">
-                <th class="font-weight-bold text-left pl-4 cell-header-left">
+            <tr class="">
+                <th class="cell-header-left">
                     Course Name
                 </th>
-                <th class="text-right font-weight-bold pr-4 cell-header-right">
+                <th class="cell-header-right">
                     Enrolled
                 </th>
             </tr>
@@ -26,19 +26,18 @@
         <tbody>
             @foreach (var course in courses)
             {
-                <tr class=" border-bottom-0 underline">
-                    <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
+                <tr class=" underline">
+                    <td class="cell-left">
                         @course.Key
                     </td>
-                    <td class="text-right pr-4 cell-right" >
+                    <td class="cell-right">
                         @course.Value
                     </td>
                 </tr>
             }
-            <tr class="text-center">
-                <td colspan="2" class="cell" style="color: #16D696">
-                View More
-
+            <tr>
+                <td colspan="2" class="view-more cell ">
+                    View More
                 </td>
             </tr>
         </tbody>

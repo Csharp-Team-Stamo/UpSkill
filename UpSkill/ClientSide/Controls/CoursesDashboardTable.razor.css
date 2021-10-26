@@ -21,10 +21,23 @@
         background: black;
     }
 
+.head {
+    background-color: var(--color-blue-primary);
+    color: white;
+    font-weight: 700;
+}
+
+.table_custom {
+    box-shadow: 0px 3px 10px #00000029;
+    margin-top: 4em;
+    line-height: 2.5em;
+}
+
 .head-underline {
     text-decoration: none;
     position: relative;
 }
+
     .head-underline:after {
         position: absolute;
         content: '';
@@ -43,28 +56,39 @@
         background: white;
     }
 
-
 th.cell-header-right {
     padding-right: 2.5em;
+    text-align: right;
 }
 
 th.cell-header-left {
     padding-left: 2.5em;
+    text-align: left;
 }
 
 td.cell-right {
     padding-right: 6.3em;
+    text-align: right;
 }
 
 td.cell-left {
     padding-left: 2.5em;
+    color: #16D696; /*color variable didn't work for some reason*/
+    font-weight: 700;
+    text-align: left;
 }
 
 .previous-month:hover {
     cursor: pointer;
     padding-right: 2em;
 }
+
 .next-month:hover {
     cursor: pointer;
     padding-left: 2em;
+}
+
+.view-more {
+    text-align: center;
+    color: #16D696; /*color variable didn't work for some reason*/
 }

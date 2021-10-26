@@ -8226,7 +8226,7 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 }
 
 .p-4 {
-    padding: 1.5rem 
+    padding: 1.5rem !important
 }
 
 .pt-4, .py-4 {
@@ -8234,7 +8234,7 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 }
 
 .pr-4, .px-4 {
-    padding-right: 1.5rem
+    padding-right: 1.5rem !important
 }
 
 .pb-4, .py-4 {
@@ -8242,7 +8242,7 @@ a.bg-dark:focus, a.bg-dark:hover, button.bg-dark:focus, button.bg-dark:hover {
 }
 
 .pl-4, .px-4 {
-    padding-left: 1.5rem 
+    padding-left: 1.5rem !important
 }
 
 .p-5 {
