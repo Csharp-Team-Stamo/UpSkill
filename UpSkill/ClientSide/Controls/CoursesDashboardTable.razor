@@ -1,0 +1,58 @@
+﻿<div class="mx-auto">
+    <table class="table table_custom table-borderless">
+        <thead class="head">
+            <tr>
+                <th scope="col" colspan="2" class="text-center head-underline">
+                    <span class="previous-month">
+                        &lt;
+                    </span>
+                    <span>
+                        September
+                    </span>
+                    <span class="next-month">
+                        &gt;
+                    </span>
+                </th>
+            </tr>
+            <tr class="">
+                <th class="cell-header-left">
+                    Course Name
+                </th>
+                <th class="cell-header-right">
+                    Enrolled
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in courses)
+            {
+                <tr class=" underline">
+                    <td class="cell-left">
+                        @course.Key
+                    </td>
+                    <td class="cell-right">
+                        @course.Value
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="2" class="view-more cell ">
+                    View More
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+@code {
+
+    private Dictionary<string, int> courses = new Dictionary<string, int>()
+
+{
+        { "HTML & CSS", 5 },
+        { "Photoshop", 3},
+        { "C# - Basics", 13 },
+        { "Data Structures", 2 }
+    };
+}
