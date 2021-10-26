@@ -15,7 +15,7 @@
             var jsonBytes = ParseBase64WithoutPadding(payload);
 
             var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
-           
+
             ExtractRolesFromJWT(claims, keyValuePairs);
 
             claims.AddRange(keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString())));
@@ -34,17 +34,26 @@
 
         private static void ExtractRolesFromJWT(List<Claim> claims, Dictionary<string, object> keyValuePairs)
         {
-            foreach (var claim   in keyValuePairs)
+            foreach (var claim in keyValuePairs)
             {
                 Console.WriteLine($"{claim.Key} - ${claim.Value}");
             }
 
+
             keyValuePairs.TryGetValue(ClaimTypes.Role, out object roles);
+            keyValuePairs.TryGetValue("Id", out object id);
+            keyValuePairs.TryGetValue("Company", out object companyId);
+            keyValuePairs.TryGetValue(ClaimTypes.Email, out object email);
+            keyValuePairs.TryGetValue(ClaimTypes.Name, out object name);
+            //Console.WriteLine(id);
+            //Console.WriteLine(company);
+            //Console.WriteLine(email);
+            //Console.WriteLine(name);
 
             if (roles != null)
             {
                 var parsedRoles = roles.ToString().Trim().TrimStart('[').TrimEnd(']').Split(',');
-                
+
                 if (parsedRoles.Length > 1)
                 {
                     foreach (var parsedRole in parsedRoles)
@@ -58,6 +67,27 @@
                 }
 
                 keyValuePairs.Remove(ClaimTypes.Role);
+            }
+
+            if (id != null)
+            {
+                claims.Add(new Claim("Id", id.ToString()?.Trim() ?? string.Empty));
+            }
+
+
+            if (companyId != null)
+            {
+                claims.Add(new Claim("CompanyId", companyId.ToString()?.Trim() ?? string.Empty));
+            }
+
+            if (email != null)
+            {
+                claims.Add(new Claim(ClaimTypes.Email, email.ToString()?.Trim() ?? string.Empty));
+            }
+
+            if (name != null)
+            {
+                claims.Add(new Claim(ClaimTypes.Name, name.ToString()?.Trim() ?? string.Empty));
             }
         }
     }
