@@ -8,6 +8,8 @@
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
+    using UpSkill.Infrastructure.Models.Category;
+    using UpSkill.Infrastructure.Models.Coach;
     using UpSkill.Infrastructure.Models.Course;
     using UpSkill.Services.Data.Contracts;
 
@@ -43,9 +45,9 @@
 
         public async Task<int?> Create(CourseCreateInputModel input)
         {
-            var category = await this.categoryService.GetCategory(input.CategoryId);
+            var category = await this.categoryService.GetCategory(input.Category.Id);
 
-            var coach = await this.coachService.GetCoach(input.CoachId);
+            var coach = await this.coachService.GetCoach(input.Coach.Id);
 
             var course = new Course
             {
@@ -127,8 +129,16 @@
                                        Description = c.Description,
                                        AuthorFullName = c.AuthorFullName,
                                        AuthorCompany = c.AuthorCompany,
-                                       CategoryName = c.Category.Name,
-                                       CoachFullName = c.Coach.FullName,
+                                       Category = new CategoryDetailsServiceModel
+                                       {
+                                           Id = c.Category.Id,
+                                           Name = c.Category.Name
+                                       },
+                                       Coach = new CoachDetailsServiceModel
+                                       {
+                                           Id = c.Coach.Id,
+                                           FullName = c.Coach.FullName
+                                       },
                                        Price = c.Price,
                                        VideoUrl = c.VideoUrl
                                    })

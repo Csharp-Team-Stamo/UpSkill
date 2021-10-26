@@ -30,6 +30,7 @@
         public async Task Create()
         {
             var response = await this.Client.PostAsJsonAsync<CoachCreateInputModel>("/admin/coach/create", coachInput);
+
             if(response.IsSuccessStatusCode)
             {
                 NavigationManager.NavigateTo("/admin/coaches/all");

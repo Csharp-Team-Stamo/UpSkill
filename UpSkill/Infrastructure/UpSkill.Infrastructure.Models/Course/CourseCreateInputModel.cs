@@ -9,13 +9,13 @@
     {
         public CategoryCreateInputModel Category { get; set; }
 
-        [Display(Name = "Category Id")]
+        //[Display(Name = "Category Id")]
         public int CategoryId { get; set; }
 
         public CoachCreateInputModel Coach { get; set; }
 
-        [Required]
-        [Display(Name = "Coach Id")]
+        //[Required]
+        //[Display(Name = "Coach Id")]
         public string CoachId { get; set; }
 
         [Required]

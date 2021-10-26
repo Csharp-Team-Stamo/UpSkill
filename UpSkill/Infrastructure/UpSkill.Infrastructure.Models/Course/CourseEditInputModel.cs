@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UpSkill.Infrastructure.Models.Course
+﻿namespace UpSkill.Infrastructure.Models.Course
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
+    using Category;
+    using Coach;
+
     public class CourseEditInputModel
     {
         public int Id { get; set; }
-        public int CategoryId { get; set; }
+        public CategoryEditInputModel Category { get; set; }
 
-        [Required]
-        public string CoachId { get; set; }
+        public CoachEditInputModel Coach { get; set; }
 
         [Required]
         public string Name { get; set; }

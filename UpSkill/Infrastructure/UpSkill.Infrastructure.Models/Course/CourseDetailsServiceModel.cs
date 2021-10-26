@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UpSkill.Infrastructure.Models.Category;
+using UpSkill.Infrastructure.Models.Coach;
 
 namespace UpSkill.Infrastructure.Models.Course
 {
     public class CourseDetailsServiceModel
     {
         public int Id { get; set; }
-        public string CategoryName { get; set; }
-        public string CoachFullName { get; set; }
+
+        public CategoryDetailsServiceModel Category { get; set; }
+        public CoachDetailsServiceModel Coach { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string AuthorFullName { get; set; }

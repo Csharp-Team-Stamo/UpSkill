@@ -1,32 +1,90 @@
-﻿@page "/admin/course/edit/{id}"
+﻿@page "/admin/course/edit/{id:int}"
 @using UpSkill.Infrastructure.Models.Course
+@using UpSkill.Infrastructure.Models.Category
+@using UpSkill.Infrastructure.Models.Coach
+
 <h3>Admin Edit Course</h3>
 
-<EditForm Model="EditModel" OnValidSubmit="Edit">
+<EditForm Model="editModel" OnValidSubmit="Edit" class="card card-body bg-light mt-5">
     <DataAnnotationsValidator />
+
     <div class="form-group row">
         <label for="name" class="col-md-2 col-form-label">Name</label>
         <div class="col-md-10">
-            <InputText id="name" class="form-control" @bind-Value="EditModel.Name" placeholder="@EditModel.Name" />
-            <ValidationMessage For="@(() => EditModel.Name)" />
+            <InputText id="name" class="form-control" @bind-Value="editModel.Name" placeholder="@CourseDetails.Name" />
+            <ValidationMessage For="@(() => editModel.Name)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="description" class="col-md-2 col-form-label">Description</label>
+        <div class="col-md-10">
+            <InputText id="description" class="form-control" @bind-Value="editModel.Description" placeholder="@CourseDetails.Description" />
+            <ValidationMessage For="@(() => editModel.Description)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="Category" class="col-md-2 col-form-label">Category Name</label>
+        <div class="col-md-10">
+            <InputSelect id="categoryId" class="form-control" @bind-Value="editModel.Category.Id">
+                <option>@CourseDetails.Category.Name</option>
+                @foreach (var category in CategoriesInDb)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => editModel.Category)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="coach" class="col-md-2 col-form-label">Coach</label>
+        <div class="col-md-10">
+            <InputText id="coach" class="form-control" @bind-Value="editModel.Coach.Id" placeholder="@CourseDetails.Coach.FullName" />
+            <ValidationMessage For="@(() => editModel.Coach)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="authorfullname" class="col-md-2 col-form-label">Author Full Name</label>
+        <div class="col-md-10">
+            <InputText id="authorfullname" class="form-control" @bind-Value="editModel.AuthorFullName" placeholder="@CourseDetails.AuthorFullName" />
+            <ValidationMessage For="@(() => editModel.AuthorFullName)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="authorcompany" class="col-md-2 col-form-label">Author Company</label>
+        <div class="col-md-10">
+            <InputText id="authorcompany" class="form-control" @bind-Value="editModel.AuthorCompany" placeholder="@CourseDetails.AuthorCompany" />
+            <ValidationMessage For="@(() => editModel.AuthorCompany)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="price" class="col-md-2 col-form-label">Price</label>
+        <div class="col-md-10">
+            <InputNumber id="price" class="form-control" @bind-Value="editModel.Price" placeholder="@CourseDetails.Price" />
+            <ValidationMessage For="@(() => editModel.Price)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="videourl" class="col-md-2 col-form-label">Video URL</label>
+        <div class="col-md-10">
+            <InputText id="videourl" class="form-control" @bind-Value="editModel.VideoUrl" placeholder="@CourseDetails.VideoUrl" />
+            <ValidationMessage For="@(() => editModel.VideoUrl)" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-primary">Edit Course</button>
         </div>
     </div>
 </EditForm>
 
 @code {
-    [Inject]
-    public HttpClient Client { get; set; }
-
-    public CourseEditInputModel EditModel { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        this.EditModel = await this.Client
-            .GetFromJsonAsync<CourseEditInputModel>("/admin/course");
-    }
-
-    public async Task Edit()
-    {
-
-    }
+    
 }

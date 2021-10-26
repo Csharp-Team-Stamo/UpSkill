@@ -1,30 +1,30 @@
 {
-  //"iisSettings": {
-  //  "windowsAuthentication": false,
-  //  "anonymousAuthentication": true,
-  //  "iisExpress": {
-  //    "applicationUrl": "http://localhost:42582",
-  //    "sslPort": 44363
-  //  }
-  //},
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:42582",
+      "sslPort": 44363
+    }
+  },
   "profiles": {
-    //"IIS Express": {
-    //  "commandName": "IISExpress",
-    //  "launchBrowser": true,
-    //  "environmentVariables": {
-    //    "ASPNETCORE_ENVIRONMENT": "Development"
-    //  },
-    //  "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}"
-    //},
-    "UpSkill.ClientSide": {
-      "commandName": "Project",
+    "IIS Express": {
+      "commandName": "IISExpress",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "dotnetRunMessages": "true",
-      "applicationUrl": "https://localhost:44363;http://localhost:42582",
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}"
+    },
+    "UpSkill.ClientSide": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": "true",
+      "applicationUrl": "https://localhost:44363;http://localhost:42582"
     },
     "Docker": {
       "commandName": "Docker",
