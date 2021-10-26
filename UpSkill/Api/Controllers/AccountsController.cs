@@ -110,14 +110,15 @@ namespace UpSkill.Api.Controllers
 
         private IList<Claim> GetClaims(ApplicationUser user)
         {
-            //TODO --- NO IDEA!!!
             var claims = this.userManager.GetClaimsAsync(user);
-           
             var claimsAsList = new List<Claim>(claims.Result);
 
-            //var userNameClaim = new Claim(ClaimTypes.Name, user.FullName);
-            //var userEmailClaim = new Claim(ClaimTypes.Email, user.Email);
+            claimsAsList.Add(
+                new Claim(ClaimTypes.Name, user.FullName));
 
+            claimsAsList.Add(new Claim(ClaimTypes.Email, user.Email));
+            claimsAsList.Add(new Claim("Company", user.CompanyId.ToString()));
+            claimsAsList.Add(new Claim("Id", user.Id));
             return claimsAsList;
         }
 
@@ -132,6 +133,7 @@ namespace UpSkill.Api.Controllers
                 signingCredentials: signingCredentials);
 
     }
+
 
 }
 

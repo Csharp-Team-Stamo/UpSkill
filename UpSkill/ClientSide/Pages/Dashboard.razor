@@ -1,11 +1,29 @@
 ﻿@page "/Dashboard"
 
 <h3>Dashboard</h3>
+<div>
+    @user.Claims.FirstOrDefault(x => x.Type == "Id").Value
+    <br />
+    @user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name).Value
+    <br />
+    @user.Claims.FirstOrDefault(x => x.Type == "CompanyId").Value
+    <br />
+    @user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value
+</div>
 
 <OwnerDashboardStatistics></OwnerDashboardStatistics>
 <CoursesDashboardTable></CoursesDashboardTable>
 <CoachesDashboardTable></CoachesDashboardTable>
 
 @code {
+    [CascadingParameter]
+    public Task<AuthenticationState> authenticationState { get; set; }
+
+    ClaimsPrincipal user;
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = (await authenticationState).User;
+    }
 
 }
