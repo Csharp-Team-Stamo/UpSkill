@@ -22,7 +22,7 @@
     }
 
 .head {
-    background-color: var(--color-blue-green-aqua);
+    background-color: var(--color-blue-primary);
     color: white;
     font-weight: 700;
 }

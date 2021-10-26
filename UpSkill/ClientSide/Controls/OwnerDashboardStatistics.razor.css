@@ -1,17 +1,83 @@
-﻿.stats {
-    box-shadow: 0px 3px 10px #00000029;
-    font-size: 1em;
-    font-family: Montserrat, sans-serif;
-}
-.value {
-    font-size: 2em;
+﻿
+.head {
+    color: black;
     font-weight: 700;
 }
 
-.coaches {
-    color: #16D696;
+.table_custom {
+    box-shadow: 0px 3px 10px #00000029;
+    margin-top: 10em;
+    line-height: 1.5em;
 }
 
-.courses {
-    color: #296CFB;
+.separator {
+    text-decoration: none;
+    position: relative;
 }
+
+    .separator:after {
+        content: '';
+        bottom: -50px;
+        right: -0.75px;
+        height: 150%;
+        background: gray;
+        width: 1.5px;
+        text-align: right;
+        position: absolute;
+    }
+
+.cell-header {
+    vertical-align:top;
+    text-align: left;
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+    padding-top: 1rem;
+}
+
+.cell {
+    color: #16D696; /*color variable didn't work for some reason*/
+    font-weight: 700;
+    text-align: left;
+    font-size: 2.5em;
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+    padding-top: 1rem;
+}
+
+.first_col{
+    color: black;
+}
+.second_col {
+    color: var(--color-blue-primary);
+}
+.third_col {
+    color: var(--color-blue-green-aqua);
+}
+
+
+/*
+th.cell-header-right {
+    padding-right: 2.5em;
+    text-align: right;
+}
+*/
+/*td.cell-right {
+    padding-right: 6.3em;
+    text-align: right;
+}*/
+
+
+/*.previous-month:hover {
+    cursor: pointer;
+    padding-right: 2em;
+}
+
+.next-month:hover {
+    cursor: pointer;
+    padding-left: 2em;
+}
+
+.view-more {
+    text-align: center;
+    color: #16D696;*/ /*color variable didn't work for some reason*/
+/*}*/
