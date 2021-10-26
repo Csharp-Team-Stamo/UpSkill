@@ -1,6 +1,8 @@
-﻿namespace UpSkill.Api.Controllers
+﻿#nullable enable
+namespace UpSkill.Api.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Data.Common.Repositories;
     using Data.Models;
@@ -47,6 +49,13 @@
             await employeeRepository.SaveChangesAsync();
 
             return Ok("Weahhh!!");
+        }
+
+        [HttpGet("GetEmployeesByCompanyId/{companyId}")]
+        public ActionResult<ICollection<AddEmployeeFormModel>> GetEmployeesByCompanyId(string? userId, string companyId)
+        {
+            return employeeRepository.All().Where(x => x.User.CompanyId == int.Parse(companyId)).Select(x =>
+                new AddEmployeeFormModel { FullName = x.User.FullName, Email = x.User.Email, }).ToList();
         }
     }
 }

@@ -1,9 +1,11 @@
-﻿<div class="mx-auto">
+﻿@inject HttpClient Client
+
+<div class="mx-auto">
     <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
         <thead class="border-bottom-0">
             <tr class="" style="color: white; background-color: #296cfb">
                 <th class="font-weight-bold text-left pl-4 cell-header-left">
-                    Employees (64)
+                    Employees (@employeesModel.Count)
                 </th>
                 <th class="text-left font-weight-bold pr-4 cell-header-right">
                     Email
@@ -14,14 +16,14 @@
             </tr>
         </thead>
         <tbody>
-            @for (int i = 1; i < 10; i++)
+            @foreach(var emp in employeesModel)
             {
                 <tr class=" border-bottom-0 underline">
                     <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
-                        Employee @i
+                        @emp.FullName
                     </td>
                     <td class="text-left pr-4 cell-right">
-                        Email@yoodsdsdsadasdasd.com @i
+                        @emp.Email
                     </td>
                 </tr>
             }
@@ -43,7 +45,22 @@
 
 @code
 {
+    [CascadingParameter]
+    public Task<AuthenticationState> authenticationState { get; set; }
+
+    ClaimsPrincipal user;
+
     private bool show = false;
+    private List<AddEmployeeFormModel> employeesModel = new List<AddEmployeeFormModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        user = (await authenticationState).User;
+
+        var companyId = user.Claims.FirstOrDefault(x => x.Type == "CompanyId").Value;
+
+        employeesModel = await Client.GetFromJsonAsync<List<AddEmployeeFormModel>>($"/Employees/GetEmployeesByCompanyId/{companyId}");
+    }
 
     private void ShowPopup()
     {
