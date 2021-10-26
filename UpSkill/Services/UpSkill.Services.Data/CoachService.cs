@@ -49,9 +49,9 @@
             return coach;
         }
 
-        public async Task<Coach> GetCoach(CoachCreateInputModel coachInput)
+        public async Task<Coach> GetCoach(string id)
         {
-            var coach = await this.coachRepo.All().FirstOrDefaultAsync(c => c.Id == coachInput.Id);
+            var coach = await this.coachRepo.All().FirstOrDefaultAsync(c => c.Id == id);
 
             return coach;
         }

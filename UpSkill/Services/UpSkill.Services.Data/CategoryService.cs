@@ -33,11 +33,11 @@ namespace UpSkill.Services.Data
             return category;
         }
 
-        public async Task<IEnumerable<CategoryCreateInputModel>> GetAll()
+        public async Task<IEnumerable<AdminCategoryListingServiceModel>> GetAll()
         {
             var allCategories = await this.categoryRepo
                 .All()
-                .Select(c => new CategoryCreateInputModel
+                .Select(c => new AdminCategoryListingServiceModel
                 {
                     Id = c.Id,
                     Name = c.Name
@@ -52,11 +52,6 @@ namespace UpSkill.Services.Data
             var category = await this.categoryRepo
                                      .All()
                                      .FirstOrDefaultAsync(c => c.Id == id);
-
-            //if (category == null)
-            //{
-            //    category = await this.CreateCategory(categoryInput);
-            //}
 
             return category;
         }

@@ -2,7 +2,7 @@
 
 <h3>Create Course</h3>
 
-<EditForm Model="courseInput" OnValidSubmit="@(Create)" class="card card-body bg-light mt-5">
+<EditForm Model="courseInput" OnValidSubmit="Create" class="card card-body bg-light mt-5">
     <DataAnnotationsValidator />
     <div class="form-group row">
         <label for="name" class="col-md-2 col-form-label">Name</label>

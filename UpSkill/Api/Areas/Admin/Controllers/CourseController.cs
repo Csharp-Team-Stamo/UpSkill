@@ -1,6 +1,7 @@
 ﻿namespace UpSkill.Api.Areas.Admin.Controllers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Infrastructure.Models.Course;
     using Microsoft.AspNetCore.Mvc;
@@ -37,14 +38,62 @@
             return StatusCode(201);
         }
 
-        [HttpGet("ListAll")]
-        public async Task<ActionResult<IEnumerable<AdminCourseListingServiceModel>>> ListAll()
+        [HttpGet("All")]
+        public async Task<ActionResult<IEnumerable<AdminCourseListingServiceModel>>> All()
         {
             var allCourses = await this.courseService.All();
 
-            // TODO add logic, if allCourses.Any() == false
+            if(allCourses.Any() == false)
+            {
+                return NoContent();
+            }
 
             return new List<AdminCourseListingServiceModel>(allCourses);
+        }
+
+        [HttpGet("Details/{id}")]
+        public async Task<ActionResult<CourseDetailsServiceModel>> Details(int id)
+        {
+            if(id <= 0)
+            {
+                return BadRequest();
+            }
+
+            var course = await this.courseService.GetCourse(id);
+
+            return course;
+        }
+
+        [HttpGet("Edit/{id}")]
+        public async Task<ActionResult<CourseEditInputModel>> Edit(int id)
+        {
+            if(id <= 0)
+            {
+                return BadRequest();
+            }
+
+            var course = await this.courseService.GetCourse(id);
+
+            if(course == null)
+            {
+                return NotFound();
+            }
+
+            var courseEditModel = new CourseEditInputModel
+            {
+                Id = course.Id,
+                Name = course.Name,
+                AuthorCompany = course.AuthorCompany,
+                AuthorFullName = course.AuthorFullName,
+                Description = course.Description,
+                Price = course.Price,
+                VideoUrl = course.VideoUrl,
+
+                // TODO complete with Category & Coach
+
+            };
+
+            return courseEditModel;
         }
 
         [HttpPost("id")]

@@ -43,19 +43,9 @@
 
         public async Task<int?> Create(CourseCreateInputModel input)
         {
-            var category = await this.categoryService.GetCategory(input.Category.Id);
+            var category = await this.categoryService.GetCategory(input.CategoryId);
 
-            if(category == null)
-            {
-                category = await this.categoryService.CreateCategory(input.Category);
-            }
-
-            var coach = await this.coachService.GetCoach(input.Coach);
-
-            if(coach == null)
-            {
-                coach = await this.coachService.Create(input.Coach);
-            }
+            var coach = await this.coachService.GetCoach(input.CoachId);
 
             var course = new Course
             {
@@ -124,6 +114,27 @@
             return editResult <= 0 ?
                 null :
                 courseToEdit.Id;
+        }
+
+        public async Task<CourseDetailsServiceModel> GetCourse(int id)
+        {
+            var course = await this.courseRepo
+                                   .All()
+                                   .Select(c => new CourseDetailsServiceModel
+                                   {
+                                       Id = c.Id,
+                                       Name = c.Name,
+                                       Description = c.Description,
+                                       AuthorFullName = c.AuthorFullName,
+                                       AuthorCompany = c.AuthorCompany,
+                                       CategoryName = c.Category.Name,
+                                       CoachFullName = c.Coach.FullName,
+                                       Price = c.Price,
+                                       VideoUrl = c.VideoUrl
+                                   })
+                                   .FirstOrDefaultAsync(c => c.Id == id);
+
+            return course;
         }
     }
 }

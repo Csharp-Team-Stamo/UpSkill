@@ -11,7 +11,7 @@ namespace UpSkill.Services.Data.Contracts
     public interface ICoachService
     {
         Task<Coach> Create(CoachCreateInputModel coachInput);
-        Task<Coach> GetCoach(CoachCreateInputModel coachInput);
+        Task<Coach> GetCoach(string id);
         Task<IEnumerable<AdminCoachListingServiceModel>> GetAll();
     }
 }

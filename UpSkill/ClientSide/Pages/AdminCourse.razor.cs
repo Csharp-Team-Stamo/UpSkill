@@ -19,14 +19,16 @@
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
-        public IEnumerable<CategoryCreateInputModel> CategoriesInDb { get; set; }
+        public IEnumerable<AdminCategoryListingServiceModel> CategoriesInDb { get; set; } =
+            new List<AdminCategoryListingServiceModel>();
 
-        public IEnumerable<CoachCreateInputModel> CoachesInDb { get; set; }
+        public IEnumerable<AdminCoachListingServiceModel> CoachesInDb { get; set; } =
+            new List<AdminCoachListingServiceModel>();
 
         protected override async Task OnInitializedAsync()
         {
-            this.CategoriesInDb = await this.Client.GetFromJsonAsync<IEnumerable<CategoryCreateInputModel>>("/admin/category/all");
-            this.CoachesInDb = await this.Client.GetFromJsonAsync<IEnumerable<CoachCreateInputModel>>("/admin/coach/all");
+            this.CategoriesInDb = await this.Client.GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>("/admin/category/all");
+            this.CoachesInDb = await this.Client.GetFromJsonAsync<IEnumerable<AdminCoachListingServiceModel>>("/admin/coach/all");
         }
 
         public async Task Create()
@@ -35,7 +37,7 @@
 
             if (response.IsSuccessStatusCode)
             {
-                NavigationManager.NavigateTo("/admin/allCourses");
+                NavigationManager.NavigateTo("/admin/course/all");
             }
         }
     }

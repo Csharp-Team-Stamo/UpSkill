@@ -1,24 +1,45 @@
-﻿@page "/admin/allCourses"
+﻿@page "/admin/course/all"
 
 @using UpSkill.Infrastructure.Models.Course
 
-<h3>Admin All Courses</h3>
+<style>
+    .allCoursesGrid{
+        display: grid;
+        grid-template-columns: 1fr 1fr 2fr 1fr;
+        row-gap: 1rem;
+    }
 
-<table>
-    <thead>
+    .allCoursesGrid .gridCol{
+        border-bottom: 2px solid #296cfb;
+        text-align: center;
+        vertical-align: central;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
 
-    </thead>
-    <tbody>
-        @foreach(var course in allCourses)
-            {
-                <tr>
-                    <td>@course.Id</td>
-                    <td>@course.Name</td>
-                    <td>@course.Description</td>
-                </tr>
-            }
-    </tbody>
-</table>
+    .allCoursesGrid .gridCol a{
+        margin: .2em;
+    }
+</style>
+
+<h3 class="text-center mt-2 mb-2">Admin All Courses</h3>
+
+<div class="allCoursesGrid mt-5">
+    <div class="gridCol">Id</div>
+    <div class="gridCol">Name</div>
+    <div class="gridCol">Description</div>
+    <div class="gridCol">Action</div>
+    @foreach (var course in allCourses)
+    {
+        <div class="gridCol">@course.Id</div>
+        <div class="gridCol">@course.Name</div>
+        <div class="gridCol">@course.Description</div>
+        <div class="gridCol">
+            <a href="/admin/course/edit/@course.Id">Edit</a>
+            <a href="">Delete</a>
+        </div>
+    }
+</div>
 
 @code {
     private IEnumerable<AdminCourseListingServiceModel> allCourses =
@@ -27,8 +48,12 @@
     [Inject]
     public HttpClient Client { get; set; }
 
-    public async Task Display()
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
-        this.allCourses = await this.Client.GetFromJsonAsync<IEnumerable<AdminCourseListingServiceModel>>("admin/course/all");
+        this.allCourses = await this.Client
+        .GetFromJsonAsync<IEnumerable<AdminCourseListingServiceModel>>("admin/course/all");
     }
 }

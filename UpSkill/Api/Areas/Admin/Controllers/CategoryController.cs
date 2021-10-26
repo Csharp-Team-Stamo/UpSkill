@@ -37,12 +37,11 @@
         }
 
         [HttpGet("All")]
-        public async Task<IEnumerable<CategoryCreateInputModel>> All()
+        public async Task<IEnumerable<AdminCategoryListingServiceModel>> All()
         {
-            //return await this.categoryService.GetAll();
             var allCategories = await this.categoryService.GetAll();
 
-            return new List<CategoryCreateInputModel>(allCategories);
+            return new List<AdminCategoryListingServiceModel>(allCategories);
         }
     }
 }
