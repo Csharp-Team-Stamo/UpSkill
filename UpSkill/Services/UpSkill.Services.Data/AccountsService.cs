@@ -8,8 +8,8 @@
     using System.Threading.Tasks;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Common;
-    using UpSkill.Services.Data.Contracts;
+    using Infrastructure.Common;
+    using Contracts;
    
 
     public class AccountsService : IAccountsService

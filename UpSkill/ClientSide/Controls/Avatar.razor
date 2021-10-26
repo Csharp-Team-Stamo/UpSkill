@@ -1,14 +1,20 @@
-﻿<AuthorizeView>
-<div class="">
-    <i class="my-2 d-flex justify-content-around">
-        <span class="justify-content-center align-self-center">
-            @*Replace with first letter of user full name*@
-            C
-        </span> 
-    </i>
-</div>
+﻿@inject NavigationManager NavigationManager
+
+<AuthorizeView>
+    <div class="avatar-container" @onclick=@(() => RedirectToPage("/Dashboard"))>
+        <i class="my-2 d-flex justify-content-around">
+            <span class="justify-content-center align-self-center">
+                @*Replace with first letter of user full name*@
+                C
+            </span>
+        </i>
+    </div>
 </AuthorizeView>
 
-@code {
 
+@code{
+    private void RedirectToPage(string pagePath)
+    {
+        NavigationManager.NavigateTo(pagePath);
+    }
 }

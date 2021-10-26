@@ -1,5 +1,6 @@
 ﻿@page "/login"
 @layout EmptyLayout
+@attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
 @if (AuthErrorExists)
 {
@@ -125,8 +126,4 @@
     </div>
 
 </EditForm>
-
-
-@code {
-
-}
+@code {}

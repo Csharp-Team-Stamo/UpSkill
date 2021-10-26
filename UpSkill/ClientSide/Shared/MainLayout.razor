@@ -1,37 +1,23 @@
-﻿@using UpSkill.ClientSide.Controls
-@using UpSkill.ClientSide.Pages
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <AuthorizeView>
-        <div class="sidebar">
+
+<div class="wrapper">
+    <div class="header">
+        <Header></Header>
+    </div>
+    <div class="sidebar-1">
+        <div class="sticky-content">
             <NavMenu />
         </div>
-    </AuthorizeView>
-    <div class="main">
-        <div class="top-row px-4 auth">
-            <NavLink>
-                <LoginDisplay></LoginDisplay>
-            </NavLink>
-            <div class="">
-                <NavLink href="Courses">
-                    Courses
-                </NavLink>
-            </div>
-            <div class="">
-                <NavLink href="Coaches">
-                    Coaches
-                </NavLink>
-            </div>
-            <NavLink>
-                <Avatar></Avatar>
-            </NavLink>
-        </div>
-
-
-        <div class="content px-4">
+    </div>
+  
+    <div class="content">
+        <div class="sticky-spacer"></div>
+        <div class="sticky-content">
             @Body
         </div>
     </div>
+    <div class="footer">  <Footer></Footer></div>
 </div>
+
 
