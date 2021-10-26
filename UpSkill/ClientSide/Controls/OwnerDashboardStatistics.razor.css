@@ -53,31 +53,3 @@
 .third_col {
     color: var(--color-blue-green-aqua);
 }
-
-
-/*
-th.cell-header-right {
-    padding-right: 2.5em;
-    text-align: right;
-}
-*/
-/*td.cell-right {
-    padding-right: 6.3em;
-    text-align: right;
-}*/
-
-
-/*.previous-month:hover {
-    cursor: pointer;
-    padding-right: 2em;
-}
-
-.next-month:hover {
-    cursor: pointer;
-    padding-left: 2em;
-}
-
-.view-more {
-    text-align: center;
-    color: #16D696;*/ /*color variable didn't work for some reason*/
-/*}*/
