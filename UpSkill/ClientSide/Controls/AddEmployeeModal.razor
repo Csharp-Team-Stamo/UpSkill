@@ -48,6 +48,7 @@
     public EventCallback<bool> SetShow { get; set; }
 
     private AddEmployeeFormModel EmployeeFormModel = new();
+    private ICollection<AddEmployeeFormModel> employeeCollection = new List<AddEmployeeFormModel>();
 
     private void ClosePopup()
     {
@@ -58,6 +59,8 @@
     {
 
         var model = EmployeeFormModel;
+        employeeCollection.Add(model);
+
 
         if (EmployeeFormModel.AddAnotherOneBtn)
         {
