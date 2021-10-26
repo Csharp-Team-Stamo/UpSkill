@@ -26,6 +26,7 @@
     color: white;
     font-weight: 700;
 }
+
 .table_custom {
     box-shadow: 0px 3px 10px #00000029;
     margin-top: 4em;
@@ -36,6 +37,7 @@
     text-decoration: none;
     position: relative;
 }
+
     .head-underline:after {
         position: absolute;
         content: '';
@@ -53,9 +55,6 @@
         width: 95%;
         background: white;
     }
-
-
-
 
 th.cell-header-right {
     padding-right: 2.5em;
@@ -83,6 +82,7 @@ td.cell-left {
     cursor: pointer;
     padding-right: 2em;
 }
+
 .next-month:hover {
     cursor: pointer;
     padding-left: 2em;
