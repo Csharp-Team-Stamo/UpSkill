@@ -9,13 +9,12 @@
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.Hosting;
-	using Microsoft.Identity.Web;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
-	using UpSkill.Data;
-    using UpSkill.Data.Common.Repositories;
-    using UpSkill.Data.Models;
-    using UpSkill.Data.Repositories;
+	using Data;
+    using Data.Common.Repositories;
+    using Data.Models;
+    using Data.Repositories;
     using UpSkill.Services.Data;
     using UpSkill.Services.Data.Contracts;
 
