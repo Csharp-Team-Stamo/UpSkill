@@ -1,14 +1,30 @@
 ﻿@page "/Dashboard"
+@using System.Security.Claims
+@using UpSkill.ClientSide.Infrastructure.Extensions
+@inject UpSkill.ClientSide.Authentication.Services.Contracts.IUser userInterface
 
 <h3>Dashboard</h3>
 <div>
-    @user.Claims.FirstOrDefault(x => x.Type == "Id").Value
+    User Role: @user.Role().Result;
     <br />
-    @user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name).Value
+    Username: @user.Name().Result;
     <br />
-    @user.Claims.FirstOrDefault(x => x.Type == "CompanyId").Value
+
+    CompanyId: @user.Company().Result;
     <br />
-    @user.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value
+
+    Email: @user.Email().Result;
+    <br />
+    User is authenticated: @user.IsAuthenticated().Result;
+
+    <br />
+    <br />
+    <br />
+
+    @userInterface.Username()
+
+
+
 </div>
 
 <OwnerDashboardStatistics></OwnerDashboardStatistics>
@@ -17,13 +33,5 @@
 
 @code {
     [CascadingParameter]
-    public Task<AuthenticationState> authenticationState { get; set; }
-
-    ClaimsPrincipal user;
-
-    protected override async Task OnInitializedAsync()
-    {
-        user = (await authenticationState).User;
-    }
-
+    public Task<AuthenticationState> user { get; set; };
 }

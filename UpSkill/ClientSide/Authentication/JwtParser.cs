@@ -16,7 +16,7 @@
 
             var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
 
-            ExtractRolesFromJWT(claims, keyValuePairs);
+            ExtractClaimsFromJWT(claims, keyValuePairs);
 
             claims.AddRange(keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString())));
             return claims;
@@ -32,7 +32,7 @@
             return Convert.FromBase64String(base64);
         }
 
-        private static void ExtractRolesFromJWT(List<Claim> claims, Dictionary<string, object> keyValuePairs)
+        private static void ExtractClaimsFromJWT(List<Claim> claims, Dictionary<string, object> keyValuePairs)
         {
             foreach (var claim in keyValuePairs)
             {
@@ -45,10 +45,6 @@
             keyValuePairs.TryGetValue("Company", out object companyId);
             keyValuePairs.TryGetValue(ClaimTypes.Email, out object email);
             keyValuePairs.TryGetValue(ClaimTypes.Name, out object name);
-            //Console.WriteLine(id);
-            //Console.WriteLine(company);
-            //Console.WriteLine(email);
-            //Console.WriteLine(name);
 
             if (roles != null)
             {
