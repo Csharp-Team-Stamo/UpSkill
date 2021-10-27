@@ -1,12 +1,13 @@
 ﻿@page "/Dashboard"
 @using System.Security.Claims
 @using UpSkill.ClientSide.Infrastructure.Extensions
-@inject UpSkill.ClientSide.Authentication.Services.Contracts.IUser userInterface
 
 <h3>Dashboard</h3>
 <div>
+
     User Role: @user.Role().Result;
     <br />
+
     Username: @user.Name().Result;
     <br />
 
@@ -15,15 +16,8 @@
 
     Email: @user.Email().Result;
     <br />
+
     User is authenticated: @user.IsAuthenticated().Result;
-
-    <br />
-    <br />
-    <br />
-
-    @userInterface.Username()
-
-
 
 </div>
 
@@ -33,5 +27,5 @@
 
 @code {
     [CascadingParameter]
-    public Task<AuthenticationState> user { get; set; };
+    public Task<AuthenticationState> user { get; set; }
 }
