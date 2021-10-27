@@ -16,7 +16,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var emp in employeesModel)
+            @foreach (var emp in employeesModel)
             {
                 <tr class=" border-bottom-0 underline">
                     <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
@@ -67,8 +67,14 @@
         show = true;
     }
 
-    private void SetShowValue(bool value)
+    private async Task SetShowValue(bool value)
     {
         show = value;
+        //employeesModel.Add(new AddEmployeeFormModel
+        //{
+        //    Email = "User@abv.com",
+        //    FullName = "Yavor Test"
+        //});
+        await InvokeAsync(StateHasChanged);
     }
 }
