@@ -33,7 +33,7 @@
 
             if(response.IsSuccessStatusCode)
             {
-                NavigationManager.NavigateTo("/admin/coaches/all");
+                NavigationManager.NavigateTo("/admin/coach/all");
             }
         }
     }

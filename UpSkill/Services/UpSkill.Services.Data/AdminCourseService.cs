@@ -14,13 +14,13 @@
     public class AdminCourseService : IAdminCourseService
     {
         private readonly IRepository<Course> courseRepo;
-        private readonly ICategoryService categoryService;
-        private readonly ICoachService coachService;
+        private readonly IAdminCategoryService categoryService;
+        private readonly IAdminCoachService coachService;
 
         public AdminCourseService(
             IRepository<Course> courseRepo,
-            ICategoryService categoryService,
-            ICoachService coachService)
+            IAdminCategoryService categoryService,
+            IAdminCoachService coachService)
         {
             this.courseRepo = courseRepo;
             this.categoryService = categoryService;
@@ -126,7 +126,12 @@
                 courseToEdit.Id;
         }
 
-        public async Task<CourseDetailsServiceModel> GetCourse(int id)
+        public async Task<Course> GetCourse(int id)
+            => await this.courseRepo
+            .All()
+            .FirstOrDefaultAsync(c => c.Id == id);
+
+        public async Task<CourseDetailsServiceModel> GetCourseDetails(int id)
         {
             var course = await this.courseRepo
                                    .All()

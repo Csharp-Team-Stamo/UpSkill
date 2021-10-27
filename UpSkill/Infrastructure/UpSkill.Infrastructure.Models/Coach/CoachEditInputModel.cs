@@ -11,7 +11,8 @@
         [Required]
         public string FullName { get; set; }
 
-        public CategoryEditInputModel Category { get; set; }
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
 
         [Required]
         public string Company { get; set; }

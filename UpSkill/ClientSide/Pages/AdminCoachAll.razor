@@ -4,7 +4,7 @@
 <style>
     .pageMainGrid{
         display: grid;
-        grid-template-columns: 1fr 1fr 2fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         row-gap: 1rem;
     }
 
@@ -24,12 +24,17 @@
 <h3>AdminCoachAll</h3>
 
 <div class="pageMainGrid">
-    <div>Id</div>
-    <div>Name</div>
+    <div class="gridCol">Id</div>
+    <div class="gridCol">Name</div>
+    <div class="gridCol">Actions</div>
     @foreach(var coach in allCoachesInDb)
     {
-        <div>@coach.Id</div>
-        <div>@coach.FullName</div>
+        <div class="gridCol">@coach.Id</div>
+        <div class="gridCol">@coach.FullName</div>
+        <div class="gridCol">
+            <a href="/admin/coach/edit/@coach.Id">Edit</a>
+            <a>Delete</a>
+        </div>
     }
 </div>
 
@@ -39,6 +44,7 @@
 
     [Inject]
     public HttpClient Client { get; set; }
+
 
     protected override async Task OnInitializedAsync()
     {

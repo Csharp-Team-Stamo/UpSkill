@@ -56,7 +56,7 @@
                 return BadRequest();
             }
 
-            var course = await this.courseService.GetCourse(id);
+            var course = await this.courseService.GetCourseDetails(id);
 
             return course;
         }
@@ -119,7 +119,7 @@
         {
             if (id <= 0)
             {
-                return BadRequest("A valid Id is needed.");
+                return BadRequest("A valid Id is required.");
             }
 
             var deleteResult = await this.courseService.Delete(id);

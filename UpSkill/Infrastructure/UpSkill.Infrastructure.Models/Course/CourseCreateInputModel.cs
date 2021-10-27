@@ -7,10 +7,7 @@
 
     public class CourseCreateInputModel
     {
-        //public CategoryCreateInputModel Category { get; set; }
-        public int CategoryId { get; set; }
-
-        //public CoachCreateInputModel Coach { get; set; }
+       public int CategoryId { get; set; }
 
         [Required]
         public string CoachId { get; set; }

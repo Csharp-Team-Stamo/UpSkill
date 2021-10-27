@@ -13,11 +13,6 @@
 
         public string CoachId { get; set; }
         public string CoachName { get; set; }
-        // public CategoryEditInputModel Category { get; set; }
-
-        //[Required]
-        ////public string CoachId { get; set; }
-        //public CoachEditInputModel Coach { get; set; }
 
         [Required]
         public string Name { get; set; }

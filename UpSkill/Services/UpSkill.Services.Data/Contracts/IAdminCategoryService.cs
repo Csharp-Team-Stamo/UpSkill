@@ -5,11 +5,13 @@
     using UpSkill.Data.Models;
     using UpSkill.Infrastructure.Models.Category;
 
-    public interface ICategoryService
+    public interface IAdminCategoryService
     {
         Task<Category> GetCategory(int id);
-        // Task<Category> GetCategory(CategoryCreateInputModel categoryInput);
-        Task<Category> CreateCategory(CategoryCreateInputModel categoryInput);
+        Task<CategoryDetailsServiceModel> GetCategoryDetails(int id);
+        Task<int?> CreateCategory(CategoryCreateInputModel categoryInput);
         Task<IEnumerable<AdminCategoryListingServiceModel>> GetAll();
+        Task<int?> Edit(CategoryEditInputModel editInput);
+        Task<int?> Delete(int id);
     }
 }

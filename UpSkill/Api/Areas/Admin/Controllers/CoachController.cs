@@ -1,19 +1,16 @@
 ﻿namespace UpSkill.Api.Areas.Admin.Controllers
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Coach;
-    using UpSkill.Services.Data.Contracts;
+    using Infrastructure.Models.Coach;
+    using Services.Data.Contracts;
 
     public class CoachController : AdminController
     {
-        private readonly ICoachService coachService;
+        private readonly IAdminCoachService coachService;
 
-        public CoachController(ICoachService coachService)
+        public CoachController(IAdminCoachService coachService)
         {
             this.coachService = coachService;
         }
@@ -39,28 +36,72 @@
         [HttpGet("All")]
         public async Task<ActionResult<IEnumerable<AdminCoachListingServiceModel>>> All()
         {
-            /* TODO create a CoachAdminListingServiceModel &
-            * make it the type of the returned collection */
-
             var coaches = await this.coachService.GetAll();
 
             return new List<AdminCoachListingServiceModel>(coaches);
         }
 
-        [HttpPut("Edit/{id}")]
-        public async Task<ActionResult> Edit(string id)
+        [HttpGet("Details/{id}")]
+        public async Task<ActionResult<CoachDetailsServiceModel>> Details(string id)
         {
-            /* TODO create CoachEditInputModel &
-             * pass it [FromBody] to the ctor */
-
             if(id == null)
             {
-                return BadRequest("A valid Id is needed.");
+                return BadRequest();
             }
 
-            // TODO Add logic to edit coach
+            var coachInDb = await this.coachService.GetCoachDetails(id);
 
-            await Task.Delay(0);
+            if(coachInDb == null)
+            {
+                return NotFound();
+            }
+
+            return coachInDb;
+        }
+
+        [HttpGet("Edit/{id}")]
+        public async Task<ActionResult<CoachEditInputModel>> Edit(string id)
+        {
+            if(id == null)
+            {
+                return BadRequest("A valid Id is required.");
+            }
+
+            var coachInDb = await this.coachService.GetCoach(id);
+
+            if(coachInDb == null)
+            {
+                return NotFound();
+            }
+
+            var editInput = new CoachEditInputModel
+            {
+                Id = coachInDb.Id,
+                Company = coachInDb.Company,
+                FullName = coachInDb.FullName,
+                PricePerSession = coachInDb.PricePerSession,
+                CategoryId = coachInDb.Category.Id,
+                CategoryName = coachInDb.Category.Name
+            };
+
+            return editInput;
+        }
+
+        [HttpPut("Edit")]
+        public async Task<ActionResult> Edit([FromBody]CoachEditInputModel editInput)
+        {
+            if(ModelState.IsValid == false)
+            {
+                return BadRequest();
+            }
+
+            var editResult = await this.coachService.Edit(editInput);
+
+            if(editResult == null)
+            {
+                return StatusCode(500);
+            }
+
             return StatusCode(200);
         }
 
@@ -72,8 +113,12 @@
                 return BadRequest("A valid Id is needed.");
             }
 
-            // TODO add logic to delete coach
-            await Task.Delay(0);
+            var deleteResult = await this.coachService.Delete(id);
+
+            if (deleteResult == null)
+            {
+                return StatusCode(500);
+            }
 
             return StatusCode(200);
         }

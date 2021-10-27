@@ -11,9 +11,9 @@
 
     public class CategoryController : AdminController
     {
-        private readonly ICategoryService categoryService;
+        private readonly IAdminCategoryService categoryService;
 
-        public CategoryController(ICategoryService categoryService)
+        public CategoryController(IAdminCategoryService categoryService)
         {
             this.categoryService = categoryService;
         }
