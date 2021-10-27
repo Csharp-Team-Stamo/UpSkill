@@ -36,6 +36,7 @@ namespace UpSkill.Api.Controllers
                     Email = employeeModel.Email,
                     CompanyId = int.Parse(employeeModel.CompanyId),
                     UserName = employeeModel.Email,
+
                 };
 
                 var result = await userManager.CreateAsync(user, "123");
@@ -50,12 +51,14 @@ namespace UpSkill.Api.Controllers
                     var emp = new Employee
                     {
                         UserId = user.Id,
+
+
                     };
 
                     await employeeRepository.AddAsync(emp);
                 }
 
-                
+
             }
 
             await employeeRepository.SaveChangesAsync();
