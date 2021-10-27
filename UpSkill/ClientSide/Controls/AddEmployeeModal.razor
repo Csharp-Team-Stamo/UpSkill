@@ -98,7 +98,6 @@
     private async Task<List<AddEmployeeFormModel>> GetEmployees()
     {
 
-
         return await Client.GetFromJsonAsync<List<AddEmployeeFormModel>>($"/Employees/GetEmployeesByCompanyId/{user.Company().Result}");
     }
 }
