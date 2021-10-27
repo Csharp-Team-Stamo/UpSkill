@@ -1,5 +1,4 @@
-﻿@inject HttpClient Client;
-
+﻿@using Newtonsoft.Json
 <div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.8);"
      aria-modal="true">
     <div class="modal-dialog">
@@ -26,7 +25,7 @@
                         + Add another employee
                     </button>
                     <div class="row">
-                        <button  class="cancel-btn">
+                        <button class="cancel-btn">
                             <div @onclick="ClosePopup" class="cancel-btn-text">
                                 Cancel
                             </div>
@@ -45,11 +44,19 @@
 
 @code {
 
+    private AddEmployeeFormModel EmployeeFormModel = new();
+    private ICollection<AddEmployeeFormModel> employeeCollection = new List<AddEmployeeFormModel>();
+
+    [CascadingParameter]
+    public Task<AuthenticationState> authenticationState { get; set; }
+
+
     [Parameter]
     public EventCallback<bool> SetShow { get; set; }
 
-    private AddEmployeeFormModel EmployeeFormModel = new();
-    private ICollection<AddEmployeeFormModel> employeeCollection = new List<AddEmployeeFormModel>();
+    [Parameter]
+    public EventCallback<List<AddEmployeeFormModel>> GetUpdatedEmployees { get; set; }
+
 
     private void ClosePopup()
     {
@@ -60,6 +67,7 @@
     {
 
         var model = EmployeeFormModel;
+        model.CompanyId = await GetCompanyId();
         employeeCollection.Add(model);
 
 
@@ -69,10 +77,36 @@
         }
         else
         {
-           await Client.PostAsJsonAsync("/Employees/PostEmployeesCollection", employeeCollection);
+            var result = await PostEmployees();
+
+            await GetUpdatedEmployees.InvokeAsync(await GetEmployees());
+
+            var s = result.Content.ReadAsStringAsync().Result;
+
+            var res = JsonConvert.DeserializeObject<List<string>>(s);
+
             ClosePopup();
         }
-       
+
     }
 
+    private async Task<HttpResponseMessage> PostEmployees()
+    {
+        return await Client.PostAsJsonAsync("/Employees/PostEmployeesCollection", employeeCollection);
+    }
+
+    private async Task<List<AddEmployeeFormModel>> GetEmployees()
+    {
+
+
+        return await Client.GetFromJsonAsync<List<AddEmployeeFormModel>>($"/Employees/GetEmployeesByCompanyId/{await GetCompanyId()}");
+    }
+
+    private async Task<string> GetCompanyId()
+    {
+        var user = (await authenticationState).User;
+
+        return user.Claims.FirstOrDefault(x => x.Type == "CompanyId").Value;
+    }
 }
+

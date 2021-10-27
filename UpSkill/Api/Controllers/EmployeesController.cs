@@ -24,35 +24,47 @@ namespace UpSkill.Api.Controllers
         }
 
         [HttpPost("PostEmployeesCollection")]
-        public async Task<ActionResult> PostEmployeesCollection(ICollection<AddEmployeeFormModel> employees)
+        public async Task<ActionResult<List<string>>> PostEmployeesCollection(ICollection<AddEmployeeFormModel> employees)
         {
+            var resultErrors = new List<string>();
+
             foreach (var employeeModel in employees)
             {
                 var user = new ApplicationUser
                 {
                     FullName = employeeModel.FullName,
                     Email = employeeModel.Email,
-                    CompanyId = 1,
+                    CompanyId = int.Parse(employeeModel.CompanyId),
                     UserName = employeeModel.Email,
                 };
 
                 var result = await userManager.CreateAsync(user, "123");
 
-                var emp = new Employee
+                if (!result.Succeeded)
                 {
-                    UserId = user.Id,
-                };
+                    resultErrors.AddRange(result.Errors.Select(x => x.Description.Replace("Username", "Email")).ToList());
 
-                await employeeRepository.AddAsync(emp);
+                }
+                else
+                {
+                    var emp = new Employee
+                    {
+                        UserId = user.Id,
+                    };
+
+                    await employeeRepository.AddAsync(emp);
+                }
+
+                
             }
 
             await employeeRepository.SaveChangesAsync();
 
-            return Ok("Weahhh!!");
+            return Ok(resultErrors);
         }
 
         [HttpGet("GetEmployeesByCompanyId/{companyId}")]
-        public ActionResult<ICollection<AddEmployeeFormModel>> GetEmployeesByCompanyId(string? userId, string companyId)
+        public ActionResult<ICollection<AddEmployeeFormModel>> GetEmployeesByCompanyId(string companyId)
         {
             return employeeRepository.All().Where(x => x.User.CompanyId == int.Parse(companyId)).Select(x =>
                 new AddEmployeeFormModel { FullName = x.User.FullName, Email = x.User.Email, }).ToList();

@@ -7,6 +7,8 @@
 
     public class AddEmployeeFormModel
     {
+        public string CompanyId { get; set; }
+
         [Required]
         [MinLength(FullNameMinLen, ErrorMessage = "Name must be at least 2 characters")]
         [MaxLength(FullNameMaxLen, ErrorMessage = "Name can be maximum 20 characters")]

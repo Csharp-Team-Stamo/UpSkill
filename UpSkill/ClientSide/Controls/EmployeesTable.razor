@@ -1,6 +1,4 @@
-﻿@inject HttpClient Client
-
-<div class="mx-auto">
+﻿<div class="mx-auto">
     <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
         <thead class="border-bottom-0">
             <tr class="" style="color: white; background-color: #296cfb">
@@ -39,7 +37,7 @@
 @* Modal *@
 @if (show)
 {
-    <AddEmployeeModal SetShow="SetShowValue"></AddEmployeeModal>
+    <AddEmployeeModal SetShow="SetShowValue" GetUpdatedEmployees="SetEmployeesCollection"></AddEmployeeModal>
 }
 
 
@@ -51,15 +49,13 @@
     ClaimsPrincipal user;
 
     private bool show = false;
-    private List<AddEmployeeFormModel> employeesModel = new List<AddEmployeeFormModel>();
+    private List<AddEmployeeFormModel> employeesModel = new();
 
     protected override async Task OnInitializedAsync()
     {
         user = (await authenticationState).User;
 
-        var companyId = user.Claims.FirstOrDefault(x => x.Type == "CompanyId").Value;
-
-        employeesModel = await Client.GetFromJsonAsync<List<AddEmployeeFormModel>>($"/Employees/GetEmployeesByCompanyId/{companyId}");
+        employeesModel = await GetEmployees();
     }
 
     private void ShowPopup()
@@ -67,14 +63,20 @@
         show = true;
     }
 
-    private async Task SetShowValue(bool value)
+    private void SetShowValue(bool value)
     {
         show = value;
-        //employeesModel.Add(new AddEmployeeFormModel
-        //{
-        //    Email = "User@abv.com",
-        //    FullName = "Yavor Test"
-        //});
-        await InvokeAsync(StateHasChanged);
+    }
+
+    private void SetEmployeesCollection(List<AddEmployeeFormModel> value)
+    {
+        employeesModel = value;
+    }
+
+    private async Task<List<AddEmployeeFormModel>> GetEmployees()
+    {
+        var companyId = user.Claims.FirstOrDefault(x => x.Type == "CompanyId").Value;
+
+        return await Client.GetFromJsonAsync<List<AddEmployeeFormModel>>($"/Employees/GetEmployeesByCompanyId/{companyId}");
     }
 }
