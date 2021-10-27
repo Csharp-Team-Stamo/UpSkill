@@ -11,7 +11,7 @@
     <div class="form-group row">
         <label for="name" class="col-md-2 col-form-label">Name</label>
         <div class="col-md-10">
-            <InputText id="name" class="form-control" @bind-Value="editModel.Name" placeholder="@CourseDetails.Name" />
+            <InputText id="name" class="form-control" @bind-Value="editModel.Name" />
             <ValidationMessage For="@(() => editModel.Name)" />
         </div>
     </div>
@@ -19,37 +19,43 @@
     <div class="form-group row">
         <label for="description" class="col-md-2 col-form-label">Description</label>
         <div class="col-md-10">
-            <InputText id="description" class="form-control" @bind-Value="editModel.Description" placeholder="@CourseDetails.Description" />
+            <InputText id="description" class="form-control" @bind-Value="editModel.Description" />
             <ValidationMessage For="@(() => editModel.Description)" />
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="Category" class="col-md-2 col-form-label">Category Name</label>
+        <label for="CategoryId" class="col-md-2 col-form-label">Category</label>
         <div class="col-md-10">
-            <InputSelect id="categoryId" class="form-control" @bind-Value="editModel.Category.Id">
-                <option>@CourseDetails.Category.Name</option>
+            <InputSelect id="categoryId" class="form-control" @bind-Value="editModel.CategoryId">
+                <option>@editModel.CategoryName</option>
                 @foreach (var category in CategoriesInDb)
                 {
                     <option value="@category.Id">@category.Name</option>
                 }
             </InputSelect>
-            <ValidationMessage For="@(() => editModel.Category)" />
+            <ValidationMessage For="@(() => editModel.CategoryId)" />
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="coach" class="col-md-2 col-form-label">Coach</label>
+        <label for="CoachId" class="col-md-2 col-form-label">Coach</label>
         <div class="col-md-10">
-            <InputText id="coach" class="form-control" @bind-Value="editModel.Coach.Id" placeholder="@CourseDetails.Coach.FullName" />
-            <ValidationMessage For="@(() => editModel.Coach)" />
+            <InputSelect id="coach" class="form-control" @bind-Value="editModel.CoachId">
+                <option>@editModel.CoachName</option>
+                @foreach (var coach in CoachesInDb)
+                {
+                    <option value="@coach.Id">@coach.FullName</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => editModel.CoachId)" />
         </div>
     </div>
 
     <div class="form-group row">
         <label for="authorfullname" class="col-md-2 col-form-label">Author Full Name</label>
         <div class="col-md-10">
-            <InputText id="authorfullname" class="form-control" @bind-Value="editModel.AuthorFullName" placeholder="@CourseDetails.AuthorFullName" />
+            <InputText id="authorfullname" class="form-control" @bind-Value="editModel.AuthorFullName" />
             <ValidationMessage For="@(() => editModel.AuthorFullName)" />
         </div>
     </div>
@@ -57,7 +63,7 @@
     <div class="form-group row">
         <label for="authorcompany" class="col-md-2 col-form-label">Author Company</label>
         <div class="col-md-10">
-            <InputText id="authorcompany" class="form-control" @bind-Value="editModel.AuthorCompany" placeholder="@CourseDetails.AuthorCompany" />
+            <InputText id="authorcompany" class="form-control" @bind-Value="editModel.AuthorCompany" />
             <ValidationMessage For="@(() => editModel.AuthorCompany)" />
         </div>
     </div>
@@ -65,7 +71,7 @@
     <div class="form-group row">
         <label for="price" class="col-md-2 col-form-label">Price</label>
         <div class="col-md-10">
-            <InputNumber id="price" class="form-control" @bind-Value="editModel.Price" placeholder="@CourseDetails.Price" />
+            <InputNumber id="price" class="form-control" @bind-Value="editModel.Price" />
             <ValidationMessage For="@(() => editModel.Price)" />
         </div>
     </div>
@@ -73,7 +79,7 @@
     <div class="form-group row">
         <label for="videourl" class="col-md-2 col-form-label">Video URL</label>
         <div class="col-md-10">
-            <InputText id="videourl" class="form-control" @bind-Value="editModel.VideoUrl" placeholder="@CourseDetails.VideoUrl" />
+            <InputText id="videourl" class="form-control" @bind-Value="editModel.VideoUrl" />
             <ValidationMessage For="@(() => editModel.VideoUrl)" />
         </div>
     </div>

@@ -22,8 +22,6 @@
         [Parameter]
         public int Id { get; set; }
 
-        public CourseDetailsServiceModel CourseDetails { get; set; } = new();
-
         public IEnumerable<AdminCategoryListingServiceModel> CategoriesInDb { get; set; } =
             new List<AdminCategoryListingServiceModel>();
 
@@ -32,8 +30,8 @@
 
         protected override async Task OnInitializedAsync()
         {
-            this.CourseDetails = await this.Client
-                .GetFromJsonAsync<CourseDetailsServiceModel>($"/admin/course/details/{Id}");
+            this.editModel = await this.Client
+                .GetFromJsonAsync<CourseEditInputModel>($"/admin/course/edit/{Id}");
 
             this.CategoriesInDb = await this.Client
                 .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>("/admin/category/all");

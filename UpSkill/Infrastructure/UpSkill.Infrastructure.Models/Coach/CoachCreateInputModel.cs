@@ -9,7 +9,7 @@
         public string Id { get; set; }
 
         public int CategoryId { get; set; }
-        public CategoryCreateInputModel Category { get; set; }
+        // public CategoryCreateInputModel Category { get; set; }
 
         [Required]
         public string FullName { get; set; }

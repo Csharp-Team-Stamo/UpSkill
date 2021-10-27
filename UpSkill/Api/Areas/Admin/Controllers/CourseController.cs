@@ -42,7 +42,7 @@
 
             if(allCourses.Any() == false)
             {
-                return NoContent();
+                return NotFound();
             }
 
             return new List<AdminCourseListingServiceModel>(allCourses);
@@ -61,12 +61,42 @@
             return course;
         }
 
+        [HttpGet("Edit/{id}")]
+        public async Task<ActionResult<CourseEditInputModel>> Edit(int id)
+        {
+            if(id <= 0)
+            {
+                return BadRequest("Valid Course Id is required.");
+            }
+
+            var courseInDb = await this.courseService.GetCourse(id);
+
+            if(courseInDb == null)
+            {
+                return NotFound();
+            }
+
+            var editModel = new CourseEditInputModel
+            {
+                Id = courseInDb.Id,
+                AuthorCompany = courseInDb.AuthorCompany,
+                AuthorFullName = courseInDb.AuthorFullName,
+                Name = courseInDb.Name,
+                Description = courseInDb.Description,
+                Price = courseInDb.Price,
+                VideoUrl = courseInDb.VideoUrl,
+                CategoryId = courseInDb.Category.Id,
+                CategoryName = courseInDb.Category.Name,
+                CoachId = courseInDb.Coach.Id,
+                CoachName = courseInDb.Coach.FullName
+            };
+
+            return editModel;
+        }
 
         [HttpPut("Edit")]
         public async Task<ActionResult> Edit([FromBody] CourseEditInputModel input)
         {
-            // TODO create a CourseEditInputModel & pass it [FromBody] to the ctor
-
             if(input == null || 
                 ModelState.IsValid == false || 
                 input.Id <= 0)

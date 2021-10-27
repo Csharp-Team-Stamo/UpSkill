@@ -8,9 +8,16 @@
     public class CourseEditInputModel
     {
         public int Id { get; set; }
-        public CategoryEditInputModel Category { get; set; }
+        public int CategoryId { get; set; }
+        public string CategoryName { get; set; }
 
-        public CoachEditInputModel Coach { get; set; }
+        public string CoachId { get; set; }
+        public string CoachName { get; set; }
+        // public CategoryEditInputModel Category { get; set; }
+
+        //[Required]
+        ////public string CoachId { get; set; }
+        //public CoachEditInputModel Coach { get; set; }
 
         [Required]
         public string Name { get; set; }

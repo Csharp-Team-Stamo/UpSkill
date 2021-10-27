@@ -1,9 +1,7 @@
 ﻿namespace UpSkill.Services.Data
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
@@ -45,9 +43,9 @@
 
         public async Task<int?> Create(CourseCreateInputModel input)
         {
-            var category = await this.categoryService.GetCategory(input.Category.Id);
+            var category = await this.GetCategory(input.CategoryId);
 
-            var coach = await this.coachService.GetCoach(input.Coach.Id);
+            var coach = await this.GetCoach(input.CoachId);
 
             var course = new Course
             {
@@ -108,7 +106,17 @@
             courseToEdit.AuthorCompany = input.AuthorCompany;
             courseToEdit.VideoUrl = input.VideoUrl;
 
-            // TODO complete with category and coach
+            if(courseToEdit.CategoryId != input.CategoryId)
+            {
+                courseToEdit.Category = await this.GetCategory(input.CategoryId);
+                courseToEdit.CategoryId = input.CategoryId;
+            }
+
+            if(courseToEdit.CoachId != input.CoachId)
+            {
+                courseToEdit.Coach = await this.GetCoach(input.CoachId);
+                courseToEdit.CoachId = input.CoachId;
+            }
 
             this.courseRepo.Update(courseToEdit);
             var editResult = await this.courseRepo.SaveChangesAsync();
@@ -146,5 +154,11 @@
 
             return course;
         }
+
+        private async Task<Category> GetCategory(int id)
+            => await this.categoryService.GetCategory(id);
+
+        private async Task<Coach> GetCoach(string id)
+            => await this.coachService.GetCoach(id);
     }
 }

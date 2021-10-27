@@ -1,0 +1,48 @@
+﻿@page "/admin/coach/all"
+@using UpSkill.Infrastructure.Models.Coach
+
+<style>
+    .pageMainGrid{
+        display: grid;
+        grid-template-columns: 1fr 1fr 2fr 1fr;
+        row-gap: 1rem;
+    }
+
+        .pageMainGrid .gridCol {
+            border-bottom: 2px solid #296cfb;
+            text-align: center;
+            vertical-align: central;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+            .pageMainGrid .gridCol a {
+                margin: .2em;
+            }
+</style>
+
+<h3>AdminCoachAll</h3>
+
+<div class="pageMainGrid">
+    <div>Id</div>
+    <div>Name</div>
+    @foreach(var coach in allCoachesInDb)
+    {
+        <div>@coach.Id</div>
+        <div>@coach.FullName</div>
+    }
+</div>
+
+@code {
+    private IEnumerable<AdminCoachListingServiceModel> allCoachesInDb =
+        new List<AdminCoachListingServiceModel>();
+
+    [Inject]
+    public HttpClient Client { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.allCoachesInDb = await this.Client
+        .GetFromJsonAsync<IEnumerable<AdminCoachListingServiceModel>>("admin/coach/all");
+    }
+}

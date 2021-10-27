@@ -7,15 +7,12 @@
 
     public class CourseCreateInputModel
     {
-        public CategoryCreateInputModel Category { get; set; }
-
-        //[Display(Name = "Category Id")]
+        //public CategoryCreateInputModel Category { get; set; }
         public int CategoryId { get; set; }
 
-        public CoachCreateInputModel Coach { get; set; }
+        //public CoachCreateInputModel Coach { get; set; }
 
-        //[Required]
-        //[Display(Name = "Coach Id")]
+        [Required]
         public string CoachId { get; set; }
 
         [Required]
