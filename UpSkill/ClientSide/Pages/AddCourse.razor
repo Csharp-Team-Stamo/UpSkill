@@ -1,0 +1,21 @@
+﻿@page "/Courses/Add"
+<!--MUST REMOVE LATER-->
+<!--THIS PAGE SHOULDN'T BE ACCESIBLE WITHOUT GETTING AUTHENTICATED FIRST-->
+@attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+
+<div style="display: block;">
+    <CoursesTopCard></CoursesTopCard>
+</div>
+
+<div class="row">
+    
+
+    @for (int i = 1; i < 5; i++)
+    {
+        <ResourceCard></ResourceCard>
+    }
+
+    <div class="col-sm-12 col-md-6 col-lg-4 mb-2 p-md-2 p-lg-5" style="position: relative;">
+        <input type="image" src="images/PlusButton.svg" style="position: absolute; top: 40%;" alt="Add Button">
+    </div>
+</div>

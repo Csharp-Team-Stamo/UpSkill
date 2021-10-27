@@ -1,0 +1,52 @@
+﻿.everything {
+    position: relative;
+    text-align: center;
+    color: white;
+}
+
+/* Background */
+.BlueBackground {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Mockup */
+.MockUp {
+    position: absolute;
+    top: 50%;
+    left: 75%;
+    width: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Courses */
+.Courses {
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    text-align: left;
+    font: normal normal bold 70px/85px Montserrat;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+}
+
+/* information */
+.TextInfo {
+    position: absolute;
+    top: 50%;
+    left: 15%;
+    width: 50%;
+    height: 50%;
+    transform: translate(-50%, -50%);
+    text-align: left;
+    font: normal normal medium 22px/42px Montserrat;
+    letter-spacing: 0px;
+    color: #000000;
+    opacity: 1;
+}
