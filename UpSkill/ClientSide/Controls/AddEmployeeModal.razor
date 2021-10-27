@@ -48,7 +48,7 @@
     private ICollection<AddEmployeeFormModel> employeeCollection = new List<AddEmployeeFormModel>();
 
     [CascadingParameter]
-    public Task<AuthenticationState> authenticationState { get; set; }
+    public Task<AuthenticationState> user { get; set; }
 
 
     [Parameter]
@@ -67,7 +67,7 @@
     {
 
         var model = EmployeeFormModel;
-        model.CompanyId = await GetCompanyId();
+        model.CompanyId = user.Company().Result;
         employeeCollection.Add(model);
 
 
@@ -99,14 +99,7 @@
     {
 
 
-        return await Client.GetFromJsonAsync<List<AddEmployeeFormModel>>($"/Employees/GetEmployeesByCompanyId/{await GetCompanyId()}");
-    }
-
-    private async Task<string> GetCompanyId()
-    {
-        var user = (await authenticationState).User;
-
-        return user.Claims.FirstOrDefault(x => x.Type == "CompanyId").Value;
+        return await Client.GetFromJsonAsync<List<AddEmployeeFormModel>>($"/Employees/GetEmployeesByCompanyId/{user.Company().Result}");
     }
 }
 

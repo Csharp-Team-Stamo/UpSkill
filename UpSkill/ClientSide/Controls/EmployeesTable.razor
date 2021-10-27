@@ -44,17 +44,13 @@
 @code
 {
     [CascadingParameter]
-    public Task<AuthenticationState> authenticationState { get; set; }
-
-    ClaimsPrincipal user;
+    public Task<AuthenticationState> user { get; set; }
 
     private bool show = false;
     private List<AddEmployeeFormModel> employeesModel = new();
 
     protected override async Task OnInitializedAsync()
     {
-        user = (await authenticationState).User;
-
         employeesModel = await GetEmployees();
     }
 
@@ -75,8 +71,6 @@
 
     private async Task<List<AddEmployeeFormModel>> GetEmployees()
     {
-        var companyId = user.Claims.FirstOrDefault(x => x.Type == "CompanyId").Value;
-
-        return await Client.GetFromJsonAsync<List<AddEmployeeFormModel>>($"/Employees/GetEmployeesByCompanyId/{companyId}");
+        return await Client.GetFromJsonAsync<List<AddEmployeeFormModel>>($"/Employees/GetEmployeesByCompanyId/{user.Company().Result}");
     }
 }
