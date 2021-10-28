@@ -15,6 +15,7 @@ namespace UpSkill.Infrastructure.Models.Course
         public CategoryDetailsServiceModel Category { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string ImageUrl { get; set; }
         public string AuthorFullName { get; set; }
         public string AuthorCompany { get; set; }
         public decimal Price { get; set; }

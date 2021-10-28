@@ -11,6 +11,9 @@
         [Required]
         public string FullName { get; set; }
 
+        [Required]
+        public string ImageUrl { get; set; }
+
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
 

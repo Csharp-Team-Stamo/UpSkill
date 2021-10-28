@@ -18,6 +18,9 @@
         public string Description { get; set; }
 
         [Required]
+        public string ImageUrl { get; set; }
+
+        [Required]
         public string AuthorFullName { get; set; }
 
         [Required]

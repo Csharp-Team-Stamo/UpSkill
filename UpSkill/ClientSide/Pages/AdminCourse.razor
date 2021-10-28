@@ -20,6 +20,14 @@
     </div>
 
     <div class="form-group row">
+        <label for="imageurl" class="col-md-2 col-form-label">Image URL</label>
+        <div class="col-md-10">
+            <InputText id="imageurl" class="form-control" @bind-Value="courseInput.ImageUrl" />
+            <ValidationMessage For="@(() => courseInput.ImageUrl)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
         <label for="CategoryId" class="col-md-2 col-form-label">Category</label>
         <div class="col-md-10">
             <InputSelect id="categoryId" class="form-control" @bind-Value="courseInput.CategoryId">

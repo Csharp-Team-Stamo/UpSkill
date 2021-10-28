@@ -21,6 +21,9 @@
         public string Description { get; set; }
 
         [Required]
+        public string ImageUrl { get; set; }
+
+        [Required]
         [Display(Name = "Author Full Name")]
         public string AuthorFullName { get; set; }
 

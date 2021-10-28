@@ -47,6 +47,7 @@
                 CategoryId = category.Id,
                 Name = input.Name,
                 Description = input.Description,
+                ImageUrl = input.ImageUrl,
                 AuthorFullName = input.AuthorFullName,
                 AuthorCompany = input.AuthorCompany,
                 Price = input.Price,
@@ -93,6 +94,7 @@
 
             courseToEdit.Name = input.Name;
             courseToEdit.Description = input.Description;
+            courseToEdit.ImageUrl = input.ImageUrl;
             courseToEdit.Price = input.Price;
             courseToEdit.AuthorFullName = input.AuthorFullName;
             courseToEdit.AuthorCompany = input.AuthorCompany;

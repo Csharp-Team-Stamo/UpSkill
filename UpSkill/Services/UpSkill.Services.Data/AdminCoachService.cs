@@ -33,6 +33,7 @@
                 CategoryId = category.Id,
                 Company = coachInput.Company,
                 FullName = coachInput.FullName,
+                ImageUrl = coachInput.ImageUrl,
                 PricePerSession = coachInput.PricePerSession
             };
 
@@ -55,6 +56,7 @@
             {
                 Id = coachInDb.Id,
                 FullName = coachInDb.FullName,
+                ImageUrl = coachInDb.ImageUrl,
                 Category = new CategoryDetailsServiceModel
                 {
                     Id = coachInDb.Category.Id,
@@ -91,6 +93,7 @@
             }
 
             coachToEdit.FullName = editInput.FullName;
+            coachToEdit.ImageUrl = editInput.ImageUrl;
             coachToEdit.PricePerSession = editInput.PricePerSession;
             coachToEdit.Company = editInput.Company;
             
@@ -150,6 +153,7 @@
                 Id = coachInDb.Id,
                 Company = coachInDb.Company,
                 FullName = coachInDb.FullName,
+                ImageUrl = coachInDb.ImageUrl,
                 PricePerSession = coachInDb.PricePerSession,
                 CategoryId = coachInDb.Category.Id,
                 CategoryName = coachInDb.Category.Name

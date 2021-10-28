@@ -2,9 +2,7 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
     using global::Data.Models;
-
     using UpSkill.Data.Common.Models;
 
     public class Course : BaseDeletableModel<int>
@@ -17,6 +15,9 @@
 
         [Required]
         public string Description { get; set; }
+
+        [Required]
+        public string ImageUrl { get; set; }
 
         [Required]
         public string AuthorFullName { get; set; }
