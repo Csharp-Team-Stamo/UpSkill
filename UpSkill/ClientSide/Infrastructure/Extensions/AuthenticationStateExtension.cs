@@ -19,13 +19,13 @@ namespace UpSkill.ClientSide.Infrastructure.Extensions
             return result.User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
         }
 
-        public static async Task<string> Name(this Task<AuthenticationState> authState)
+        public static async Task<string> FullName(this Task<AuthenticationState> authState)
         {
             var result = await authState;
             return result.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
         }
 
-        public static async Task<string> Company(this Task<AuthenticationState> authState)
+        public static async Task<string> CompanyId(this Task<AuthenticationState> authState)
         {
             var result = await authState;
             return result.User.Claims.FirstOrDefault(x => x.Type == "Company")?.Value;

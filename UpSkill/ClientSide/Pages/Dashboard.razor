@@ -1,27 +1,6 @@
 ﻿@page "/Dashboard"
 
 <h3>Dashboard</h3>
-<div>
-    User Role: @user.Role().Result;
-    <br />
-    Username: @user.Name().Result;
-    <br />
-
-    CompanyId: @user.Company().Result;
-    <br />
-
-    Email: @user.Email().Result;
-    <br />
-    User is authenticated: @user.IsAuthenticated().Result;
-
-    <br />
-    <br />
-    <br />
-
-
-
-
-</div>
 
 <OwnerDashboardStatistics></OwnerDashboardStatistics>
 <CoursesDashboardTable></CoursesDashboardTable>

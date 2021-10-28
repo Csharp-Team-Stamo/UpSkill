@@ -26,13 +26,15 @@ namespace UpSkill.Api.Controllers
     {
         private readonly IAccountsService accountService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ICompanyService companyService;
         private readonly IConfigurationSection jwtSettings;
         public AccountsController(IAccountsService accountService, UserManager<ApplicationUser> userManager,
-            IConfiguration configuration)
+            IConfiguration configuration, ICompanyService companyService)
         {
 
             this.accountService = accountService;
             this.userManager = userManager;
+            this.companyService = companyService;
             this.jwtSettings = configuration.GetSection("JWTSettings");
         }
 
@@ -113,12 +115,12 @@ namespace UpSkill.Api.Controllers
             var claims = this.userManager.GetClaimsAsync(user);
             var claimsAsList = new List<Claim>(claims.Result);
 
-            claimsAsList.Add(
-                new Claim(ClaimTypes.Name, user.FullName));
-
             claimsAsList.Add(new Claim(ClaimTypes.Email, user.Email));
-            claimsAsList.Add(new Claim("Company", user.CompanyId.ToString()));
             claimsAsList.Add(new Claim("Id", user.Id));
+            claimsAsList.Add(new Claim("FullName", user.FullName));
+            claimsAsList.Add(new Claim("CompanyId", user.CompanyId.ToString()));
+            claimsAsList.Add(new Claim("CompanyName", companyService.GetName(user.CompanyId)));
+
             return claimsAsList;
         }
 

@@ -34,17 +34,7 @@
 
         private static void ExtractClaimsFromJWT(List<Claim> claims, Dictionary<string, object> keyValuePairs)
         {
-            foreach (var claim in keyValuePairs)
-            {
-                Console.WriteLine($"{claim.Key} - ${claim.Value}");
-            }
-
-
             keyValuePairs.TryGetValue(ClaimTypes.Role, out object roles);
-            keyValuePairs.TryGetValue("Id", out object id);
-            keyValuePairs.TryGetValue("Company", out object companyId);
-            keyValuePairs.TryGetValue(ClaimTypes.Email, out object email);
-            keyValuePairs.TryGetValue(ClaimTypes.Name, out object name);
 
             if (roles != null)
             {
@@ -65,25 +55,14 @@
                 keyValuePairs.Remove(ClaimTypes.Role);
             }
 
-            if (id != null)
+            foreach (var claim in keyValuePairs)
             {
-                claims.Add(new Claim("Id", id.ToString()?.Trim() ?? string.Empty));
-            }
+                keyValuePairs.TryGetValue(claim.Key, out object claimValue);
 
-
-            if (companyId != null)
-            {
-                claims.Add(new Claim("CompanyId", companyId.ToString()?.Trim() ?? string.Empty));
-            }
-
-            if (email != null)
-            {
-                claims.Add(new Claim(ClaimTypes.Email, email.ToString()?.Trim() ?? string.Empty));
-            }
-
-            if (name != null)
-            {
-                claims.Add(new Claim(ClaimTypes.Name, name.ToString()?.Trim() ?? string.Empty));
+                if (claimValue != null)
+                {
+                    claims.Add(new Claim($"{claim.Key}", claimValue.ToString()?.Trim() ?? string.Empty));
+                }
             }
         }
     }

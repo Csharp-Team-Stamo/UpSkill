@@ -2,15 +2,17 @@
 
 
 <div class="wrapper">
-    <div class="header">
-        <Header></Header>
-    </div>
-    <div class="sidebar-1">
-        <div class="sticky-content">
-            <NavMenu />
+    <AuthorizeView>
+        <div class="header">
+            <Header></Header>
         </div>
-    </div>
-  
+        <div class="sidebar-1">
+            <div class="sticky-content">
+                <NavMenu />
+            </div>
+        </div>
+    </AuthorizeView>
+
     <div class="content">
         <div class="sticky-spacer"></div>
         <div class="sticky-content">
@@ -19,5 +21,9 @@
     </div>
     <div class="footer">  <Footer></Footer></div>
 </div>
+
+@code{
+
+}
 
 

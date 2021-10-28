@@ -9,14 +9,14 @@
     <li class="nav-item px-3">
         <div class="d-inline-flex p-3 align-content-center">
             <Avatar></Avatar>
-            <div class="ml-2">
-                <div class=" mt-1 pb-1">
-                    Christo Peev
+                <div class="ml-2 text-left">
+                    <div class=" mt-1 pb-1">
+                        @user.FullName().Result
+                    </div>
+                    <div class="my-1">
+                        @user.CompanyName().Result
+                    </div>
                 </div>
-                <div class="my-1">
-                    Motion Software
-                </div>
-            </div>
         </div>
     </li>
 
@@ -63,3 +63,8 @@
     </AuthorizeView>
 </ul>
 
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+}
