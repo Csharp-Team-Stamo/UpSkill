@@ -3,7 +3,7 @@
     using System.Linq;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Services.Data.Contracts;
+    using Contracts;
 
     public class CompanyService : ICompanyService
     {

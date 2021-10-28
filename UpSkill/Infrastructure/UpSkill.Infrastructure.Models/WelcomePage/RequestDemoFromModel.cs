@@ -2,6 +2,7 @@
 {
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
+    using static Common.GlobalConstants;
     using static Common.GlobalConstants.WelcomePageConst;
 
     public class RequestDemoFromModel
