@@ -76,17 +76,24 @@
         }
         else
         {
-            var result = await EmployeesService.SaveCollectionInDbAsync(employeeCollection);
+            var responseErrors = await EmployeesService.SaveCollectionInDbAsync(employeeCollection);
 
             await GetUpdatedEmployees.InvokeAsync(await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result));
 
-            var s = result.Content.ReadAsStringAsync().Result;
-
-            var res = JsonConvert.DeserializeObject<List<string>>(s);
+            var errors = DeserializePostErrors(responseErrors);
 
             ClosePopup();
         }
 
+    }
+
+    private ICollection<string> DeserializePostErrors(HttpResponseMessage errors)
+    {
+        var errorsAsString = errors.Content.ReadAsStringAsync().Result;
+
+        var errorsAsStringCollection = JsonConvert.DeserializeObject<List<string>>(errorsAsString);
+
+        return errorsAsStringCollection;
     }
 }
 

@@ -1,6 +1,5 @@
 ﻿@inherits LayoutComponentBase
 
-
 <div class="wrapper">
     <AuthorizeView>
         <div class="header">
@@ -19,11 +18,15 @@
             @Body
         </div>
     </div>
-    <div class="footer">  <Footer></Footer></div>
+    <div class="footer">
+        <Footer></Footer>
+    </div>
 </div>
 
-@code{
-
-}
-
-
+<BlazoredToasts Position="ToastPosition.BottomRight"
+                Timeout="10"
+                IconType="IconType.Material"
+                ErrorIcon="error_outline"
+                InfoIcon="school"
+                SuccessIcon="done_outline"
+                WarningIcon="warning" ></BlazoredToasts>

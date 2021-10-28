@@ -12,6 +12,8 @@ namespace UpSkill.ClientSide
     using Authentication;
     using Authentication.Services;
     using Authentication.Services.Contracts;
+    using Blazored.Toast;
+    using Blazored.Toast.Services;
     using Infrastructure.Services;
     using Infrastructure.Services.Contracts;
 
@@ -39,7 +41,7 @@ namespace UpSkill.ClientSide
             builder.Services.AddTransient<IEmployeesService, EmployeesService>();
 
             builder.Services.AddBlazoredLocalStorage();
-            builder.Services.AddBlazoredLocalStorage();
+            builder.Services.AddBlazoredToast();
 
             builder.Services.AddAuthorizationCore();
 

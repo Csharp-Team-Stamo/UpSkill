@@ -8,7 +8,7 @@
 
     public partial class Registration
     {
-        private UserRegistrationDto userForRegistration = new();
+        private readonly UserRegistrationDto userForRegistration = new();
 
         [Inject]
         public IRegistrationService AuthenticationService { get; set; }
