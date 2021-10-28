@@ -34,18 +34,7 @@
 
         private static void ExtractClaimsFromJWT(List<Claim> claims, Dictionary<string, object> keyValuePairs)
         {
-            foreach (var claim in keyValuePairs)
-            {
-                Console.WriteLine($"{claim.Key} - ${claim.Value}");
-            }
-
-
             keyValuePairs.TryGetValue(ClaimTypes.Role, out object roles);
-            //keyValuePairs.TryGetValue("Id", out object id);
-            //keyValuePairs.TryGetValue("CompanyId", out object companyId);
-            //keyValuePairs.TryGetValue("CompanyName", out object companyName);
-            //keyValuePairs.TryGetValue(ClaimTypes.Email, out object email);
-            //keyValuePairs.TryGetValue("FullName", out object name);
 
             if (roles != null)
             {
@@ -75,36 +64,6 @@
                     claims.Add(new Claim($"{claim.Key}", claimValue.ToString()?.Trim() ?? string.Empty));
                 }
             }
-
-            //if (id != null)
-            //{
-            //    claims.Add(new Claim("Id", id.ToString()?.Trim() ?? string.Empty));
-            //}
-
-            //if (companyId != null)
-            //{
-            //    claims.Add(new Claim("CompanyId", companyId.ToString()?.Trim() ?? string.Empty));
-            //}
-
-            //if (name != null)
-            //{
-            //    claims.Add(new Claim("CompanyName", companyName.ToString()?.Trim() ?? string.Empty));
-            //}
-
-            //if (email != null)
-            //{
-            //    claims.Add(new Claim(ClaimTypes.Email, email.ToString()?.Trim() ?? string.Empty));
-            //}
-
-            //if (name != null)
-            //{
-            //    claims.Add(new Claim("FullName", name.ToString()?.Trim() ?? string.Empty));
-            //}
-
-            //if (email != null)
-            //{
-            //    claims.Add(new Claim(ClaimsIdentity.DefaultNameClaimType, email.ToString()?.Trim() ?? string.Empty));
-            //}
         }
     }
 }
