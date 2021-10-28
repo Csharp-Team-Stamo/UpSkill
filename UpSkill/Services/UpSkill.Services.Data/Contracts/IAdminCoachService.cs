@@ -9,9 +9,10 @@
     {
         Task<Coach> Create(CoachCreateInputModel coachInput);
         Task<Coach> GetCoach(string id);
+        Task<CoachEditInputModel> GetCoachEditModel(string id);
         Task<CoachDetailsServiceModel> GetCoachDetails(string id);
         Task<IEnumerable<AdminCoachListingServiceModel>> GetAll();
-        Task<int?> Edit(CoachEditInputModel editInput);
+        Task<int?> ExecuteEdit(CoachEditInputModel editInput);
         Task<int?> Delete(string id);
     }
 }

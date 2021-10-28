@@ -76,6 +76,8 @@
                 return NotFound();
             }
 
+            // get categories, then add to editModel
+
             var editModel = new CourseEditInputModel
             {
                 Id = courseInDb.Id,
@@ -87,8 +89,6 @@
                 VideoUrl = courseInDb.VideoUrl,
                 CategoryId = courseInDb.Category.Id,
                 CategoryName = courseInDb.Category.Name,
-                CoachId = courseInDb.Coach.Id,
-                CoachName = courseInDb.Coach.FullName
             };
 
             return editModel;

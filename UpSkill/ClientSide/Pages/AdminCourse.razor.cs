@@ -16,8 +16,8 @@
         public IEnumerable<AdminCategoryListingServiceModel> CategoriesInDb { get; set; } 
             = new List<AdminCategoryListingServiceModel>();
 
-        public IEnumerable<AdminCoachListingServiceModel> CoachesInDb { get; set; } 
-            = new List<AdminCoachListingServiceModel>();
+        //public IEnumerable<AdminCoachListingServiceModel> CoachesInDb { get; set; } 
+        //    = new List<AdminCoachListingServiceModel>();
 
         [Inject]
         public HttpClient Client { get; set; }
@@ -29,9 +29,6 @@
         {
             this.CategoriesInDb = await this.Client
                 .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>("/admin/category/all");
-
-            this.CoachesInDb = await this.Client
-                .GetFromJsonAsync<IEnumerable<AdminCoachListingServiceModel>>("/admin/coach/all");
         }
 
         public async Task Create()

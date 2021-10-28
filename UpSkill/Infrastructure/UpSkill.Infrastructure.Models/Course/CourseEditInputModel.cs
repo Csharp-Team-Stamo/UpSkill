@@ -11,9 +11,6 @@
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
 
-        public string CoachId { get; set; }
-        public string CoachName { get; set; }
-
         [Required]
         public string Name { get; set; }
 

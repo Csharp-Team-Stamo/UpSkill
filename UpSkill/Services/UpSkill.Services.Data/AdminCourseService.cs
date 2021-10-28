@@ -7,7 +7,6 @@
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
     using UpSkill.Infrastructure.Models.Category;
-    using UpSkill.Infrastructure.Models.Coach;
     using UpSkill.Infrastructure.Models.Course;
     using UpSkill.Services.Data.Contracts;
 
@@ -15,16 +14,13 @@
     {
         private readonly IRepository<Course> courseRepo;
         private readonly IAdminCategoryService categoryService;
-        private readonly IAdminCoachService coachService;
 
         public AdminCourseService(
             IRepository<Course> courseRepo,
-            IAdminCategoryService categoryService,
-            IAdminCoachService coachService)
+            IAdminCategoryService categoryService)
         {
             this.courseRepo = courseRepo;
             this.categoryService = categoryService;
-            this.coachService = coachService;
         }
 
         public async Task<IEnumerable<AdminCourseListingServiceModel>> All()
@@ -45,14 +41,10 @@
         {
             var category = await this.GetCategory(input.CategoryId);
 
-            var coach = await this.GetCoach(input.CoachId);
-
             var course = new Course
             {
                 Category = category,
                 CategoryId = category.Id,
-                Coach = coach,
-                CoachId = coach.Id,
                 Name = input.Name,
                 Description = input.Description,
                 AuthorFullName = input.AuthorFullName,
@@ -112,12 +104,6 @@
                 courseToEdit.CategoryId = input.CategoryId;
             }
 
-            if(courseToEdit.CoachId != input.CoachId)
-            {
-                courseToEdit.Coach = await this.GetCoach(input.CoachId);
-                courseToEdit.CoachId = input.CoachId;
-            }
-
             this.courseRepo.Update(courseToEdit);
             var editResult = await this.courseRepo.SaveChangesAsync();
 
@@ -130,7 +116,6 @@
             => await this.courseRepo
             .All()
             .Include(c => c.Category)
-            .Include(c => c.Coach)
             .FirstOrDefaultAsync(c => c.Id == id);
 
         public async Task<CourseDetailsServiceModel> GetCourseDetails(int id)
@@ -149,11 +134,6 @@
                                            Id = c.Category.Id,
                                            Name = c.Category.Name
                                        },
-                                       Coach = new CoachDetailsServiceModel
-                                       {
-                                           Id = c.Coach.Id,
-                                           FullName = c.Coach.FullName
-                                       },
                                        Price = c.Price,
                                        VideoUrl = c.VideoUrl
                                    })
@@ -164,8 +144,5 @@
 
         private async Task<Category> GetCategory(int id)
             => await this.categoryService.GetCategory(id);
-
-        private async Task<Coach> GetCoach(string id)
-            => await this.coachService.GetCoach(id);
     }
 }

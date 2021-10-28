@@ -9,8 +9,10 @@
     {
        public int CategoryId { get; set; }
 
-        [Required]
-        public string CoachId { get; set; }
+       // public IEnume Category { get; set; }
+
+        //[Required]
+        //public string CoachId { get; set; }
 
         [Required]
         public string Name { get; set; }

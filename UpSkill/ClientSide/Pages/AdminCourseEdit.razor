@@ -39,20 +39,6 @@
     </div>
 
     <div class="form-group row">
-        <label for="CoachId" class="col-md-2 col-form-label">Coach</label>
-        <div class="col-md-10">
-            <InputSelect id="coach" class="form-control" @bind-Value="editModel.CoachId">
-                <option>@editModel.CoachName</option>
-                @foreach (var coach in CoachesInDb)
-                {
-                    <option value="@coach.Id">@coach.FullName</option>
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => editModel.CoachId)" />
-        </div>
-    </div>
-
-    <div class="form-group row">
         <label for="authorfullname" class="col-md-2 col-form-label">Author Full Name</label>
         <div class="col-md-10">
             <InputText id="authorfullname" class="form-control" @bind-Value="editModel.AuthorFullName" />

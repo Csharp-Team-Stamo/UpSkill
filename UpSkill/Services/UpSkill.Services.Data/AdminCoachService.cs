@@ -81,7 +81,7 @@
             return allCoaches;
         }
 
-        public async Task<int?> Edit(CoachEditInputModel editInput)
+        public async Task<int?> ExecuteEdit(CoachEditInputModel editInput)
         {
             var coachToEdit = await this.GetCoach(editInput.Id);
 
@@ -121,6 +121,20 @@
             return deleteResult;
         }
 
+        public async Task<CoachEditInputModel> GetCoachEditModel(string id)
+        {
+            var coachToEdit = await this.GetCoach(id);
+
+            if(coachToEdit == null)
+            {
+                return null;
+            }
+
+            var editModel = ConvertToEditModel(coachToEdit);
+
+            return editModel;
+        }
+
         public async Task<Coach> GetCoach(string id)
             => await this.coachRepo
                         .All()
@@ -129,5 +143,16 @@
 
         private async Task<Category> GetCategory(int id)
             => await this.categoryService.GetCategory(id);
+
+        private static CoachEditInputModel ConvertToEditModel(Coach coachInDb)
+            => new()
+            {
+                Id = coachInDb.Id,
+                Company = coachInDb.Company,
+                FullName = coachInDb.FullName,
+                PricePerSession = coachInDb.PricePerSession,
+                CategoryId = coachInDb.Category.Id,
+                CategoryName = coachInDb.Category.Name
+            };
     }
 }

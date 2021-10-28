@@ -68,14 +68,12 @@
                 return BadRequest("A valid Id is required.");
             }
 
-            var coachInDb = await this.coachService.GetCoach(id);
+            var editInput = await this.coachService.GetCoachEditModel(id);
 
-            if(coachInDb == null)
+            if (editInput == null)
             {
                 return NotFound($"Coach with Id {id} was not found.");
             }
-
-            var editInput = this.ConvertToEditModel(coachInDb);
 
             return editInput;
         }
@@ -88,7 +86,7 @@
                 return BadRequest();
             }
 
-            var editResult = await this.coachService.Edit(editInput);
+            var editResult = await this.coachService.ExecuteEdit(editInput);
 
             if(editResult == null)
             {
@@ -115,16 +113,5 @@
 
             return StatusCode(200);
         }
-
-        private CoachEditInputModel ConvertToEditModel(Coach coachInDb)
-            => new()
-            {
-                Id = coachInDb.Id,
-                Company = coachInDb.Company,
-                FullName = coachInDb.FullName,
-                PricePerSession = coachInDb.PricePerSession,
-                CategoryId = coachInDb.Category.Id,
-                CategoryName = coachInDb.Category.Name
-            };
     }
 }

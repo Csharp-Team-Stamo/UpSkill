@@ -13,7 +13,6 @@ namespace UpSkill.Infrastructure.Models.Course
         public int Id { get; set; }
 
         public CategoryDetailsServiceModel Category { get; set; }
-        public CoachDetailsServiceModel Coach { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string AuthorFullName { get; set; }
