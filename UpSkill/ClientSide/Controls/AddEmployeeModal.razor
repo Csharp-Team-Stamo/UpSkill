@@ -84,13 +84,7 @@
 
             ClosePopup();
 
-            if (errors.Any())
-            {
-                foreach (var error in errors)
-                {
-                    toastService.ShowError($"Employee with Full Name '{EmployeeFormModel.FullName}' is not saved because his email '{error}' is already registered ");
-                }
-            }
+            DisplayToast(errors);
         }
 
     }
@@ -102,6 +96,23 @@
         var errorsAsStringCollection = JsonConvert.DeserializeObject<List<string>>(errorsAsString);
 
         return errorsAsStringCollection;
+    }
+
+    private void DisplayToast(ICollection<string> info )
+    {
+        if (info.Any())
+        {
+            foreach (var error in info)
+            {
+                toastService.ShowError($"Employee with Full Name '{EmployeeFormModel.FullName}' is not saved because his email '{error}' is already registered");
+            }
+        }
+        else
+        {
+            var message = employeeCollection.Count > 1 ? $"{employeeCollection.Count}  Employees saved" : $"{employeeCollection.Count}  Employee saved";
+
+            toastService.ShowSuccess(message);
+        }
     }
 }
 
