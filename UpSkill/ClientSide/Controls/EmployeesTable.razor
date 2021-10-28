@@ -71,6 +71,6 @@
 
     private async Task<ICollection<AddEmployeeFormModel>> GetEmployees()
     {
-        return await Client.GetFromJsonAsync<ICollection<AddEmployeeFormModel>>($"/Employees/GetCollectionByCompanyId/{user.Company().Result}");
+        return await Client.GetFromJsonAsync<ICollection<AddEmployeeFormModel>>($"/Employees/GetCollectionByCompanyId/{user.CompanyId().Result}");
     }
 }

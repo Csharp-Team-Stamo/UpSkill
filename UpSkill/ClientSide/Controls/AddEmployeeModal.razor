@@ -67,7 +67,7 @@
     {
 
         var model = EmployeeFormModel;
-        model.CompanyId = user.Company().Result;
+        model.CompanyId = user.CompanyId().Result;
         employeeCollection.Add(model);
 
 
@@ -98,7 +98,7 @@
     private async Task<ICollection<AddEmployeeFormModel>> GetEmployees()
     {
 
-        return await Client.GetFromJsonAsync<ICollection<AddEmployeeFormModel>>($"/Employees/GetCollectionByCompanyId/{user.Company().Result}");
+        return await Client.GetFromJsonAsync<ICollection<AddEmployeeFormModel>>($"/Employees/GetCollectionByCompanyId/{user.CompanyId().Result}");
     }
 }
 
