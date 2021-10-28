@@ -47,7 +47,7 @@
     public Task<AuthenticationState> user { get; set; }
 
     private bool show = false;
-    private List<AddEmployeeFormModel> employeesModel = new();
+    private ICollection<AddEmployeeFormModel> employeesModel = new List<AddEmployeeFormModel>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -64,13 +64,13 @@
         show = value;
     }
 
-    private void SetEmployeesCollection(List<AddEmployeeFormModel> value)
+    private void SetEmployeesCollection(ICollection<AddEmployeeFormModel> value)
     {
         employeesModel = value;
     }
 
-    private async Task<List<AddEmployeeFormModel>> GetEmployees()
+    private async Task<ICollection<AddEmployeeFormModel>> GetEmployees()
     {
-        return await Client.GetFromJsonAsync<List<AddEmployeeFormModel>>($"/Employees/GetEmployeesByCompanyId/{user.Company().Result}");
+        return await Client.GetFromJsonAsync<ICollection<AddEmployeeFormModel>>($"/Employees/GetCollectionByCompanyId/{user.Company().Result}");
     }
 }

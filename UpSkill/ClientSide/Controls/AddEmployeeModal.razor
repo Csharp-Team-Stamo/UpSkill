@@ -55,7 +55,7 @@
     public EventCallback<bool> SetShow { get; set; }
 
     [Parameter]
-    public EventCallback<List<AddEmployeeFormModel>> GetUpdatedEmployees { get; set; }
+    public EventCallback<ICollection<AddEmployeeFormModel>> GetUpdatedEmployees { get; set; }
 
 
     private void ClosePopup()
@@ -92,13 +92,13 @@
 
     private async Task<HttpResponseMessage> PostEmployees()
     {
-        return await Client.PostAsJsonAsync("/Employees/PostEmployeesCollection", employeeCollection);
+        return await Client.PostAsJsonAsync("/Employees/PostCollection", employeeCollection);
     }
 
-    private async Task<List<AddEmployeeFormModel>> GetEmployees()
+    private async Task<ICollection<AddEmployeeFormModel>> GetEmployees()
     {
 
-        return await Client.GetFromJsonAsync<List<AddEmployeeFormModel>>($"/Employees/GetEmployeesByCompanyId/{user.Company().Result}");
+        return await Client.GetFromJsonAsync<ICollection<AddEmployeeFormModel>>($"/Employees/GetCollectionByCompanyId/{user.Company().Result}");
     }
 }
 
