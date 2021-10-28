@@ -3,12 +3,12 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
-    using Infrastructure;
+    using Infrastructure.Services.Contracts;
     using UpSkill.Infrastructure.Models.Account;
 
     public partial class Registration
     {
-        private UserRegistrationDto userForRegistration = new UserRegistrationDto();
+        private UserRegistrationDto userForRegistration = new();
 
         [Inject]
         public IRegistrationService AuthenticationService { get; set; }

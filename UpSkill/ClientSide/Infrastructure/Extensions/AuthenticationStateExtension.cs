@@ -10,43 +10,43 @@ namespace UpSkill.ClientSide.Infrastructure.Extensions
         public static async Task<string> Role(this Task<AuthenticationState> authState)
         {
             var result = await authState;
-            return result.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
+            return result.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
         }
 
         public static async Task<string> Id(this Task<AuthenticationState> authState)
         {
             var result = await authState;
-            return result.User.Claims.FirstOrDefault(x => x.Type == "Id").Value;
+            return result.User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
         }
 
         public static async Task<string> Name(this Task<AuthenticationState> authState)
         {
             var result = await authState;
-            return result.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name).Value;
+            return result.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
         }
 
         public static async Task<string> Company(this Task<AuthenticationState> authState)
         {
             var result = await authState;
-            return result.User.Claims.FirstOrDefault(x => x.Type == "Company").Value;
+            return result.User.Claims.FirstOrDefault(x => x.Type == "Company")?.Value;
         }
 
         public static async Task<string> Email(this Task<AuthenticationState> authState)
         {
             var result = await authState;
-            return result.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email).Value;
+            return result.User.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
         }
 
         public static async Task<string> Username(this Task<AuthenticationState> authState)
         {
             var result = await authState;
-            return result.User.Identity.Name;
+            return result.User.Identity?.Name;
         }
 
         public static async Task<bool> IsAuthenticated(this Task<AuthenticationState> authState)
         {
             var result = await authState;
-            return result.User.Identity.IsAuthenticated;
+            return result.User.Identity != null && result.User.Identity.IsAuthenticated;
         }
     }
 }

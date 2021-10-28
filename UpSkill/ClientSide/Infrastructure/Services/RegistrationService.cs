@@ -1,9 +1,10 @@
-﻿namespace UpSkill.ClientSide.Infrastructure
+﻿namespace UpSkill.ClientSide.Infrastructure.Services
 {
     using System.Net.Http;
     using System.Text;
     using System.Text.Json;
     using System.Threading.Tasks;
+    using Contracts;
     using UpSkill.Infrastructure.Models.Account;
 
     public class RegistrationService : IRegistrationService

@@ -12,7 +12,8 @@ namespace UpSkill.ClientSide
     using Authentication;
     using Authentication.Services;
     using Authentication.Services.Contracts;
-    using Infrastructure;
+    using Infrastructure.Services;
+    using Infrastructure.Services.Contracts;
 
     public class Program
 	{
