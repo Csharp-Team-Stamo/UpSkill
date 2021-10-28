@@ -18,5 +18,10 @@
             this.companyRepo
             .AllAsNoTracking()
             .FirstOrDefault(x => x.Name == companyName) != null ? true : false;
+
+        public string GetName(int id)
+        => this.companyRepo
+            .AllAsNoTracking()
+            .FirstOrDefault(x => x.Id == id).Name;
     }
 }
