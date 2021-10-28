@@ -1,0 +1,146 @@
+﻿
+.footer {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+}
+
+.footer-card {
+    position: relative
+}
+
+.background-img {
+    width: 100%;
+    position: relative
+}
+
+.upskill-img {
+    position: absolute;
+    top: 19%;
+    left: 5%;
+    width: 5%;
+}
+
+.upskill-img-text {
+    position: absolute;
+    top: 26%;
+    left: 11%;
+    font: normal normal bold 45px/55px Montserrat;
+    letter-spacing: 2.25px;
+    color: #FFFFFF;
+}
+
+.logo-div {
+    position: absolute
+}
+
+.div-info {
+    position: absolute;
+    top: 32%;
+    left: 4%;
+    font: 172% Montserrat;
+    color: #FFFFFF;
+}
+
+.footer-get-started-btn {
+    position: absolute;
+    top: 123%;
+    left: 3%;
+    height: 23%;
+    width: 41%;
+    background: #FFFFFF;
+}
+
+.footer-get-started-btn-text {
+    font: bold 51% Montserrat;
+    letter-spacing: 1.1px;
+    color: #0B2969;
+}
+
+.footer-bottom-background {
+    background-color: #0B2969;
+}
+
+.footer-bottom-text {
+    text-align: center;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+}
+
+.footer-bottom-img-copyright {
+    position: absolute;
+    top: 96%;
+    left: 45%;
+    width: 1%;
+}
+.div-company {
+    position: absolute;
+    top: 41%;
+    left: 54%;
+}
+.div-title-text {
+    text-align: left;
+    font: normal normal bold 22px/27px Montserrat;
+    letter-spacing: 1.1px;
+    color: #FFFFFF;
+}
+.div-service {
+    position: absolute;
+    top: 41%;
+    left: 77%;
+}
+.div-content-text {
+    text-align: left;
+    font: normal normal medium 22px/27px Montserrat;
+    letter-spacing: 1.1px;
+    color: #FFFFFF;
+}
+.div-about-us {
+    position: absolute;
+    top: 56%;
+    left: 54%;
+}
+.div-contact-us {
+    position: absolute;
+    top: 66%;
+    left: 54%;
+}
+.div-privacy-policy {
+    position: absolute;
+    top: 76%;
+    left: 54%;
+}
+.div-courses {
+    position: absolute;
+    top: 56%;
+    left: 77%;
+}
+.div-coaches {
+    position: absolute;
+    top: 66%;
+    left: 77%;
+}
+.div-requests {
+    position: absolute;
+    top: 76%;
+    left: 76%;
+}
+.facebook-logo-img {
+    position: absolute;
+    top: 56%;
+    left: 97%;
+    width: 2%;
+}
+.instagram-logo-img {
+    position: absolute;
+    top: 66%;
+    left: 97%;
+    width: 2%;
+}
+.linkin-logo-img {
+    position: absolute;
+    top: 76%;
+    left: 97%;
+    width: 2%;
+}

@@ -5,8 +5,6 @@
 
     using UpSkill.Data.Common.Models;
 
-    using static UpSkill.Data.DataConstants.Company;
-
     public class Company : BaseDeletableModel<int>
     {
         [Required]

@@ -8,24 +8,36 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="wwwroot\images\NewFolder\**" />
-    <Content Remove="wwwroot\images\NewFolder\**" />
-    <EmbeddedResource Remove="wwwroot\images\NewFolder\**" />
-    <None Remove="wwwroot\images\NewFolder\**" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <None Remove="Controls\AddEmployeeModal.razor.css" />
     <None Remove="Controls\Avatar.razor.css" />
+    <None Remove="Controls\CoachesDashboardTable.razor.css" />
+    <None Remove="Controls\CoursesDashboardTable.razor.css" />
+    <None Remove="Controls\DashboardTable.razor.css" />
+    <None Remove="Controls\Footer.razor.css" />
+    <None Remove="Controls\Header.razor.css" />
     <None Remove="Controls\OwnerDashboardStatistics.razor.css" />
     <None Remove="Controls\CoachCard.razor.css" />
+    <None Remove="Pages\LogIn.razor.css" />
+    <None Remove="Pages\SignUp.razor.css" />
+    <None Remove="Pages\Registration.razor.css" />
     <None Remove="Pages\WelcomePage.razor.css" />
+    <None Remove="Shared\LoginDisplay.razor.css" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Controls\AddEmployeeModal.razor.css" />
     <Content Include="Controls\Avatar.razor.css" />
+    <Content Include="Controls\CoachesDashboardTable.razor.css" />
+    <Content Include="Controls\CoursesDashboardTable.razor.css" />
+    <Content Include="Controls\Footer.razor.css" />
+    <Content Include="Controls\Header.razor.css" />
     <Content Include="Controls\OwnerDashboardStatistics.razor.css" />
     <Content Include="Controls\CoachCard.razor.css" />
+    <Content Include="Pages\LogIn.razor.css" />
+    <Content Include="Pages\SignUp.razor.css" />
+    <Content Include="Pages\Registration.razor.css" />
     <Content Include="Pages\WelcomePage.razor.css" />
+    <Content Include="Shared\LoginDisplay.razor.css" />
   </ItemGroup>
 
   <ItemGroup>

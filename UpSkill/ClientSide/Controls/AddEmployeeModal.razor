@@ -1,0 +1,76 @@
+﻿@using System.Reflection.PortableExecutable
+<div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.8);"
+     aria-modal="true">
+    <div class="modal-dialog">
+        <div class="modal-body">
+            <div class="row modal-header-custom">
+                <div class="add-emp-text">Add Employees</div>
+                <div @onclick="ClosePopup" class="close header-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </div>
+                <div class="upload-csv-file-btn">
+                    <div class="upload-csv-file-btn-text">
+                        Upload CSV file
+                    </div>
+                </div>
+            </div>
+            <div>
+                <EditForm Model="@EmployeeFormModel" OnValidSubmit="@HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <InputText @bind-Value="EmployeeFormModel.FullName" placeholder="Full Name*"></InputText>
+                    <ValidationMessage For="@(() => EmployeeFormModel.FullName)"></ValidationMessage>
+                    <InputText @bind-Value="EmployeeFormModel.Email" placeholder="Email Address*"></InputText>
+                    <ValidationMessage For="@(() => EmployeeFormModel.Email)"></ValidationMessage>
+                    <button @onclick="@(() => EmployeeFormModel.AddAnotherOneBtn = true)" type="submit" class="add-another-one-employee">
+                        + Add another employee
+                    </button>
+                    <div class="row">
+                        <button  class="cancel-btn">
+                            <div @onclick="ClosePopup" class="cancel-btn-text">
+                                Cancel
+                            </div>
+                        </button>
+                        <button @onclick="@(() => EmployeeFormModel.AddAnotherOneBtn = false)" type="submit" class="save-btn">
+                            <div class="save-btn-text">
+                                Save
+                            </div>
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public EventCallback<bool> SetShow { get; set; }
+
+    private AddEmployeeFormModel EmployeeFormModel = new();
+    private ICollection<AddEmployeeFormModel> employeeCollection = new List<AddEmployeeFormModel>();
+
+    private void ClosePopup()
+    {
+        SetShow.InvokeAsync(false);
+    }
+
+    private void HandleValidSubmit()
+    {
+
+        var model = EmployeeFormModel;
+        employeeCollection.Add(model);
+
+
+        if (EmployeeFormModel.AddAnotherOneBtn)
+        {
+            EmployeeFormModel = new();
+        }
+        else
+        {
+            ClosePopup();
+        }
+       
+    }
+
+}

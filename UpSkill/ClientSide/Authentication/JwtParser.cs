@@ -12,12 +12,11 @@
         {
             var claims = new List<Claim>();
             var payload = jwt.Split('.')[1];
-
             var jsonBytes = ParseBase64WithoutPadding(payload);
 
             var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
 
-            ExtractRolesFromJWT(claims, keyValuePairs);
+            ExtractClaimsFromJWT(claims, keyValuePairs);
 
             claims.AddRange(keyValuePairs.Select(kvp => new Claim(kvp.Key, kvp.Value.ToString())));
             return claims;
@@ -33,7 +32,7 @@
             return Convert.FromBase64String(base64);
         }
 
-        private static void ExtractRolesFromJWT(List<Claim> claims, Dictionary<string, object> keyValuePairs)
+        private static void ExtractClaimsFromJWT(List<Claim> claims, Dictionary<string, object> keyValuePairs)
         {
             keyValuePairs.TryGetValue(ClaimTypes.Role, out object roles);
 
@@ -54,6 +53,16 @@
                 }
 
                 keyValuePairs.Remove(ClaimTypes.Role);
+            }
+
+            foreach (var claim in keyValuePairs)
+            {
+                keyValuePairs.TryGetValue(claim.Key, out object claimValue);
+
+                if (claimValue != null)
+                {
+                    claims.Add(new Claim($"{claim.Key}", claimValue.ToString()?.Trim() ?? string.Empty));
+                }
             }
         }
     }
