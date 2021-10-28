@@ -15,8 +15,11 @@
 @using UpSkill.ClientSide.Infrastructure
 @using UpSkill.Infrastructure.Models.AddEmployeeModal
 @using UpSkill.ClientSide.Infrastructure.Extensions
+@using Newtonsoft.Json
+@using UpSkill.ClientSide.Infrastructure.Services.Contracts
 
 @inject HttpClient Client
+@inject IEmployeesService EmployeesService
 
 
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]

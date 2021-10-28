@@ -33,8 +33,10 @@ namespace UpSkill.ClientSide
 				builder.Configuration.Bind("Local", options.ProviderOptions);
 			});
 
+            // Custom Services
             builder.Services.AddScoped<AuthenticationStateProvider, UpSkillAuthStateProvider>();
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+            builder.Services.AddTransient<IEmployeesService, EmployeesService>();
 
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddBlazoredLocalStorage();

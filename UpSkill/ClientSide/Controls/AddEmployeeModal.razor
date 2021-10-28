@@ -1,5 +1,4 @@
-﻿@using Newtonsoft.Json
-<div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.8);"
+﻿<div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.8);"
      aria-modal="true">
     <div class="modal-dialog">
         <div class="modal-body">
@@ -77,9 +76,9 @@
         }
         else
         {
-            var result = await PostEmployees();
+            var result = await EmployeesService.SaveCollectionInDbAsync(employeeCollection);
 
-            await GetUpdatedEmployees.InvokeAsync(await GetEmployees());
+            await GetUpdatedEmployees.InvokeAsync(await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result));
 
             var s = result.Content.ReadAsStringAsync().Result;
 
@@ -88,17 +87,6 @@
             ClosePopup();
         }
 
-    }
-
-    private async Task<HttpResponseMessage> PostEmployees()
-    {
-        return await Client.PostAsJsonAsync("/Employees/PostCollection", employeeCollection);
-    }
-
-    private async Task<ICollection<AddEmployeeFormModel>> GetEmployees()
-    {
-
-        return await Client.GetFromJsonAsync<ICollection<AddEmployeeFormModel>>($"/Employees/GetCollectionByCompanyId/{user.CompanyId().Result}");
     }
 }
 

@@ -51,7 +51,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        employeesModel = await GetEmployees();
+        employeesModel = await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result);
+        employeesModel = employeesModel.OrderBy(x => x.FullName).ToList();
     }
 
     private void ShowPopup()
@@ -67,10 +68,5 @@
     private void SetEmployeesCollection(ICollection<AddEmployeeFormModel> value)
     {
         employeesModel = value;
-    }
-
-    private async Task<ICollection<AddEmployeeFormModel>> GetEmployees()
-    {
-        return await Client.GetFromJsonAsync<ICollection<AddEmployeeFormModel>>($"/Employees/GetCollectionByCompanyId/{user.CompanyId().Result}");
     }
 }
