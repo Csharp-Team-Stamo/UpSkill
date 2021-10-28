@@ -1,52 +1,33 @@
-﻿.everything {
-    position: relative;
-    text-align: center;
-    color: white;
-}
-
-/* Background */
-.BlueBackground {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-/* Mockup */
-.MockUp {
-    position: absolute;
-    top: 50%;
-    left: 75%;
-    width: 50%;
-    height: 50%;
-    transform: translate(-50%, -50%);
-}
-
-/* Courses */
-.Courses {
-    position: absolute;
-    top: 15%;
-    left: 15%;
-    width: 50%;
-    height: 50%;
-    transform: translate(-50%, -50%);
-    text-align: left;
-    font: normal normal bold 70px/85px Montserrat;
+﻿/*#region row 1 */
+.get-started-title {
+    margin-top: 5%;
+    margin-left: 12%;
+    font: bold 300% Montserrat;
     letter-spacing: 0px;
     color: #000000;
-    opacity: 1;
+    text-align: left;
 }
 
-/* information */
-.TextInfo {
-    position: absolute;
-    top: 50%;
-    left: 15%;
-    width: 50%;
-    height: 50%;
-    transform: translate(-50%, -50%);
+.get-started-content {
+    margin-top: 3%;
+    margin-left: 10%;
     text-align: left;
     font: normal normal medium 22px/42px Montserrat;
     letter-spacing: 0px;
     color: #000000;
     opacity: 1;
+}
+
+.get-started-img-background {
+    width: 50%;
+    height: 230px;
+    background: transparent url('/images/CoursesTopBackground.svg') 0% 100% no-repeat padding-box;
+}
+
+.get-started-img {
+    margin-right: 18%;
+    margin-top: 6%;
+    float: right;
+    width: 50%;
+    height: auto;
 }

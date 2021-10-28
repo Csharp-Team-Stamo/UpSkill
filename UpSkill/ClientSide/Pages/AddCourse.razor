@@ -1,14 +1,8 @@
 ﻿@page "/Courses/Add"
-<!--MUST REMOVE LATER-->
-<!--THIS PAGE SHOULDN'T BE ACCESIBLE WITHOUT GETTING AUTHENTICATED FIRST-->
-@attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
-
-<div style="display: block;">
-    <CoursesTopCard></CoursesTopCard>
-</div>
+@layout NoMenuLayout
 
 <div class="row">
-    
+    <CoursesTopCard></CoursesTopCard>
 
     @for (int i = 1; i < 5; i++)
     {
