@@ -39,9 +39,12 @@
         [HttpGet("All")]
         public async Task<IEnumerable<AdminCategoryListingServiceModel>> All()
         {
-            var allCategories = await this.categoryService.GetAll();
+            var allCategories = await this
+                .categoryService
+                .GetAll();
 
-            return new List<AdminCategoryListingServiceModel>(allCategories);
+            return new List<AdminCategoryListingServiceModel>
+                (allCategories.OrderBy(c => c.Name));
         }
     }
 }

@@ -24,7 +24,8 @@
         protected override async Task OnInitializedAsync()
         {
             this.CategoriesInDb = await this.Client
-                .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>("/admin/category/all");
+                .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>
+                ("/admin/category/all");
         }
 
         public async Task Create()

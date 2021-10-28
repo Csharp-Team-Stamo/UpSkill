@@ -1,15 +1,42 @@
 ﻿@page "/admin/category/all"
 @using UpSkill.Infrastructure.Models.Category
 
-<h3>Admin Category All</h3>
+<style>
+    .pageMainGrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        row-gap: 1rem;
+    }
+
+        .pageMainGrid .gridCol {
+            border-bottom: 1px solid #296cfb;
+            text-align: center;
+            vertical-align: central;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+
+            .pageMainGrid .gridCol a {
+                margin: .2em;
+            }
+</style>
+
+<h3 class="text-center mt-5 mb-5">Admin All Categories</h3>
 
 <div class="pageMainGrid">
-    <div>Id</div>
-    <div>Name</div>
+    <div class="gridCol">Id</div>
+    <div class="gridCol">Name</div>
+    <div class="gridCol">Actions</div>
     @foreach(var category in allCategories)
     {
-        <div>@category.Id</div>
-        <div>@category.Name</div>
+        <div class="gridCol">@category.Id</div>
+        <div class="gridCol">
+            <a href="/admin/category/details/@category.Id">@category.Name</a>
+        </div>
+        <div class="gridCol">
+            <a>Edit</a>
+            <a>Delete</a>
+        </div>
     }
 </div>
 

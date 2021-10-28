@@ -18,7 +18,9 @@
 
         public async Task Create()
         {
-            var response = await this.Client.PostAsJsonAsync<CategoryCreateInputModel>("/admin/category/create", categoryInput);
+            var response = await this.Client
+                .PostAsJsonAsync<CategoryCreateInputModel>
+                ("/admin/category/create", categoryInput);
 
             if(response.IsSuccessStatusCode)
             {

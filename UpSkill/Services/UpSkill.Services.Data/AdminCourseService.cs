@@ -129,6 +129,8 @@
         public async Task<Course> GetCourse(int id)
             => await this.courseRepo
             .All()
+            .Include(c => c.Category)
+            .Include(c => c.Coach)
             .FirstOrDefaultAsync(c => c.Id == id);
 
         public async Task<CourseDetailsServiceModel> GetCourseDetails(int id)

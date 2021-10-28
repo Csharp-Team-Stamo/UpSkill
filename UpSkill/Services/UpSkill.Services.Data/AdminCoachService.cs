@@ -96,7 +96,8 @@
             
             if(coachToEdit.Category.Id != editInput.CategoryId)
             {
-                // 
+                coachToEdit.Category = await this.GetCategory(editInput.CategoryId);
+                coachToEdit.CategoryId = editInput.CategoryId;
             }
 
             this.coachRepo.Update(coachToEdit);
@@ -122,7 +123,11 @@
 
         public async Task<Coach> GetCoach(string id)
             => await this.coachRepo
-                .All()
-                .FirstOrDefaultAsync(c => c.Id == id);
+                        .All()
+                        .Include(c => c.Category)
+                        .FirstOrDefaultAsync(c => c.Id == id);
+
+        private async Task<Category> GetCategory(int id)
+            => await this.categoryService.GetCategory(id);
     }
 }

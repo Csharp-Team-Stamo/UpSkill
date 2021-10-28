@@ -5,6 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Infrastructure.Models.Coach;
     using Services.Data.Contracts;
+    using UpSkill.Data.Models;
 
     public class CoachController : AdminController
     {
@@ -71,18 +72,10 @@
 
             if(coachInDb == null)
             {
-                return NotFound();
+                return NotFound($"Coach with Id {id} was not found.");
             }
 
-            var editInput = new CoachEditInputModel
-            {
-                Id = coachInDb.Id,
-                Company = coachInDb.Company,
-                FullName = coachInDb.FullName,
-                PricePerSession = coachInDb.PricePerSession,
-                CategoryId = coachInDb.Category.Id,
-                CategoryName = coachInDb.Category.Name
-            };
+            var editInput = this.ConvertToEditModel(coachInDb);
 
             return editInput;
         }
@@ -122,5 +115,16 @@
 
             return StatusCode(200);
         }
+
+        private CoachEditInputModel ConvertToEditModel(Coach coachInDb)
+            => new()
+            {
+                Id = coachInDb.Id,
+                Company = coachInDb.Company,
+                FullName = coachInDb.FullName,
+                PricePerSession = coachInDb.PricePerSession,
+                CategoryId = coachInDb.Category.Id,
+                CategoryName = coachInDb.Category.Name
+            };
     }
 }

@@ -31,18 +31,23 @@
         protected override async Task OnInitializedAsync()
         {
             this.editModel = await this.Client
-                .GetFromJsonAsync<CourseEditInputModel>($"/admin/course/edit/{Id}");
+                .GetFromJsonAsync<CourseEditInputModel>
+                ($"/admin/course/edit/{Id}");
 
             this.CategoriesInDb = await this.Client
-                .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>("/admin/category/all");
+                .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>
+                ("/admin/category/all");
 
             this.CoachesInDb = await this.Client
-                .GetFromJsonAsync<IEnumerable<AdminCoachListingServiceModel>>("/admin/coach/all");
+                .GetFromJsonAsync<IEnumerable<AdminCoachListingServiceModel>>
+                ("/admin/coach/all");
         }
 
         public async Task Edit()
         {
-            var response = await this.Client.PutAsJsonAsync<CourseEditInputModel>("/admin/course/edit", editModel);
+            var response = await this.Client
+                .PutAsJsonAsync<CourseEditInputModel>
+                ("/admin/course/edit", editModel);
 
             if (response.IsSuccessStatusCode)
             {
