@@ -83,6 +83,14 @@
             var errors = DeserializePostErrors(responseErrors);
 
             ClosePopup();
+
+            if (errors.Any())
+            {
+                foreach (var error in errors)
+                {
+                    toastService.ShowError($"Employee with Full Name '{EmployeeFormModel.FullName}' is not saved because his email '{error}' is already registered ");
+                }
+            }
         }
 
     }

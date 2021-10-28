@@ -45,7 +45,7 @@
 
                 if (!result.Succeeded)
                 {
-                    resultErrors.AddRange(result.Errors.Select(x => x.Description.Replace("Username", "Email")).ToList());
+                    resultErrors.AddRange(result.Errors.Select(x => x.Description.Split("'")[1]).ToList());
                 }
                 else
                 {
