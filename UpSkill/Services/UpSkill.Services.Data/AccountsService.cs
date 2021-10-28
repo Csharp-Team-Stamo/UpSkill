@@ -65,8 +65,6 @@
             var claimRole = new Claim(ClaimTypes.Role, GlobalConstants.BusinessOwnerRoleName);
             claims.Add(claimRole);
 
-            // TODO Add Company Claim ?
-
             await this.userManager.AddClaimsAsync(user, claims);
             return result;
         }
