@@ -107,9 +107,9 @@
                 toastService.ShowError($"Employee with Full Name '{EmployeeFormModel.FullName}' is not saved because his email '{error}' is already registered");
             }
         }
-        else
+        if (employeeCollection.Count - info.Count != 0)
         {
-            var message = employeeCollection.Count > 1 ? $"{employeeCollection.Count}  Employees saved" : $"{employeeCollection.Count}  Employee saved";
+            var message = employeeCollection.Count - info.Count > 1 ? $"{employeeCollection.Count - info.Count}  Employees saved" : $"{employeeCollection.Count - info.Count}  Employee saved";
 
             toastService.ShowSuccess(message);
         }
