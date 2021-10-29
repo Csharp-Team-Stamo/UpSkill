@@ -12,7 +12,10 @@ namespace UpSkill.ClientSide
     using Authentication;
     using Authentication.Services;
     using Authentication.Services.Contracts;
-    using Infrastructure;
+    using Blazored.Toast;
+    using Blazored.Toast.Services;
+    using Infrastructure.Services;
+    using Infrastructure.Services.Contracts;
 
     public class Program
 	{
@@ -32,11 +35,13 @@ namespace UpSkill.ClientSide
 				builder.Configuration.Bind("Local", options.ProviderOptions);
 			});
 
+            // Custom Services
             builder.Services.AddScoped<AuthenticationStateProvider, UpSkillAuthStateProvider>();
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+            builder.Services.AddTransient<IEmployeesService, EmployeesService>();
 
             builder.Services.AddBlazoredLocalStorage();
-            builder.Services.AddBlazoredLocalStorage();
+            builder.Services.AddBlazoredToast();
 
             builder.Services.AddAuthorizationCore();
 

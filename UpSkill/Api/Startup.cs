@@ -32,7 +32,6 @@
 		{
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
-
             services
 				.AddDbContext<ApplicationDbContext>(options => options
 				.UseSqlServer(connectionString));
@@ -106,8 +105,8 @@
 			services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
 			//Business logic services
-
 			services.AddTransient<IAccountsService, AccountsService>();
+
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<SendGridEmailSenderOptions>(options =>
@@ -117,6 +116,10 @@
                 options.SenderName = Configuration["ExternalProviders:SendGrid:SenderName"];
             });
             
+
+            services.AddTransient<IEmployeesService, EmployeesService>();
+        
+
 			services.AddTransient<ICompanyService, CompanyService>();
 		}
 

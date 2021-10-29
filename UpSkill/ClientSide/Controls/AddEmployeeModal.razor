@@ -1,5 +1,4 @@
-﻿@using System.Reflection.PortableExecutable
-<div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.8);"
+﻿<div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.8);"
      aria-modal="true">
     <div class="modal-dialog">
         <div class="modal-body">
@@ -25,7 +24,7 @@
                         + Add another employee
                     </button>
                     <div class="row">
-                        <button  class="cancel-btn">
+                        <button class="cancel-btn">
                             <div @onclick="ClosePopup" class="cancel-btn-text">
                                 Cancel
                             </div>
@@ -44,21 +43,30 @@
 
 @code {
 
+    private AddEmployeeFormModel EmployeeFormModel = new();
+    private ICollection<AddEmployeeFormModel> employeeCollection = new List<AddEmployeeFormModel>();
+
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+
     [Parameter]
     public EventCallback<bool> SetShow { get; set; }
 
-    private AddEmployeeFormModel EmployeeFormModel = new();
-    private ICollection<AddEmployeeFormModel> employeeCollection = new List<AddEmployeeFormModel>();
+    [Parameter]
+    public EventCallback<ICollection<AddEmployeeFormModel>> GetUpdatedEmployees { get; set; }
+
 
     private void ClosePopup()
     {
         SetShow.InvokeAsync(false);
     }
 
-    private void HandleValidSubmit()
+    private async Task HandleValidSubmit()
     {
 
         var model = EmployeeFormModel;
+        model.CompanyId = user.CompanyId().Result;
         employeeCollection.Add(model);
 
 
@@ -68,9 +76,45 @@
         }
         else
         {
+            var emailsFromResponseErrorResult = await EmployeesService.SaveCollectionInDbAsync(employeeCollection);
+
+            await GetUpdatedEmployees.InvokeAsync(await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result));
+
+            var emailsAsCollection = DeserializeEmails(emailsFromResponseErrorResult);
+
             ClosePopup();
+
+            DisplayToast(emailsAsCollection);
         }
-       
+
     }
 
+    private ICollection<string> DeserializeEmails(HttpResponseMessage emailsForDeserialization)
+    {
+        var emailsAsString = emailsForDeserialization.Content.ReadAsStringAsync().Result;
+
+        var emailsAsCollection = JsonConvert.DeserializeObject<List<string>>(emailsAsString);
+
+        return emailsAsCollection;
+    }
+
+    private void DisplayToast(ICollection<string> notSavedEmails )
+    {
+        if (notSavedEmails.Any())
+        {
+            foreach (var email in notSavedEmails)
+            {
+                toastService.ShowError($"Employee with Full Name '{EmployeeFormModel.FullName}' is not saved because his Email '{email}' is already registered");
+            }
+        }
+        var addedEmployeesCount = employeeCollection.Count - notSavedEmails.Count;
+
+        if (addedEmployeesCount != 0)
+        {
+            var message = addedEmployeesCount > 1 ? $"{addedEmployeesCount}  Employees saved" : $"{addedEmployeesCount}  Employee saved";
+
+            toastService.ShowSuccess(message);
+        }
+    }
 }
+
