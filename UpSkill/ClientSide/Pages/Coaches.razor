@@ -1,7 +1,6 @@
 ﻿@page "/Coaches"
-
 <div class="text-right">
-    <button class="btn-add">
+    <button @onclick="@(() => { NavigationManager.NavigateTo("/Coaches-catalog");})" class="btn-add">
         <div class="btn-text">
             Add
         </div>
@@ -14,3 +13,6 @@
     <CoachCard></CoachCard>
     }
 </div>
+@code
+{
+}
