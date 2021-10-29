@@ -30,8 +30,8 @@
                       {
                           Id = c.Id,
                           Name = c.Name,
-                          Description = c.Description
-
+                          Description = c.Description,
+                          IsDeleted = c.IsDeleted
                       }).ToListAsync();
 
             return allCourses;
@@ -62,7 +62,7 @@
                 course.Id;
         }
 
-        public async Task<int?> Delete(int id)
+        public async Task<int?> SetDelete(int id)
         {
             var courseToDelete = this.courseRepo
                 .All()
@@ -73,7 +73,9 @@
                 return null;
             }
 
-            this.courseRepo.Delete(courseToDelete);
+            courseToDelete.IsDeleted = !courseToDelete.IsDeleted;
+
+            this.courseRepo.Update(courseToDelete);
             var deleteResult = await this.courseRepo.SaveChangesAsync();
 
             return deleteResult <= 0 ?

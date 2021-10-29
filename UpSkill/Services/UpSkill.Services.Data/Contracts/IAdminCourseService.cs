@@ -16,6 +16,6 @@ namespace UpSkill.Services.Data.Contracts
 
         Task<CourseDetailsServiceModel> GetCourseDetails(int id);
         Task<IEnumerable<AdminCourseListingServiceModel>> All();
-        Task<int?> Delete(int id);
+        Task<int?> SetDelete(int id);
     }
 }

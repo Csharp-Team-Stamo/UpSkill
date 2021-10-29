@@ -10,11 +10,14 @@
     public class CourseController : AdminController
     {
         private readonly IAdminCourseService courseService;
+        private readonly IAdminCategoryService categoryService;
 
         public CourseController(
-            IAdminCourseService courseService)
+            IAdminCourseService courseService,
+            IAdminCategoryService categoryService)
         {
             this.courseService = courseService;
+            this.categoryService = categoryService;
         }
 
         [HttpPost("Create")]
@@ -76,7 +79,7 @@
                 return NotFound();
             }
 
-            // get categories, then add to editModel
+            // var allCategories = await this.categoryService.GetAll();
 
             var editModel = new CourseEditInputModel
             {
@@ -88,8 +91,10 @@
                 Price = courseInDb.Price,
                 VideoUrl = courseInDb.VideoUrl,
                 CategoryId = courseInDb.Category.Id,
-                CategoryName = courseInDb.Category.Name,
+                CategoryName = courseInDb.Category.Name
             };
+
+            // editModel.AllCategories = await this.categoryService.GetAll();
 
             return editModel;
         }
@@ -115,14 +120,15 @@
         }
 
         [HttpDelete("id")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> SetDelete(int id)
         {
             if (id <= 0)
             {
                 return BadRequest("A valid Id is required.");
             }
 
-            var deleteResult = await this.courseService.Delete(id);
+            var deleteResult = await this.courseService
+                                         .SetDelete(id);
 
             if(deleteResult == null)
             {

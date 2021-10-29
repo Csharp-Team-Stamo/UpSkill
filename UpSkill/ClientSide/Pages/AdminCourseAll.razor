@@ -32,11 +32,20 @@
     @foreach (var course in allCourses)
     {
         <div class="gridCol">@course.Id</div>
-        <div class="gridCol">@course.Name</div>
+        <div class="gridCol">
+            <a href="/admin/course/details/@course.Id">@course.Name</a>
+        </div>
         <div class="gridCol">@course.Description</div>
         <div class="gridCol">
             <a href="/admin/course/edit/@course.Id">Edit</a>
-            <button class="btn btn-link">Delete</button>
+            @if (course.IsDeleted)
+            {
+                <button @onclick="(() => SetDelete(course.Id))" class="btn btn-link">Undelete</button>
+            }
+            else
+            {
+                <button @onclick="(() => SetDelete(course.Id))" class="btn btn-link">Delete</button>
+            }
         </div>
     }
 </div>
@@ -51,9 +60,18 @@
     [Inject]
     public NavigationManager NavigationManager { get; set; }
 
+    [Inject]
+    public IJSRuntime JSRuntime { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         this.allCourses = await this.Client
         .GetFromJsonAsync<IEnumerable<AdminCourseListingServiceModel>>("admin/course/all");
+    }
+
+    public async Task SetDelete(int id)
+    {
+        var response = await this.Client.DeleteAsync($"/admin/course/setdelete/{id}");
+        await OnInitializedAsync();
     }
 }
