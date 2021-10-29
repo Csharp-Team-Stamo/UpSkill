@@ -25,6 +25,14 @@
     </div>
 
     <div class="form-group row">
+        <label for="imageurl" class="col-md-2 col-form-label">Image URL</label>
+        <div class="col-md-10">
+            <InputText id="imageUrl" class="form-control" @bind-Value="editModel.ImageUrl" />
+            <ValidationMessage For="@(() => editModel.ImageUrl)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
         <label for="CategoryId" class="col-md-2 col-form-label">Category</label>
         <div class="col-md-10">
             <InputSelect id="categoryId" class="form-control" @bind-Value="editModel.CategoryId">
@@ -78,5 +86,40 @@
 </EditForm>
 
 @code {
+    private CourseEditInputModel editModel = new();
 
+    [Inject]
+    public HttpClient Client { get; set; }
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    [Parameter]
+    public int Id { get; set; }
+
+    public IEnumerable<AdminCategoryListingServiceModel> CategoriesInDb { get; set; } =
+        new List<AdminCategoryListingServiceModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.editModel = await this.Client
+            .GetFromJsonAsync<CourseEditInputModel>
+            ($"/admin/course/edit/{Id}");
+
+        this.CategoriesInDb = await this.Client
+            .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>
+            ("/admin/category/all");
+    }
+
+    public async Task Edit()
+    {
+        var response = await this.Client
+            .PutAsJsonAsync<CourseEditInputModel>
+            ("/admin/course/edit", editModel);
+
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/admin/course/all");
+        }
+    }
 }

@@ -26,7 +26,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        this.courseDetails = await this.Client
-            .GetFromJsonAsync<CourseDetailsServiceModel>(@"/admin/course/details/{Id}");
+        this.courseDetails = await this.Client.GetFromJsonAsync<CourseDetailsServiceModel>(@"/admin/course/details/{Id}");
     }
 }

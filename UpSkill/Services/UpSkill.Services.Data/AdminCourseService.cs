@@ -130,6 +130,7 @@
                                    {
                                        Id = c.Id,
                                        Name = c.Name,
+                                       ImageUrl = c.ImageUrl,
                                        Description = c.Description,
                                        AuthorFullName = c.AuthorFullName,
                                        AuthorCompany = c.AuthorCompany,

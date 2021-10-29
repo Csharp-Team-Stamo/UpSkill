@@ -69,6 +69,11 @@
         .GetFromJsonAsync<IEnumerable<AdminCourseListingServiceModel>>("admin/course/all");
     }
 
+    public void SeeDetails(int id)
+    {
+        NavigationManager.NavigateTo($"/admin/course/details/{id}");
+    }
+
     public async Task SetDelete(int id)
     {
         var response = await this.Client.DeleteAsync($"/admin/course/setdelete/{id}");

@@ -59,9 +59,9 @@
                 return BadRequest();
             }
 
-            var course = await this.courseService.GetCourseDetails(id);
+            var courseDetails = await this.courseService.GetCourseDetails(id);
 
-            return course;
+            return courseDetails;
         }
 
         [HttpGet("Edit/{id}")]
@@ -88,6 +88,7 @@
                 AuthorFullName = courseInDb.AuthorFullName,
                 Name = courseInDb.Name,
                 Description = courseInDb.Description,
+                ImageUrl = courseInDb.ImageUrl,
                 Price = courseInDb.Price,
                 VideoUrl = courseInDb.VideoUrl,
                 CategoryId = courseInDb.Category.Id,
