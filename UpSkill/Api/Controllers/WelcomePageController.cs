@@ -34,11 +34,12 @@
             {
                 return BadRequest("You already have an UpSkill account.");
             }
-            var demoMessage = GlobalConstants.demoMessage;
-            var textMessage = string.Format(demoMessage, input.Name);
+
+            var textMessage = string.Format(GlobalConstants.demoMessage, input.Name);
+            var messageAsHtml = string.Format(GlobalConstants.demoMessageHtml, input.Name);
             var subject = GlobalConstants.demoSubject;
 
-            await this.emailSender.SendMailAsync(subject, input.Email, input.Name, textMessage);
+            await this.emailSender.SendMailAsync(subject, input.Email, input.Name, textMessage, messageAsHtml);
 
             return StatusCode(200);
         }
