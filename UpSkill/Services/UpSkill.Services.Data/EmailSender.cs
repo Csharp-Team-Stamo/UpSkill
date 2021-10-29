@@ -59,7 +59,7 @@
             var result = await client.SendEmailAsync(email);
 
             //TODO Impelment Error Handling
-
+            // a small change to be able to commit
             return result;
         }
     }
