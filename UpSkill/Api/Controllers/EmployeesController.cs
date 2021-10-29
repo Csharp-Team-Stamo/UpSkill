@@ -21,9 +21,9 @@ namespace UpSkill.Api.Controllers
         [HttpPost("PostCollection")]
         public async Task<ActionResult<ICollection<string>>> PostCollection(ICollection<AddEmployeeFormModel> employees)
         {
-            var errors = await employeesService.SaveEmployeesCollectionAsync(employees);
+            var emailsFromErrorResult = await employeesService.SaveEmployeesCollectionAsync(employees);
 
-            return Ok(errors);
+            return Ok(emailsFromErrorResult);
         }
 
         [HttpGet("GetCollectionByCompanyId/{companyId}")]

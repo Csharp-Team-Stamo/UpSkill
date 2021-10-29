@@ -28,7 +28,7 @@
 
         public async Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees)
         {
-            var resultErrors = new List<string>();
+            var emailsFromErrorResult = new List<string>();
 
             foreach (var employeeModel in employees)
             {
@@ -45,7 +45,7 @@
 
                 if (!result.Succeeded)
                 {
-                    resultErrors.AddRange(result.Errors.Select(x => x.Description.Split("'")[1]).ToList());
+                    emailsFromErrorResult.AddRange(result.Errors.Select(x => x.Description.Split("'")[1]).ToList());
                 }
                 else
                 {
@@ -60,7 +60,7 @@
 
             await employeeRepository.SaveChangesAsync();
 
-            return resultErrors;
+            return emailsFromErrorResult;
         }
     }
 }

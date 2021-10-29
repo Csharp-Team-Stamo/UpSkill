@@ -76,40 +76,42 @@
         }
         else
         {
-            var responseErrors = await EmployeesService.SaveCollectionInDbAsync(employeeCollection);
+            var emailsFromResponseErrorResult = await EmployeesService.SaveCollectionInDbAsync(employeeCollection);
 
             await GetUpdatedEmployees.InvokeAsync(await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result));
 
-            var errors = DeserializePostErrors(responseErrors);
+            var emailsAsCollection = DeserializeEmails(emailsFromResponseErrorResult);
 
             ClosePopup();
 
-            DisplayToast(errors);
+            DisplayToast(emailsAsCollection);
         }
 
     }
 
-    private ICollection<string> DeserializePostErrors(HttpResponseMessage errors)
+    private ICollection<string> DeserializeEmails(HttpResponseMessage emailsForDeserialization)
     {
-        var errorsAsString = errors.Content.ReadAsStringAsync().Result;
+        var emailsAsString = emailsForDeserialization.Content.ReadAsStringAsync().Result;
 
-        var errorsAsStringCollection = JsonConvert.DeserializeObject<List<string>>(errorsAsString);
+        var emailsAsCollection = JsonConvert.DeserializeObject<List<string>>(emailsAsString);
 
-        return errorsAsStringCollection;
+        return emailsAsCollection;
     }
 
-    private void DisplayToast(ICollection<string> info )
+    private void DisplayToast(ICollection<string> notSavedEmails )
     {
-        if (info.Any())
+        if (notSavedEmails.Any())
         {
-            foreach (var error in info)
+            foreach (var email in notSavedEmails)
             {
-                toastService.ShowError($"Employee with Full Name '{EmployeeFormModel.FullName}' is not saved because his email '{error}' is already registered");
+                toastService.ShowError($"Employee with Full Name '{EmployeeFormModel.FullName}' is not saved because his Email '{email}' is already registered");
             }
         }
-        if (employeeCollection.Count - info.Count != 0)
+        var addedEmployeesCount = employeeCollection.Count - notSavedEmails.Count;
+
+        if (addedEmployeesCount != 0)
         {
-            var message = employeeCollection.Count - info.Count > 1 ? $"{employeeCollection.Count - info.Count}  Employees saved" : $"{employeeCollection.Count - info.Count}  Employee saved";
+            var message = addedEmployeesCount > 1 ? $"{addedEmployeesCount}  Employees saved" : $"{addedEmployeesCount}  Employee saved";
 
             toastService.ShowSuccess(message);
         }
