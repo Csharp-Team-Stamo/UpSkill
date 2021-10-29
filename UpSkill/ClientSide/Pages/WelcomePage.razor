@@ -110,17 +110,13 @@
 @code {
 
     [CascadingParameter]
-    public Task<AuthenticationState> authenticationState { get; set; }
-
-    ClaimsPrincipal user;
+    public Task<AuthenticationState> user { get; set; }
 
     public RequestDemoFromModel RequestDemoFromModel = new();
 
     protected override async Task OnInitializedAsync()
     {
-        user = (await authenticationState).User;
-
-        if (user.Identity.IsAuthenticated)
+        if (user.IsAuthenticated().Result)
         {
             NavigationManager.NavigateTo("/dashboard");
         }

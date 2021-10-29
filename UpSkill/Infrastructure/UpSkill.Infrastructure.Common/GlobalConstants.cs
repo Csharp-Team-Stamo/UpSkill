@@ -1,12 +1,16 @@
 ﻿namespace UpSkill.Infrastructure.Common
 {
-    public class GlobalConstants
+    public static class GlobalConstants
     {
         public const string AdministratorRoleName = "Administrator";
         public const string BusinessOwnerRoleName = "Owner";
         public const string EmployeeRoleName = "Employee";
 
         public const string EmailRegEx = @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$";
+
+        public const string demoMessage = "Dear {1} , thank you for contacting us. Below you can find a link where you can test the functionalities of the website";
+
+        public const string demoSubject = "UpSkill Demo Request";
 
         public class WelcomePageConst
         {
@@ -23,5 +27,7 @@
             public const int FullNameMinLen = 2;
             public const int FullNameMaxLen = 20;
         }
+
+        
     }
 }

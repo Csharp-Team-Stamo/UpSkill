@@ -1,10 +1,11 @@
 ﻿namespace UpSkill.Api.Controllers
 {
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.AspNetCore.Mvc;
     using UpSkill.Infrastructure.Models.WelcomePage;
     using UpSkill.Services.Data.Contracts;
+    using UpSkill.Infrastructure.Common;
+
 
     [Route("/[controller]")]
     [ApiController]
@@ -33,10 +34,11 @@
             {
                 return BadRequest("You already have an UpSkill account.");
             }
+            var demoMessage = GlobalConstants.demoMessage;
+            var textMessage = string.Format(demoMessage, input.Name);
+            var subject = GlobalConstants.demoSubject;
 
-            var htmlMessage = "";
-
-            await this.emailSender.SendEmailAsync(input.Email, "Your UpSkill Demo", htmlMessage);
+            await this.emailSender.SendMailAsync(subject, input.Email, input.Name, textMessage);
 
             return StatusCode(200);
         }

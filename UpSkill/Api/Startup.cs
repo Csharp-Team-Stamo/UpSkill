@@ -5,7 +5,6 @@
 	using Microsoft.AspNetCore.Builder;
 	using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Identity.UI.Services;
     using Microsoft.EntityFrameworkCore;
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
@@ -40,6 +39,7 @@
 
 			services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 			{
+
 				options.Password.RequireDigit = false;
 				options.Password.RequireLowercase = false;
 				options.Password.RequireNonAlphanumeric = false;
@@ -109,7 +109,7 @@
 
 			services.AddTransient<IAccountsService, AccountsService>();
 
-            services.AddTransient<IEmailSender, SendGridEmailSender>();
+            services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<SendGridEmailSenderOptions>(options =>
             {
                 options.ApiKey = Configuration["ExternalProviders:SendGrid:ApiKey"];
