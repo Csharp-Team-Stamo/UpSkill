@@ -7,20 +7,25 @@
 <h1 class="mx-3">Coach Catalog</h1>
 
 <div class="row">
-    @foreach (var coach in coachesCollection)
+    @foreach (var coach in coaches.Coaches)
     {
-        <CoachCard Coach="coach"></CoachCard>
+        <CoachCard Coach="coach" OwnerId="@coaches.OwnerId"></CoachCard>
     }
 </div>
 
 @code {
 
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
     private CoachesListingCatalogModel coaches = new ();
-    private ICollection<CoachInListingCatalogModel> coachesCollection = new List<CoachInListingCatalogModel>();
+    private ICollection<CoachInListCatalogModel> coachesCollection = new List<CoachInListCatalogModel>();
 
     protected override async Task OnInitializedAsync()
     {
-        coaches = await Client.GetFromJsonAsync<CoachesListingCatalogModel>("/coaches/getall");
+        var userId = user.Id().Result;
+
+        coaches = await Client.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/getall?userId={userId}");
         coachesCollection = coaches.Coaches;
     }
 

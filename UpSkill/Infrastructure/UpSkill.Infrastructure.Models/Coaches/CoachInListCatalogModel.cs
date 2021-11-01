@@ -1,6 +1,6 @@
 ﻿namespace UpSkill.Infrastructure.Models.Coaches
 {
-    public class CoachInListingCatalogModel
+    public class CoachInListCatalogModel
     {
         public string Id { get; set; }
 

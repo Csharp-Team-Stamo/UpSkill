@@ -1,7 +1,9 @@
 ﻿namespace UpSkill.Services.Data
 {
     using System.Linq;
+    using System.Threading.Tasks;
     using Contracts;
+    using global::Data.Models;
     using Infrastructure.Models.Coaches;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
@@ -9,17 +11,22 @@
     public class CoachesService : ICoachesService
     {
         private readonly IDeletableEntityRepository<Coach> coachesRepository;
+        private readonly IDeletableEntityRepository<CoachOwner> coachesOwnerRepository;
+        private readonly IOwnerService ownerService;
 
-        public CoachesService(IDeletableEntityRepository<Coach> coachesRepository)
+        public CoachesService(IDeletableEntityRepository<Coach> coachesRepository, IDeletableEntityRepository<CoachOwner> coachesOwnerRepository, IOwnerService ownerService)
         {
             this.coachesRepository = coachesRepository;
+            this.coachesOwnerRepository = coachesOwnerRepository;
+            this.ownerService = ownerService;
         }
 
-        public CoachesListingCatalogModel GetAll()
+        public CoachesListingCatalogModel GetAll(string userId)
         {
             var coaches = new CoachesListingCatalogModel
             {
-                Coaches = coachesRepository.All().Select(x => new CoachInListingCatalogModel
+                OwnerId = ownerService.GetId(userId),
+                Coaches = coachesRepository.All().Select(x => new CoachInListCatalogModel
                 {
                     Id = x.Id,
                     FullName = x.FullName,
@@ -31,6 +38,13 @@
             };
 
             return coaches;
+        }
+
+        public async Task AddCoachInOwnerCoachesCollectionAsync(string coachId, string ownerId)
+        {
+            var coachOwner = new CoachOwner { CoachId = coachId, OwnerId = ownerId, };
+            await coachesOwnerRepository.AddAsync(coachOwner);
+            await coachesOwnerRepository.SaveChangesAsync();
         }
     }
 }

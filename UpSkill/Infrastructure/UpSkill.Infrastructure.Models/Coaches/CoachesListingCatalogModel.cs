@@ -5,6 +5,8 @@
 
     public class CoachesListingCatalogModel
     {
-        public ICollection<CoachInListingCatalogModel> Coaches { get; set; }
+        public string OwnerId { get; set; }
+
+        public ICollection<CoachInListCatalogModel> Coaches { get; set; } = new List<CoachInListCatalogModel>();
     }
 }

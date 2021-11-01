@@ -12,15 +12,18 @@
         </div>
         <div class="row">
             <div class="coah-price col-6">
-                @Coach.PricePerSession.ToString("F2")€ per person
+                @Coach.PricePerSession.ToString("####")€ per person
             </div>
             <div class="col-6 text-right">
                 <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
             </div>
         </div>
-        <div class="text-center">
-            <button href="#" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>
-        </div>
+        @if (user.IsAuthenticated().Result)
+        {
+            <div class="text-center">
+                <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
+            </div>
+        }
     </div>
 </div>
 
@@ -28,5 +31,18 @@
 @code {
 
     [Parameter]
-    public CoachInListingCatalogModel Coach { get; set; }
+    public CoachInListCatalogModel Coach { get; set; }
+
+    [Parameter]
+    public string OwnerId { get; set; }
+
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+    private async Task AddCoach(string coachId, string ownerId)
+    {
+
+        await Client.PostAsJsonAsync($"/Coaches/AddCoachInOwnerCoachesCollectionAsync?coachId={coachId}&ownerId={ownerId}", string.Empty);
+
+    }
 }

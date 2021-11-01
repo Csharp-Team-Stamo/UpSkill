@@ -1,5 +1,6 @@
 ﻿namespace UpSkill.Data.Models
 {
+    using System;
     using System.Collections.Generic;
 
     using global::Data.Models;
@@ -7,6 +8,11 @@
 
     public class Owner : BaseDeletableModel<string>
     {
+        public Owner()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+
         public string UserId { get; init; }
         public ApplicationUser User { get; init; }
 

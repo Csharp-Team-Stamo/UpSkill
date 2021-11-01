@@ -1,5 +1,6 @@
 ﻿namespace UpSkill.Api.Controllers
 {
+    using System.Threading.Tasks;
     using Infrastructure.Models.Coaches;
     using Microsoft.AspNetCore.Mvc;
     using Services.Data.Contracts;
@@ -16,9 +17,15 @@
         }
 
         [HttpGet("GetAll")]
-        public CoachesListingCatalogModel GetAll()
+        public CoachesListingCatalogModel GetAll([FromQuery]string userId)
         {
-            return coachesService.GetAll();
+            return coachesService.GetAll(userId);
+        }
+
+        [HttpPost("AddCoachInOwnerCoachesCollectionAsync")]
+        public async Task AddCoachInOwnerCoachesCollectionAsync([FromQuery]string coachId, [FromQuery] string ownerId)
+        {
+           await coachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
         }
     }
 }
