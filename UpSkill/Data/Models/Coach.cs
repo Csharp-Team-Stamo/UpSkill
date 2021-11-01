@@ -27,6 +27,8 @@
         [Required]
         public string Company { get; set; }
 
+        public string CompanyLogoUrl { get; set; }
+
         [Required]
         public decimal PricePerSession { get; set; }
 

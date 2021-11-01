@@ -1,67 +1,30 @@
-﻿@using UpSkill.ClientSide.Controls
-@using UpSkill.ClientSide.Pages
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 
-<div class="page">
+<div class="wrapper">
     <AuthorizeView>
-        <div class="sidebar">
-            <NavMenu />
+        <div class="header">
+            <Header></Header>
+        </div>
+        <div class="sidebar-1">
+            <div class="sticky-content">
+                <NavMenu />
+            </div>
         </div>
     </AuthorizeView>
-    <div class="main">
-        <div class="top-row px-4 auth">
-            <div class="logo-container">
-                <div>
-                    <img class="logo" src="/images/registrationPage/logo.svg" />
-                </div>
-                <div class="brand">
-                    upskill
-                </div>
-            </div>
 
-            <div class="">
-                <NavLink href="AdminCourse">
-                    Admin Create Course
-                </NavLink>
-            </div>
-
-            <div class="">
-                <NavLink href="AdminCategory">
-                    Admin Create Category
-                </NavLink>
-            </div>
-
-            <div class="">
-                <NavLink href="AdminCoach">
-                    Admin Create Coach
-                </NavLink>
-            </div>
-
-            <div class="">
-                <NavLink href="Courses">
-                    Courses
-                </NavLink>
-            </div>
-
-            <div class="">
-                <NavLink href="Coaches">
-                    Coaches
-                </NavLink>
-            </div>
-
-            <NavLink>
-                <LoginDisplay></LoginDisplay>
-            </NavLink>
-
-            <NavLink>
-                <Avatar></Avatar>
-            </NavLink>
-        </div>
-
-
-        <div class="content px-4">
+    <div class="content">
+        <div class="sticky-spacer"></div>
+        <div class="sticky-content">
             @Body
         </div>
     </div>
+    <div class="footer">
+        <Footer></Footer>
+    </div>
 </div>
 
+<BlazoredToasts Position="ToastPosition.TopRight"
+                IconType="IconType.Material"
+                InfoIcon="school"
+                Timeout="100000"
+                WarningIcon="warning" ></BlazoredToasts>

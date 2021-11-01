@@ -4,6 +4,6 @@
     {
         bool Exists(string companyName);
 
-        
+        string GetName(int id);
     }
 }

@@ -22,8 +22,7 @@
         [Required]
         public string AuthorFullName { get; set; }
 
-        [Required]
-        public string AuthorCompany { get; set; }
+        public string CompanyLogoUrl { get; set; }
 
         [Required]
         public decimal Price { get; set; }

@@ -11,7 +11,7 @@
 <AuthorizeView>
     <NotAuthorized>
         <button class="login_button" @onclick=@(() => RedirectToPage("/LogIn"))>LogIn</button>
-        <button href="" class="demo_button" @onclick=@(() => RedirectToPage("/#demo"))>Request a Demo</button>
+        <button href="" class="demo_button" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">Request a Demo</button>
     </NotAuthorized>
 </AuthorizeView>
 

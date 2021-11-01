@@ -6,20 +6,20 @@ namespace UpSkill.ClientSide
     using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
     using System;
-    using System.Collections.Generic;
     using System.Net.Http;
-    using System.Text;
     using System.Threading.Tasks;
-    using UpSkill.ClientSide.Authentication;
-    using UpSkill.ClientSide.Authentication.Services;
-    using UpSkill.ClientSide.Authentication.Services.Contracts;
-    using UpSkill.ClientSide.Infrastructure;
+    using Authentication;
+    using Authentication.Services;
+    using Authentication.Services.Contracts;
+    using Blazored.Toast;
+    using Blazored.Toast.Services;
+    using Infrastructure.Services;
+    using Infrastructure.Services.Contracts;
 
     public class Program
 	{
-		public static async Task Main(string[] args)
+        public static async Task Main(string[] args)
 		{
 			var builder = WebAssemblyHostBuilder.CreateDefault(args);
 			builder.RootComponents.Add<App>("#app");
@@ -35,10 +35,13 @@ namespace UpSkill.ClientSide
 				builder.Configuration.Bind("Local", options.ProviderOptions);
 			});
 
+            // Custom Services
             builder.Services.AddScoped<AuthenticationStateProvider, UpSkillAuthStateProvider>();
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+            builder.Services.AddTransient<IEmployeesService, EmployeesService>();
+
             builder.Services.AddBlazoredLocalStorage();
-            builder.Services.AddBlazoredLocalStorage();
+            builder.Services.AddBlazoredToast();
 
             builder.Services.AddAuthorizationCore();
 

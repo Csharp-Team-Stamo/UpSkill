@@ -1,10 +1,11 @@
 ﻿@page "/Dashboard"
-@using System.Security.Claims
-
 <h3>Dashboard</h3>
 
 <OwnerDashboardStatistics></OwnerDashboardStatistics>
+<CoursesDashboardTable></CoursesDashboardTable>
+<CoachesDashboardTable></CoachesDashboardTable>
 
 @code {
-
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
 }
