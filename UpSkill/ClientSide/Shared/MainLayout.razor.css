@@ -57,7 +57,9 @@ html, body {
 
 .content {
     grid-area: content;
-    padding-left: 2em;
+    padding-left: 5em;
+    padding-right: 5em;
+    text-align: center
     /* General appearance */
 }
 
@@ -84,6 +86,7 @@ html, body {
 
 .sticky-content {
     position: sticky;
+    text-align:center;
     bottom: var(--footer-height);
     min-height: calc(100vh - var(--footer-height));
     box-sizing: border-box;

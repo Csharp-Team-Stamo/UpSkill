@@ -1,5 +1,8 @@
 ﻿:root {
     --color-blue-primary: #296CFB;
     --color-white-primary: white;
+    --color-light-green: rgba(41, 108, 251);
+    --color-light-green-low-opacity: rgba(41, 108, 251, 0.1);
     --color-light-blue-nav: #ebf1ff;
+    --color-blue-green-aqua: #16d696;
 }

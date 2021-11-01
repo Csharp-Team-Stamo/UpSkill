@@ -1,0 +1,18 @@
+﻿@page "/Courses-catalogue"
+@layout NoMenuLayout
+@attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+
+<QueryPanel></QueryPanel>
+
+@* <h1 class="mx-3">Course catalogue</h1> *@
+
+<div class="row">
+    @for (int i = 1; i < 10; i++)
+    {
+        <ResourceCard></ResourceCard>
+    }
+</div>
+
+@code {
+
+}

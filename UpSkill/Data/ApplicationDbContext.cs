@@ -15,7 +15,7 @@
     using Microsoft.Extensions.Configuration;
     using Models;
 
-    using static UpSkill.Data.DataConstants.PriceContants;
+    using static DataConstants.PriceContants;
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {

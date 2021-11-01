@@ -9,13 +9,12 @@
 	using Microsoft.Extensions.Configuration;
 	using Microsoft.Extensions.DependencyInjection;
 	using Microsoft.Extensions.Hosting;
-	using Microsoft.Identity.Web;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
-	using UpSkill.Data;
-    using UpSkill.Data.Common.Repositories;
-    using UpSkill.Data.Models;
-    using UpSkill.Data.Repositories;
+	using Data;
+    using Data.Common.Repositories;
+    using Data.Models;
+    using Data.Repositories;
     using UpSkill.Services.Data;
     using UpSkill.Services.Data.Contracts;
 
@@ -33,13 +32,13 @@
 		{
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
-
             services
 				.AddDbContext<ApplicationDbContext>(options => options
 				.UseSqlServer(connectionString));
 
 			services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 			{
+
 				options.Password.RequireDigit = false;
 				options.Password.RequireLowercase = false;
 				options.Password.RequireNonAlphanumeric = false;
@@ -106,8 +105,22 @@
 			services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
 			//Business logic services
-
 			services.AddTransient<IAccountsService, AccountsService>();
+
+
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<SendGridEmailSenderOptions>(options =>
+            {
+                options.ApiKey = Configuration["ExternalProviders:SendGrid:ApiKey"];
+                options.SenderEmail = Configuration["ExternalProviders:SendGrid:SenderEmail"];
+                options.SenderName = Configuration["ExternalProviders:SendGrid:SenderName"];
+            });
+            
+
+            services.AddTransient<IEmployeesService, EmployeesService>();
+        
+
+			services.AddTransient<ICompanyService, CompanyService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

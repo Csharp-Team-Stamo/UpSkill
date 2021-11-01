@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Components
 @inject NavigationManager NavigationManager
 @layout NoMenuLayout
+@attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
 <div class="welcome-page-card container">
     <!-- #region row 1 -->
@@ -64,27 +65,27 @@
             <div class="demo-content">
                 Don’t find what you are looking for? We would be more than happy to help you and assist you in everything you need! Let us know about your personal requirements by filling our request form:
             </div>
-            <div >
-                <EditForm Model="@RequestDemoFromModel" OnInvalidSubmit="() => { }">
+            <div>
+                <EditForm Model="input" OnValidSubmit="RequestDemo">
                     <DataAnnotationsValidator />
                     <div class="row mt-5">
                         <div class="col">
-                            <InputText @bind-Value="RequestDemoFromModel.Name" placeholder="Name*"></InputText>
-                            <ValidationMessage For="@(() =>RequestDemoFromModel.Name)"></ValidationMessage>
+                            <InputText  @bind-Value="input.Name" placeholder="Name*"></InputText>
+                            <ValidationMessage For="@(() => input.Name)"></ValidationMessage>
                         </div>
                         <div class="col">
-                            <InputText @bind-Value="RequestDemoFromModel.CompanyName" placeholder="Company Name*"></InputText>
-                            <ValidationMessage For="@(() =>RequestDemoFromModel.CompanyName)"></ValidationMessage>
+                            <InputText  @bind-Value="input.CompanyName" placeholder="Company Name*"></InputText>
+                            <ValidationMessage For="@(() => input.CompanyName)"></ValidationMessage>
                         </div>
                     </div>
                     <div class="row mt-5">
                         <div class="col">
-                            <InputText @bind-Value="RequestDemoFromModel.Email" placeholder="Email Address*"></InputText>
-                            <ValidationMessage For="@(() =>RequestDemoFromModel.Email)"></ValidationMessage>
+                            <InputText  @bind-Value="input.Email" placeholder="Email Address*"></InputText>
+                            <ValidationMessage For="@(() => input.Email)"></ValidationMessage>
                         </div>
                         <div class="col">
-                            <InputText @bind-Value="RequestDemoFromModel.PhoneNumber" placeholder="Phone number*"></InputText>
-                            <ValidationMessage For="@(() =>RequestDemoFromModel.CompanyName)"></ValidationMessage>
+                            <InputText  @bind-Value="input.PhoneNumber" placeholder="Phone number*"></InputText>
+                            <ValidationMessage For="@(() => input.PhoneNumber)"></ValidationMessage>
                         </div>
                     </div>
                     <div class="row">
@@ -109,17 +110,13 @@
 @code {
 
     [CascadingParameter]
-    public Task<AuthenticationState> authenticationState { get; set; }
-
-    ClaimsPrincipal user;
+    public Task<AuthenticationState> user { get; set; }
 
     public RequestDemoFromModel RequestDemoFromModel = new();
 
     protected override async Task OnInitializedAsync()
     {
-        user = (await authenticationState).User;
-
-        if (user.Identity.IsAuthenticated)
+        if (user.IsAuthenticated().Result)
         {
             NavigationManager.NavigateTo("/dashboard");
         }
