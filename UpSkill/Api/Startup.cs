@@ -38,6 +38,7 @@
 
 			services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 			{
+
 				options.Password.RequireDigit = false;
 				options.Password.RequireLowercase = false;
 				options.Password.RequireNonAlphanumeric = false;
@@ -105,8 +106,20 @@
 
 			//Business logic services
 			services.AddTransient<IAccountsService, AccountsService>();
+
+
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<SendGridEmailSenderOptions>(options =>
+            {
+                options.ApiKey = Configuration["ExternalProviders:SendGrid:ApiKey"];
+                options.SenderEmail = Configuration["ExternalProviders:SendGrid:SenderEmail"];
+                options.SenderName = Configuration["ExternalProviders:SendGrid:SenderName"];
+            });
+            
+
             services.AddTransient<IEmployeesService, EmployeesService>();
         
+
 			services.AddTransient<ICompanyService, CompanyService>();
 		}
 

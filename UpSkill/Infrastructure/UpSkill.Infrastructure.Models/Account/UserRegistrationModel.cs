@@ -2,7 +2,7 @@
 
 namespace UpSkill.Infrastructure.Models.Account
 {
-    public class UserRegistrationDto
+    public class UserRegistrationModel
     {
         [Required(ErrorMessage = "Full name is required.")]
         public string FullName { get; set; }
