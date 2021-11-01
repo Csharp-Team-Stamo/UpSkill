@@ -1,6 +1,6 @@
 ﻿namespace UpSkill.Infrastructure.Models.Account
 {
-    public class AuthenticationResponseDto
+    public class AuthenticationResponseModel
     {
         public bool AuthIsSuccessful { get; set; }
         public string ErrorMessage { get; set; }
