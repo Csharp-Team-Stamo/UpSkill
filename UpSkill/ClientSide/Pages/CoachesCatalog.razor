@@ -1,17 +1,27 @@
 ﻿@page "/Coaches-catalog"
+@using UpSkill.Infrastructure.Models.Coaches
 @layout NoMenuLayout
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
 
-    <h1 class="mx-3">Coach Catalog</h1>
+<h1 class="mx-3">Coach Catalog</h1>
 
-    <div class="row">
-        @for (int i = 1; i < 10; i++)
-        {
-            <CoachCard></CoachCard>
-        }
-    </div>
-
-    @code {
-
+<div class="row">
+    @foreach (var coach in coachesCollection)
+    {
+        <CoachCard Coach="coach"></CoachCard>
     }
+</div>
+
+@code {
+
+    private CoachesListingCatalogModel coaches = new ();
+    private ICollection<CoachInListingCatalogModel> coachesCollection = new List<CoachInListingCatalogModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        coaches = await Client.GetFromJsonAsync<CoachesListingCatalogModel>("/coaches/getall");
+        coachesCollection = coaches.Coaches;
+    }
+
+}
