@@ -6,7 +6,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    class CoachInCatalogModel
+    class CoachInListingCatalogModel
     {
     }
 }
