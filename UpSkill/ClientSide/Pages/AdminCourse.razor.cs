@@ -15,8 +15,8 @@
         public IEnumerable<AdminCategoryListingServiceModel> CategoriesInDb { get; set; } 
             = new List<AdminCategoryListingServiceModel>();
 
-        [Inject]
-        public HttpClient Client { get; set; }
+        //[Inject]
+        //public HttpClient Client { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }

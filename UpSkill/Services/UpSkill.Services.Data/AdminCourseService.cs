@@ -49,7 +49,7 @@
                 Description = input.Description,
                 ImageUrl = input.ImageUrl,
                 AuthorFullName = input.AuthorFullName,
-                // CompanyLogoUrl = 
+                CompanyLogoUrl = input.CompanyLogoUrl,
                 Price = input.Price,
                 VideoUrl = input.VideoUrl
             };
@@ -99,8 +99,7 @@
             courseToEdit.ImageUrl = input.ImageUrl;
             courseToEdit.Price = input.Price;
             courseToEdit.AuthorFullName = input.AuthorFullName;
-            
-            // TODO fix this courseToEdit.AuthorCompany = input.AuthorCompany;
+            courseToEdit.CompanyLogoUrl = input.CompanyLogoUrl;
             courseToEdit.VideoUrl = input.VideoUrl;
 
             if(courseToEdit.CategoryId != input.CategoryId)
@@ -134,7 +133,7 @@
                                        ImageUrl = c.ImageUrl,
                                        Description = c.Description,
                                        AuthorFullName = c.AuthorFullName,
-                                       // AuthorCompany = c.AuthorCompany,
+                                       CompanyLogoUrl = c.CompanyLogoUrl,
                                        Category = new CategoryDetailsServiceModel
                                        {
                                            Id = c.Category.Id,

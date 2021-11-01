@@ -28,7 +28,8 @@
         public string AuthorFullName { get; set; }
 
         [Required]
-        public string AuthorCompany { get; set; }
+        [Display(Name = "Author Company Logo URL")]
+        public string CompanyLogoUrl { get; set; }
 
         [Range(0.00, 1000.00)]
         [DataType(DataType.Currency)]

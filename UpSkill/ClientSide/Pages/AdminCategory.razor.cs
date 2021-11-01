@@ -10,8 +10,8 @@
     {
         private readonly CategoryCreateInputModel categoryInput = new();
 
-        [Inject]
-        public HttpClient Client { get; set; }
+        //[Inject]
+        //public HttpClient Client { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }

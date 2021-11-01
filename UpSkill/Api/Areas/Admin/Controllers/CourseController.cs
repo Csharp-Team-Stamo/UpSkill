@@ -84,7 +84,7 @@
             var editModel = new CourseEditInputModel
             {
                 Id = courseInDb.Id,
-                AuthorCompany = courseInDb.CompanyLogoUrl,
+                CompanyLogoUrl = courseInDb.CompanyLogoUrl,
                 AuthorFullName = courseInDb.AuthorFullName,
                 Name = courseInDb.Name,
                 Description = courseInDb.Description,

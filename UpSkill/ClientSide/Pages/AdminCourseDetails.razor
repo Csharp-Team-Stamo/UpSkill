@@ -9,7 +9,7 @@
         <p>@courseDetails.Description</p>
     </div>
     <div class="row">
-        <p>@courseDetails.AuthorFullName &ndash; @courseDetails.AuthorCompany</p>
+        <p>@courseDetails.AuthorFullName &ndash; @courseDetails.CompanyLogoUrl</p>
         <p>@courseDetails.Category.Name</p>
         <p>@courseDetails.Price</p>
     </div>
@@ -21,8 +21,8 @@
     [Parameter]
     public int Id { get; set; }
 
-    [Inject]
-    public HttpClient Client { get; set; }
+    //[Inject]
+    //public HttpClient Client { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
