@@ -39,7 +39,7 @@ namespace UpSkill.Api.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationDto input)
+        public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationModel input)
         {
             if (input == null || !ModelState.IsValid)
             {
@@ -56,7 +56,7 @@ namespace UpSkill.Api.Controllers
             if (!result.Succeeded)
             {
                 var errors = result.Errors.Select(e => e.Description);
-                return BadRequest(new RegistrationResponseDto { Errors = errors });
+                return BadRequest(new RegistrationResponseModel { Errors = errors });
             }
 
             return StatusCode(201);
@@ -65,7 +65,7 @@ namespace UpSkill.Api.Controllers
         [HttpPost("Login")]
         //[AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Login(
-        [FromBody] UserAuthenticationDto userData)
+        [FromBody] UserAuthenticationModel userData)
         {
             var user = await this.userManager
                 .FindByEmailAsync(userData.Email);
@@ -74,7 +74,7 @@ namespace UpSkill.Api.Controllers
                 !await this.userManager
                            .CheckPasswordAsync(user, userData.Password))
             {
-                var unauthorizedResponse = new AuthenticationResponseDto
+                var unauthorizedResponse = new AuthenticationResponseModel
                 {
                     ErrorMessage = "unauthorizedErrorMessage"
                 };
@@ -84,7 +84,7 @@ namespace UpSkill.Api.Controllers
 
             var userToken = GetToken(user);
 
-            var authenticationResponse = new AuthenticationResponseDto
+            var authenticationResponse = new AuthenticationResponseModel
             {
                 AuthIsSuccessful = true,
                 Token = userToken
@@ -138,4 +138,3 @@ namespace UpSkill.Api.Controllers
 
 
 }
-

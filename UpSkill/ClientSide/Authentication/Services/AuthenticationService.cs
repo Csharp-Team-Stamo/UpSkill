@@ -21,8 +21,8 @@
         private readonly ILocalStorageService localStorage;
 
         public AuthenticationService(
-            HttpClient client, 
-            AuthenticationStateProvider authStateProvider, 
+            HttpClient client,
+            AuthenticationStateProvider authStateProvider,
             ILocalStorageService localStorage,
             NavigationManager navigationManager)
         {
@@ -33,8 +33,8 @@
             this.navigationManager = navigationManager;
         }
 
-        public  async Task<AuthenticationResponseDto> Login(
-            UserAuthenticationDto userData)
+        public  async Task<AuthenticationResponseModel> Login(
+            UserAuthenticationModel userData)
         {
             var bodyContent = GetBodyContent(userData);
 
@@ -54,8 +54,8 @@
 
             //NotifyOfAuthentication(userData.Email);
             SetAuthenticationHeaderForClient("bearer", authResponse.Token);
-            
-            return new AuthenticationResponseDto { AuthIsSuccessful = true };
+
+            return new AuthenticationResponseModel { AuthIsSuccessful = true };
         }
 
         public async Task Logout()
@@ -69,7 +69,7 @@
             this.navigationManager.NavigateTo("/");
         }
 
-        private async Task<AuthenticationResponseDto> GetDeserializedAuthResult(
+        private async Task<AuthenticationResponseModel> GetDeserializedAuthResult(
             HttpResponseMessage authResult)
         {
             var authContent = await authResult.Content.ReadAsStringAsync();
@@ -77,10 +77,10 @@
             return DeserializeAuthContent(authContent, this.options);
         }
 
-        private AuthenticationResponseDto DeserializeAuthContent(
+        private AuthenticationResponseModel DeserializeAuthContent(
             string authContent, JsonSerializerOptions options)
             => JsonSerializer
-                .Deserialize<AuthenticationResponseDto>(authContent, options);
+                .Deserialize<AuthenticationResponseModel>(authContent, options);
 
         private async Task<HttpResponseMessage> PostToHttpClient(
             string url, StringContent bodyContent)
@@ -98,7 +98,7 @@
             => ((UpSkillAuthStateProvider)this.authStateProvider)
                                               .NotifyUserAuthentication(emailAddress);
 
-        private StringContent GetBodyContent(UserAuthenticationDto userData)
+        private StringContent GetBodyContent(UserAuthenticationModel userData)
         {
             var content = JsonSerializer.Serialize(userData);
             return new StringContent(content, Encoding.UTF8, "application/json");
