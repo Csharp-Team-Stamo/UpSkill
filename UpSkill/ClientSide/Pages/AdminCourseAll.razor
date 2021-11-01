@@ -33,7 +33,8 @@
     {
         <div class="gridCol">@course.Id</div>
         <div class="gridCol">
-            <a href="/admin/course/details/@course.Id">@course.Name</a>
+            <a href="@($"/admin/course/details/{course.Id}")">@course.Name</a>
+            
         </div>
         <div class="gridCol">@course.Description</div>
         <div class="gridCol">
