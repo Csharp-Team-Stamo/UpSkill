@@ -1,0 +1,14 @@
+﻿@page "/admin/dashboard"
+@layout AdminLayout
+
+<AuthorizeView Roles="Administrator">
+    @*<h3>Admin Dashboard</h3>*@
+
+    <AdminDashboardStatistics></AdminDashboardStatistics>
+</AuthorizeView>
+
+
+
+@code {
+
+}

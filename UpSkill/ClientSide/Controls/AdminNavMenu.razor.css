@@ -1,0 +1,90 @@
+﻿.navbar-toggler {
+    background-color: #296CFB;
+    border-color: black;
+    border: 2px;
+}
+
+.top-row {
+    height: 5rem;
+    background-color: white;
+    box-shadow: 0px 3px 6px #00000029;
+}
+
+.navbar-brand {
+    font-size: 1.1rem;
+    color: black;
+}
+
+.oi {
+    width: 2rem;
+    font-size: 1.1rem;
+    vertical-align: text-top;
+    top: -2px;
+}
+
+a > div {
+    color: #E84855;
+}
+
+    a > div:hover {
+        color: white;
+        cursor: pointer;
+    }
+
+div > div {
+    font-size: 16px;
+    font-family: Montserrat;
+    font-weight: 500;
+}
+
+.nav-item {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid;
+    border-bottom-color: darkgray;
+}
+
+    .nav-item:first-of-type {
+        padding-top: 1rem;
+    }
+
+    .nav-item:last-of-type {
+        padding-bottom: 1rem;
+    }
+
+    .nav-item ::deep a {
+        color: #000;
+        font-size: 16px;
+        font-family: Montserrat;
+        font-weight: 500;
+        border-radius: 4px;
+        height: 2rem;
+        display: flex;
+        align-items: center;
+        line-height: 3rem;
+    }
+
+        .nav-item ::deep a.active {
+            background-color: none;
+            font-family: Montserrat;
+            font-weight: 500;
+            color: #296CFB;
+        }
+
+        .nav-item ::deep a:hover {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+
+
+@media (min-width: 641px) {
+    .navbar-toggler {
+        display: none;
+    }
+
+    .collapse {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
+}

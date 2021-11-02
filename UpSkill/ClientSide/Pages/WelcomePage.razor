@@ -118,7 +118,16 @@
     {
         if (user.IsAuthenticated().Result)
         {
-            NavigationManager.NavigateTo("/dashboard");
+            var userRole = await user.Role();
+
+            if(userRole.Equals("Administrator"))
+            {
+                NavigationManager.NavigateTo("/admin/dashboard");
+            }
+            else
+            {
+                NavigationManager.NavigateTo("/dashboard");
+            }
         }
     }
 }
