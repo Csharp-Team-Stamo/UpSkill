@@ -19,14 +19,12 @@
     public Task<AuthenticationState> user { get; set; }
 
     private CoachesListingCatalogModel coaches = new ();
-    private ICollection<CoachInListCatalogModel> coachesCollection = new List<CoachInListCatalogModel>();
 
     protected override async Task OnInitializedAsync()
     {
         var userId = user.Id().Result;
 
         coaches = await Client.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/getall?userId={userId}");
-        coachesCollection = coaches.Coaches;
     }
 
 }
