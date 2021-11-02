@@ -79,6 +79,17 @@
             await coachesOwnerRepository.SaveChangesAsync();
         }
 
+        public async Task RemoveCoachFromOwnerCoachCollectionAsync(string coachId, string userId)
+        {
+            var ownerId = OwnerId(userId);
+
+            var coachToRemove = coachesOwnerRepository.All().FirstOrDefault(x => x.CoachId == coachId && x.OwnerId == ownerId);
+
+            coachesOwnerRepository.Delete(coachToRemove);
+
+            await coachesOwnerRepository.SaveChangesAsync();
+        }
+
         private string OwnerId(string userId)
         {
             var ownerId = ownerService.GetId(userId);

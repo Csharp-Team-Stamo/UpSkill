@@ -11,7 +11,7 @@
 <div class="row">
     @foreach (var coach in coaches.Coaches)
     {
-        <CoachCard Coach="coach" OwnerId="@coaches.OwnerId" CoachIdsCollection="@coaches.OwnerCoachCollectionIds"></CoachCard>
+        <CoachCard Coach="coach" OwnerId="@coaches.OwnerId" CoachIdsCollection="@coaches.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches"></CoachCard>
     }
 </div>
 @code
@@ -26,5 +26,10 @@
         var userId = user.Id().Result;
 
         coaches = await Client.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAllByOwnerId?userId={userId}");
+    }
+
+    private void SetCoaches(CoachesListingCatalogModel updatedCoaches)
+    {
+        coaches = updatedCoaches;
     }
 }

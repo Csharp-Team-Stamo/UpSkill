@@ -11,7 +11,7 @@
 
         Task AddCoachInOwnerCoachesCollectionAsync(string coachId, string ownerId);
 
-
+        Task RemoveCoachFromOwnerCoachCollectionAsync(string coachId, string userId);
     }
 
 }

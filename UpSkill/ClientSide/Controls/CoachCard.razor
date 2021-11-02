@@ -29,7 +29,7 @@
             else
             {
                 <div class="text-center">
-                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
+                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.Id().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
                 </div>
             }
         }
@@ -54,14 +54,29 @@
     [Parameter]
     public EventCallback<CoachesListingCatalogModel> UpdatedCoachesListingCatalogModel { get; set; }
 
+    [Parameter]
+    public EventCallback<CoachesListingCatalogModel> UpdatedOwnerCoachesListingCatalogModel { get; set; }
+
+
 
     private async Task AddCoach(string coachId, string ownerId)
     {
         var userId = user.Id().Result;
 
-        await Client.PostAsJsonAsync($"/Coaches/AddCoachInOwnerCoachesCollectionAsync?coachId={coachId}&ownerId={ownerId}", string.Empty);
+        var coachOwnerIdResponse = await Client.PostAsJsonAsync($"/Coaches/AddCoachInOwnerCoachesCollectionAsync?coachId={coachId}&ownerId={ownerId}", string.Empty);
+
         await UpdatedCoachesListingCatalogModel.InvokeAsync(await Client.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAll?userId={userId}"));
 
+    }
+
+
+    private async Task RemoveCoach(string coachId, string userId)
+    {
+        await Client.DeleteAsync($"/Coaches/RemoveCoachFromOwnerCoachCollection?coachId={coachId}&userId={userId}");
+
+        await UpdatedCoachesListingCatalogModel.InvokeAsync(await Client.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAll?userId={userId}"));
+
+        await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await Client.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAllByOwnerId?userId={userId}"));
     }
 
     private bool IsCoachAdded()
