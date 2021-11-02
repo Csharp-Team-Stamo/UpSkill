@@ -25,7 +25,7 @@
     {
         var userId = user.Id().Result;
 
-        coaches = await Client.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAllByOwnerId?userId={userId}");
+        coaches = await CoachesService.GetAllByOwnerIdAsync(userId);
     }
 
     private void SetCoaches(CoachesListingCatalogModel updatedCoaches)

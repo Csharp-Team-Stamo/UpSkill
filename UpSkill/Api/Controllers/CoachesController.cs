@@ -34,7 +34,7 @@
            await coachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
         }
         
-        [HttpDelete("RemoveCoachFromOwnerCoachCollection")]
+        [HttpDelete("RemoveCoachFromOwnerCoachCollectionAsync")]
         public async Task<ActionResult> RemoveCoachFromOwnerCoachCollectionAsync([FromQuery]string coachId, [FromQuery] string userId)
         {
            await coachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, userId);

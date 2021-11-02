@@ -18,7 +18,7 @@
                 <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
             </div>
         </div>
-        @if (user.IsAuthenticated().Result && user.Role().Result == )
+        @if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
         {
             if (IsCoachAdded())
             {
@@ -63,20 +63,20 @@
     {
         var userId = user.Id().Result;
 
-        await Client.PostAsJsonAsync($"/Coaches/AddCoachInOwnerCoachesCollectionAsync?coachId={coachId}&ownerId={ownerId}", string.Empty);
+        await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
 
-        await UpdatedCoachesListingCatalogModel.InvokeAsync(await Client.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAll?userId={userId}"));
+        await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(userId));
 
     }
 
 
     private async Task RemoveCoach(string coachId, string userId)
     {
-        await Client.DeleteAsync($"/Coaches/RemoveCoachFromOwnerCoachCollection?coachId={coachId}&userId={userId}");
+        await CoachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, userId);
 
-        await UpdatedCoachesListingCatalogModel.InvokeAsync(await Client.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAll?userId={userId}"));
+        await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(userId));
 
-        await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await Client.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAllByOwnerId?userId={userId}"));
+        await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllByOwnerIdAsync(userId));
     }
 
     private bool IsCoachAdded()
