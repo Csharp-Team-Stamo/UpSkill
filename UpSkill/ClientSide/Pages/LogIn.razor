@@ -44,10 +44,10 @@
         <a href="/ForgotPassword" class="ForgotPassword">Забравена парола?</a>
 
         <div class="row">
-            <button @*type="submit" *@ class="btn btn-primary LogInButton">LogIn</button>
+            <button type="submit" class="btn btn-primary LogInButton">LogIn</button>
         </div>
 
-        <button @*type="submit" *@ class="btn btn-outline-primary SignUpButton">SignUp</button>
+        <button @onclick="@(() => NavigationManager.NavigateTo("/registration"))" class="btn btn-outline-primary SignUpButton">SignUp</button>
     </div>
 
 
@@ -83,10 +83,10 @@
         <a href="/ForgotPassword" class="ForgotPassword" style="left: 82%; top: 68%;">Забравена парола?</a>
 
         <div class="row">
-            <button @*type="submit" *@ class="btn btn-primary LogInButton" style="left: 65%;">LogIn</button>
+            <button type="submit" class="btn btn-primary LogInButton" style="left: 65%;">LogIn</button>
         </div>
 
-        <button @*type="submit" *@ class="btn btn-outline-primary SignUpButton" style="left: 85%;">SignUp</button>
+        <button @onclick="@(() => NavigationManager.NavigateTo("/registration"))" class="btn btn-outline-primary SignUpButton" style="left: 85%;">SignUp</button>
     </div>
 
     <!--Div for mobile screens-->
@@ -119,9 +119,9 @@
         <a href="/ForgotPassword" class="ForgotPasswordMobile">Забравена парола?</a>
 
         <div class="row">
-            <button @*type="submit" *@ class="btn btn-primary LogInButtonMobile">LogIn</button>
+            <button type="submit" class="btn btn-primary LogInButtonMobile">LogIn</button>
         </div>
 
-        <button @*type="submit" *@ class="btn btn-outline-primary SignUpButtonMobile">SignUp</button>
+        <button @onclick="@(() => NavigationManager.NavigateTo("/registration"))" class="btn btn-outline-primary SignUpButtonMobile">SignUp</button>
     </div>
 </EditForm>

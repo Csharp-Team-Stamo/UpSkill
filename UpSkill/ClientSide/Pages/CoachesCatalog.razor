@@ -1,0 +1,37 @@
+﻿@page "/Coaches-catalog"
+@using UpSkill.Infrastructure.Models.Coaches
+@layout NoMenuLayout
+@attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
+
+
+<h1 class="mx-3">Coach Catalog</h1>
+
+<div class="row">
+    @foreach (var coach in coaches.Coaches)
+    {
+        <CoachCard Coach="coach" OwnerId="@coaches.OwnerId" CoachIdsCollection="@coaches.OwnerCoachCollectionIds" UpdatedCoachesListingCatalogModel="SetCoaches" ></CoachCard>
+    }
+</div>
+
+@code {
+
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+    private CoachesListingCatalogModel coaches = new ();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var userId = user.Id().Result;
+
+        coaches = await CoachesService.GetAllAsync(userId);
+
+    }
+
+    private void SetCoaches(CoachesListingCatalogModel updatedCoaches)
+    {
+        coaches = updatedCoaches;
+    }
+
+}
