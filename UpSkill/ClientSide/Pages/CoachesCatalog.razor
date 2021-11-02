@@ -24,7 +24,7 @@
     {
         var userId = user.Id().Result;
 
-        coaches = await Client.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/getall?userId={userId}");
+        coaches = await Client.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAll?userId={userId}");
     }
 
 }

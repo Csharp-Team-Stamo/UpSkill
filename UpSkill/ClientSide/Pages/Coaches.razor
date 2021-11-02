@@ -1,4 +1,5 @@
 ﻿@page "/Coaches"
+@using UpSkill.Infrastructure.Models.Coaches
 <div class="text-right">
     <button @onclick="@(() => { NavigationManager.NavigateTo("/Coaches-catalog");})" class="btn-add">
         <div class="btn-text">
@@ -8,11 +9,22 @@
 </div>
 
 <div class="row">
-    @for (int i = 1; i < 10; i++)
+    @foreach (var coach in coaches.Coaches)
     {
-    <CoachCard></CoachCard>
+        <CoachCard Coach="coach" OwnerId="@coaches.OwnerId"></CoachCard>
     }
 </div>
 @code
 {
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+    private CoachesListingCatalogModel coaches = new ();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var userId = user.Id().Result;
+
+        coaches = await Client.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAllByOwnerId?userId={userId}");
+    }
 }
