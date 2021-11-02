@@ -33,5 +33,10 @@
         {
            await coachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
         }
+
+        //public bool IsCoachAddedInOwnerCoachCollection(string coachId, string userId)
+        //{
+
+        //}
     }
 }

@@ -20,9 +20,18 @@
         </div>
         @if (user.IsAuthenticated().Result)
         {
-            <div class="text-center">
-                <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
-            </div>
+            if (IsCoachAdded())
+            {
+                <div class="text-center">
+                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
+                </div>
+            }
         }
     </div>
 </div>
@@ -36,13 +45,28 @@
     [Parameter]
     public string OwnerId { get; set; }
 
+    [Parameter]
+    public ICollection<string> CoachIdsCollection { get; set; }
+
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
 
+    [Parameter]
+    public EventCallback<CoachesListingCatalogModel> UpdatedCoachesListingCatalogModel { get; set; }
+
+
     private async Task AddCoach(string coachId, string ownerId)
     {
+        var userId = user.Id().Result;
 
         await Client.PostAsJsonAsync($"/Coaches/AddCoachInOwnerCoachesCollectionAsync?coachId={coachId}&ownerId={ownerId}", string.Empty);
+        await UpdatedCoachesListingCatalogModel.InvokeAsync(await Client.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAll?userId={userId}"));
 
     }
+
+    private bool IsCoachAdded()
+    {
+        return CoachIdsCollection.FirstOrDefault(x => x == Coach.Id) == null;
+    }
+
 }

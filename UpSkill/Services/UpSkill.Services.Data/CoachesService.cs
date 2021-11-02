@@ -1,5 +1,6 @@
 ﻿namespace UpSkill.Services.Data
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
     using Contracts;
@@ -23,9 +24,12 @@
 
         public CoachesListingCatalogModel GetAll(string userId)
         {
+            var ownerId = OwnerId(userId);
+
             var coaches = new CoachesListingCatalogModel
             {
-                OwnerId = ownerService.GetId(userId),
+                OwnerId = ownerId,
+                OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
                 Coaches = coachesRepository.All().Select(x => new CoachInListCatalogModel
                 {
                     Id = x.Id,
@@ -40,13 +44,20 @@
             return coaches;
         }
 
+        private List<string> OwnerCoachCollectionIds(string ownerId)
+        {
+            return coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => x.CoachId).ToList();
+        }
+
+
         public CoachesListingCatalogModel GetAllByOwnerId(string userId)
         {
-            var ownerId = ownerService.GetId(userId);
+            var ownerId = OwnerId(userId);
 
             var coachesByOwnerId = new CoachesListingCatalogModel
             {
                 OwnerId = ownerId,
+                OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
                 Coaches = coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CoachInListCatalogModel
                 {
                     Id = x.Coach.Id,
@@ -66,6 +77,12 @@
             var coachOwner = new CoachOwner { CoachId = coachId, OwnerId = ownerId, };
             await coachesOwnerRepository.AddAsync(coachOwner);
             await coachesOwnerRepository.SaveChangesAsync();
+        }
+
+        private string OwnerId(string userId)
+        {
+            var ownerId = ownerService.GetId(userId);
+            return ownerId;
         }
     }
 }

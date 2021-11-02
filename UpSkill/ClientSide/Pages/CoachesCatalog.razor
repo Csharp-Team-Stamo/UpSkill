@@ -9,7 +9,7 @@
 <div class="row">
     @foreach (var coach in coaches.Coaches)
     {
-        <CoachCard Coach="coach" OwnerId="@coaches.OwnerId"></CoachCard>
+        <CoachCard Coach="coach" OwnerId="@coaches.OwnerId" CoachIdsCollection="@coaches.OwnerCoachCollectionIds" UpdatedCoachesListingCatalogModel="SetCoaches" ></CoachCard>
     }
 </div>
 
@@ -20,11 +20,18 @@
 
     private CoachesListingCatalogModel coaches = new ();
 
+
     protected override async Task OnInitializedAsync()
     {
         var userId = user.Id().Result;
 
         coaches = await Client.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAll?userId={userId}");
+
+    }
+
+    private void SetCoaches(CoachesListingCatalogModel updatedCoaches)
+    {
+        coaches = updatedCoaches;
     }
 
 }
