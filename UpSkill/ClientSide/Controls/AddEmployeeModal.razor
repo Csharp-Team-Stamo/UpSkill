@@ -77,7 +77,6 @@
         else
         {
             var emailsFromResponseErrorResult = await EmployeesService.SaveCollectionInDbAsync(employeeCollection);
-
             await GetUpdatedEmployees.InvokeAsync(await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result));
 
             var emailsAsCollection = DeserializeEmails(emailsFromResponseErrorResult);

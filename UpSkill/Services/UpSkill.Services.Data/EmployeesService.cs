@@ -2,22 +2,28 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
+    using System.Text;
     using System.Threading.Tasks;
     using Contracts;
     using Infrastructure.Models.AddEmployeeModal;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.WebUtilities;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
+    using UpSkill.Infrastructure.Common;
 
     public class EmployeesService : IEmployeesService
     {
         private readonly IDeletableEntityRepository<Employee> employeeRepository;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IEmailSender mailSender;
 
-        public EmployeesService(IDeletableEntityRepository<Employee> employeeRepository, UserManager<ApplicationUser> userManager)
+        public EmployeesService(IDeletableEntityRepository<Employee> employeeRepository, UserManager<ApplicationUser> userManager, IEmailSender mailSender)
         {
             this.employeeRepository = employeeRepository;
             this.userManager = userManager;
+            this.mailSender = mailSender;
         }
 
         public ICollection<AddEmployeeFormModel> GetByCompanyId(string companyId)
@@ -41,7 +47,11 @@
 
                 };
 
-                var result = await userManager.CreateAsync(user, "123");
+                var result = await userManager.CreateAsync(user, AccountsService.GenerateRandomPassword());
+
+                var claimRole = new Claim(ClaimTypes.Role, GlobalConstants.EmployeeRoleName);
+
+                await userManager .AddClaimAsync(user, claimRole);
 
                 if (!result.Succeeded)
                 {
@@ -55,6 +65,8 @@
                     };
 
                     await employeeRepository.AddAsync(emp);
+
+                    await ResetPassword(user);
                 }
             }
 
@@ -62,5 +74,16 @@
 
             return emailsFromErrorResult;
         }
+
+        public async Task ResetPassword(ApplicationUser user)
+        {
+            var passwordResetToken = await userManager.GeneratePasswordResetTokenAsync(user);
+            var passwordResetUrl = "https://localhost:44363/reset-password?email=" + user.Email + "&token=" + passwordResetToken;
+
+            var content = string.Format(GlobalConstants.verifyAndResetPassword, user.FullName, passwordResetUrl);
+
+            await this.mailSender.SendMailAsync("Upskill: Reset password requested!", user.Email, user.FullName, content, content);
+        }
+
     }
 }

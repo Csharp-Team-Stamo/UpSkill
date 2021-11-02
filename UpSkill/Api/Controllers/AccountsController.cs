@@ -28,6 +28,7 @@ namespace UpSkill.Api.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ICompanyService companyService;
         private readonly IConfigurationSection jwtSettings;
+
         public AccountsController(IAccountsService accountService, UserManager<ApplicationUser> userManager,
             IConfiguration configuration, ICompanyService companyService)
         {
@@ -62,23 +63,55 @@ namespace UpSkill.Api.Controllers
             return StatusCode(201);
         }
 
+        [HttpPost("Reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] UserConfirmPassRequestModel input)
+        {
+            if (!input.Password.Equals(input.ConfirmPassword))
+            {
+                return BadRequest("Password and confirm password do not match!");
+            }
+
+            var user = userManager.FindByEmailAsync(input.Email).Result;
+            var escapedPlusSymbolToken = input.ResetToken.Replace(" ", "+");
+            var result = await userManager.ResetPasswordAsync(user, escapedPlusSymbolToken, input.Password);
+
+            if (!result.Succeeded)
+            {
+                var errors = result.Errors
+                    .Select(x => x.Description)
+                    .ToList();
+
+                return BadRequest(errors);
+            }
+
+            var confirmEmailToken = await userManager.GenerateEmailConfirmationTokenAsync(user);
+            await userManager.ConfirmEmailAsync(user, confirmEmailToken);
+
+            return Ok();
+        }
+
         [HttpPost("Login")]
-        //[AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Login(
         [FromBody] UserAuthenticationDto userData)
         {
-            var user = await this.userManager
-                .FindByEmailAsync(userData.Email);
+            var user = await this.userManager.FindByEmailAsync(userData.Email);
+            var unauthorizedResponse = new AuthenticationResponseDto();
+
+            //TODO: remove in production evironment. Every user should confirm their email.
+            var claims = await userManager.GetClaimsAsync(user);
+            var role = claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
 
             if (user == null ||
                 !await this.userManager
                            .CheckPasswordAsync(user, userData.Password))
             {
-                var unauthorizedResponse = new AuthenticationResponseDto
-                {
-                    ErrorMessage = "unauthorizedErrorMessage"
-                };
+                unauthorizedResponse.ErrorMessage = "Username or password is incorrect!";
+                return Unauthorized(unauthorizedResponse);
+            }
 
+            else if (!user.EmailConfirmed && role == "Employee")
+            {
+                unauthorizedResponse.ErrorMessage = "Email is not confirmed.";
                 return Unauthorized(unauthorizedResponse);
             }
 
@@ -133,9 +166,6 @@ namespace UpSkill.Api.Controllers
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(Convert.ToDouble(this.jwtSettings["expiryInMinutes"])),
                 signingCredentials: signingCredentials);
-
     }
-
-
 }
 
