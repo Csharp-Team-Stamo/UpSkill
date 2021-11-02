@@ -18,7 +18,7 @@
                 <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
             </div>
         </div>
-        @if (user.IsAuthenticated().Result)
+        @if (user.IsAuthenticated().Result && user.Role().Result == )
         {
             if (IsCoachAdded())
             {
@@ -63,7 +63,7 @@
     {
         var userId = user.Id().Result;
 
-        var coachOwnerIdResponse = await Client.PostAsJsonAsync($"/Coaches/AddCoachInOwnerCoachesCollectionAsync?coachId={coachId}&ownerId={ownerId}", string.Empty);
+        await Client.PostAsJsonAsync($"/Coaches/AddCoachInOwnerCoachesCollectionAsync?coachId={coachId}&ownerId={ownerId}", string.Empty);
 
         await UpdatedCoachesListingCatalogModel.InvokeAsync(await Client.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAll?userId={userId}"));
 

@@ -85,7 +85,7 @@
 
             var coachToRemove = coachesOwnerRepository.All().FirstOrDefault(x => x.CoachId == coachId && x.OwnerId == ownerId);
 
-            coachesOwnerRepository.Delete(coachToRemove);
+            coachesOwnerRepository.HardDelete(coachToRemove);
 
             await coachesOwnerRepository.SaveChangesAsync();
         }
