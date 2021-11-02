@@ -22,6 +22,12 @@
             return coachesService.GetAll(userId);
         }
 
+        [HttpGet("GetAllByOwnerId")]
+        public CoachesListingCatalogModel GetAllByOwnerId([FromQuery] string userId)
+        {
+            return coachesService.GetAllByOwnerId(userId);
+        }
+
         [HttpPost("AddCoachInOwnerCoachesCollectionAsync")]
         public async Task AddCoachInOwnerCoachesCollectionAsync([FromQuery]string coachId, [FromQuery] string ownerId)
         {

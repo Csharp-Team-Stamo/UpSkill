@@ -7,7 +7,10 @@
     {
         CoachesListingCatalogModel GetAll(string userId);
 
+        CoachesListingCatalogModel GetAllByOwnerId(string userId);
+
         Task AddCoachInOwnerCoachesCollectionAsync(string coachId, string ownerId);
+
 
     }
 

@@ -40,6 +40,27 @@
             return coaches;
         }
 
+        public CoachesListingCatalogModel GetAllByOwnerId(string userId)
+        {
+            var ownerId = ownerService.GetId(userId);
+
+            var coachesByOwnerId = new CoachesListingCatalogModel
+            {
+                OwnerId = ownerId,
+                Coaches = coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CoachInListCatalogModel
+                {
+                    Id = x.Coach.Id,
+                    FullName = x.Coach.FullName,
+                    CategoryName = x.Coach.Category.Name,
+                    Company = x.Coach.Company,
+                    CompanyLogoUrl = x.Coach.CompanyLogoUrl,
+                    PricePerSession = x.Coach.PricePerSession,
+                }).ToList()
+            };
+
+            return coachesByOwnerId;
+        }
+
         public async Task AddCoachInOwnerCoachesCollectionAsync(string coachId, string ownerId)
         {
             var coachOwner = new CoachOwner { CoachId = coachId, OwnerId = ownerId, };
