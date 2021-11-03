@@ -25,6 +25,7 @@
             this.companyRepo = companyRepo;
             this.mailSender = mailSender;
             this.ownerRepository = ownerRepository;
+        }
 
         public bool IsEmailAvailable(string email)
         {
