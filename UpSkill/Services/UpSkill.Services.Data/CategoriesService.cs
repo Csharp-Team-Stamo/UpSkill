@@ -1,12 +1,23 @@
 ﻿namespace UpSkill.Services.Data
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using Contracts;
+    using UpSkill.Data.Common.Repositories;
+    using UpSkill.Data.Models;
 
-    class CategoriesService
+    public class CategoriesService : ICategoriesService
     {
+        private readonly IDeletableEntityRepository<Category> categoriesRepository;
+
+        public CategoriesService(IDeletableEntityRepository<Category> categoriesRepository)
+        {
+            this.categoriesRepository = categoriesRepository;
+        }
+
+        public ICollection<string> GetAllNames()
+        {
+            return categoriesRepository.All().Select(x => x.Name).ToList();
+        }
     }
 }
