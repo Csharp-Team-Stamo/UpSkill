@@ -33,7 +33,7 @@
             this.navigationManager = navigationManager;
         }
 
-        public  async Task<AuthenticationResponseModel> Login(
+        public  async Task<UserAuthenticationResponseModel> Login(
             UserAuthenticationModel userData)
         {
             var bodyContent = GetBodyContent(userData);
@@ -55,7 +55,7 @@
             //NotifyOfAuthentication(userData.Email);
             SetAuthenticationHeaderForClient("bearer", authResponse.Token);
 
-            return new AuthenticationResponseModel { AuthIsSuccessful = true };
+            return new UserAuthenticationResponseModel { AuthIsSuccessful = true };
         }
 
         public async Task Logout()
@@ -69,7 +69,7 @@
             this.navigationManager.NavigateTo("/");
         }
 
-        private async Task<AuthenticationResponseModel> GetDeserializedAuthResult(
+        private async Task<UserAuthenticationResponseModel> GetDeserializedAuthResult(
             HttpResponseMessage authResult)
         {
             var authContent = await authResult.Content.ReadAsStringAsync();
@@ -77,10 +77,10 @@
             return DeserializeAuthContent(authContent, this.options);
         }
 
-        private AuthenticationResponseModel DeserializeAuthContent(
+        private UserAuthenticationResponseModel DeserializeAuthContent(
             string authContent, JsonSerializerOptions options)
             => JsonSerializer
-                .Deserialize<AuthenticationResponseModel>(authContent, options);
+                .Deserialize<UserAuthenticationResponseModel>(authContent, options);
 
         private async Task<HttpResponseMessage> PostToHttpClient(
             string url, StringContent bodyContent)

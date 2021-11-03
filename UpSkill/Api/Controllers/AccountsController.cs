@@ -115,7 +115,7 @@ namespace UpSkill.Api.Controllers
         [FromBody] UserAuthenticationModel userData)
         {
             var user = await this.userManager.FindByEmailAsync(userData.Email);
-            var unauthorizedResponse = new AuthenticationResponseDto();
+            var unauthorizedResponse = new UserAuthenticationResponseModel();
 
             //TODO: remove in production evironment. Every user should confirm their email.
             var claims = await userManager.GetClaimsAsync(user);
@@ -138,7 +138,7 @@ namespace UpSkill.Api.Controllers
 
             var userToken = GetToken(user);
 
-            var authenticationResponse = new AuthenticationResponseModel
+            var authenticationResponse = new UserAuthenticationResponseModel
             {
                 AuthIsSuccessful = true,
                 Token = userToken
