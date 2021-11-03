@@ -1,5 +1,4 @@
-﻿
-namespace UpSkill.ClientSide
+﻿namespace UpSkill.ClientSide
 {
     using Blazored.LocalStorage;
     using Microsoft.AspNetCore.Components.Authorization;
@@ -13,7 +12,6 @@ namespace UpSkill.ClientSide
     using Authentication.Services;
     using Authentication.Services.Contracts;
     using Blazored.Toast;
-    using Blazored.Toast.Services;
     using Infrastructure.Services;
     using Infrastructure.Services.Contracts;
 

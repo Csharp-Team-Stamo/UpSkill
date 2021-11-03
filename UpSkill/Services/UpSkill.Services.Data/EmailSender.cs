@@ -2,9 +2,7 @@
 {
     using System.Threading.Tasks;
     using Microsoft.Extensions.Options;
-    using Newtonsoft.Json;
     using SendGrid;
-    using SendGrid.Helpers.Errors.Model;
     using SendGrid.Helpers.Mail;
     using UpSkill.Services.Data.Contracts;
 
