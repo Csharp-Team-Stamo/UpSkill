@@ -103,7 +103,7 @@
         {
             foreach (var email in notSavedEmails)
             {
-                toastService.ShowError($"Employee with Full Name '{EmployeeFormModel.FullName}' is not saved because his Email '{email}' is already registered");
+                ToastService.ShowError($"Employee with Full Name '{EmployeeFormModel.FullName}' is not saved because his Email '{email}' is already registered");
             }
         }
         var addedEmployeesCount = employeeCollection.Count - notSavedEmails.Count;
@@ -112,7 +112,7 @@
         {
             var message = addedEmployeesCount > 1 ? $"{addedEmployeesCount}  Employees saved" : $"{addedEmployeesCount}  Employee saved";
 
-            toastService.ShowSuccess(message);
+            ToastService.ShowSuccess(message);
         }
     }
 }

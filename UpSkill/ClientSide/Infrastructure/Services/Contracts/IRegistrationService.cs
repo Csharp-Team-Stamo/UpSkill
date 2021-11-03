@@ -5,6 +5,6 @@
 
     public interface IRegistrationService
     {
-        Task<RegistrationResponseDto> RegisterUser(UserRegistrationDto userForRegistration);
+        Task<RegistrationResponseModel> RegisterUser(UserRegistrationModel userForRegistration);
     }
 }

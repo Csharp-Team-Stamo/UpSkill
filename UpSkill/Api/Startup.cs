@@ -107,6 +107,8 @@
 
 			//Business logic services
 			services.AddTransient<IAccountsService, AccountsService>();
+            services.AddTransient<ICoachesService, CoachesService>();
+            services.AddTransient<IOwnerService, OwnerService>();
 
 
             services.AddTransient<IEmailSender, EmailSender>();

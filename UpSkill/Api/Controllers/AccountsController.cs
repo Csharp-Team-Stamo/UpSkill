@@ -41,7 +41,7 @@ namespace UpSkill.Api.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationDto input)
+        public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationModel input)
         {
             if (input == null || !ModelState.IsValid)
             {
@@ -58,7 +58,7 @@ namespace UpSkill.Api.Controllers
             if (!result.Succeeded)
             {
                 var errors = result.Errors.Select(e => e.Description);
-                return BadRequest(new RegistrationResponseDto { Errors = errors });
+                return BadRequest(new RegistrationResponseModel { Errors = errors });
             }
 
             return StatusCode(201);
@@ -112,7 +112,7 @@ namespace UpSkill.Api.Controllers
 
         [HttpPost("Login")]
         public async Task<IActionResult> Login(
-        [FromBody] UserAuthenticationDto userData)
+        [FromBody] UserAuthenticationModel userData)
         {
             var user = await this.userManager.FindByEmailAsync(userData.Email);
             var unauthorizedResponse = new AuthenticationResponseDto();
@@ -129,6 +129,7 @@ namespace UpSkill.Api.Controllers
                 return Unauthorized(unauthorizedResponse);
             }
 
+
             else if (!user.EmailConfirmed && role == "Employee")
             {
                 unauthorizedResponse.ErrorMessage = "Email is not confirmed.";
@@ -137,7 +138,7 @@ namespace UpSkill.Api.Controllers
 
             var userToken = GetToken(user);
 
-            var authenticationResponse = new AuthenticationResponseDto
+            var authenticationResponse = new AuthenticationResponseModel
             {
                 AuthIsSuccessful = true,
                 Token = userToken
@@ -188,4 +189,3 @@ namespace UpSkill.Api.Controllers
                 signingCredentials: signingCredentials);
     }
 }
-
