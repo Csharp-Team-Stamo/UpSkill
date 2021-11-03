@@ -1,10 +1,35 @@
 ﻿@page "/Coaches"
-
-<h1>My Coaches</h1>
+@using UpSkill.Infrastructure.Models.Coaches
+<div class="text-right">
+    <button @onclick="@(() => { NavigationManager.NavigateTo("/Coaches-catalog");})" class="btn-add">
+        <div class="btn-text">
+            Add
+        </div>
+    </button>
+</div>
 
 <div class="row">
-    @for (int i = 1; i < 10; i++)
+    @foreach (var coach in coaches.Coaches)
     {
-    <CoachCard></CoachCard>
+        <CoachCard Coach="coach" OwnerId="@coaches.OwnerId" CoachIdsCollection="@coaches.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches"></CoachCard>
     }
 </div>
+@code
+{
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+    private CoachesListingCatalogModel coaches = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var userId = user.Id().Result;
+
+        coaches = await CoachesService.GetAllByOwnerIdAsync(userId);
+    }
+
+    private void SetCoaches(CoachesListingCatalogModel updatedCoaches)
+    {
+        coaches = updatedCoaches;
+    }
+}

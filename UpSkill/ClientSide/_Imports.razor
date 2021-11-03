@@ -27,10 +27,14 @@
 @using UpSkill.Infrastructure.Models.AddEmployeeModal
 @using UpSkill.ClientSide.Infrastructure.Extensions
 @using UpSkill.ClientSide.Infrastructure.Services.Contracts
+@using UpSkill.Infrastructure.Common
 
 @inject HttpClient Client
+@inject NavigationManager NavigationManager
+
 @inject IEmployeesService EmployeesService
-@inject IToastService toastService
+@inject IToastService ToastService
+@inject ICoachesService CoachesService
 
 
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]

@@ -17,6 +17,7 @@
     <None Remove="Controls\Header.razor.css" />
     <None Remove="Controls\OwnerDashboardStatistics.razor.css" />
     <None Remove="Controls\CoachCard.razor.css" />
+    <None Remove="Pages\Coaches.razor.css" />
     <None Remove="Pages\LogIn.razor.css" />
     <None Remove="Pages\SignUp.razor.css" />
     <None Remove="Pages\Registration.razor.css" />
@@ -33,6 +34,7 @@
     <Content Include="Controls\Header.razor.css" />
     <Content Include="Controls\OwnerDashboardStatistics.razor.css" />
     <Content Include="Controls\CoachCard.razor.css" />
+    <Content Include="Pages\Coaches.razor.css" />
     <Content Include="Pages\LogIn.razor.css" />
     <Content Include="Pages\SignUp.razor.css" />
     <Content Include="Pages\Registration.razor.css" />
