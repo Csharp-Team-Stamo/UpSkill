@@ -7,7 +7,6 @@
     width: 65vw;
 }
 
-
 .img-decoration {
     height: 60%;
     width: 40%;
@@ -33,10 +32,6 @@
 .input_group {
 }
 
-/*.input_form {
-     ;
-}*/
-
 input, ::deep input {
     border: 1px solid;
     border-color: var(--color-blue-primary);
@@ -50,7 +45,6 @@ input, ::deep input {
         font-size: 0.8em;
         padding-left: 2em;
     }
-
 
         input, ::deep input::placeholder:after {
             font-size: 1rem;
