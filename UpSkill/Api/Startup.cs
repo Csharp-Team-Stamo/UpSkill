@@ -50,7 +50,8 @@
 				options.SignIn.RequireConfirmedAccount = false;
 				options.SignIn.RequireConfirmedPhoneNumber = false;
 			})
-				.AddEntityFrameworkStores<ApplicationDbContext>();
+				.AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
 
             var jwtSettings = Configuration.GetSection("JWTSettings");
             services.AddAuthentication(opt =>

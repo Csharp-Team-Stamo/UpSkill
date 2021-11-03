@@ -18,8 +18,8 @@
 		public int CompanyId { get; set; }
 		public Company Company { get; set; }
 
-		// Audit info
-		public DateTime CreatedOn { get; set; }
+        // Audit info
+        public DateTime CreatedOn { get; set; }
 
 		public DateTime? ModifiedOn { get; set; }
 
