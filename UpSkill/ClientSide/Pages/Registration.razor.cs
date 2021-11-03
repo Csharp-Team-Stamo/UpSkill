@@ -13,8 +13,6 @@
         [Inject]
         public IRegistrationService AuthenticationService { get; set; }
 
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
         public bool ShowRegistrationErrors { get; set; }
         public IEnumerable<string> Errors { get; set; }
 

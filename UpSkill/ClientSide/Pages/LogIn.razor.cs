@@ -12,9 +12,6 @@
         [Inject]
         public IAuthenticationService AuthenticationService { get; set; }
 
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
-
         public bool AuthErrorExists { get; set; }
 
         public string Error { get; set; }

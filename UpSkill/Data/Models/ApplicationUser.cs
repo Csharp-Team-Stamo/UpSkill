@@ -18,8 +18,6 @@
 		public int CompanyId { get; set; }
 		public Company Company { get; set; }
 
-        public string ResetPasswordToken { get; set; }
-
         // Audit info
         public DateTime CreatedOn { get; set; }
 

@@ -63,6 +63,21 @@ namespace UpSkill.Api.Controllers
             return StatusCode(201);
         }
 
+        [HttpPost("Request-reset-password")]
+        public async Task<IActionResult> RequestResetPassword([FromBody] UserForgottenPasswordRequestModel input)
+        {
+            var user = await userManager.FindByEmailAsync(input.Email);
+
+            if (user == null)
+            {
+                var error = "User with that email does not exist!";
+                return BadRequest(error);
+            }
+
+
+            return Ok();
+        }
+
         [HttpPost("Reset-password")]
         public async Task<IActionResult> ResetPassword([FromBody] UserConfirmPassRequestModel input)
         {
@@ -84,8 +99,11 @@ namespace UpSkill.Api.Controllers
                 return BadRequest(errors);
             }
 
-            var confirmEmailToken = await userManager.GenerateEmailConfirmationTokenAsync(user);
-            await userManager.ConfirmEmailAsync(user, confirmEmailToken);
+            if (!await userManager.IsEmailConfirmedAsync(user))
+            {
+                var confirmEmailToken = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                await userManager.ConfirmEmailAsync(user, confirmEmailToken);
+            }
 
             return Ok();
         }
