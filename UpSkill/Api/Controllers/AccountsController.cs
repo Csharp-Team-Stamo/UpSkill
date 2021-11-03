@@ -19,6 +19,7 @@ namespace UpSkill.Api.Controllers
     using Data.Models;
     using Infrastructure.Models.Account;
     using UpSkill.Services.Data.Contracts;
+    using UpSkill.Infrastructure.Common;
 
     [Route("/[controller]")]
     [ApiController]
@@ -74,6 +75,7 @@ namespace UpSkill.Api.Controllers
                 return BadRequest(error);
             }
 
+            await accountService.ResetPassword(user, GlobalConstants.resetPasswordMessage);
 
             return Ok();
         }

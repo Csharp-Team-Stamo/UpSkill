@@ -18,12 +18,14 @@
         private readonly IDeletableEntityRepository<Employee> employeeRepository;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IEmailSender mailSender;
+        private readonly IAccountsService accountsService;
 
-        public EmployeesService(IDeletableEntityRepository<Employee> employeeRepository, UserManager<ApplicationUser> userManager, IEmailSender mailSender)
+        public EmployeesService(IDeletableEntityRepository<Employee> employeeRepository, UserManager<ApplicationUser> userManager, IEmailSender mailSender, IAccountsService accountsService)
         {
             this.employeeRepository = employeeRepository;
             this.userManager = userManager;
             this.mailSender = mailSender;
+            this.accountsService = accountsService;
         }
 
         public ICollection<AddEmployeeFormModel> GetByCompanyId(string companyId)
@@ -65,8 +67,7 @@
                     };
 
                     await employeeRepository.AddAsync(emp);
-
-                    await ResetPassword(user);
+                    await this.accountsService.ResetPassword(user, GlobalConstants.verifyAndResetPassword);
                 }
             }
 
@@ -74,16 +75,5 @@
 
             return emailsFromErrorResult;
         }
-
-        public async Task ResetPassword(ApplicationUser user)
-        {
-            var passwordResetToken = await userManager.GeneratePasswordResetTokenAsync(user);
-            var passwordResetUrl = "https://localhost:44363/reset-password?email=" + user.Email + "&token=" + passwordResetToken;
-
-            var content = string.Format(GlobalConstants.verifyAndResetPassword, user.FullName, passwordResetUrl);
-
-            await this.mailSender.SendMailAsync("Upskill: Reset password requested!", user.Email, user.FullName, content, content);
-        }
-
     }
 }

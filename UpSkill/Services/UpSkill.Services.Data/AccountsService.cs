@@ -16,11 +16,13 @@
     {
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IRepository<Company> companyRepo;
+        private readonly IEmailSender mailSender;
 
-        public AccountsService(UserManager<ApplicationUser> userManager, IRepository<Company> companyRepo)
+        public AccountsService(UserManager<ApplicationUser> userManager, IRepository<Company> companyRepo, IEmailSender mailSender)
         {
             this.userManager = userManager;
             this.companyRepo = companyRepo;
+            this.mailSender = mailSender;
         }
 
         public bool IsEmailAvailable(string email)
@@ -123,6 +125,16 @@
             }
 
             return new string(chars.ToArray());
+        }
+
+        public async Task ResetPassword(ApplicationUser user, string emailContent)
+        {
+                var passwordResetToken = await userManager.GeneratePasswordResetTokenAsync(user);
+                var passwordResetUrl = "https://localhost:44363/reset-password?email=" + user.Email + "&token=" + passwordResetToken;
+
+                var content = string.Format(emailContent, user.FullName, passwordResetUrl);
+
+                await this.mailSender.SendMailAsync("Upskill: Reset password requested!", user.Email, user.FullName, content, content);
         }
     }
 }
