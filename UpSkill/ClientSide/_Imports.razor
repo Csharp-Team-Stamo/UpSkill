@@ -29,9 +29,11 @@
 @inject HttpClient Client
 @inject NavigationManager NavigationManager
 
+@* Custom services *@
 @inject IEmployeesService EmployeesService
-@inject IToastService ToastService
 @inject ICoachesService CoachesService
 
+@* NuGet Packages services *@
+@inject IToastService ToastService
 
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
