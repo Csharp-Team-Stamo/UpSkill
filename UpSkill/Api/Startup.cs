@@ -46,11 +46,12 @@
                 options.Password.RequiredLength = 1;
                 options.Password.RequiredUniqueChars = 0;
 
-                options.SignIn.RequireConfirmedEmail = false;
-                options.SignIn.RequireConfirmedAccount = false;
-                options.SignIn.RequireConfirmedPhoneNumber = false;
-            })
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+				options.SignIn.RequireConfirmedEmail = false;
+				options.SignIn.RequireConfirmedAccount = false;
+				options.SignIn.RequireConfirmedPhoneNumber = false;
+			})
+				.AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
 
             var jwtSettings = Configuration.GetSection("JWTSettings");
             services.AddAuthentication(opt =>

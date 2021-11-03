@@ -19,6 +19,7 @@ namespace UpSkill.Api.Controllers
     using Data.Models;
     using Infrastructure.Models.Account;
     using UpSkill.Services.Data.Contracts;
+    using UpSkill.Infrastructure.Common;
 
     [Route("/[controller]")]
     [ApiController]
@@ -28,6 +29,7 @@ namespace UpSkill.Api.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ICompanyService companyService;
         private readonly IConfigurationSection jwtSettings;
+
         public AccountsController(IAccountsService accountService, UserManager<ApplicationUser> userManager,
             IConfiguration configuration, ICompanyService companyService)
         {
@@ -62,29 +64,81 @@ namespace UpSkill.Api.Controllers
             return StatusCode(201);
         }
 
+        [HttpPost("Request-reset-password")]
+        public async Task<IActionResult> RequestResetPassword([FromBody] UserForgottenPasswordRequestModel input)
+        {
+            var user = await userManager.FindByEmailAsync(input.Email);
+
+            if (user == null)
+            {
+                var error = "User with that email does not exist!";
+                return BadRequest(error);
+            }
+
+            await accountService.ResetPassword(user, GlobalConstants.resetPasswordMessage);
+
+            return Ok();
+        }
+
+        [HttpPost("Reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] UserConfirmPassRequestModel input)
+        {
+            if (!input.Password.Equals(input.ConfirmPassword))
+            {
+                return BadRequest("Password and confirm password do not match!");
+            }
+
+            var user = userManager.FindByEmailAsync(input.Email).Result;
+            var escapedPlusSymbolToken = input.ResetToken.Replace(" ", "+");
+            var result = await userManager.ResetPasswordAsync(user, escapedPlusSymbolToken, input.Password);
+
+            if (!result.Succeeded)
+            {
+                var errors = result.Errors
+                    .Select(x => x.Description)
+                    .ToList();
+
+                return BadRequest(errors);
+            }
+
+            if (!await userManager.IsEmailConfirmedAsync(user))
+            {
+                var confirmEmailToken = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                await userManager.ConfirmEmailAsync(user, confirmEmailToken);
+            }
+
+            return Ok();
+        }
+
         [HttpPost("Login")]
-        //[AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Login(
         [FromBody] UserAuthenticationModel userData)
         {
-            var user = await this.userManager
-                .FindByEmailAsync(userData.Email);
+            var user = await this.userManager.FindByEmailAsync(userData.Email);
+            var unauthorizedResponse = new UserAuthenticationResponseModel();
+
+            //TODO: remove in production evironment. Every user should confirm their email.
+            var claims = await userManager.GetClaimsAsync(user);
+            var role = claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
 
             if (user == null ||
                 !await this.userManager
                            .CheckPasswordAsync(user, userData.Password))
             {
-                var unauthorizedResponse = new AuthenticationResponseModel
-                {
-                    ErrorMessage = "unauthorizedErrorMessage"
-                };
+                unauthorizedResponse.ErrorMessage = "Username or password is incorrect!";
+                return Unauthorized(unauthorizedResponse);
+            }
 
+
+            else if (!user.EmailConfirmed && role == "Employee")
+            {
+                unauthorizedResponse.ErrorMessage = "Email is not confirmed.";
                 return Unauthorized(unauthorizedResponse);
             }
 
             var userToken = GetToken(user);
 
-            var authenticationResponse = new AuthenticationResponseModel
+            var authenticationResponse = new UserAuthenticationResponseModel
             {
                 AuthIsSuccessful = true,
                 Token = userToken
@@ -133,8 +187,5 @@ namespace UpSkill.Api.Controllers
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(Convert.ToDouble(this.jwtSettings["expiryInMinutes"])),
                 signingCredentials: signingCredentials);
-
     }
-
-
 }
