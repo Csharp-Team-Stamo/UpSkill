@@ -4,21 +4,30 @@
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
 
-<h1 class="mx-3">Coach Catalog</h1>
+<CheckboxesPanel></CheckboxesPanel>
 
-<div class="row">
-    @foreach (var coach in coaches.Coaches)
-    {
-        <CoachCard Coach="coach" OwnerId="@coaches.OwnerId" CoachIdsCollection="@coaches.OwnerCoachCollectionIds" UpdatedCoachesListingCatalogModel="SetCoaches" ></CoachCard>
-    }
-</div>
+@if (coaches.Coaches.Count == 0)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="row mt-5">
+        @foreach (var coach in coaches.Coaches)
+        {
+            <CoachCard Coach="coach" OwnerId="@coaches.OwnerId" CoachIdsCollection="@coaches.OwnerCoachCollectionIds" UpdatedCoachesListingCatalogModel="SetCoaches"></CoachCard>
+        }
+    </div>
+
+}
+
 
 @code {
 
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
 
-    private CoachesListingCatalogModel coaches = new ();
+    private CoachesListingCatalogModel coaches = new();
 
 
     protected override async Task OnInitializedAsync()
