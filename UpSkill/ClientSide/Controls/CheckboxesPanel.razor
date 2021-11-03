@@ -2,34 +2,13 @@
     <div class="query-panel row">
         <section class="col-4">
             <h2 class="section-title">Categories</h2>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">Art</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">Design</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">Marketing</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">Leadership</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">Personal Development</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">Data Science</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">Computer Science</label>
-            </div>
+            @foreach (var categoryName in categoryNames.OrderBy(x => x))
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox">
+                    <label class="form-check-label" for="defaultCheck1">@categoryName</label>
+                </div>
+            }
         </section>
         <div class="vertical-separator col-1"></div>
         <section class="languages col-4">
@@ -56,3 +35,13 @@
         </section>
     </div>
 </form>
+
+@code
+{
+    private ICollection<string> categoryNames = new List<string>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        categoryNames = await Client.GetFromJsonAsync<ICollection<string>>("Category/GetAllNames");
+    }
+}
