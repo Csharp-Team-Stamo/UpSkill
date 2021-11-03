@@ -6,12 +6,21 @@
 
 <CheckboxesPanel></CheckboxesPanel>
 
-<div class="row mt-5">
-    @foreach (var coach in coaches.Coaches)
-    {
-        <CoachCard Coach="coach" OwnerId="@coaches.OwnerId" CoachIdsCollection="@coaches.OwnerCoachCollectionIds" UpdatedCoachesListingCatalogModel="SetCoaches"></CoachCard>
-    }
-</div>
+@if (coaches.Coaches.Count == 0)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="row mt-5">
+        @foreach (var coach in coaches.Coaches)
+        {
+            <CoachCard Coach="coach" OwnerId="@coaches.OwnerId" CoachIdsCollection="@coaches.OwnerCoachCollectionIds" UpdatedCoachesListingCatalogModel="SetCoaches"></CoachCard>
+        }
+    </div>
+
+}
+
 
 @code {
 
