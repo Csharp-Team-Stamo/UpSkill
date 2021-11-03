@@ -1,0 +1,55 @@
+﻿.query-panel {
+    background: var(--color-blue-green-aqua-low-opticaly) 0% 0% no-repeat padding-box;
+    text-align: left;
+}
+
+.vertical-separator {
+    max-width: 1px;
+    height: 250px;
+    border-left: 1px solid black
+}
+
+section {
+    font: normal normal medium 22px/30px Montserrat;
+    letter-spacing: 1.1px;
+    padding: 20px;
+}
+
+.section-title {
+    font: normal normal bold 28px/85px Montserrat;
+    letter-spacing: 0px;
+    color: #000000;
+}
+
+input[type='checkbox'] {
+    display: relative;
+    appearance: none;
+    background-color: var(--color-blue-green-aqua-low-opticaly);
+    width: 25px;
+    aspect-ratio: 1;
+    border: 2px solid var(--color-blue-primary);
+}
+
+input[type='checkbox']:checked {
+    background-color: var(--color-blue-primary);
+    transition: all 150ms ease-in-out;
+}
+
+input[type='checkbox']:checked:before {
+    color: white;
+    font-weight: bold;
+    content: "✓";
+    position: absolute;
+    left: 4px;
+    top: -4px;
+    font-size: 1.2em;
+}
+
+input[type='checkbox']+label {
+    position: relative;
+    left: 10px;
+    margin-top: 5px;
+
+    font: normal normal medium 22px/30px Montserrat;
+    letter-spacing: 1.1px;
+}
