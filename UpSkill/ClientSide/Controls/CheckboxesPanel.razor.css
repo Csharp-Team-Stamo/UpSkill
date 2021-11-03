@@ -6,7 +6,9 @@
 .vertical-separator {
     max-width: 1px;
     height: 250px;
-    border-left: 1px solid black
+    border-left: 1px solid black;
+    margin: auto
+
 }
 
 section {
@@ -52,4 +54,9 @@ input[type='checkbox']+label {
 
     font: normal normal medium 22px/30px Montserrat;
     letter-spacing: 1.1px;
+}
+
+.coach-catalog-img {
+    position: relative;
+    width: 100%;
 }
