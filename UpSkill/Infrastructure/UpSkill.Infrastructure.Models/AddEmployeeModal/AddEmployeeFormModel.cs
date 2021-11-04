@@ -2,7 +2,8 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    using static Common.GlobalConstants;
+    using UpSkill.Infrastructure.Common.Attributes;
+
     using static Common.GlobalConstants.AddEmployeeModal;
 
     public class AddEmployeeFormModel
@@ -15,7 +16,7 @@
         public string FullName { get; set; }
 
         [Required]
-        [RegularExpression(EmailRegEx, ErrorMessage = "Not valid email")]
+        [IsEmail]
         public string Email { get; set; }
 
         public bool AddAnotherOneBtn { get; set; } = false;

@@ -34,6 +34,9 @@
             public const int FullNameMaxLen = 20;
         }
 
-        
+        public class Errors
+        {
+            public const string InvalidEmail = "Not valid email";
+        }
     }
 }
