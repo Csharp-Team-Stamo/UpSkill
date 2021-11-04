@@ -12,6 +12,7 @@
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 
+        [Required]
         public int LanguageId { get; set; }
         public Language Language { get; set; }
 
