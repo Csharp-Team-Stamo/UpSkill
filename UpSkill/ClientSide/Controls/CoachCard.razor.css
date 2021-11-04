@@ -26,6 +26,8 @@
 
 .coach-btn {
     background: #296CFB 0% 0% no-repeat padding-box;
+    border: none;
+    margin-top: 1em;
     opacity: 1;
 }
 

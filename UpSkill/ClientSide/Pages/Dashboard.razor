@@ -1,9 +1,17 @@
 ﻿@page "/Dashboard"
 <h3>Dashboard</h3>
 
-<OwnerDashboardStatistics></OwnerDashboardStatistics>
-<CoursesDashboardTable></CoursesDashboardTable>
-<CoachesDashboardTable></CoachesDashboardTable>
+
+@if (user.Role().Result == "Owner")
+{
+    <OwnerDashboardStatistics></OwnerDashboardStatistics>
+    <CoursesDashboardTable></CoursesDashboardTable>
+    <CoachesDashboardTable></CoachesDashboardTable>
+}
+else
+{
+    <EmployeeDashboardScheduler></EmployeeDashboardScheduler>
+}
 
 @code {
     [CascadingParameter]
