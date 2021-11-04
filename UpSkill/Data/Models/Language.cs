@@ -1,6 +1,6 @@
-namespace Data.Models
+﻿namespace UpSkill.Data.Models
 {
-    using UpSkill.Data.Common.Models;
+    using Common.Models;
 
     public class Language : BaseDeletableModel<int>
     {
