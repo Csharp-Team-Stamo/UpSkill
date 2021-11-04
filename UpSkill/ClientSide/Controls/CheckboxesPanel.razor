@@ -4,9 +4,12 @@
             <h2 class="section-title">Categories</h2>
             @foreach (var categoryName in categoryNames.OrderBy(x => x))
             {
+                var id = Guid.NewGuid();
+
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox">
-                    <label class="form-check-label" for="defaultCheck1">@categoryName</label>
+                    <input id="@id" class="form-check-input" type="checkbox" 
+                           @onchange="@(() => AddInSelectedCollection(categoryName))">
+                    <label for="@id" class="form-check-label">@categoryName</label>
                 </div>
             }
         </section>
@@ -40,8 +43,22 @@
 {
     private ICollection<string> categoryNames = new List<string>();
 
+    private ICollection<string> selectedCategories = new List<string>();
+
     protected override async Task OnInitializedAsync()
     {
         categoryNames = await Client.GetFromJsonAsync<ICollection<string>>("Category/GetAllNames");
+    }
+
+    protected void AddInSelectedCollection(string categoryName)
+    {
+        if (selectedCategories.Contains(categoryName))
+        {
+            selectedCategories.Remove(categoryName);
+        }
+        else
+        {
+            selectedCategories.Add(categoryName);
+        }
     }
 }
