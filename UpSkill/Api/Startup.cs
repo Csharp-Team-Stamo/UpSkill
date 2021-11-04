@@ -111,6 +111,7 @@
             services.AddTransient<IAdminCoachService, AdminCoachService>();
             services.AddTransient<ICoachesService, CoachesService>();
             services.AddTransient<IOwnerService, OwnerService>();
+            services.AddTransient<IStatisticsService, StatisticsService>();
 
 
             services.AddTransient<IEmailSender, EmailSender>();

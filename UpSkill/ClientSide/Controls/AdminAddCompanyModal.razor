@@ -1,0 +1,268 @@
+﻿@using UpSkill.Infrastructure.Models.Company
+
+<style>
+    .modal-body {
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        height: 350px;
+        margin-top: 15%;
+        width: 90%;
+        position: absolute;
+        pointer-events: auto;
+    }
+
+    .modal-header-custom {
+        background: #296CFB;
+        height: 39%;
+        position: relative;
+        top: -6%;
+        width: 107.9%;
+        left: -0.46%;
+    }
+
+    .add-company-text {
+        font: 93% Montserrat;
+        letter-spacing: 1.4px;
+        color: #FFFFFF;
+        position: absolute;
+        left: 33%;
+        top: 68%;
+    }
+
+    .header-btn {
+        position: relative;
+        left: 94%;
+        top: 5%;
+        color: white;
+        font-weight: 100;
+        cursor: pointer;
+    }
+
+    .upload-csv-file-btn {
+        border: 2px solid #FFFFFF;
+        position: relative;
+        left: 63%;
+        top: 41%;
+        width: 26%;
+        height: 17%;
+        cursor: pointer;
+    }
+
+    .upload-csv-file-btn-text {
+        text-align: left;
+        font: bold 50% Montserrat;
+        letter-spacing: 1.1px;
+        color: #FFFFFF;
+        position: relative;
+        left: 17%;
+        top: 18%;
+    }
+
+    input, ::deep input {
+        border: 2px solid #296CFB;
+        margin-bottom: 3%;
+    }
+
+        input, ::deep input::placeholder {
+            color: #296CFB;
+            padding-left: 8%;
+        }
+
+    .add-another-one-employee {
+        text-align: left;
+        font: 70% Montserrat;
+        letter-spacing: 1.1px;
+        color: #296CFB;
+        margin-left: 25%;
+        cursor: pointer;
+        position: relative;
+        border: none;
+        padding: 0;
+        background: none;
+        outline: none;
+        left: -18%;
+        margin-bottom: 7%;
+    }
+
+    .cancel-btn {
+        border: 2px solid #296CFB;
+        position: relative;
+        width: 20%;
+        height: 7%;
+        top: 8%;
+        left: 26%;
+        cursor: pointer;
+        padding: 0;
+        background: none;
+    }
+
+    .cancel-btn-text {
+        font: bold 64% Montserrat;
+        letter-spacing: 1.1px;
+        color: #296CFB;
+        position: relative;
+        top: 17%;
+    }
+
+    .save-btn {
+        background: #296CFB 0% 0% no-repeat padding-box;
+        position: relative;
+        width: 20%;
+        height: 14%;
+        top: -1%;
+        left: 34%;
+        cursor: pointer;
+        border: none;
+    }
+
+    .save-btn-text {
+        font: bold 64% Montserrat;
+        letter-spacing: 1.1px;
+        color: #FFFFFF;
+        position: relative;
+        top: 21%;
+    }
+</style>
+
+@*<h3>Admin Add Company</h3>*@
+
+<div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.8);"
+     aria-modal="true">
+    <div class="modal-dialog">
+        <div class="modal-body">
+            <div class="row modal-header-custom">
+                <div class="add-company-text">Add Company</div>
+                <div @onclick="ClosePopup" class="close header-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </div>
+                <div class="upload-csv-file-btn">
+                    <div class="upload-csv-file-btn-text">
+                        Upload CSV file
+                    </div>
+                </div>
+            </div>
+            <div>
+                <EditForm Model="@companyInput" OnValidSubmit="@Create">
+                    <DataAnnotationsValidator />
+                    <InputText @bind-Value="companyInput.Name" placeholder="Company Name*"></InputText>
+                    <ValidationMessage For="@(() => companyInput.Name)"></ValidationMessage>
+                    <InputText @bind-Value="companyInput.UIC" placeholder="UIC"></InputText>
+                    <ValidationMessage For="@(() => companyInput.UIC)"></ValidationMessage>
+                    @*<button @onclick="@(() => EmployeeFormModel.AddAnotherOneBtn = true)" type="submit" class="add-another-one-employee">
+                        + Add another employee
+                    </button>*@
+                    <div class="row">
+                        <button class="cancel-btn">
+                            <div @onclick="ClosePopup" class="cancel-btn-text">
+                                Cancel
+                            </div>
+                        </button>
+                        <button type="submit" class="save-btn">
+                            <div class="save-btn-text">
+                                Add Company
+                            </div>
+                        </button>
+                        @*<button @onclick="@(() => EmployeeFormModel.AddAnotherOneBtn = false)" type="submit" class="save-btn">
+                            <div class="save-btn-text">
+                                Save
+                            </div>
+                        </button>*@
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+
+    private CompanyCreateInputModel companyInput = new();
+    // private ICollection<AddEmployeeFormModel> employeeCollection = new List<AddEmployeeFormModel>();
+
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+
+    [Parameter]
+    public EventCallback<bool> SetShow { get; set; }
+
+    [Parameter]
+    public EventCallback<ICollection<AddEmployeeFormModel>> GetUpdatedEmployees { get; set; }
+
+
+    private void ClosePopup()
+    {
+        SetShow.InvokeAsync(false);
+    }
+
+    private async Task Create()
+    {
+
+        // var model = companyInput;
+
+        // model.CompanyId = user.CompanyId().Result;
+        // employeeCollection.Add(model);
+
+        var response = await Client
+            .PostAsJsonAsync<CompanyCreateInputModel>("/admin/company/create", companyInput);
+
+        // await GetUpdatedEmployees.InvokeAsync(await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result));
+
+        // var emailsAsCollection = DeserializeEmails(emailsFromResponseErrorResult);
+
+        ClosePopup();
+
+        DisplayToast(response);
+
+        //if (EmployeeFormModel.AddAnotherOneBtn)
+        //{
+        //    EmployeeFormModel = new();
+        //}
+        //else
+        //{
+        //    //var emailsFromResponseErrorResult = await EmployeesService.SaveCollectionInDbAsync(employeeCollection);
+
+
+        //}
+
+    }
+
+    private ICollection<string> DeserializeEmails(HttpResponseMessage emailsForDeserialization)
+    {
+        var emailsAsString = emailsForDeserialization.Content.ReadAsStringAsync().Result;
+
+        var emailsAsCollection = JsonConvert.DeserializeObject<List<string>>(emailsAsString);
+
+        return emailsAsCollection;
+    }
+
+    private void DisplayToast(HttpResponseMessage responseMessage)
+    {
+        if(responseMessage.IsSuccessStatusCode)
+        {
+            ToastService.ShowSuccess($"Company {companyInput.Name} was added to DB.");
+        }
+        else
+        {
+            ToastService.ShowError($"Company {companyInput.Name} could not be added to DB.");
+        }
+    }
+
+    //private void DisplayToast(ICollection<string> notSavedEmails)
+    //{
+    //    if (notSavedEmails.Any())
+    //    {
+    //        foreach (var email in notSavedEmails)
+    //        {
+    //            ToastService.ShowError($"Employee with Full Name '{EmployeeFormModel.FullName}' is not saved because his Email '{email}' is already registered");
+    //        }
+    //    }
+    //    var addedEmployeesCount = employeeCollection.Count - notSavedEmails.Count;
+
+    //    if (addedEmployeesCount != 0)
+    //    {
+    //        var message = addedEmployeesCount > 1 ? $"{addedEmployeesCount}  Employees saved" : $"{addedEmployeesCount}  Employee saved";
+
+    //        ToastService.ShowSuccess(message);
+    //    }
+    //}
+}

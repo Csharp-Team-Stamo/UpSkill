@@ -10,9 +10,6 @@
     {
         private readonly CategoryCreateInputModel categoryInput = new();
 
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
-
         public async Task Create()
         {
             var response = await this.Client

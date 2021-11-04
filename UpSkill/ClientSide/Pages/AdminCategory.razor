@@ -1,24 +1,41 @@
 ﻿@page "/adminCategory"
 @layout AdminLayout
 
-<h3>Create Category</h3>
+<style>
+    .category-create-div{
+        font-family: Montserrat, sans-serif;
+    }
 
-<EditForm Model="categoryInput" OnValidSubmit="Create" class="card card-body bg-light mt-5">
-    <DataAnnotationsValidator />
-    <div class="form-group row">
-        <label for="name" class="col-md-2 col-form-label">Name</label>
-        <div class="col-md-10">
-            <InputText id="name" class="form-control" @bind-Value="categoryInput.Name" />
-            <ValidationMessage For="@(() => categoryInput.Name)" />
-        </div>
-    </div>
+    .blueish-bckgrnd {
+        background-color: #ebf1ff;
+    }
+    .upSkill-create-button {
+        color: #fff;
+        background-color: #296cfb;
+        border-color: #296cfb;
+    }
+</style>
 
-    <div class="row">
-        <div class="col-md-12 text-right">
-            <button type="submit" class="btn btn-primary">Create Category</button>
+
+<div class="mx-auto my-5 category-create-div">
+    <h3 class="text-center">Create Category</h3>
+    <EditForm Model="categoryInput" OnValidSubmit="Create" class="card card-body bg-light mt-5">
+        <DataAnnotationsValidator />
+        <div class="form-group row">
+            <label for="name" class="col-md-2 col-form-label">Name</label>
+            <div class="col-md-10">
+                <InputText id="name" class="form-control" @bind-Value="categoryInput.Name" />
+                <ValidationMessage For="@(() => categoryInput.Name)" />
+            </div>
         </div>
-    </div>
-</EditForm>
+
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn upSkill-create-button">Create Category</button>
+            </div>
+        </div>
+    </EditForm>
+</div>
 
 
 

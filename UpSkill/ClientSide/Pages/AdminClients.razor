@@ -1,0 +1,157 @@
+﻿@page "/admin/clients"
+@layout AdminLayout
+
+@using UpSkill.Infrastructure.Models.Company
+
+<style>
+    .add-btn {
+        height: 30px;
+        line-height: 30px;
+        width: 30px;
+        font-size: 2em;
+        font-weight: bold;
+        border-radius: 50%;
+        background-color: lemonchiffon;
+        color: #296CFB;
+        cursor: pointer;
+    }
+
+    .underline {
+        text-decoration: none;
+        position: relative;
+    }
+
+        .underline:after {
+            position: absolute;
+            content: '';
+            height: 1px;
+            /* adjust this to move up and down. 
+               You may have to adjust the line height of the paragraph if you move it down a lot. */
+            bottom: 0px;
+            /****** 
+       optional values below 
+       ******/
+            /* center - (optional) use with adjusting width   */
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+            width: 95%;
+            background: black;
+        }
+
+    .head-underline {
+        text-decoration: none;
+        position: relative;
+    }
+
+        .head-underline:after {
+            position: absolute;
+            content: '';
+            height: 1px;
+            /* adjust this to move up and down. 
+               You may have to adjust the line height of the paragraph if you move it down a lot. */
+            bottom: 0px;
+            /****** 
+       optional values below 
+       ******/
+            /* center - (optional) use with adjusting width   */
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+            width: 95%;
+            background: white;
+        }
+
+
+    th.cell-header-right {
+        padding-right: 1.5em;
+    }
+
+    th.cell-header-left {
+        padding-left: 5.5em;
+    }
+
+    td.cell-right {
+        padding-right: 1.3em;
+    }
+
+    td.cell-left {
+        padding-left: 5.5em;
+    }
+</style>
+
+<div class="mx-auto">
+    <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
+        <thead class="border-bottom-0">
+            <tr class="" style="color: white; background-color: #296cfb">
+                <th class="font-weight-bold text-left pl-4 cell-header-left">
+                    Company Name
+                </th>
+                <th class="text-left font-weight-bold pr-4 cell-header-right">
+                    Email
+                </th>
+                <th>
+                    <div class="add-btn" @onclick="ShowPopup">+</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var company in allClients)
+            {
+                <tr class="border-bottom-0 underline">
+                    <td class="text-left pl-4 font-weight-bold cell-left" style="color: #296CFB;">
+                        @company.Name
+                    </td>
+                    <td class="text-left pr-4 cell-right">
+                        @company.Email
+                    </td>
+                </tr>
+            }
+            <tr class="text-center">
+                <td colspan="2" style="color: #16D696">
+                    View More
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@if (show)
+{
+    <AdminAddCompanyModal SetShow="SetShowValue"></AdminAddCompanyModal>
+    @*<AddEmployeeModal SetShow="SetShowValue" GetUpdatedEmployees="SetEmployeesCollection"></AddEmployeeModal>*@
+}
+
+@code {
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+    private bool show = false;
+
+    private IEnumerable<AdminCompanyListingModel> allClients =
+        new List<AdminCompanyListingModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.allClients = await Client.GetFromJsonAsync<IEnumerable<AdminCompanyListingModel>>("/admin/statistics/getallclients");
+
+        //    await EmployeesService
+        //    .GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result);
+        //employeesModel = employeesModel.OrderBy(x => x.FullName).ToList();
+    }
+
+    private void ShowPopup()
+    {
+        show = true;
+    }
+
+    private void SetShowValue(bool value)
+    {
+        show = value;
+    }
+
+    //private void SetEmployeesCollection(ICollection<AddEmployeeFormModel> value)
+    //{
+    //    allClients = value;
+    //}
+}

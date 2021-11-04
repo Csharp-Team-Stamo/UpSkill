@@ -1,4 +1,4 @@
-﻿namespace UpSkill.Infrastructure.Models.Admin
+﻿namespace UpSkill.Infrastructure.Models.Company
 {
     using System;
     using System.Collections.Generic;
@@ -6,10 +6,10 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class MonthlyClient
+    public class AdminCompanyListingModel
     {
         public int Id { get; set; }
-        public string MonthName { get; set; }
-        public int ClientsNum { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
     }
 }
