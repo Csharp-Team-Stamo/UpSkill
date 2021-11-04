@@ -4,7 +4,6 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Contracts;
-    using global::Data.Models;
     using Infrastructure.Models.Coaches;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;

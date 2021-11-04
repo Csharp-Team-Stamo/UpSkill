@@ -8,6 +8,8 @@
 
     public class AddEmployeeFormModel
     {
+        public string UserId { get; set; }
+
         public string CompanyId { get; set; }
 
         [Required]

@@ -1,7 +1,6 @@
-namespace Data.Models
+﻿namespace UpSkill.Data.Models
 {
-    using UpSkill.Data.Common.Models;
-    using UpSkill.Data.Models;
+    using Common.Models;
 
     public class CoachOwner : BaseDeletableModel<int>
     {

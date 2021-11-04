@@ -3,12 +3,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
-    using System.Text;
     using System.Threading.Tasks;
     using Contracts;
     using Infrastructure.Models.AddEmployeeModal;
     using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.WebUtilities;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
     using UpSkill.Infrastructure.Common;
@@ -19,13 +17,15 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IEmailSender mailSender;
         private readonly IAccountsService accountsService;
+        private readonly IOwnerService ownerService;
 
-        public EmployeesService(IDeletableEntityRepository<Employee> employeeRepository, UserManager<ApplicationUser> userManager, IEmailSender mailSender, IAccountsService accountsService)
+        public EmployeesService(IDeletableEntityRepository<Employee> employeeRepository, UserManager<ApplicationUser> userManager, IEmailSender mailSender, IAccountsService accountsService, IOwnerService ownerService)
         {
             this.employeeRepository = employeeRepository;
             this.userManager = userManager;
             this.mailSender = mailSender;
             this.accountsService = accountsService;
+            this.ownerService = ownerService;
         }
 
         public ICollection<AddEmployeeFormModel> GetByCompanyId(string companyId)
@@ -51,19 +51,19 @@
 
                 var result = await userManager.CreateAsync(user, AccountsService.GenerateRandomPassword());
 
-                var claimRole = new Claim(ClaimTypes.Role, GlobalConstants.EmployeeRoleName);
-
-                await userManager .AddClaimAsync(user, claimRole);
-
                 if (!result.Succeeded)
                 {
                     emailsFromErrorResult.AddRange(result.Errors.Select(x => x.Description.Split("'")[1]).ToList());
                 }
                 else
                 {
+                    var claimRole = new Claim(ClaimTypes.Role, GlobalConstants.EmployeeRoleName);
+                    await userManager.AddClaimAsync(user, claimRole);
+
                     var emp = new Employee
                     {
                         UserId = user.Id,
+                        OwnerId = ownerService.GetId(employeeModel.UserId),
                     };
 
                     await employeeRepository.AddAsync(emp);
