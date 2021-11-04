@@ -6,7 +6,7 @@
 
 <CheckboxesPanel></CheckboxesPanel>
 
-@if (coaches.Coaches.Count == 0)
+@if (coaches == null)
 {
     <div class="spinner"></div>
 }
@@ -27,7 +27,7 @@ else
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
 
-    private CoachesListingCatalogModel coaches = new();
+    private CoachesListingCatalogModel coaches;
 
 
     protected override async Task OnInitializedAsync()
