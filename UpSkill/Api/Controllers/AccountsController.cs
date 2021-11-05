@@ -43,14 +43,20 @@ namespace UpSkill.Api.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationModel input)
         {
+            var response = new RegistrationResponseModel { };
+
             if (input == null || !ModelState.IsValid)
             {
-                return BadRequest();
+                var errors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
+                AddErrors(response, errors);
+                return BadRequest(response);
             }
 
             if (!this.accountService.IsEmailAvailable(input.Email))
             {
-                return BadRequest("This email is already taken!");
+                var errors = new List<string>() { GlobalConstants.Errors.EmailIsTaken };
+                AddErrors(response, errors);
+                return BadRequest(response);
             }
 
             var result = await this.accountService.Register(input.FullName, input.Email, input.Password, input.CompanyName);
@@ -58,10 +64,18 @@ namespace UpSkill.Api.Controllers
             if (!result.Succeeded)
             {
                 var errors = result.Errors.Select(e => e.Description);
-                return BadRequest(new RegistrationResponseModel { Errors = errors });
+                response.Errors = errors;
+                return BadRequest(response);
             }
+            response.IsSuccessfulRegistration = true;
 
-            return StatusCode(201);
+            return StatusCode(201, response);
+        }
+
+        private static void AddErrors(RegistrationResponseModel response, IEnumerable<string> errors)
+        {
+            response.Errors = errors;
+            response.IsSuccessfulRegistration = false;
         }
 
         [HttpPost("Request-reset-password")]
@@ -123,16 +137,6 @@ namespace UpSkill.Api.Controllers
                            .CheckPasswordAsync(user, userData.Password))
             {
                 unauthorizedResponse.ErrorMessage = "Username or password is incorrect!";
-                return Unauthorized(unauthorizedResponse);
-            }
-
-            //TODO: remove in production evironment. Every user should confirm their email.
-            var claims = await userManager.GetClaimsAsync(user);
-            var role = claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
-
-            if (!user.EmailConfirmed && role == "Employee")
-            {
-                unauthorizedResponse.ErrorMessage = "Email is not confirmed.";
                 return Unauthorized(unauthorizedResponse);
             }
 

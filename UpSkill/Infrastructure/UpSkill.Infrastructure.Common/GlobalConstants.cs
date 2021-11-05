@@ -37,6 +37,9 @@
         public class Errors
         {
             public const string InvalidEmail = "Not valid email";
+            public const string EmailIsTaken = "This email is already taken!";
+
+
         }
     }
 }
