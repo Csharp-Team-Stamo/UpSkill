@@ -142,6 +142,21 @@
                 .HasForeignKey(ce => ce.StudentId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<CoachLanguage>()
+                .HasKey(k => new { k.CoachId, k.LanguageId });
+
+            builder.Entity<CoachLanguage>()
+                .HasOne(cl => cl.Coach)
+                .WithMany(c => c.Languages)
+                .HasForeignKey(cl => cl.CoachId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<CoachLanguage>()
+                .HasOne(cl => cl.Language)
+                .WithMany(l => l.Coaches)
+                .HasForeignKey(cl => cl.LanguageId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
         }
 

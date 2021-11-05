@@ -2,7 +2,7 @@
 {
     using Common.Models;
 
-    public class CoachLanguage : BaseDeletableModel<int>
+    public class CoachLanguage
     {
         public string CoachId { get; set; }
         public Coach Coach { get; set; }
