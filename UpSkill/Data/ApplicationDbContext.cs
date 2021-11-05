@@ -127,6 +127,21 @@
             .Property(c => c.Price)
             .HasPrecision(Precision, Scale);
 
+            builder.Entity<CoachEmployee>()
+                .HasKey(k => new { k.CoachId, k.StudentId });
+
+            builder.Entity<CoachEmployee>()
+                .HasOne(ce => ce.Coach)
+                .WithMany(c => c.Students)
+                .HasForeignKey(ce => ce.CoachId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<CoachEmployee>()
+                .HasOne(ce => ce.Student)
+                .WithMany(s => s.Coaches)
+                .HasForeignKey(ce => ce.StudentId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
         }
 
