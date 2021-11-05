@@ -11,10 +11,10 @@
     public class CoachesService : ICoachesService
     {
         private readonly IDeletableEntityRepository<Coach> coachesRepository;
-        private readonly IDeletableEntityRepository<CoachOwner> coachesOwnerRepository;
+        private readonly IRepository<CoachOwner> coachesOwnerRepository;
         private readonly IOwnerService ownerService;
 
-        public CoachesService(IDeletableEntityRepository<Coach> coachesRepository, IDeletableEntityRepository<CoachOwner> coachesOwnerRepository, IOwnerService ownerService)
+        public CoachesService(IDeletableEntityRepository<Coach> coachesRepository, IRepository<CoachOwner> coachesOwnerRepository, IOwnerService ownerService)
         {
             this.coachesRepository = coachesRepository;
             this.coachesOwnerRepository = coachesOwnerRepository;
@@ -78,16 +78,16 @@
             await coachesOwnerRepository.SaveChangesAsync();
         }
 
-        public async Task RemoveCoachFromOwnerCoachCollectionAsync(string coachId, string userId)
-        {
-            var ownerId = OwnerId(userId);
+        //public async Task RemoveCoachFromOwnerCoachCollectionAsync(string coachId, string userId)
+        //{
+        //    var ownerId = OwnerId(userId);
 
-            var coachToRemove = coachesOwnerRepository.All().FirstOrDefault(x => x.CoachId == coachId && x.OwnerId == ownerId);
+        //    var coachToRemove = coachesOwnerRepository.All().FirstOrDefault(x => x.CoachId == coachId && x.OwnerId == ownerId);
 
-            coachesOwnerRepository.HardDelete(coachToRemove);
+        //    coachesOwnerRepository..HardDelete(coachToRemove);
 
-            await coachesOwnerRepository.SaveChangesAsync();
-        }
+        //    await coachesOwnerRepository.SaveChangesAsync();
+        //}
 
         private string OwnerId(string userId)
         {

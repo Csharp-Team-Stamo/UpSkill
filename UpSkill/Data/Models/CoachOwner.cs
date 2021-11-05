@@ -2,7 +2,7 @@
 {
     using Common.Models;
 
-    public class CoachOwner : BaseDeletableModel<int>
+    public class CoachOwner
     {
         public string CoachId { get; set; }
         public Coach Coach { get; set; }

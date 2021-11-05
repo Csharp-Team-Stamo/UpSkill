@@ -34,13 +34,13 @@
            await coachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
         }
         
-        [HttpDelete("RemoveCoachFromOwnerCoachCollectionAsync")]
-        public async Task<ActionResult> RemoveCoachFromOwnerCoachCollectionAsync([FromQuery]string coachId, [FromQuery] string userId)
-        {
-           await coachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, userId);
+        //[HttpDelete("RemoveCoachFromOwnerCoachCollectionAsync")]
+        //public async Task<ActionResult> RemoveCoachFromOwnerCoachCollectionAsync([FromQuery]string coachId, [FromQuery] string userId)
+        //{
+        //   await coachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, userId);
 
-           return Ok();
-        }
+        //   return Ok();
+        //}
 
     }
 }
