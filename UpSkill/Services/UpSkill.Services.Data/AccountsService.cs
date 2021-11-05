@@ -66,7 +66,7 @@
                 return result;
             }
 
-            var owner = new Owner { UserId = user.Id, };
+            var owner = new Owner { Id = user.Id, UserId = user.Id, };
             await ownerRepository.AddAsync(owner);
             await ownerRepository.SaveChangesAsync();
 
