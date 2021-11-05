@@ -1151,7 +1151,7 @@ namespace UpSkill.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("UpSkill.Data.Models.Employee", "Student")
-                        .WithMany("Students")
+                        .WithMany("Courses")
                         .HasForeignKey("StudentId");
 
                     b.Navigation("Course");
@@ -1292,11 +1292,11 @@ namespace UpSkill.Data.Migrations
                 {
                     b.Navigation("Coaches");
 
+                    b.Navigation("Courses");
+
                     b.Navigation("Grades");
 
                     b.Navigation("Invoices");
-
-                    b.Navigation("Students");
                 });
 
             modelBuilder.Entity("UpSkill.Data.Models.Language", b =>
