@@ -1,6 +1,10 @@
 ﻿namespace UpSkill.Api
 {
     using System.Text;
+    using Data;
+    using Data.Common.Repositories;
+    using Data.Models;
+    using Data.Repositories;
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -11,12 +15,8 @@
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
-    using Data;
-    using Data.Common.Repositories;
-    using Data.Models;
-    using Data.Repositories;
-    using UpSkill.Services.Data;
-    using UpSkill.Services.Data.Contracts;
+    using Services.Data;
+    using Services.Data.Contracts;
 
     public class Startup
     {
@@ -34,23 +34,22 @@
 
             services
                 .AddDbContext<ApplicationDbContext>(options => options
-                .UseSqlServer(connectionString));
+                    .UseSqlServer(connectionString));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
-            {
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequireLowercase = false;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequiredLength = 1;
+                    options.Password.RequiredUniqueChars = 0;
 
-                options.Password.RequireDigit = false;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequiredLength = 1;
-                options.Password.RequiredUniqueChars = 0;
-
-				options.SignIn.RequireConfirmedEmail = false;
-				options.SignIn.RequireConfirmedAccount = false;
-				options.SignIn.RequireConfirmedPhoneNumber = false;
-			})
-				.AddEntityFrameworkStores<ApplicationDbContext>()
+                    options.SignIn.RequireConfirmedEmail = false;
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.SignIn.RequireConfirmedPhoneNumber = false;
+                })
+                .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
 
             var jwtSettings = Configuration.GetSection("JWTSettings");
@@ -66,7 +65,6 @@
                     ValidateAudience = true,
                     ValidateLifetime = true,
                     ValidateIssuerSigningKey = true,
-
                     ValidIssuer = jwtSettings["validIssuer"],
                     ValidAudience = jwtSettings["validAudience"],
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["securityKey"]))
@@ -74,7 +72,7 @@
             });
 
 
-            //        services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            // services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             //.AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
 
             services.AddControllers();
@@ -110,6 +108,7 @@
             services.AddTransient<ICoachesService, CoachesService>();
             services.AddTransient<IOwnerService, OwnerService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<ILanguagesService, LanguagesService>();
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<SendGridEmailSenderOptions>(options =>
