@@ -9,29 +9,22 @@
                 <div class="form-check">
                     <input id="@id" class="form-check-input" type="checkbox" 
                            @onchange="@(() => AddInSelectedCollection(categoryName))">
-                    <label for="@id" class="form-check-label">@categoryName</label>
+                    <label for="@id" class="form-check-label" >@categoryName</label>
                 </div>
             }
         </section>
         <div class="vertical-separator col-1"></div>
         <section class="languages col-4">
             <h2 class="section-title">Languages</h2>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">English</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">Spanish</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">German</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">French</label>
-            </div>
+            @foreach (var language in languages)
+            {
+                var id = Guid.NewGuid();
+
+                <div class="form-check">
+                    <input id="@id" class="form-check-input" type="checkbox">
+                    <label for="@id" class="form-check-label" >@language</label>
+                </div>
+            }
         </section>
         <section class="col-3">
             <img class="coach-catalog-img" src="images/coachesCatalog/CoachCatalogCheckboxImg.svg">
@@ -43,6 +36,8 @@
 {
     private ICollection<string> categoryNames = new List<string>();
 
+    private ICollection<string> languages = new List<string>();
+
     private ICollection<string> selectedCategories = new List<string>();
 
     [Parameter]
@@ -51,6 +46,7 @@
     protected override async Task OnInitializedAsync()
     {
         categoryNames = await Client.GetFromJsonAsync<ICollection<string>>("Category/GetAllNames");
+        languages = await Client.GetFromJsonAsync<ICollection<string>>("Languages/GetAll");
     }
 
     protected void AddInSelectedCollection(string categoryName)
@@ -64,6 +60,6 @@
             selectedCategories.Add(categoryName);
         }
 
-         CategoryNames.InvokeAsync(selectedCategories.ToList());
+        CategoryNames.InvokeAsync(selectedCategories.ToList());
     }
 }
