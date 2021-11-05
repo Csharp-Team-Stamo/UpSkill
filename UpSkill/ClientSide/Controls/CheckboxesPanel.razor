@@ -8,7 +8,7 @@
 
                 <div class="form-check">
                     <input id="@id" class="form-check-input" type="checkbox" 
-                           @onchange="@(() => AddInSelectedCollection(categoryName))">
+                           @onchange="@(() => AddCategoryNameInCollection(categoryName))">
                     <label for="@id" class="form-check-label" >@categoryName</label>
                 </div>
             }
@@ -16,13 +16,14 @@
         <div class="vertical-separator col-1"></div>
         <section class="languages col-4">
             <h2 class="section-title">Languages</h2>
-            @foreach (var language in languages)
+            @foreach (var languageName in languages)
             {
                 var id = Guid.NewGuid();
 
                 <div class="form-check">
-                    <input id="@id" class="form-check-input" type="checkbox">
-                    <label for="@id" class="form-check-label" >@language</label>
+                    <input id="@id" class="form-check-input" type="checkbox"
+                           @onchange="@(() => AddLanguageNameInCollection(languageName))">
+                    <label for="@id" class="form-check-label" >@languageName</label>
                 </div>
             }
         </section>
@@ -40,8 +41,13 @@
 
     private ICollection<string> selectedCategories = new List<string>();
 
+    private ICollection<string> selectedLanguages = new List<string>();
+
     [Parameter]
     public EventCallback<ICollection<string>> CategoryNames { get; set; }
+
+    [Parameter]
+    public EventCallback<ICollection<string>> LanguageNames { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -49,7 +55,7 @@
         languages = await Client.GetFromJsonAsync<ICollection<string>>("Languages/GetAll");
     }
 
-    protected void AddInSelectedCollection(string categoryName)
+    protected void AddCategoryNameInCollection(string categoryName)
     {
         if (selectedCategories.Contains(categoryName))
         {
@@ -61,5 +67,19 @@
         }
 
         CategoryNames.InvokeAsync(selectedCategories.ToList());
+    }
+
+    protected void AddLanguageNameInCollection(string languageName)
+    {
+        if (selectedLanguages.Contains(languageName))
+        {
+            selectedLanguages.Remove(languageName);
+        }
+        else
+        {
+            selectedLanguages.Add(languageName);
+        }
+
+        LanguageNames.InvokeAsync(selectedLanguages.ToList());
     }
 }

@@ -37,6 +37,7 @@
                     Company = x.Company,
                     CompanyLogoUrl = x.CompanyLogoUrl,
                     PricePerSession = x.PricePerSession,
+                    Languages = x.Languages.Select(cl => cl.Language.Name).ToList(),
                 }).ToList()
             };
 

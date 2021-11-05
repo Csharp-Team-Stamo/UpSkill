@@ -3,7 +3,7 @@
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
 
-<CheckboxesPanel CategoryNames="FilterCoaches"></CheckboxesPanel>
+<CheckboxesPanel CategoryNames="FilterCoachesByCategory" LanguageNames="FilterCoachesByLanguage"></CheckboxesPanel>
 
 @if (model == null)
 {
@@ -45,11 +45,23 @@ else
     }
 
 
-    private void FilterCoaches(ICollection<string> categoryNames)
+    private void FilterCoachesByCategory(ICollection<string> categoryNames)
     {
         if (categoryNames.Any())
         {
             coaches = model.Coaches.Where(x => categoryNames.ToList().Contains(x.CategoryName)).ToList();
+        }
+        else
+        {
+            coaches = model.Coaches;
+        }
+    }
+
+    private void FilterCoachesByLanguage(ICollection<string> languageNames)
+    {
+        if (languageNames.Any())
+        {
+            coaches = model.Coaches.Where(x => languageNames.Any(l => x.Languages.Contains(l))).ToList();
         }
         else
         {
