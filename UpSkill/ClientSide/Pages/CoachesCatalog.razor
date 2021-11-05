@@ -3,7 +3,7 @@
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
 
-<CheckboxesPanel CategoryNames="Callback"></CheckboxesPanel>
+<CheckboxesPanel CategoryNames="FilterCoaches"></CheckboxesPanel>
 
 @if (model == null)
 {
@@ -45,11 +45,11 @@ else
     }
 
 
-    private void Callback(ICollection<string> obj)
+    private void FilterCoaches(ICollection<string> categoryNames)
     {
-        if (obj.Any())
+        if (categoryNames.Any())
         {
-            coaches = model.Coaches.Where(x => obj.ToList().Contains(x.CategoryName)).ToList();
+            coaches = model.Coaches.Where(x => categoryNames.ToList().Contains(x.CategoryName)).ToList();
         }
         else
         {
