@@ -6,11 +6,6 @@
 
     public class Owner : BaseDeletableModel<string>
     {
-        public Owner()
-        {
-            Id = Guid.NewGuid().ToString();
-        }
-
         public string UserId { get; init; }
         public ApplicationUser User { get; init; }
 
