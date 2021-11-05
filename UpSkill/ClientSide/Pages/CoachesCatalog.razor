@@ -1,21 +1,20 @@
 ﻿@page "/Coaches-catalog"
-@using UpSkill.Infrastructure.Models.Coaches
 @layout NoMenuLayout
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
 
-<CheckboxesPanel></CheckboxesPanel>
+<CheckboxesPanel CategoryNames="Callback"></CheckboxesPanel>
 
-@if (coaches == null)
+@if (model == null)
 {
     <div class="spinner"></div>
 }
 else
 {
     <div class="row mt-5">
-        @foreach (var coach in coaches.Coaches)
+        @foreach (var coach in coaches)
         {
-            <CoachCard Coach="coach" OwnerId="@coaches.OwnerId" CoachIdsCollection="@coaches.OwnerCoachCollectionIds" UpdatedCoachesListingCatalogModel="SetCoaches"></CoachCard>
+            <CoachCard Coach="coach" OwnerId="@model.OwnerId" CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedCoachesListingCatalogModel="SetCoaches"></CoachCard>
         }
     </div>
 
@@ -27,20 +26,35 @@ else
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
 
-    private CoachesListingCatalogModel coaches;
+    private CoachesListingCatalogModel model;
+    private ICollection<CoachInListCatalogModel> coaches = new List<CoachInListCatalogModel>();
 
 
     protected override async Task OnInitializedAsync()
     {
         var userId = user.Id().Result;
 
-        coaches = await CoachesService.GetAllAsync(userId);
+        model = await CoachesService.GetAllAsync(userId);
 
+        coaches = model.Coaches.ToList();
     }
 
-    private void SetCoaches(CoachesListingCatalogModel updatedCoaches)
+    private void SetCoaches(CoachesListingCatalogModel updatedModel)
     {
-        coaches = updatedCoaches;
+        model = updatedModel;
+    }
+
+
+    private void Callback(ICollection<string> obj)
+    {
+        if (obj.Any())
+        {
+            coaches = model.Coaches.Where(x => obj.ToList().Contains(x.CategoryName)).ToList();
+        }
+        else
+        {
+            coaches = model.Coaches;
+        }
     }
 
 }

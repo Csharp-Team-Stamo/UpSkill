@@ -45,6 +45,9 @@
 
     private ICollection<string> selectedCategories = new List<string>();
 
+    [Parameter]
+    public EventCallback<ICollection<string>> CategoryNames { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         categoryNames = await Client.GetFromJsonAsync<ICollection<string>>("Category/GetAllNames");
@@ -60,5 +63,7 @@
         {
             selectedCategories.Add(categoryName);
         }
+
+         CategoryNames.InvokeAsync(selectedCategories.ToList());
     }
 }
