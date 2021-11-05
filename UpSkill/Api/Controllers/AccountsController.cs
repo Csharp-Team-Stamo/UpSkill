@@ -117,9 +117,6 @@ namespace UpSkill.Api.Controllers
             var user = await this.userManager.FindByEmailAsync(userData.Email);
             var unauthorizedResponse = new UserAuthenticationResponseModel();
 
-            //TODO: remove in production evironment. Every user should confirm their email.
-            var claims = await userManager.GetClaimsAsync(user);
-            var role = claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
 
             if (user == null ||
                 !await this.userManager
@@ -129,8 +126,11 @@ namespace UpSkill.Api.Controllers
                 return Unauthorized(unauthorizedResponse);
             }
 
+            //TODO: remove in production evironment. Every user should confirm their email.
+            var claims = await userManager.GetClaimsAsync(user);
+            var role = claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
 
-            else if (!user.EmailConfirmed && role == "Employee")
+            if (!user.EmailConfirmed && role == "Employee")
             {
                 unauthorizedResponse.ErrorMessage = "Email is not confirmed.";
                 return Unauthorized(unauthorizedResponse);
