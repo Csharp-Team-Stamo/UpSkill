@@ -172,6 +172,21 @@
                 .HasForeignKey(co => co.OwnerId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            builder.Entity<CourseOwner>()
+                .HasKey(k => new { k.CourseId, k.OwnerId });
+
+            builder.Entity<CourseOwner>()
+                .HasOne(co => co.Course)
+                .WithMany(c => c.Owners)
+                .HasForeignKey(co => co.CourseId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<CourseOwner>()
+                .HasOne(co => co.Owner)
+                .WithMany(o => o.Courses)
+                .HasForeignKey(co => co.OwnerId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             base.OnModelCreating(builder);
         }
 
