@@ -5,9 +5,6 @@
     using System.Reflection;
     using System.Threading;
     using System.Threading.Tasks;
-
-    using global::Data.Models;
-
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 

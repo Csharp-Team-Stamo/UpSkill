@@ -29,7 +29,6 @@
             else
             {
                 //TODO Redirect to login page when available
-
                 NavigationManager.NavigateTo("/");
             }
         }

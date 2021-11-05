@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-
-    using global::Data.Models;
     using UpSkill.Data.Common.Models;
 
     public class Owner : BaseDeletableModel<string>
