@@ -46,7 +46,6 @@
                     Email = employeeModel.Email,
                     CompanyId = int.Parse(employeeModel.CompanyId),
                     UserName = employeeModel.Email,
-
                 };
 
                 var result = await userManager.CreateAsync(user, AccountsService.GenerateRandomPassword());
