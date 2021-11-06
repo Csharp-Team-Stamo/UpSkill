@@ -107,11 +107,12 @@
 
 			//Business logic services
 			services.AddTransient<IAccountsService, AccountsService>();
-            services.AddTransient<IAdminCourseService, AdminCourseService>();
             services.AddTransient<IAdminCategoryService, AdminCategoryService>();
+            services.AddTransient<IAdminCompanyService, AdminCompanyService>();
+            services.AddTransient<IAdminCourseService, AdminCourseService>();
             services.AddTransient<IAdminCoachService, AdminCoachService>();
-            services.AddTransient<ICoachesService, CoachesService>();
             services.AddTransient<IAdminLanguageService, AdminLanguageService>();
+            services.AddTransient<ICoachesService, CoachesService>();
             services.AddTransient<IOwnerService, OwnerService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
 
