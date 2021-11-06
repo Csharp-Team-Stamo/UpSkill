@@ -15,12 +15,6 @@
         public IEnumerable<AdminCategoryListingServiceModel> CategoriesInDb =
             new List<AdminCategoryListingServiceModel>();
 
-        //[Inject]
-        //public HttpClient Client { get; set; }
-
-        //[Inject]
-        //public NavigationManager NavigationManager { get; set; }
-
         protected override async Task OnInitializedAsync()
         {
             this.CategoriesInDb = await this.Client
@@ -30,7 +24,8 @@
 
         public async Task Create()
         {
-            var response = await this.Client.PostAsJsonAsync<CoachCreateInputModel>("/admin/coach/create", coachInput);
+            var response = await this.Client
+                .PostAsJsonAsync<CoachCreateInputModel>("/admin/coach/create", coachInput);
 
             if(response.IsSuccessStatusCode)
             {

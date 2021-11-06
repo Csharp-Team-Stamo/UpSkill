@@ -19,6 +19,9 @@
         [Required]
         public string Company { get; set; }
 
+        [Required]
+        public string CompanyLogoUrl { get; set; }
+
         [DataType(DataType.Currency)]
         [Range(0.00, 1000.00)]
         public decimal PricePerSession { get; set; }
