@@ -1,0 +1,56 @@
+﻿@page "/admin/language"
+@layout AdminLayout
+
+@using UpSkill.Infrastructure.Models.Language
+
+<style>
+    .language-create-div {
+        font-family: Montserrat, sans-serif;
+    }
+
+    .blueish-bckgrnd {
+        background-color: #ebf1ff;
+    }
+
+    .upSkill-create-button {
+        color: #fff;
+        background-color: #296cfb;
+        border-color: #296cfb;
+    }
+</style>
+
+<div class="mx-auto my-5 language-create-div">
+    <h3 class="text-center">Create Language</h3>
+    <EditForm Model="input" OnValidSubmit="Create" class="card card-body bg-light mt-5">
+        <DataAnnotationsValidator />
+        <div class="form-group row">
+            <label for="name" class="col-md-2 col-form-label">Name</label>
+            <div class="col-md-10">
+                <InputText id="name" class="form-control" @bind-Value="input.Name" />
+                <ValidationMessage For="@(() => input.Name)" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn upSkill-create-button">Create Language</button>
+            </div>
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    private LanguageCreateInputModel input = new();
+
+    public async Task Create()
+    {
+        var response = await this.Client
+                .PostAsJsonAsync<LanguageCreateInputModel>
+                ("/admin/language/create", input);
+
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/admin/language/all");
+        }
+    }
+}

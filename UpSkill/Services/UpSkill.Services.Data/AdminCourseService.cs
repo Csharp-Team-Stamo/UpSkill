@@ -14,13 +14,16 @@
     {
         private readonly IRepository<Course> courseRepo;
         private readonly IAdminCategoryService categoryService;
+        private readonly IAdminLanguageService languageService;
 
         public AdminCourseService(
             IRepository<Course> courseRepo,
-            IAdminCategoryService categoryService)
+            IAdminCategoryService categoryService,
+            IAdminLanguageService languageService)
         {
             this.courseRepo = courseRepo;
             this.categoryService = categoryService;
+            this.languageService = languageService;
         }
 
         public async Task<IEnumerable<AdminCourseListingServiceModel>> All()
@@ -40,6 +43,7 @@
         public async Task<int?> Create(CourseCreateInputModel input)
         {
             var category = await this.GetCategory(input.CategoryId);
+            var language = await this.GetLanguage(input.LanguageId);
 
             var course = new Course
             {
@@ -51,7 +55,9 @@
                 AuthorFullName = input.AuthorFullName,
                 CompanyLogoUrl = input.CompanyLogoUrl,
                 Price = input.Price,
-                VideoUrl = input.VideoUrl
+                VideoUrl = input.VideoUrl,
+                Language = language,
+                LanguageId = language.Id
             };
 
             await this.courseRepo.AddAsync(course);
@@ -149,5 +155,8 @@
 
         private async Task<Category> GetCategory(int id)
             => await this.categoryService.GetCategory(id);
+
+        private async Task<Language> GetLanguage(int id)
+            => await this.languageService.GetLanguage(id);
     }
 }

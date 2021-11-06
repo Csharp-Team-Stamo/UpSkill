@@ -9,11 +9,6 @@
     {
        public int CategoryId { get; set; }
 
-       // public IEnume Category { get; set; }
-
-        //[Required]
-        //public string CoachId { get; set; }
-
         [Required]
         public string Name { get; set; }
 
@@ -34,6 +29,8 @@
         [Range(0.00, 1000.00)]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
+
+        public int LanguageId { get; set; }
 
         [Required]
         [Display(Name = "Video URL")]

@@ -7,6 +7,7 @@
     using Microsoft.AspNetCore.Components;
     using UpSkill.Infrastructure.Models.Category;
     using UpSkill.Infrastructure.Models.Course;
+    using UpSkill.Infrastructure.Models.Language;
 
     public partial class AdminCourse : ComponentBase
     {
@@ -15,17 +16,18 @@
         public IEnumerable<AdminCategoryListingServiceModel> CategoriesInDb { get; set; } 
             = new List<AdminCategoryListingServiceModel>();
 
-        //[Inject]
-        //public HttpClient Client { get; set; }
-
-        //[Inject]
-        //public NavigationManager NavigationManager { get; set; }
+        public IEnumerable<LanguageListingServiceModel> LanguagesInDb { get; set; } =
+            new List<LanguageListingServiceModel>();
 
         protected override async Task OnInitializedAsync()
         {
             this.CategoriesInDb = await this.Client
                 .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>
                 ("/admin/category/all");
+
+            this.LanguagesInDb = await this.Client
+                .GetFromJsonAsync<IEnumerable<LanguageListingServiceModel>>
+                ("/admin/language/all");
         }
 
         public async Task Create()

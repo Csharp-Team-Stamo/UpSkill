@@ -133,7 +133,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        this.allClients = await Client.GetFromJsonAsync<IEnumerable<AdminCompanyListingModel>>("/admin/statistics/getallclients");
+        this.allClients = await Client
+            .GetFromJsonAsync<IEnumerable<AdminCompanyListingModel>>
+            ("/admin/statistics/getallclients");
 
         //    await EmployeesService
         //    .GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result);

@@ -12,6 +12,11 @@
         [HttpPost("Create")]
         public async Task<ActionResult> Create([FromBody]CompanyCreateInputModel input)
         {
+            if(ModelState.IsValid == false)
+            {
+                return BadRequest("Please fill all required fields.");
+            }
+
             await Task.Delay(0);
             return StatusCode(201);
         }

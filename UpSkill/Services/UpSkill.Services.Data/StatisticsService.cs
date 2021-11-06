@@ -29,7 +29,7 @@
                 {
                     Id = c.Id,
                     Name = c.Name,
-                    Email = "company@company.com"
+                    Email = c.Email
                 })
                 .OrderBy(c => c.Name)
                 .ToListAsync();

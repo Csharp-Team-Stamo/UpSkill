@@ -111,6 +111,7 @@
             services.AddTransient<IAdminCategoryService, AdminCategoryService>();
             services.AddTransient<IAdminCoachService, AdminCoachService>();
             services.AddTransient<ICoachesService, CoachesService>();
+            services.AddTransient<IAdminLanguageService, AdminLanguageService>();
             services.AddTransient<IOwnerService, OwnerService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
 
