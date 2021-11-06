@@ -33,11 +33,27 @@
                 </div>
             }
         }
+
+        else if(
+            user.Role().Result == GlobalConstants.EmployeeRoleName &&
+            !NavigationManager.Uri.Contains("Coaches-catalog"))
+        {
+            <div class="text-center">
+                <button @onclick="@(() =>AddNewEmployeeSession(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>
+            </div>
+        }
+
     </div>
 </div>
 
 
-@code {
+@code { 
+
+   protected override void OnInitialized()
+    {
+        var url = NavigationManager.Uri;
+        Console.WriteLine(url);
+    }
 
     [Parameter]
     public CoachInListCatalogModel Coach { get; set; }
@@ -57,7 +73,15 @@
     [Parameter]
     public EventCallback<CoachesListingCatalogModel> UpdatedOwnerCoachesListingCatalogModel { get; set; }
 
+    private async Task AddNewEmployeeSession(string coachId, string ownerId)
+    {
+        var employeeId = user.Id().Result;
 
+        //await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
+
+        //await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(userId));
+
+    }
 
     private async Task AddCoach(string coachId, string ownerId)
     {

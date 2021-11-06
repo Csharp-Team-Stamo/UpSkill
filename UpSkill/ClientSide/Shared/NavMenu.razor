@@ -9,14 +9,14 @@
     <li class="nav-item px-3">
         <div class="d-inline-flex p-3 align-content-center">
             <Avatar></Avatar>
-                <div class="ml-2 text-left">
-                    <div class=" mt-1 pb-1">
-                        @user.FullName().Result
-                    </div>
-                    <div class="my-1">
-                        @user.CompanyName().Result
-                    </div>
+            <div class="ml-2 text-left">
+                <div class=" mt-1 pb-1">
+                    @user.FullName().Result
                 </div>
+                <div class="my-1">
+                    @user.CompanyName().Result
+                </div>
+            </div>
         </div>
     </li>
 
@@ -25,7 +25,6 @@
             Dashboard
         </NavLink>
     </li>
-
     <li class="nav-item px-3">
         <NavLink class="nav-link" href="Courses">
             Courses
@@ -37,23 +36,30 @@
         </NavLink>
     </li>
 
-    <li class="nav-item px-3">
-        <NavLink class="nav-link" href="Grades">
-            Grades
-        </NavLink>
-    </li>
+    @if (user.Role().Result == "Owner")
+    {
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="Employees">
+                Employees
+            </NavLink>
+        </li>
 
-    <li class="nav-item px-3">
-        <NavLink class="nav-link" href="Employees">
-            Employees
-        </NavLink>
-    </li>
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="Invoice">
+                Invoice
+            </NavLink>
+        </li>
 
-    <li class="nav-item px-3">
-        <NavLink class="nav-link" href="Invoice">
-            Invoice
-        </NavLink>
-    </li>
+    }
+    else
+    {
+        <li class="nav-item px-3">
+            <NavLink class="nav-link" href="Grades">
+                Grades
+            </NavLink>
+        </li>
+    }
+
     <AuthorizeView>
         <Authorized>
             <li class="nav-item px-3">
