@@ -2,57 +2,91 @@
     <div class="query-panel row">
         <section class="col-4">
             <h2 class="section-title">Categories</h2>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">Art</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">Design</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">Marketing</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">Leadership</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">Personal Development</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">Data Science</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">Computer Science</label>
-            </div>
+            @foreach (var categoryName in categoryNames.OrderBy(x => x))
+            {
+                var id = Guid.NewGuid();
+
+                <div class="form-check">
+                    <input id="@id" class="form-check-input" type="checkbox" 
+                           @onchange="@(() => AddCategoryNameInCollection(categoryName))">
+                    <label for="@id" class="form-check-label" >@categoryName</label>
+                </div>
+            }
         </section>
         <div class="vertical-separator col-1"></div>
         <section class="languages col-4">
             <h2 class="section-title">Languages</h2>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">English</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">Spanish</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">German</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox">
-                <label class="form-check-label" for="defaultCheck1">French</label>
-            </div>
+            @foreach (var languageName in languages)
+            {
+                var id = Guid.NewGuid();
+
+                <div class="form-check">
+                    <input id="@id" class="form-check-input" type="checkbox"
+                           @onchange="@(() => AddLanguageNameInCollection(languageName))">
+                    <label for="@id" class="form-check-label" >@languageName</label>
+                </div>
+            }
         </section>
         <section class="col-3">
             <img class="coach-catalog-img" src="images/coachesCatalog/CoachCatalogCheckboxImg.svg">
         </section>
     </div>
 </form>
+
+@code
+{
+    private ICollection<string> categoryNames = new List<string>();
+
+    private ICollection<string> languages = new List<string>();
+
+    private SortingTermsCoachesModel sortingTerms = new();
+
+    //private ICollection<string> selectedCategories = new List<string>();
+
+    //private ICollection<string> selectedLanguages = new List<string>();
+
+    [Parameter]
+    public EventCallback<SortingTermsCoachesModel> SortingTerms { get; set; }
+
+    //[Parameter]
+    //public EventCallback<ICollection<string>> CategoryNames { get; set; }
+
+    //[Parameter]
+    //public EventCallback<ICollection<string>> LanguageNames { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        categoryNames = await Client.GetFromJsonAsync<ICollection<string>>("Category/GetAllNames");
+        languages = await Client.GetFromJsonAsync<ICollection<string>>("Languages/GetAll");
+    }
+
+    protected void AddCategoryNameInCollection(string categoryName)
+    {
+        if (sortingTerms.Categories.Contains(categoryName))
+        {
+            sortingTerms.Categories.Remove(categoryName);
+        }
+        else
+        {
+            sortingTerms.Categories.Add(categoryName);
+        }
+
+        Console.WriteLine(string.Join(" ", sortingTerms.Categories));
+
+        SortingTerms.InvokeAsync(sortingTerms);
+    }
+
+    protected void AddLanguageNameInCollection(string languageName)
+    {
+        if (sortingTerms.Languages.Contains(languageName))
+        {
+            sortingTerms.Languages.Remove(languageName);
+        }
+        else
+        {
+            sortingTerms.Languages.Add(languageName);
+        }
+
+        SortingTerms.InvokeAsync(sortingTerms);
+    }
+}

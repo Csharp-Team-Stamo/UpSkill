@@ -34,6 +34,11 @@
                 new AddEmployeeFormModel { FullName = x.User.FullName, Email = x.User.Email, }).ToList();
         }
 
+        public string GetOwnerById(string userId)
+        {
+            return this.employeeRepository.AllAsNoTracking().FirstOrDefault(x => x.UserId == userId).OwnerId;
+        }
+
         public async Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees)
         {
             var emailsFromErrorResult = new List<string>();
