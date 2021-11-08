@@ -38,5 +38,14 @@ namespace UpSkill.Api.Areas.Admin.Controllers
 
             return new List<AdminCompanyListingModel>(allClients);
         }
+
+        [HttpGet("GetDashboardStats")]
+        public async Task<ActionResult<AdminDasboardStatsServiceModel>> 
+            GetDashboardStats()
+        {
+            var stats = await this.statisticsService.GetDashboardStats();
+
+            return stats;
+        }
     }
 }

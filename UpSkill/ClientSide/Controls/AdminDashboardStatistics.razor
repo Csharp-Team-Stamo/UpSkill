@@ -1,4 +1,4 @@
-﻿@*<h3>Admin Dashboard</h3>*@
+﻿@using UpSkill.Infrastructure.Models.Admin
 
 <div class="mx-auto">
     <table class="table table_custom table-borderless">
@@ -34,22 +34,22 @@
         <tbody>
             <tr class="">
                 <td class="cell first_col">
-                    64
+                    @stats.ClientsNum
                 </td>
                 <td>
                 </td>
                 <td class="cell first_col">
-                    1245
+                    @stats.Revenue
                 </td>
                 <td>
                 </td>
                 <td class="cell third_col">
-                    28
+                    @stats.CoursesNum
                 </td>
                 <td>
                 </td>
                 <td class="cell second_col">
-                    13
+                    @stats.CoachesNum
                 </td>
                 <td>
                 </td>
@@ -58,5 +58,11 @@
     </table>
 </div>
 @code {
+    private AdminDasboardStatsServiceModel stats = new();
 
+    protected override async Task OnInitializedAsync()
+    {
+        this.stats = await this.Client.GetFromJsonAsync<AdminDasboardStatsServiceModel>
+        ("/admin/statistics/getdashboardstats");
+    }
 }

@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using UpSkill.Infrastructure.Common.Attributes;
 
     public class CompanyCreateInputModel
     {
@@ -17,6 +18,8 @@
 
         public string Address { get; set; }
 
+        [Required]
+        [IsEmail]
         public string Email { get; set; }
     }
 }

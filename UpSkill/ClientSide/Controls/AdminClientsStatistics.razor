@@ -1,16 +1,12 @@
 ﻿@using UpSkill.Infrastructure.Models.Admin
 
-<style>
-    
-</style>
-
 <div class="card stats-card my-5">
     <div class="card-header graph-head">
         Number of Clients
     </div>
     <div class="card-body">
         <RadzenChart>
-            <RadzenLineSeries Smooth="@smooth" Data="@items" CategoryProperty="MonthName" ValueProperty="ClientsCount" LineType="LineType.Solid">
+            <RadzenLineSeries Smooth="@smooth" Data="@clientsByMonth" CategoryProperty="MonthName" ValueProperty="ClientsNum" LineType="LineType.Solid">
 
             </RadzenLineSeries>
         </RadzenChart>
@@ -19,37 +15,37 @@
 
 
 @code {
-    bool smooth = true;
+    bool smooth = false;
 
-    // private IEnumerable<MonthlyClient> clientsByMonth;
+    private IEnumerable<MonthlyClient> clientsByMonth = new List<MonthlyClient>();
 
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    this.clientsByMonth = await this.Client
-    //        .GetFromJsonAsync<IEnumerable<MonthlyClient>>("/admin/statistics/upSkillClients/2021");
-
-    //    StateHasChanged();
-    //}
-
-    class DataItem
+    protected override async Task OnInitializedAsync()
     {
-        public string MonthName { get; set; }
-        public int ClientsCount { get; set; }
+        this.clientsByMonth = await this.Client
+            .GetFromJsonAsync<IEnumerable<MonthlyClient>>("/admin/statistics/clientsbymonth/2021");
+
+        // StateHasChanged();
     }
 
-    IEnumerable<DataItem> items = new List<DataItem>
-    {
-        new DataItem { MonthName = "Jan", ClientsCount = 3 },
-        new DataItem { MonthName = "Feb", ClientsCount = 5 },
-        new DataItem { MonthName = "Mar", ClientsCount = 4 },
-        new DataItem { MonthName = "Apr", ClientsCount = 12 },
-        new DataItem { MonthName = "May", ClientsCount = 23 },
-        new DataItem { MonthName = "Jun", ClientsCount = 13 },
-        new DataItem { MonthName = "Jul", ClientsCount = 2 },
-        new DataItem { MonthName = "Aug", ClientsCount = 0 },
-        new DataItem { MonthName = "Sep", ClientsCount = 10 },
-        new DataItem { MonthName = "Oct", ClientsCount = 22 },
-        new DataItem { MonthName = "Nov", ClientsCount = 17 },
-        new DataItem { MonthName = "Dec", ClientsCount = 17 }
-    };
+    //class DataItem
+    //{
+    //    public string MonthName { get; set; }
+    //    public int ClientsCount { get; set; }
+    //}
+
+    //IEnumerable<DataItem> items = new List<DataItem>
+    //{
+    //    new DataItem { MonthName = "Jan", ClientsCount = 3 },
+    //    new DataItem { MonthName = "Feb", ClientsCount = 5 },
+    //    new DataItem { MonthName = "Mar", ClientsCount = 4 },
+    //    new DataItem { MonthName = "Apr", ClientsCount = 12 },
+    //    new DataItem { MonthName = "May", ClientsCount = 23 },
+    //    new DataItem { MonthName = "Jun", ClientsCount = 13 },
+    //    new DataItem { MonthName = "Jul", ClientsCount = 2 },
+    //    new DataItem { MonthName = "Aug", ClientsCount = 0 },
+    //    new DataItem { MonthName = "Sep", ClientsCount = 10 },
+    //    new DataItem { MonthName = "Oct", ClientsCount = 22 },
+    //    new DataItem { MonthName = "Nov", ClientsCount = 17 },
+    //    new DataItem { MonthName = "Dec", ClientsCount = 17 }
+    //};
 }

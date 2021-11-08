@@ -12,5 +12,6 @@
     {
         Task<IEnumerable<MonthlyClient>> GetClientsStatistics(int? year);
         Task<IEnumerable<AdminCompanyListingModel>> GetAllClients();
+        Task<AdminDasboardStatsServiceModel> GetDashboardStats();
     }
 }

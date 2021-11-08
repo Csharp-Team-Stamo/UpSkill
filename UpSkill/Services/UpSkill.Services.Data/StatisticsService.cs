@@ -15,10 +15,17 @@
     public class StatisticsService : IStatisticsService
     {
         private readonly IDeletableEntityRepository<Company> companyRepo;
+        private readonly IDeletableEntityRepository<Course> coursesRepo;
+        private readonly IDeletableEntityRepository<Coach> coachesRepo;
 
-        public StatisticsService(IDeletableEntityRepository<Company> companyRepo)
+        public StatisticsService(
+            IDeletableEntityRepository<Company> companyRepo,
+            IDeletableEntityRepository<Course> coursesRepo,
+            IDeletableEntityRepository<Coach> coachesRepo)
         {
             this.companyRepo = companyRepo;
+            this.coursesRepo = coursesRepo;
+            this.coachesRepo = coachesRepo;
         }
 
         public async Task<IEnumerable<AdminCompanyListingModel>> GetAllClients()
@@ -43,16 +50,67 @@
             var yearlyClients = await this.companyRepo
                 .All()
                 .Where(c => c.CreatedOn.Year == year)
-                .GroupBy(c => c.CreatedOn.Month)
                 .ToListAsync();
 
-            var res = yearlyClients
-                .Select(c => new MonthlyClient
+            var clientsInMemory = yearlyClients
+                .GroupBy(c => c.CreatedOn.Month);
+
+            var result = new List<MonthlyClient>();
+
+            foreach(var client in clientsInMemory)
+            {
+                var record = new MonthlyClient
                 {
-                    MonthName = ConvertMonthNumToName(c.Key),
-                    ClientsNum = c.Select(c => c).Count()
-                });
+                    ClientsNum = client.Select(c => c).Count(),
+                    MonthName = ConvertMonthNumToName(client.Key)
+                };
+
+                result.Add(record);
+            }
                 
+            return result;
+        }
+
+        public async Task<AdminDasboardStatsServiceModel> GetDashboardStats()
+        {
+            var statsModel = new AdminDasboardStatsServiceModel();
+
+            statsModel.ClientsNum = await this.GetClientsNum();
+            statsModel.CoursesNum = await this.GetCoursesNum();
+            statsModel.CoachesNum = await this.GetCoachesNum();
+            statsModel.Revenue = 1000;
+
+            return statsModel;
+        }
+
+        private async Task<int> GetCoachesNum()
+        {
+            var coachesNum = this.coachesRepo.All().Count();
+
+            await Task.Delay(0);
+
+            return coachesNum;
+        }
+
+        private async Task<int> GetCoursesNum()
+        {
+            var allCoursesCount = this.coursesRepo
+                .All()
+                .Count();
+
+            await Task.Delay(0);
+
+            return allCoursesCount;
+        }
+
+        private async Task<int> GetClientsNum()
+        {
+            var res = this.companyRepo
+                .All()
+                .Count();
+
+            await Task.Delay(0);
+
             return res;
         }
 
