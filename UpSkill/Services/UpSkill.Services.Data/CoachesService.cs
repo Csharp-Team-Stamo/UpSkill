@@ -49,9 +49,10 @@
         }
 
 
-        public CoachesListingCatalogModel GetAllByOwnerId(string userId)
+        public CoachesListingCatalogModel GetAllByOwnerId(string ownerId)
         {
-            var ownerId = OwnerId(userId);
+            //var ownerId = OwnerId(userId);
+            //GetOwnerById
 
             var coachesByOwnerId = new CoachesListingCatalogModel
             {

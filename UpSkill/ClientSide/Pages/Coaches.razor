@@ -27,9 +27,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var userId = user.Id().Result;
+        var ownerId = user.OwnerId().Result;
 
-        coaches = await CoachesService.GetAllByOwnerIdAsync(userId);
+        coaches = await CoachesService.GetAllByOwnerIdAsync(ownerId);
     }
 
     private void SetCoaches(CoachesListingCatalogModel updatedCoaches)
