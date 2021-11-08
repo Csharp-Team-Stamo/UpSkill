@@ -34,7 +34,7 @@ else
     {
         var ownerId = user.OwnerId().Result;
 
-        coaches = await CoachesService.GetAllAsync(ownerId);
+        model = await CoachesService.GetAllAsync(ownerId);
 
         coaches = model.Coaches.ToList();
     }
