@@ -17,15 +17,15 @@
         }
 
         [HttpGet("GetAll")]
-        public CoachesListingCatalogModel GetAll([FromQuery]string userId)
+        public CoachesListingCatalogModel GetAll([FromQuery]string ownerId)
         {
-            return coachesService.GetAll(userId);
+            return coachesService.GetAll(ownerId);
         }
 
         [HttpGet("GetAllByOwnerId")]
-        public CoachesListingCatalogModel GetAllByOwnerId([FromQuery] string userId)
+        public CoachesListingCatalogModel GetAllByOwnerId([FromQuery] string ownerId)
         {
-            return coachesService.GetAllByOwnerId(userId);
+            return coachesService.GetAllByOwnerId(ownerId);
         }
 
         [HttpPost("AddCoachInOwnerCoachesCollectionAsync")]
@@ -35,9 +35,9 @@
         }
         
         [HttpDelete("RemoveCoachFromOwnerCoachCollectionAsync")]
-        public async Task<ActionResult> RemoveCoachFromOwnerCoachCollectionAsync([FromQuery]string coachId, [FromQuery] string userId)
+        public async Task<ActionResult> RemoveCoachFromOwnerCoachCollectionAsync([FromQuery]string coachId, [FromQuery] string ownerId)
         {
-           await coachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, userId);
+           await coachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
 
            return Ok();
         }
