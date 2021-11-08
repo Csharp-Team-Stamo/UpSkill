@@ -2,9 +2,6 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
-    using global::Data.Models;
-
     using UpSkill.Data.Common.Models;
 
     public class Course : BaseDeletableModel<int>
@@ -12,8 +9,9 @@
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 
-        public string CoachId { get; set; }
-        public Coach Coach { get; set; }
+        [Required]
+        public int LanguageId { get; set; }
+        public Language Language { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -24,13 +22,11 @@
         [Required]
         public string AuthorFullName { get; set; }
 
-        [Required]
-        public string AuthorCompany { get; set; }
+        public string CompanyLogoUrl { get; set; }
 
         [Required]
         public decimal Price { get; set; }
 
-        // Decide if the video is going to be accessed through a link or not
         [Required]
         public string VideoUrl { get; set; }
 

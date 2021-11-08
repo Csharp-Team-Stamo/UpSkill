@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class UserAuthenticationDto
+    public class UserAuthenticationModel
     {
         [Required(ErrorMessage = "Email is required.")]
         [DataType(DataType.EmailAddress)]

@@ -1,9 +1,7 @@
-namespace Data.Models
+﻿namespace UpSkill.Data.Models
 {
     using System.ComponentModel.DataAnnotations;
-
-    using UpSkill.Data.Common.Models;
-    using UpSkill.Data.Models;
+    using Common.Models;
 
     public class CourseVote : BaseDeletableModel<int>
     {

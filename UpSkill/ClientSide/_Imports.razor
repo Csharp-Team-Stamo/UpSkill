@@ -1,18 +1,38 @@
 ﻿@using System.Net.Http
 @using System.Net.Http.Json
-@using Microsoft.AspNetCore.Components.Authorization
+@using System.Security.Claims
+
+@using Newtonsoft.Json
+
+@using Blazored.Toast
+@using Blazored.Toast.Services
+@using Blazored.Toast.Configuration
+
+@using Microsoft.JSInterop
+@using Microsoft.AspNetCore.Components.Web
 @using Microsoft.AspNetCore.Components.Forms
 @using Microsoft.AspNetCore.Components.Routing
-@using Microsoft.AspNetCore.Components.Web
-@using Microsoft.AspNetCore.Components.Web.Virtualization
+@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Http
-@using Microsoft.JSInterop
+@using Microsoft.AspNetCore.Components.Web.Virtualization
+
 @using UpSkill.ClientSide
 @using UpSkill.ClientSide.Shared
 @using UpSkill.ClientSide.Controls
-@using System.Security.Claims
-@using UpSkill.Infrastructure.Models.WelcomePage
+@using UpSkill.Infrastructure.Common
 @using UpSkill.ClientSide.Infrastructure
+@using UpSkill.Infrastructure.Models.Coaches
+@using UpSkill.Infrastructure.Models.WelcomePage
+@using UpSkill.ClientSide.Infrastructure.Extensions
 @using UpSkill.Infrastructure.Models.AddEmployeeModal
+@using UpSkill.ClientSide.Infrastructure.Services.Contracts
+
+@inject HttpClient Client
+@inject NavigationManager NavigationManager
+@* Custom services *@
+@inject ICoachesService CoachesService
+@inject IEmployeesService EmployeesService
+@* NuGet Packages services *@
+@inject IToastService ToastService
 
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]

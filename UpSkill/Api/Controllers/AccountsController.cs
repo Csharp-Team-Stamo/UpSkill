@@ -19,6 +19,7 @@ namespace UpSkill.Api.Controllers
     using Data.Models;
     using Infrastructure.Models.Account;
     using UpSkill.Services.Data.Contracts;
+    using UpSkill.Infrastructure.Common;
 
     [Route("/[controller]")]
     [ApiController]
@@ -26,27 +27,45 @@ namespace UpSkill.Api.Controllers
     {
         private readonly IAccountsService accountService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly ICompanyService companyService;
+        private readonly IOwnerService ownerService;
+        private readonly IEmployeesService employeesService;
         private readonly IConfigurationSection jwtSettings;
-        public AccountsController(IAccountsService accountService, UserManager<ApplicationUser> userManager,
-            IConfiguration configuration)
+
+        public AccountsController(
+            IAccountsService accountService,
+            UserManager<ApplicationUser> userManager,
+            IConfiguration configuration,
+            ICompanyService companyService,
+            IOwnerService ownerService,
+            IEmployeesService employeesService)
         {
 
             this.accountService = accountService;
             this.userManager = userManager;
+            this.companyService = companyService;
+            this.ownerService = ownerService;
+            this.employeesService = employeesService;
             this.jwtSettings = configuration.GetSection("JWTSettings");
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationDto input)
+        public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationModel input)
         {
+            var response = new RegistrationResponseModel { };
+
             if (input == null || !ModelState.IsValid)
             {
-                return BadRequest();
+                var errors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
+                AddErrors(response, errors);
+                return BadRequest(response);
             }
 
             if (!this.accountService.IsEmailAvailable(input.Email))
             {
-                return BadRequest("This email is already taken!");
+                var errors = new List<string>() { GlobalConstants.Errors.EmailIsTaken };
+                AddErrors(response, errors);
+                return BadRequest(response);
             }
 
             var result = await this.accountService.Register(input.FullName, input.Email, input.Password, input.CompanyName);
@@ -54,35 +73,85 @@ namespace UpSkill.Api.Controllers
             if (!result.Succeeded)
             {
                 var errors = result.Errors.Select(e => e.Description);
-                return BadRequest(new RegistrationResponseDto { Errors = errors });
+                response.Errors = errors;
+                return BadRequest(response);
+            }
+            response.IsSuccessfulRegistration = true;
+
+            return StatusCode(201, response);
+        }
+
+        private static void AddErrors(RegistrationResponseModel response, IEnumerable<string> errors)
+        {
+            response.Errors = errors;
+            response.IsSuccessfulRegistration = false;
+        }
+
+        [HttpPost("Request-reset-password")]
+        public async Task<IActionResult> RequestResetPassword([FromBody] UserForgottenPasswordRequestModel input)
+        {
+            var user = await userManager.FindByEmailAsync(input.Email);
+
+            if (user == null)
+            {
+                var error = "User with that email does not exist!";
+                return BadRequest(error);
             }
 
-            return StatusCode(201);
+            await accountService.ResetPassword(user, GlobalConstants.resetPasswordMessage);
+
+            return Ok();
+        }
+
+        [HttpPost("Reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] UserConfirmPassRequestModel input)
+        {
+            if (!input.Password.Equals(input.ConfirmPassword))
+            {
+                return BadRequest("Password and confirm password do not match!");
+            }
+
+            var user = userManager.FindByEmailAsync(input.Email).Result;
+            var escapedPlusSymbolToken = input.ResetToken.Replace(" ", "+");
+            var result = await userManager.ResetPasswordAsync(user, escapedPlusSymbolToken, input.Password);
+
+            if (!result.Succeeded)
+            {
+                var errors = result.Errors
+                    .Select(x => x.Description)
+                    .ToList();
+
+                return BadRequest(errors);
+            }
+
+            if (!await userManager.IsEmailConfirmedAsync(user))
+            {
+                var confirmEmailToken = await userManager.GenerateEmailConfirmationTokenAsync(user);
+                await userManager.ConfirmEmailAsync(user, confirmEmailToken);
+            }
+
+            return Ok();
         }
 
         [HttpPost("Login")]
-        //[AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Login(
-        [FromBody] UserAuthenticationDto userData)
+        [FromBody] UserAuthenticationModel userData)
         {
-            var user = await this.userManager
-                .FindByEmailAsync(userData.Email);
+            var user = await this.userManager.FindByEmailAsync(userData.Email);
+            var unauthorizedResponse = new UserAuthenticationResponseModel();
+
 
             if (user == null ||
                 !await this.userManager
                            .CheckPasswordAsync(user, userData.Password))
             {
-                var unauthorizedResponse = new AuthenticationResponseDto
-                {
-                    ErrorMessage = "unauthorizedErrorMessage"
-                };
-
+                unauthorizedResponse.ErrorMessage = "Username or password is incorrect!";
                 return Unauthorized(unauthorizedResponse);
             }
 
             var userToken = GetToken(user);
 
-            var authenticationResponse = new AuthenticationResponseDto
+            var authenticationResponse = new UserAuthenticationResponseModel
             {
                 AuthIsSuccessful = true,
                 Token = userToken
@@ -110,13 +179,27 @@ namespace UpSkill.Api.Controllers
 
         private IList<Claim> GetClaims(ApplicationUser user)
         {
-            //TODO --- NO IDEA!!!
             var claims = this.userManager.GetClaimsAsync(user);
-           
             var claimsAsList = new List<Claim>(claims.Result);
+            
+            claimsAsList.Add(new Claim(ClaimTypes.Email, user.Email));
+            claimsAsList.Add(new Claim("Id", user.Id));
+            claimsAsList.Add(new Claim("FullName", user.FullName));
+            claimsAsList.Add(new Claim("CompanyId", user.CompanyId.ToString()));
+            claimsAsList.Add(new Claim("CompanyName", companyService.GetName(user.CompanyId)));
 
-            //var userNameClaim = new Claim(ClaimTypes.Name, user.FullName);
-            //var userEmailClaim = new Claim(ClaimTypes.Email, user.Email);
+            var ownerId = string.Empty;
+
+            if (claims.Result.Any(x => x.Value == "Owner"))
+            {
+                 ownerId = this.ownerService.GetId(user.Id);
+            }
+            else if (claims.Result.Any(x => x.Value == "Employee"))
+            {
+                ownerId = this.employeesService.GetOwnerById(user.Id);
+            }
+
+            claimsAsList.Add(new Claim("OwnerId", ownerId));
 
             return claimsAsList;
         }
@@ -130,8 +213,5 @@ namespace UpSkill.Api.Controllers
                 claims: claims,
                 expires: DateTime.Now.AddMinutes(Convert.ToDouble(this.jwtSettings["expiryInMinutes"])),
                 signingCredentials: signingCredentials);
-
     }
-
 }
-

@@ -10,6 +10,8 @@
         [Required]
         public string Name { get; set; }
 
+        public string Email { get; set; }
+
         // [StringLength(UIC_Length)]
         public string UIC { get; set; }
 

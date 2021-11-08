@@ -3,18 +3,16 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
-    using Infrastructure;
+    using Infrastructure.Services.Contracts;
     using UpSkill.Infrastructure.Models.Account;
 
     public partial class Registration
     {
-        private UserRegistrationDto userForRegistration = new UserRegistrationDto();
+        private readonly UserRegistrationModel userForRegistration = new();
 
         [Inject]
         public IRegistrationService AuthenticationService { get; set; }
 
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
         public bool ShowRegistrationErrors { get; set; }
         public IEnumerable<string> Errors { get; set; }
 
@@ -31,7 +29,6 @@
             else
             {
                 //TODO Redirect to login page when available
-
                 NavigationManager.NavigateTo("/");
             }
         }

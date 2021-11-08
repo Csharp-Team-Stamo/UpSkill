@@ -1,23 +1,30 @@
 ﻿@inherits LayoutComponentBase
 
-
 <div class="wrapper">
-    <div class="header">
-        <Header></Header>
-    </div>
-    <div class="sidebar-1">
-        <div class="sticky-content">
-            <NavMenu />
+    <AuthorizeView>
+        <div class="header">
+            <Header></Header>
         </div>
-    </div>
-  
+        <div class="sidebar-1">
+            <div class="sticky-content">
+                <NavMenu />
+            </div>
+        </div>
+    </AuthorizeView>
+
     <div class="content">
         <div class="sticky-spacer"></div>
         <div class="sticky-content">
             @Body
         </div>
     </div>
-    <div class="footer">  <Footer></Footer></div>
+    <div class="footer">
+        <Footer></Footer>
+    </div>
 </div>
 
-
+<BlazoredToasts Position="ToastPosition.TopRight"
+                IconType="IconType.Material"
+                InfoIcon="school"
+                Timeout="100000"
+                WarningIcon="warning" ></BlazoredToasts>

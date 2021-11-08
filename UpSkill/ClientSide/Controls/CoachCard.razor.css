@@ -4,7 +4,7 @@
 }
 
 .coach-profession {
-    font: normal bold 75% Montserrat;
+    font: normal bold 70% Montserrat;
     letter-spacing: 0.7px;
     color: #000000;
     opacity: 1;
@@ -26,6 +26,8 @@
 
 .coach-btn {
     background: #296CFB 0% 0% no-repeat padding-box;
+    border: none;
+    margin-top: 1em;
     opacity: 1;
 }
 

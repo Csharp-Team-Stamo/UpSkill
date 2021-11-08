@@ -5,7 +5,7 @@
 
     public interface IAuthenticationService
     {
-        Task<AuthenticationResponseDto> Login(UserAuthenticationDto userForAuthentication);
+        Task<UserAuthenticationResponseModel> Login(UserAuthenticationModel userForAuthentication);
         Task Logout();
     }
 }

@@ -1,9 +1,10 @@
-﻿namespace UpSkill.ClientSide.Infrastructure
+﻿namespace UpSkill.ClientSide.Infrastructure.Services
 {
     using System.Net.Http;
     using System.Text;
     using System.Text.Json;
     using System.Threading.Tasks;
+    using Contracts;
     using UpSkill.Infrastructure.Models.Account;
 
     public class RegistrationService : IRegistrationService
@@ -17,7 +18,7 @@
             options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         }
 
-        public async Task<RegistrationResponseDto> RegisterUser(UserRegistrationDto input)
+        public async Task<RegistrationResponseModel> RegisterUser(UserRegistrationModel input)
         {
             var content = JsonSerializer.Serialize(input);
             var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
@@ -26,11 +27,11 @@
             if (!registrationResult.IsSuccessStatusCode)
             {
                 var registrationContent = await registrationResult.Content.ReadAsStringAsync();
-                var result = JsonSerializer.Deserialize<RegistrationResponseDto>(registrationContent, options);
+                var result = JsonSerializer.Deserialize<RegistrationResponseModel>(registrationContent, options);
                 return result;
             }
 
-            return new RegistrationResponseDto { IsSuccessfulRegistration = true };
+            return new RegistrationResponseModel { IsSuccessfulRegistration = true };
         }
     }
 }

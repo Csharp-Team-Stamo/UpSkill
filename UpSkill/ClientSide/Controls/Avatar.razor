@@ -4,8 +4,7 @@
     <div class="avatar-container" @onclick=@(() => RedirectToPage("/Dashboard"))>
         <i class="my-2 d-flex justify-content-around">
             <span class="justify-content-center align-self-center">
-                @*Replace with first letter of user full name*@
-                C
+                @user.FullName().Result[0]
             </span>
         </i>
     </div>
@@ -13,6 +12,9 @@
 
 
 @code{
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
     private void RedirectToPage(string pagePath)
     {
         NavigationManager.NavigateTo(pagePath);

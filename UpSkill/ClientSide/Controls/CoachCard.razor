@@ -1,29 +1,107 @@
-﻿<div class="card custom-coach-card container mb-5" style="width: 18rem;">
+﻿@using UpSkill.Infrastructure.Models.Coaches
+<div class="card custom-coach-card container mb-5" style="width: 18rem;">
     <img class="card-img-top img-background" src="/images/coach.png" alt="Card image cap">
     <div class="card-body">
         <div class="row">
             <div class="coach-profession col-6">
-                Management
+                @Coach.CategoryName
             </div>
             <div class="coach-name col-6 text-right">
-                Emma Milton
+                @Coach.FullName
             </div>
         </div>
         <div class="row">
             <div class="coah-price col-6">
-                80€ per person
+                @Coach.PricePerSession.ToString("####")€ per person
             </div>
             <div class="col-6 text-right">
-                <img class="coach-company-logo" src="https://uvmbored.com/wp-content/uploads/2015/10/2919654-5611940169-Googl-600x246.png" alt="Alternate Text" />
+                <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
             </div>
         </div>
-        <div class="text-center">
-            <button href="#" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>
-        </div>
+        @if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
+        {
+            if (IsCoachAdded())
+            {
+                <div class="text-center">
+                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
+                </div>
+            }
+        }
+
+        else if(
+            user.Role().Result == GlobalConstants.EmployeeRoleName &&
+            !NavigationManager.Uri.Contains("Coaches-catalog"))
+        {
+            <div class="text-center">
+                <button @onclick="@(() =>AddNewEmployeeSession(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>
+            </div>
+        }
+
     </div>
 </div>
 
 
-@code {
+@code { 
 
+   protected override void OnInitialized()
+    {
+        var url = NavigationManager.Uri;
+    }
+
+    [Parameter]
+    public CoachInListCatalogModel Coach { get; set; }
+
+    [Parameter]
+    public string OwnerId { get; set; }
+
+    [Parameter]
+    public ICollection<string> CoachIdsCollection { get; set; }
+
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+    [Parameter]
+    public EventCallback<CoachesListingCatalogModel> UpdatedCoachesListingCatalogModel { get; set; }
+
+    [Parameter]
+    public EventCallback<CoachesListingCatalogModel> UpdatedOwnerCoachesListingCatalogModel { get; set; }
+
+    private async Task AddNewEmployeeSession(string coachId, string ownerId)
+    {
+        var employeeId = user.Id().Result;
+
+        //await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
+
+        //await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(userId));
+
+    }
+
+    private async Task AddCoach(string coachId, string ownerId)
+    {
+        await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
+
+        await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
+
+    }
+
+
+    private async Task RemoveCoach(string coachId, string ownerId)
+    {
+        await CoachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
+
+        await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
+
+        await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllByOwnerIdAsync(ownerId));
+    }
+
+    private bool IsCoachAdded()
+    {
+        return CoachIdsCollection.FirstOrDefault(x => x == Coach.Id) == null;
+    }
 }

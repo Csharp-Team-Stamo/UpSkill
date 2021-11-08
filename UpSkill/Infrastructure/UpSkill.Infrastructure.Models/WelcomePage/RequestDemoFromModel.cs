@@ -2,7 +2,9 @@
 {
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
-    using static Common.GlobalConstants;
+
+    using UpSkill.Infrastructure.Common.Attributes;
+
     using static Common.GlobalConstants.WelcomePageConst;
 
     public class RequestDemoFromModel
@@ -20,7 +22,7 @@
         public string CompanyName { get; set; }
 
         [Required]
-        [RegularExpression(EmailRegEx,ErrorMessage = "Not valid email")]
+        [IsEmail]
         public string Email { get; set; }
 
         [DisplayName("Phone Number")]
