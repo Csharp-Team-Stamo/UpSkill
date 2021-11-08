@@ -7,14 +7,12 @@
 
     public partial class SuperAdminLogin
     {
-        private readonly UserAuthenticationDto userAuthentication = new();
+        private readonly UserAuthenticationModel userAuthentication = new();
 
         [Inject]
         public IAuthenticationService AuthenticationService { get; set; }
 
-        [Inject]
-        public NavigationManager NavigationManager { get; set; }
-
+        
         public bool AuthErrorExists { get; set; }
 
         public string Error { get; set; }
