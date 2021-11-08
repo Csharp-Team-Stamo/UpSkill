@@ -1,11 +1,16 @@
 ﻿@page "/Coaches"
-<div class="text-right">
-    <button @onclick="@(() => { NavigationManager.NavigateTo("/Coaches-catalog");})" class="btn-add">
-        <div class="btn-text">
-            Add
-        </div>
-    </button>
-</div>
+@using UpSkill.Infrastructure.Models.Coaches
+
+@if (user.Role().Result == "Owner")
+{
+    <div class="text-right">
+        <button @onclick="@(() => { NavigationManager.NavigateTo("/Coaches-catalog");})" class="btn-add">
+            <div class="btn-text">
+                Add
+            </div>
+        </button>
+    </div>
+}
 
 @if (coaches == null)
 {
