@@ -14,34 +14,55 @@
     {
         private readonly IAdminCategoryService categoryService;
         private readonly IDeletableEntityRepository<Coach> coachRepo;
+        private readonly IDeletableEntityRepository<Language> languageRepo;
+        private readonly IDeletableEntityRepository<CoachLanguage> coachLanguagesRepo;
 
         public AdminCoachService(
             IAdminCategoryService categoryService,
-            IDeletableEntityRepository<Coach> coachRepo)
+            IDeletableEntityRepository<Coach> coachRepo,
+            IDeletableEntityRepository<Language> languageRepo,
+            IDeletableEntityRepository<CoachLanguage> coachLanguagesRepo)
         {
             this.categoryService = categoryService;
             this.coachRepo = coachRepo;
+            this.languageRepo = languageRepo;
+            this.coachLanguagesRepo = coachLanguagesRepo;
         }
 
         public async Task<Coach> Create(CoachCreateInputModel coachInput)
         {
             var category = await this.categoryService.GetCategory(coachInput.CategoryId);
 
-            var coach = new Coach
+            var coach = CreateCoach(coachInput, category);
+
+            await this.coachRepo.AddAsync(coach);
+
+            var createResult = await this.coachRepo.SaveChangesAsync();
+
+            if(createResult <= 0)
+            {
+                return null;
+            }
+
+            var addLanguagesResult = await this.AddLanguages(coach, coachInput.Languages);
+
+            return addLanguagesResult <= 0 ?
+                null : 
+                coach;
+        }
+
+        private Coach CreateCoach(CoachCreateInputModel coachInput, Category category)
+            => new()
             {
                 Category = category,
                 CategoryId = category.Id,
                 Company = coachInput.Company,
+                CompanyLogoUrl = coachInput.CompanyLogoUrl,
                 FullName = coachInput.FullName,
                 ImageUrl = coachInput.ImageUrl,
+                Email = coachInput.Email,
                 PricePerSession = coachInput.PricePerSession
             };
-
-            await this.coachRepo.AddAsync(coach);
-            await this.coachRepo.SaveChangesAsync();
-
-            return coach;
-        }
 
         public async Task<CoachDetailsServiceModel> GetCoachDetails(string id)
         {
@@ -146,6 +167,35 @@
 
         private async Task<Category> GetCategory(int id)
             => await this.categoryService.GetCategory(id);
+
+        private async Task<int> AddLanguages(Coach coach, ICollection<int> languageIds)
+        {
+            var coachLanguages = await this.GetCoachLanguages(languageIds);
+
+            foreach(var language in coachLanguages)
+            {
+                var coachLang = CreateCoachLanguageEntity(coach, language);
+
+                await this.coachLanguagesRepo.AddAsync(coachLang);
+            }
+
+            return await this.coachLanguagesRepo.SaveChangesAsync();
+        }
+
+        private CoachLanguage CreateCoachLanguageEntity(Coach coach, Language language)
+            => new CoachLanguage
+            {
+                Language = language,
+                LanguageId = language.Id,
+                Coach = coach,
+                CoachId = coach.Id
+            };
+
+        private async Task<IEnumerable<Language>> GetCoachLanguages(ICollection<int> languageIds)
+            => await this.languageRepo
+                .All()
+                .Where(l => languageIds.Contains(l.Id))
+                .ToListAsync();
 
         private static CoachEditInputModel ConvertToEditModel(Coach coachInDb)
             => new()

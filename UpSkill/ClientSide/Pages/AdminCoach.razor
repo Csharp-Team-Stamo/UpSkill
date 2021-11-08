@@ -22,6 +22,14 @@
     </div>
 
     <div class="form-group row">
+        <label for="email" class="col-md-2 col-form-label">Email</label>
+        <div class="col-md-10">
+            <InputText id="email" class="form-control" @bind-Value="coachInput.Email" />
+            <ValidationMessage For="@(() => coachInput.FullName)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
         <label for="company" class="col-md-2 col-form-label">Company</label>
         <div class="col-md-10">
             <InputText id="company" class="form-control" @bind-Value="coachInput.Company" />
@@ -59,6 +67,20 @@
         </div>
     </div>
 
+    <div class="form-group row">
+        <label for="languages" class="col-md-2 col-form-label">Languages</label>
+        <div class="col-md-10">
+            <InputSelect class="form-control" @bind-Value="coachInput.Languages">
+                <option>---Select Languages---</option>
+                @foreach (var language in LanguagesInDb)
+                {
+                    <option value="@language.Id">@language.Name</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => coachInput.Languages)" />
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-12 text-right">
             <button type="submit" class="btn btn-primary">Create Coach</button>
@@ -67,5 +89,5 @@
 </EditForm>
 
 @code {
-
+    
 }
