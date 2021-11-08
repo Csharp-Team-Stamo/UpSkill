@@ -21,8 +21,10 @@
             this.ownerService = ownerService;
         }
 
-        public CoachesListingCatalogModel GetAll(string ownerId)
+        public CoachesListingCatalogModel GetAll(string userId)
         {
+            var ownerId = OwnerId(userId);
+
             var coaches = new CoachesListingCatalogModel
             {
                 OwnerId = ownerId,
@@ -50,6 +52,8 @@
 
         public CoachesListingCatalogModel GetAllByOwnerId(string ownerId)
         {
+            //var ownerId = OwnerId(userId);
+            //GetOwnerById
 
             var coachesByOwnerId = new CoachesListingCatalogModel
             {
@@ -76,13 +80,21 @@
             await coachesOwnerRepository.SaveChangesAsync();
         }
 
-        public async Task RemoveCoachFromOwnerCoachCollectionAsync(string coachId, string ownerId)
+        public async Task RemoveCoachFromOwnerCoachCollectionAsync(string coachId, string userId)
         {
+            var ownerId = OwnerId(userId);
+
             var coachToRemove = coachesOwnerRepository.All().FirstOrDefault(x => x.CoachId == coachId && x.OwnerId == ownerId);
 
             coachesOwnerRepository.HardDelete(coachToRemove);
 
             await coachesOwnerRepository.SaveChangesAsync();
+        }
+
+        private string OwnerId(string userId)
+        {
+            var ownerId = ownerService.GetId(userId);
+            return ownerId;
         }
     }
 }

@@ -32,9 +32,9 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        var ownerId = user.OwnerId().Result;
+        var userId = user.Id().Result;
 
-        coaches = await CoachesService.GetAllAsync(ownerId);
+        model = await CoachesService.GetAllAsync(userId);
 
         coaches = model.Coaches.ToList();
     }

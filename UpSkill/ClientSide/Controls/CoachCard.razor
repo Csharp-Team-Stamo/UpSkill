@@ -29,7 +29,7 @@
             else
             {
                 <div class="text-center">
-                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
+                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.Id().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
                 </div>
             }
         }
@@ -52,6 +52,7 @@
    protected override void OnInitialized()
     {
         var url = NavigationManager.Uri;
+        Console.WriteLine(url);
     }
 
     [Parameter]
@@ -84,24 +85,27 @@
 
     private async Task AddCoach(string coachId, string ownerId)
     {
+        var userId = user.Id().Result;
+
         await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
 
-        await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
+        await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(userId));
 
     }
 
 
-    private async Task RemoveCoach(string coachId, string ownerId)
+    private async Task RemoveCoach(string coachId, string userId)
     {
-        await CoachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
+        await CoachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, userId);
 
-        await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
+        await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(userId));
 
-        await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllByOwnerIdAsync(ownerId));
+        await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllByOwnerIdAsync(userId));
     }
 
     private bool IsCoachAdded()
     {
         return CoachIdsCollection.FirstOrDefault(x => x == Coach.Id) == null;
     }
+
 }

@@ -15,14 +15,14 @@
             this.httpClient = httpClient;
         }
 
-        public async Task<CoachesListingCatalogModel> GetAllAsync(string ownerId)
+        public async Task<CoachesListingCatalogModel> GetAllAsync(string userId)
         {
-           return await httpClient.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAll?ownerId={ownerId}");
+           return await httpClient.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAll?userId={userId}");
         }
 
-        public async Task<CoachesListingCatalogModel> GetAllByOwnerIdAsync(string ownerId)
+        public async Task<CoachesListingCatalogModel> GetAllByOwnerIdAsync(string userId)
         {
-            return await httpClient.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAllByOwnerId?ownerId={ownerId}");
+            return await httpClient.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAllByOwnerId?userId={userId}");
         }
 
         public async Task AddCoachInOwnerCoachesCollectionAsync(string coachId, string ownerId)
@@ -30,9 +30,9 @@
             await httpClient.PostAsJsonAsync($"/Coaches/AddCoachInOwnerCoachesCollectionAsync?coachId={coachId}&ownerId={ownerId}", string.Empty);
         }
 
-        public async Task RemoveCoachFromOwnerCoachCollectionAsync(string coachId, string ownerId)
+        public async Task RemoveCoachFromOwnerCoachCollectionAsync(string coachId, string userId)
         {
-            await httpClient.DeleteAsync($"/Coaches/RemoveCoachFromOwnerCoachCollectionAsync?coachId={coachId}&ownerId={ownerId}");
+            await httpClient.DeleteAsync($"/Coaches/RemoveCoachFromOwnerCoachCollectionAsync?coachId={coachId}&userId={userId}");
         }
     }
 }
