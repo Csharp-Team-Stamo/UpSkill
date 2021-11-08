@@ -3,7 +3,7 @@
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
 
-<CheckboxesPanel CategoryNames="FilterCoachesByCategory" LanguageNames="FilterCoachesByLanguage"></CheckboxesPanel>
+<CheckboxesPanel SortingTerms="Filter"></CheckboxesPanel>
 
 @if (model == null)
 {
@@ -45,11 +45,29 @@ else
     }
 
 
-    private void FilterCoachesByCategory(ICollection<string> categoryNames)
+    private void Filter(SortingTermsCoachesModel input)
     {
-        if (categoryNames.Any())
+        if (input.Categories.Any() && input.Languages.Any())
         {
-            coaches = model.Coaches.Where(x => categoryNames.ToList().Contains(x.CategoryName)).ToList();
+            coaches = model.Coaches.Where(x => input.Categories.Contains(x.CategoryName) && input.Languages.Any(l => x.Languages.Contains(l))).ToList();
+        }
+
+        if (!input.Categories.Any())
+        {
+            FilterCoachesByLanguage(input);
+        }
+
+        if (!input.Languages.Any())
+        {
+            FilterCoachesByCategory(input);
+        }
+    }
+
+    private void FilterCoachesByCategory(SortingTermsCoachesModel input)
+    {
+        if (input.Categories.Any())
+        {
+            coaches = model.Coaches.Where(x => input.Categories.ToList().Contains(x.CategoryName)).ToList();
         }
         else
         {
@@ -57,16 +75,15 @@ else
         }
     }
 
-    private void FilterCoachesByLanguage(ICollection<string> languageNames)
+    private void FilterCoachesByLanguage(SortingTermsCoachesModel input)
     {
-        if (languageNames.Any())
+        if (input.Languages.Any())
         {
-            coaches = model.Coaches.Where(x => languageNames.Any(l => x.Languages.Contains(l))).ToList();
+            coaches = model.Coaches.Where(x => input.Languages.Any(l => x.Languages.Contains(l))).ToList();
         }
         else
         {
             coaches = model.Coaches;
         }
     }
-
 }

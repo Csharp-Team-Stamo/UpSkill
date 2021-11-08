@@ -39,15 +39,20 @@
 
     private ICollection<string> languages = new List<string>();
 
-    private ICollection<string> selectedCategories = new List<string>();
+    private SortingTermsCoachesModel sortingTerms = new();
 
-    private ICollection<string> selectedLanguages = new List<string>();
+    //private ICollection<string> selectedCategories = new List<string>();
+
+    //private ICollection<string> selectedLanguages = new List<string>();
 
     [Parameter]
-    public EventCallback<ICollection<string>> CategoryNames { get; set; }
+    public EventCallback<SortingTermsCoachesModel> SortingTerms { get; set; }
 
-    [Parameter]
-    public EventCallback<ICollection<string>> LanguageNames { get; set; }
+    //[Parameter]
+    //public EventCallback<ICollection<string>> CategoryNames { get; set; }
+
+    //[Parameter]
+    //public EventCallback<ICollection<string>> LanguageNames { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -57,29 +62,31 @@
 
     protected void AddCategoryNameInCollection(string categoryName)
     {
-        if (selectedCategories.Contains(categoryName))
+        if (sortingTerms.Categories.Contains(categoryName))
         {
-            selectedCategories.Remove(categoryName);
+            sortingTerms.Categories.Remove(categoryName);
         }
         else
         {
-            selectedCategories.Add(categoryName);
+            sortingTerms.Categories.Add(categoryName);
         }
 
-        CategoryNames.InvokeAsync(selectedCategories.ToList());
+        Console.WriteLine(string.Join(" ", sortingTerms.Categories));
+
+        SortingTerms.InvokeAsync(sortingTerms);
     }
 
     protected void AddLanguageNameInCollection(string languageName)
     {
-        if (selectedLanguages.Contains(languageName))
+        if (sortingTerms.Languages.Contains(languageName))
         {
-            selectedLanguages.Remove(languageName);
+            sortingTerms.Languages.Remove(languageName);
         }
         else
         {
-            selectedLanguages.Add(languageName);
+            sortingTerms.Languages.Add(languageName);
         }
 
-        LanguageNames.InvokeAsync(selectedLanguages.ToList());
+        SortingTerms.InvokeAsync(sortingTerms);
     }
 }
