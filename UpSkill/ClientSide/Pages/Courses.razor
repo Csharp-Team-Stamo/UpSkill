@@ -1,6 +1,9 @@
-﻿@page "/Courses"
+@page "/Courses"
+@layout NoMenuLayout
 
 <div class="row">
+    <CoursesTopCard></CoursesTopCard>
+
     @for (int i = 1; i < 10; i++)
     {
         <ResourceCard></ResourceCard>
