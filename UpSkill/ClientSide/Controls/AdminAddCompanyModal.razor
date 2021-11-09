@@ -61,12 +61,6 @@
 
     private async Task Create()
     {
-
-        // var model = companyInput;
-
-        // model.CompanyId = user.CompanyId().Result;
-        // employeeCollection.Add(model);
-
         var response = await Client
             .PostAsJsonAsync<CompanyCreateInputModel>("/admin/company/create", companyInput);
 
