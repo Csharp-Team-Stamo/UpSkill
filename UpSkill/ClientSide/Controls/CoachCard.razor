@@ -49,7 +49,7 @@
 @* Modal *@
 @if (show)
 {
-    <CoachDescriptionModal></CoachDescriptionModal>
+    <CoachDescriptionModal SetShow="SetShowValue"></CoachDescriptionModal>
 }
 
 @code {
@@ -117,5 +117,10 @@
     private void ShowPopup()
     {
         show = true;
+    }
+
+    private void SetShowValue(bool value)
+    {
+        show = value;
     }
 }

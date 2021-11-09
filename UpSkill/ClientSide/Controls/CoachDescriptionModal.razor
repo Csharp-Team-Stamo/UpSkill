@@ -3,8 +3,32 @@
     <div class="modal-dialog">
         <div class="modal-body">
             <div class="row modal-header-custom">
-                
+                <div class="course-title-text">MANAGEMENT</div>
+                <div @onclick="ClosePopup" class="close header-btn" data-dismiss="modal" aria-label="Close">
+                    <span style="font-size: 2em" aria-hidden="true">&times;</span>
+                </div>
+                <img src="https://www.thesnowcentre.com/snowsure/uploads/articles/WEB%20Boarder-SHSRF-81960064-2013-10-L.jpg" alt="Avatar" class="avatar">
+                <div class="coach-div">Coach</div>
+                <div class="coach-name-div">Ben Levis</div>
+                <div class="company-div">Google</div>
+            </div>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/93vKnMomVNg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <div class="session-includes-div">This session includes</div>
+
             </div>
         </div>
     </div>
 </div>
+
+@code
+{
+    [Parameter]
+    public EventCallback<bool> SetShow { get; set; }
+
+
+    private void ClosePopup()
+    {
+        SetShow.InvokeAsync(false);
+    }
+}
