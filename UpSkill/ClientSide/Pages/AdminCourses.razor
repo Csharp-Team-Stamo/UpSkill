@@ -9,20 +9,29 @@
 
     @foreach(var course in allCourses)
     {
-        <ResourceCard Id="@course.Id"
-                      Title="@course.Name"
-                      Category="@course.CategoryName"
-                      Price="@course.Price"
-                      AuthorFullName="@course.AuthorFullName"
-                      AuthorCompanyLogo="@course.AuthorCompanyLogo">
-
-        </ResourceCard>
+        <ResourceCard Course="course"></ResourceCard>
     }
 
     <div class="col-sm-12 col-md-6 col-lg-4 mb-2 p-md-2 p-lg-5" style="position: relative;">
-        <input type="image" src="images/PlusButton.svg" style="position: absolute; top: 40%;" alt="Add Button">
+        <input type="image" 
+               src="images/PlusButton.svg" 
+               style="position: absolute; 
+               top: 40%;" 
+               alt="Add Button"
+               @onclick="ShowPopup">
     </div>
 </div>
+
+@if(show)
+{
+    // AdminCourse is a safety option for while the AdminCourseModal looks terrible
+    @*<AdminCourse></AdminCourse>*@
+
+    <AdminCourseAddModal 
+                    SetShow="SetShowValue" 
+                    GetUpdatedCourses="SetCoursesCollection">
+    </AdminCourseAddModal>
+}
 
 @code {
     private IEnumerable<AdminCourseListingServiceModel> allCourses =
@@ -39,5 +48,15 @@
     private void ShowPopup()
     {
         show = true;
+    }
+
+    private void SetShowValue(bool value)
+    {
+        show = value;
+    }
+
+    private void SetCoursesCollection(IEnumerable<AdminCourseListingServiceModel> value)
+    {
+        allCourses = value;
     }
 }

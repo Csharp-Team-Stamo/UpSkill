@@ -97,7 +97,10 @@
                 .Select(c => new AdminCoachListingServiceModel
                 {
                     Id = c.Id,
-                    FullName = c.FullName
+                    FullName = c.FullName,
+                    CategoryName = c.Category.Name,
+                    CompanyLogoUrl = c.CompanyLogoUrl,
+                    Price = c.PricePerSession
                 })
                 .ToListAsync();
 
