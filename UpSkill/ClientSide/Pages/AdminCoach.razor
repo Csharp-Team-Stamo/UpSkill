@@ -70,7 +70,7 @@
     <div class="form-group row">
         <label for="languages" class="col-md-2 col-form-label">Languages</label>
         <div class="col-md-10">
-            <InputSelect class="form-control" @bind-Value="coachInput.Languages">
+            <InputSelect class="form-control" @bind-Value="coachInput.Languages" multiple>
                 <option>---Select Languages---</option>
                 @foreach (var language in LanguagesInDb)
                 {
@@ -89,5 +89,5 @@
 </EditForm>
 
 @code {
-    
+  
 }

@@ -1,4 +1,4 @@
-﻿@page "/admin/course/all"
+﻿@page "/admin/course"
 
 @layout AdminLayout
 
@@ -38,7 +38,7 @@
                 <a href="@($"/admin/course/details/{course.Id}")">@course.Name</a>
 
             </div>
-            <div class="gridCol">@course.Description</div>
+            <div class="gridCol">@course.CategoryName</div>
             <div class="gridCol">
                 <a href="/admin/course/edit/@course.Id">Edit</a>
                 @if (course.IsDeleted)

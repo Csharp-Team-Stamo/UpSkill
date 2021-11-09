@@ -10,7 +10,11 @@
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
+        public string ImageUrl { get; set; }
+        public string CategoryName { get; set; }
+        public decimal Price { get; set; }
+        public string AuthorFullName { get; set; }
+        public string AuthorCompanyLogo { get; set; }
         public bool IsDeleted { get; set; }
     }
 }

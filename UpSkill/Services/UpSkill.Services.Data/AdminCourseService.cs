@@ -33,7 +33,11 @@
                       {
                           Id = c.Id,
                           Name = c.Name,
-                          Description = c.Description,
+                          ImageUrl = c.ImageUrl,
+                          CategoryName = c.Category.Name,
+                          Price = c.Price,
+                          AuthorFullName = c.AuthorFullName,
+                          AuthorCompanyLogo = c.CompanyLogoUrl,
                           IsDeleted = c.IsDeleted
                       }).ToListAsync();
 

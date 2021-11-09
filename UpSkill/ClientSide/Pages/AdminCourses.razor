@@ -1,0 +1,43 @@
+﻿@page "/admin/course/all"
+@layout AdminNoMenuLayout
+
+@using UpSkill.Infrastructure.Models.Course
+
+
+<div class="row">
+    <CoursesTopCard></CoursesTopCard>
+
+    @foreach(var course in allCourses)
+    {
+        <ResourceCard Id="@course.Id"
+                      Title="@course.Name"
+                      Category="@course.CategoryName"
+                      Price="@course.Price"
+                      AuthorFullName="@course.AuthorFullName"
+                      AuthorCompanyLogo="@course.AuthorCompanyLogo">
+
+        </ResourceCard>
+    }
+
+    <div class="col-sm-12 col-md-6 col-lg-4 mb-2 p-md-2 p-lg-5" style="position: relative;">
+        <input type="image" src="images/PlusButton.svg" style="position: absolute; top: 40%;" alt="Add Button">
+    </div>
+</div>
+
+@code {
+    private IEnumerable<AdminCourseListingServiceModel> allCourses =
+        new List<AdminCourseListingServiceModel>();
+
+    private bool show = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.allCourses = await this.Client
+            .GetFromJsonAsync<IEnumerable<AdminCourseListingServiceModel>>("admin/course/all");
+    }
+
+    private void ShowPopup()
+    {
+        show = true;
+    }
+}
