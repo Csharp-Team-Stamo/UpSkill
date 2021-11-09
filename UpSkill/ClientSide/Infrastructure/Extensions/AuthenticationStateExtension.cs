@@ -54,5 +54,11 @@ namespace UpSkill.ClientSide.Infrastructure.Extensions
             var result = await authState;
             return result.User.Identity != null && result.User.Identity.IsAuthenticated;
         }
+
+        public static async Task<string> OwnerId(this Task<AuthenticationState> authState)
+        {
+            var result = await authState;
+            return result.User.Claims.FirstOrDefault(x => x.Type == "OwnerId")?.Value;
+        }
     }
 }
