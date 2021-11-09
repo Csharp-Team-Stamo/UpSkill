@@ -28,9 +28,13 @@
                 <div class="mobile-div">Access on mobile</div>
                 <img class="mobile-img" src="images/coachDescriptionModal/mobile-img.svg" />
                 
-                <div class="book-btn">
-                    <div class="book-btn-text">Book</div>
-                </div>
+                @if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.EmployeeRoleName &&
+                     NavigationManager.Uri.EndsWith("Coaches"))
+                {
+                    <div class="book-btn">
+                        <div class="book-btn-text">Book</div>
+                    </div>
+                }
 
             </div>
             
