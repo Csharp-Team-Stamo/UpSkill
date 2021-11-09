@@ -28,15 +28,24 @@ namespace UpSkill.Api.Controllers
         private readonly IAccountsService accountService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ICompanyService companyService;
+        private readonly IOwnerService ownerService;
+        private readonly IEmployeesService employeesService;
         private readonly IConfigurationSection jwtSettings;
 
-        public AccountsController(IAccountsService accountService, UserManager<ApplicationUser> userManager,
-            IConfiguration configuration, ICompanyService companyService)
+        public AccountsController(
+            IAccountsService accountService,
+            UserManager<ApplicationUser> userManager,
+            IConfiguration configuration,
+            ICompanyService companyService,
+            IOwnerService ownerService,
+            IEmployeesService employeesService)
         {
 
             this.accountService = accountService;
             this.userManager = userManager;
             this.companyService = companyService;
+            this.ownerService = ownerService;
+            this.employeesService = employeesService;
             this.jwtSettings = configuration.GetSection("JWTSettings");
         }
 
@@ -172,12 +181,25 @@ namespace UpSkill.Api.Controllers
         {
             var claims = this.userManager.GetClaimsAsync(user);
             var claimsAsList = new List<Claim>(claims.Result);
-
+            
             claimsAsList.Add(new Claim(ClaimTypes.Email, user.Email));
             claimsAsList.Add(new Claim("Id", user.Id));
             claimsAsList.Add(new Claim("FullName", user.FullName));
             claimsAsList.Add(new Claim("CompanyId", user.CompanyId.ToString()));
             claimsAsList.Add(new Claim("CompanyName", companyService.GetName(user.CompanyId)));
+
+            var ownerId = string.Empty;
+
+            if (claims.Result.Any(x => x.Value == "Owner"))
+            {
+                 ownerId = this.ownerService.GetId(user.Id);
+            }
+            else if (claims.Result.Any(x => x.Value == "Employee"))
+            {
+                ownerId = this.employeesService.GetOwnerById(user.Id);
+            }
+
+            claimsAsList.Add(new Claim("OwnerId", ownerId));
 
             return claimsAsList;
         }

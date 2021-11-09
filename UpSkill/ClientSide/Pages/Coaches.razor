@@ -12,24 +12,32 @@
     </div>
 }
 
-<div class="row">
-    @foreach (var coach in coaches.Coaches)
-    {
-        <CoachCard Coach="coach" OwnerId="@coaches.OwnerId" CoachIdsCollection="@coaches.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches"></CoachCard>
-    }
-</div>
+@if (coaches == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="row">
+        @foreach (var coach in coaches.Coaches)
+        {
+            <CoachCard Coach="coach" OwnerId="@coaches.OwnerId" CoachIdsCollection="@coaches.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches"></CoachCard>
+        }
+    </div>
+}
+
 @code
 {
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
 
-    private CoachesListingCatalogModel coaches = new();
+    private CoachesListingCatalogModel coaches;
 
     protected override async Task OnInitializedAsync()
     {
-        var userId = user.Id().Result;
+        var ownerId = user.OwnerId().Result;
 
-        coaches = await CoachesService.GetAllByOwnerIdAsync(userId);
+        coaches = await CoachesService.GetAllByOwnerIdAsync(ownerId);
     }
 
     private void SetCoaches(CoachesListingCatalogModel updatedCoaches)

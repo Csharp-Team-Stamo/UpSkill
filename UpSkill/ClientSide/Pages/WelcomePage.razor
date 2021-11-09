@@ -4,14 +4,14 @@
 @layout NoMenuLayout
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
-<div class="welcome-page-card container">
+<div class="welcome-page-card">
     <!-- #region row 1 -->
     <div class="row">
         <div class="col">
-            <div class="get-started-title">
+            <div class="get-started-title col-10">
                 Do you want to level up the knowledge of your team?
             </div>
-            <div class="get-started-content">
+            <div class="get-started-content col-9">
                 Upskill gives everyone the opportunity to grow professionally and develop into a specialist in every field. We inspire your people to master their skills and become the best version of themselves. Through our unique, personalised, user-friendly experience, your business is ready to reach new heights.
             </div>
             <button class="get-started-btn" @onclick="@(() => NavigationManager.NavigateTo("/registration"))">
@@ -62,7 +62,7 @@
             <div class="demo-title" id="demo">
                 Request a Demo
             </div>
-            <div class="demo-content">
+            <div class="demo-content col-8">
                 Don’t find what you are looking for? We would be more than happy to help you and assist you in everything you need! Let us know about your personal requirements by filling our request form:
             </div>
             <div>
