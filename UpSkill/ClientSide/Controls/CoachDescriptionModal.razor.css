@@ -78,8 +78,8 @@
     box-shadow: 0px 3px 10px #00000029;
     position: relative;
     width: 35%;
-    height: 74%;
-    top: -28%;
+    height: 82%;
+    top: -31%;
     right: -59%;
 }
 
@@ -93,6 +93,93 @@ div iframe {
     letter-spacing: 1.1px;
     color: #000000;
     position: relative;
-    top: 10%;
+    top: 7%;
     right: 10%;
+}
+
+.discussion-div {
+    font: 65% Montserrat;
+    letter-spacing: 0.9px;
+    color: #000000;
+    position: relative;
+    top: 10%;
+    right: -18%;
+    text-align: left;
+}
+
+.discussion-img {
+    top: 4.5%;
+    right: 39%;
+    width: 4%;
+    position: relative;
+}
+
+.resources-div {
+    font: 65% Montserrat;
+    letter-spacing: 0.9px;
+    color: #000000;
+    position: relative;
+    top: 5%;
+    right: -18%;
+    text-align: left;
+}
+
+.resources-img {
+    top: -1%;
+    right: 39%;
+    width: 4%;
+    position: relative;
+}
+
+.access-div {
+    font: 65% Montserrat;
+    letter-spacing: 0.9px;
+    color: #000000;
+    position: relative;
+    top: 0%;
+    right: -18%;
+    text-align: left;
+}
+
+.access-img {
+    top: -6%;
+    right: 39%;
+    width: 4%;
+    position: relative;
+}
+
+.mobile-div {
+    font: 65% Montserrat;
+    letter-spacing: 0.9px;
+    color: #000000;
+    position: relative;
+    top: -5%;
+    right: -18%;
+    text-align: left;
+}
+
+.mobile-img {
+    top: -11%;
+    right: 39%;
+    width: 4%;
+    position: relative;
+}
+
+.book-btn {
+    background: #296CFB;
+    width: 39%;
+    border: unset;
+    height: 9%;
+    position: relative;
+    top: -6%;
+    right: -33%;
+    cursor: pointer;
+}
+
+.book-btn-text {
+    font: bold 90% Montserrat;
+    letter-spacing: 1.1px;
+    color: #FFFFFF;
+    top: 20%;
+    position: relative;
 }

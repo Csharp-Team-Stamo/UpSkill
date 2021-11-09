@@ -16,7 +16,24 @@
                 <iframe src="https://www.youtube.com/embed/93vKnMomVNg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <div class="session-includes-div">This session includes</div>
 
+                <div class="discussion-div">20 minutes discussion</div>
+                <img class="discussion-img" src="images/coachDescriptionModal/discussion-time-img.svg" />
+
+                <div class="resources-div">23 downloadable resources</div>
+                <img class="resources-img" src="images/coachDescriptionModal/download-img.svg" />
+
+                <div class="access-div">Full lifetime access</div>
+                <img class="access-img" src="images/coachDescriptionModal/infinity-img.svg" />
+
+                <div class="mobile-div">Access on mobile</div>
+                <img class="mobile-img" src="images/coachDescriptionModal/mobile-img.svg" />
+                
+                <div class="book-btn">
+                    <div class="book-btn-text">Book</div>
+                </div>
+
             </div>
+            
         </div>
     </div>
 </div>
@@ -25,6 +42,9 @@
 {
     [Parameter]
     public EventCallback<bool> SetShow { get; set; }
+
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
 
 
     private void ClosePopup()

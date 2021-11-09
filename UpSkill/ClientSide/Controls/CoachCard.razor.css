@@ -40,11 +40,11 @@
 
 .custom-coach-card {
     box-shadow: 0px 3px 10px #00000029;
-    cursor: pointer;
 }
 
 .img-background {
     height: 90%;
     background: #1CC18A 0% 0% no-repeat padding-box;
     opacity: 1;
+    cursor: pointer;
 }
