@@ -155,3 +155,51 @@ div iframe {
     top: 20%;
     position: relative;
 }
+
+.description-div {
+    position: relative;
+    bottom: 85%;
+    right: -4%;
+}
+
+.description-title-div {
+    text-align: left;
+    font: bold 85% Montserrat;
+    letter-spacing: 1.1px;
+    color: #000000;
+    margin-bottom: 4%;
+}
+
+.description-content-div {
+    text-align: left;
+    font: 85% Montserrat;
+    letter-spacing: 1.1px;
+    color: #000000;
+}
+
+.will-learn-div {
+    position: relative;
+    bottom: 78%;
+    right: -4%;
+}
+
+.will-learn-title-div {
+    text-align: left;
+    font: bold 85% Montserrat;
+    letter-spacing: 1.1px;
+    color: #000000;
+    margin-bottom: 4%;
+}
+
+.will-learn-listing-row {
+    margin-right: unset;
+    margin-left: unset;
+    margin-bottom: 1%;
+}
+
+.will-learn-in-list-content {
+    text-align: left;
+    font: 85% Montserrat;
+    letter-spacing: 1.1px;
+    color: #000000;
+}
