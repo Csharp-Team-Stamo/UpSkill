@@ -103,15 +103,8 @@ div iframe {
     color: #000000;
     position: relative;
     top: 10%;
-    right: -18%;
+    right: -9%;
     text-align: left;
-}
-
-.discussion-img {
-    top: 4.5%;
-    right: 39%;
-    width: 4%;
-    position: relative;
 }
 
 .resources-div {
@@ -119,16 +112,9 @@ div iframe {
     letter-spacing: 0.9px;
     color: #000000;
     position: relative;
-    top: 5%;
-    right: -18%;
+    top: 11%;
+    right: -9%;
     text-align: left;
-}
-
-.resources-img {
-    top: -1%;
-    right: 39%;
-    width: 4%;
-    position: relative;
 }
 
 .access-div {
@@ -136,16 +122,9 @@ div iframe {
     letter-spacing: 0.9px;
     color: #000000;
     position: relative;
-    top: 0%;
-    right: -18%;
+    top: 12%;
+    right: -9%;
     text-align: left;
-}
-
-.access-img {
-    top: -6%;
-    right: 39%;
-    width: 4%;
-    position: relative;
 }
 
 .mobile-div {
@@ -153,16 +132,9 @@ div iframe {
     letter-spacing: 0.9px;
     color: #000000;
     position: relative;
-    top: -5%;
-    right: -18%;
+    top: 13%;
+    right: -9%;
     text-align: left;
-}
-
-.mobile-img {
-    top: -11%;
-    right: 39%;
-    width: 4%;
-    position: relative;
 }
 
 .book-btn {
@@ -171,8 +143,8 @@ div iframe {
     border: unset;
     height: 9%;
     position: relative;
-    top: -6%;
-    right: -33%;
+    top: 21%;
+    right: -32%;
     cursor: pointer;
 }
 
