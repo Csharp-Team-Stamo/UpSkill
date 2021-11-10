@@ -1,83 +1,101 @@
-﻿<div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.8);"
-     aria-modal="true">
-    <div class="modal-dialog">
-        <div class="modal-body">
-            <div class="row modal-header-custom">
-                <div class="course-title-text">MANAGEMENT</div>
-                <div @onclick="ClosePopup" class="close header-btn" data-dismiss="modal" aria-label="Close">
-                    <span style="font-size: 2em" aria-hidden="true">&times;</span>
-                </div>
-                <img src="https://www.thesnowcentre.com/snowsure/uploads/articles/WEB%20Boarder-SHSRF-81960064-2013-10-L.jpg" alt="Avatar" class="avatar">
-                <div class="coach-div">Coach</div>
-                <div class="coach-name-div">Ben Levis</div>
-                <div class="company-div">Google</div>
-            </div>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/93vKnMomVNg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                <div class="session-includes-div">This session includes</div>
-
-                <div class="discussion-div">
-                    <img style="width: 4%; margin-right: 3%" src="images/coachDescriptionModal/discussion-time-img.svg" />
-                    20 minutes discussion
-                </div>
-                <div class="resources-div">
-                    <img style="width: 3%; margin-right: 3%" src="images/coachDescriptionModal/download-img.svg" />
-                    23 downloadable resources
-                </div>
-                <div class="access-div">
-                    <img style="width: 3%; margin-right: 3%" src="images/coachDescriptionModal/infinity-img.svg" />
-                    Full lifetime access
-                </div>
-                <div class="mobile-div">
-                    <img style="width: 3%; margin-right: 3%" src="images/coachDescriptionModal/mobile-img.svg" />
-                    Access on mobile
-                </div>
-
-                @if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.EmployeeRoleName &&
-                   NavigationManager.Uri.EndsWith("Coaches"))
-                {
-                    <div class="book-btn">
-                        <div class="book-btn-text">Book</div>
+﻿@if (coach == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.8);"
+         aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-body">
+                <div class="row modal-header-custom">
+                    <div class="course-title-text">@coach.CategoryName.ToUpper()</div>
+                    <div @onclick="ClosePopup" class="close header-btn" data-dismiss="modal" aria-label="Close">
+                        <span style="font-size: 2em" aria-hidden="true">&times;</span>
                     </div>
-                }
-
-            </div>
-
-            <div class="col-6 description-div">
-                <div class="description-title-div">Session Description</div>
-                <div class="description-content-div">
-                    In this session, you will learn the fundamental language skills of reading, writing, speaking, listening, thinking, viewing and presenting.
+                    <img src="https://www.thesnowcentre.com/snowsure/uploads/articles/WEB%20Boarder-SHSRF-81960064-2013-10-L.jpg" alt="Avatar" class="avatar">
+                    <div class="coach-div">Coach</div>
+                    <div class="coach-name-div">@coach.FullName</div>
+                    <div class="company-div">Google</div>
                 </div>
-            </div>
-            <div class="col-6 will-learn-div">
-                <div class="will-learn-title-div">What you will learn</div>
-                @foreach (var w in willLearn)
-                {
-                    <div class="row will-learn-listing-row">
-                        <div class="will-learn-in-list-content"><img src="images/coachDescriptionModal/green-listing-square.svg" /> @w</div>
-                    </div>
-                }
-            </div>
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/93vKnMomVNg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    <div class="session-includes-div">This session includes</div>
 
+                    <div class="discussion-div">
+                        <img style="width: 4%; margin-right: 3%" src="images/coachDescriptionModal/discussion-time-img.svg" />
+                        20 minutes discussion
+                    </div>
+                    <div class="resources-div">
+                        <img style="width: 3%; margin-right: 3%" src="images/coachDescriptionModal/download-img.svg" />
+                        23 downloadable resources
+                    </div>
+                    <div class="access-div">
+                        <img style="width: 3%; margin-right: 3%" src="images/coachDescriptionModal/infinity-img.svg" />
+                        Full lifetime access
+                    </div>
+                    <div class="mobile-div">
+                        <img style="width: 3%; margin-right: 3%" src="images/coachDescriptionModal/mobile-img.svg" />
+                        Access on mobile
+                    </div>
+
+                    @if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.EmployeeRoleName &&
+                      NavigationManager.Uri.EndsWith("Coaches"))
+                    {
+                        <div class="book-btn">
+                            <div class="book-btn-text">Book</div>
+                        </div>
+                    }
+
+                </div>
+
+                <div class="col-6 description-div">
+                    <div class="description-title-div">Session Description</div>
+                    <div class="description-content-div">
+                        In this session, you will learn the fundamental language skills of reading, writing, speaking, listening, thinking, viewing and presenting.
+                    </div>
+                </div>
+                <div class="col-6 will-learn-div">
+                    <div class="will-learn-title-div">What you will learn</div>
+                    @foreach (var w in willLearn)
+                    {
+                        <div class="row will-learn-listing-row">
+                            <div class="will-learn-in-list-content"><img src="images/coachDescriptionModal/green-listing-square.svg" /> @w</div>
+                        </div>
+                    }
+                </div>
+
+            </div>
         </div>
     </div>
-</div>
+
+}
 
 @code
 {
+    private CoachDescriptionModel coach;
+
     [Parameter]
     public EventCallback<bool> SetShow { get; set; }
 
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
 
+    [Parameter]
+    public string CoachId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        coach = await Client.GetFromJsonAsync<CoachDescriptionModel>($"/Coaches/GetByIdAsync?coachId={CoachId}");
+    }
+
     private List<string> willLearn = new()
     {
-        "Learn more information about management",
-        "Improve your strategic skills",
-        "Solve problems",
-        "In this session, you will learn the fundamental language skills"
-    };
+            "Learn more information about management",
+            "Improve your strategic skills",
+            "Solve problems",
+            "In this session, you will learn the fundamental language skills"
+        };
 
 
     private void ClosePopup()
