@@ -1,6 +1,7 @@
 ﻿namespace UpSkill.Api.Controllers
 {
     using System.Threading.Tasks;
+    using Infrastructure.Models.CoachDescriptionModal;
     using Infrastructure.Models.Coaches;
     using Microsoft.AspNetCore.Mvc;
     using Services.Data.Contracts;
@@ -20,6 +21,12 @@
         public CoachesListingCatalogModel GetAll([FromQuery]string ownerId)
         {
             return coachesService.GetAll(ownerId);
+        }
+
+        [HttpGet("GetByIdAsync")]
+        public async Task<CoachDescriptionModel> GetByIdAsync(string coachId)
+        {
+           return await coachesService.GetByIdAsync(coachId);
         }
 
         [HttpGet("GetAllByOwnerId")]

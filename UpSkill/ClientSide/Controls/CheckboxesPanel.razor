@@ -41,18 +41,9 @@
 
     private SortingTermsCoachesModel sortingTerms = new();
 
-    //private ICollection<string> selectedCategories = new List<string>();
-
-    //private ICollection<string> selectedLanguages = new List<string>();
-
     [Parameter]
     public EventCallback<SortingTermsCoachesModel> SortingTerms { get; set; }
 
-    //[Parameter]
-    //public EventCallback<ICollection<string>> CategoryNames { get; set; }
-
-    //[Parameter]
-    //public EventCallback<ICollection<string>> LanguageNames { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
