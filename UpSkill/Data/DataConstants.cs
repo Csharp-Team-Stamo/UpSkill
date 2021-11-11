@@ -16,8 +16,6 @@
 
         public class CoachConstants
         {
-            public const string ValidImage = @"((https|http)?:\/\/\S*\.(?:png|jpg|jpeg|gif))";
-
             public const int SessionDescriptionMaxlen = 150;
 
             public const int SkillsLearnMaxlen = 150;

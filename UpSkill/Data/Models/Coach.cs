@@ -23,7 +23,6 @@
         public string CompanyLogoUrl { get; set; }
 
         [Required]
-        [RegularExpression(CoachConstants.ValidImage, ErrorMessage = "Not valid url! Valid extensions(png, jpg, jpeg, gif)")]
         public string AvatarImgUrl { get; set; }
 
         [Required]
