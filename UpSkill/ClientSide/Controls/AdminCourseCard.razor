@@ -1,30 +1,6 @@
-﻿@using UpSkill.Infrastructure.Models.Course 
+﻿@using UpSkill.Infrastructure.Models.Course
 
 <div class="col-sm-12 col-md-6 col-lg-4 p-4 p-md-3 p-lg-5">
-    <article class="resource-card shadow">
-        <div class="resource-top d-flex justify-content-center align-items-center">
-            <img class="card-img-top resource-image" src="images/course-marketing.png" alt="Recipe image">
-            <p class="resource-title position-absolute mx-auto">Marketing</p>
-        </div>
-        <div class="card-body">
-            <div class="row px-4 pb-1">
-                <p class="resource col-sm-12 col-md-6 text-left pl-md-2 pr-md-0">
-                    <span class="resource-name d-md-block">Marketing</span>
-                    <span class="resource-price d-md-block">80€ per person</span>
-                </p>
-                <p class="author col-sm-12 col-md-6 text-md-right text-sm-left pr-md-2 pl-md-0">
-                    <span class="resource-author d-md-block">Jim Wilber</span>
-                    <img class="company-logo img-responsive" src="images/logo-google.png" alt="">
-                </p>
-            </div>
-            <div class="row">
-                <button class="btn action mx-auto">Remove</button>
-            </div>
-        </div>
-    </article>
-</div>
-
-@*<div class="col-sm-12 col-md-6 col-lg-4 p-4 p-md-3 p-lg-5">
     <article class="resource-card shadow">
         <div class="resource-top d-flex justify-content-center align-items-center">
             <img class="card-img-top resource-image" src="images/course-marketing.png" alt="@Course.Name">
@@ -50,8 +26,9 @@
             }
         </div>
     </article>
-</div>*@
+</div>
 
 @code {
-    
+    [Parameter]
+    public AdminCourseListingServiceModel Course { get; set; }
 }

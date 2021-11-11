@@ -9,7 +9,8 @@
 
     @foreach(var course in allCourses)
     {
-        <ResourceCard Course="course"></ResourceCard>
+        <AdminCourseCard Course="course"></AdminCourseCard>
+        @*<ResourceCard Course="course"></ResourceCard>*@
     }
 
     <div class="col-sm-12 col-md-6 col-lg-4 mb-2 p-md-2 p-lg-5" style="position: relative;">
@@ -24,13 +25,14 @@
 
 @if(show)
 {
+    NavigationManager.NavigateTo("/adminCourse");
     // AdminCourse is a safety option for while the AdminCourseModal looks terrible
     @*<AdminCourse></AdminCourse>*@
 
-    <AdminCourseAddModal 
+    @*<AdminCourseAddModal 
                     SetShow="SetShowValue" 
                     GetUpdatedCourses="SetCoursesCollection">
-    </AdminCourseAddModal>
+    </AdminCourseAddModal>*@
 }
 
 @code {
