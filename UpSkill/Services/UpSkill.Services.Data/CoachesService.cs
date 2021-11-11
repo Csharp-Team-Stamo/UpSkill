@@ -33,6 +33,7 @@
                 {
                     Id = x.Id,
                     FullName = x.FullName,
+                    ImageUrl = x.AvatarImgUrl,
                     CategoryName = x.Category.Name,
                     Company = x.Company,
                     CompanyLogoUrl = x.CompanyLogoUrl,

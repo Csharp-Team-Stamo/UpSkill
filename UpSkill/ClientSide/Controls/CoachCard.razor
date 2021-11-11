@@ -1,5 +1,7 @@
 ﻿<div class="card custom-coach-card container mb-5" style="width: 18rem;">
-    <img @onclick="ShowPopup" class="card-img-top img-background" src="/images/coach.png" alt="Card image cap">
+    <div @onclick="ShowPopup" class="card-img-top card-img-top-custom">
+        <img class="img-custom" src="images/coach.png" />
+    </div>
     <div class="card-body">
         <div class="row">
             <div class="coach-profession col-6">
@@ -11,7 +13,7 @@
         </div>
         <div class="row">
             <div class="coah-price col-6">
-                @Coach.PricePerSession.ToString("####")€ per person
+                @Coach.PricePerSession.ToString("F2")€ per person
             </div>
             <div class="col-6 text-right">
                 <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
