@@ -51,6 +51,12 @@
                 Id = x.Id,
                 FullName = x.FullName,
                 CategoryName = x.Category.Name,
+                AvatarImgUrl = x.AvatarImgUrl,
+                Company = x.Company,
+                DiscussionDurationInMinutes = x.DiscussionDurationInMinutes,
+                ResourcesCount = x.ResourcesCount,
+                SessionDescription = x.SessionDescription,
+                SkillsLearn = x.SkillsLearn,
             }).FirstOrDefaultAsync();
         }
 
