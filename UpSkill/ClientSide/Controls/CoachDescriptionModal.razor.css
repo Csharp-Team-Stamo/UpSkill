@@ -1,0 +1,204 @@
+﻿.modal-body {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    height: 460px;
+    margin-top: 15%;
+    width: 150%;
+    position: absolute;
+    pointer-events: auto;
+    left: -28%;
+}
+
+.modal-header-custom {
+    background: #16D696;
+    height: 45%;
+    position: relative;
+    top: -6%;
+    width: 104.5%;
+    left: -0.1%;
+}
+
+.course-title-text {
+    font: 800 130% Montserrat;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    position: absolute;
+    left: 9%;
+    top: 30%;
+}
+
+.header-btn {
+    position: relative;
+    left: 93%;
+    top: 10%;
+    color: white;
+    font-weight: 100;
+    cursor: pointer;
+    opacity: 1;
+}
+
+.avatar {
+    vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    position: relative;
+    top: 56%;
+    right: -5%;
+}
+
+.coach-info-div {
+    position: relative;
+    top: 54%;
+    right: -7%;
+    text-align: left;
+}
+
+.coach-div {
+    font: 75% Montserrat;
+    letter-spacing: 1.1px;
+    color: #FFFFFF;
+}
+
+.coach-name-div {
+    font: bold 75% Montserrat;
+    letter-spacing: 1.1px;
+    color: #FFFFFF;
+}
+
+.company-div {
+    font: 75% Montserrat;
+    letter-spacing: 1.1px;
+    color: #FFFFFF;
+    margin-top: 10%;
+}
+
+.video-container {
+    background: #FFFFFF;
+    box-shadow: 0px 3px 10px #00000029;
+    position: relative;
+    width: 35%;
+    height: 82%;
+    top: -31%;
+    right: -59%;
+}
+
+div iframe {
+    width: 251px;
+    height: 150px;
+}
+
+.session-includes-div {
+    font: bold 75% Montserrat;
+    letter-spacing: 1.1px;
+    color: #000000;
+    position: relative;
+    top: 7%;
+    right: 10%;
+}
+
+.discussion-div {
+    font: 65% Montserrat;
+    letter-spacing: 0.9px;
+    color: #000000;
+    position: relative;
+    top: 10%;
+    right: -9%;
+    text-align: left;
+}
+
+.resources-div {
+    font: 65% Montserrat;
+    letter-spacing: 0.9px;
+    color: #000000;
+    position: relative;
+    top: 11%;
+    right: -9%;
+    text-align: left;
+}
+
+.access-div {
+    font: 65% Montserrat;
+    letter-spacing: 0.9px;
+    color: #000000;
+    position: relative;
+    top: 12%;
+    right: -9%;
+    text-align: left;
+}
+
+.mobile-div {
+    font: 65% Montserrat;
+    letter-spacing: 0.9px;
+    color: #000000;
+    position: relative;
+    top: 13%;
+    right: -9%;
+    text-align: left;
+}
+
+.book-btn {
+    background: #296CFB;
+    width: 39%;
+    border: unset;
+    height: 9%;
+    position: relative;
+    top: 21%;
+    right: -32%;
+    cursor: pointer;
+}
+
+.book-btn-text {
+    font: bold 90% Montserrat;
+    letter-spacing: 1.1px;
+    color: #FFFFFF;
+    top: 20%;
+    position: relative;
+}
+
+.description-div {
+    position: relative;
+    bottom: 85%;
+    right: -4%;
+}
+
+.description-title-div {
+    text-align: left;
+    font: bold 85% Montserrat;
+    letter-spacing: 1.1px;
+    color: #000000;
+    margin-bottom: 4%;
+}
+
+.description-content-div {
+    text-align: left;
+    font: 85% Montserrat;
+    letter-spacing: 1.1px;
+    color: #000000;
+}
+
+.will-learn-div {
+    position: relative;
+    bottom: 78%;
+    right: -4%;
+}
+
+.will-learn-title-div {
+    text-align: left;
+    font: bold 85% Montserrat;
+    letter-spacing: 1.1px;
+    color: #000000;
+    margin-bottom: 4%;
+}
+
+.will-learn-listing-row {
+    margin-right: unset;
+    margin-left: unset;
+    margin-bottom: 1%;
+}
+
+.will-learn-in-list-content {
+    text-align: left;
+    font: 85% Montserrat;
+    letter-spacing: 1.1px;
+    color: #000000;
+}

@@ -4,7 +4,9 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Contracts;
+    using Infrastructure.Models.CoachDescriptionModal;
     using Infrastructure.Models.Coaches;
+    using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
 
@@ -31,6 +33,7 @@
                 {
                     Id = x.Id,
                     FullName = x.FullName,
+                    ImageUrl = x.AvatarImgUrl,
                     CategoryName = x.Category.Name,
                     Company = x.Company,
                     CompanyLogoUrl = x.CompanyLogoUrl,
@@ -40,6 +43,22 @@
             };
 
             return coaches;
+        }
+
+        public Task<CoachDescriptionModel> GetByIdAsync(string coachId)
+        {
+            return coachesRepository.All().Where(x => x.Id == coachId).Select(x => new CoachDescriptionModel
+            {
+                Id = x.Id,
+                FullName = x.FullName,
+                CategoryName = x.Category.Name,
+                AvatarImgUrl = x.AvatarImgUrl,
+                Company = x.Company,
+                DiscussionDurationInMinutes = x.DiscussionDurationInMinutes,
+                ResourcesCount = x.ResourcesCount,
+                SessionDescription = x.SessionDescription,
+                SkillsLearn = x.SkillsLearn,
+            }).FirstOrDefaultAsync();
         }
 
         private List<string> OwnerCoachCollectionIds(string ownerId)

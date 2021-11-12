@@ -10,6 +10,7 @@
   <ItemGroup>
     <None Remove="Controls\AddEmployeeModal.razor.css" />
     <None Remove="Controls\Avatar.razor.css" />
+    <None Remove="Controls\CoachDescriptionModal.razor.css" />
     <None Remove="Controls\CoachesDashboardTable.razor.css" />
     <None Remove="Controls\CoursesDashboardTable.razor.css" />
     <None Remove="Controls\DashboardTable.razor.css" />
@@ -31,6 +32,7 @@
   <ItemGroup>
     <Content Include="Controls\AddEmployeeModal.razor.css" />
     <Content Include="Controls\Avatar.razor.css" />
+    <Content Include="Controls\CoachDescriptionModal.razor.css" />
     <Content Include="Controls\CoachesDashboardTable.razor.css" />
     <Content Include="Controls\CoursesDashboardTable.razor.css" />
     <Content Include="Controls\EmployeeDashboardScheduler.razor.css" />

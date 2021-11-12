@@ -1,6 +1,7 @@
-﻿@using UpSkill.Infrastructure.Models.Coaches
-<div class="card custom-coach-card container mb-5" style="width: 18rem;">
-    <img class="card-img-top img-background" src="/images/coach.png" alt="Card image cap">
+﻿<div class="card custom-coach-card container mb-5" style="width: 18rem;">
+    <div @onclick="ShowPopup" class="card-img-top card-img-top-custom">
+        <img class="img-custom" src="images/coach.png" />
+    </div>
     <div class="card-body">
         <div class="row">
             <div class="coach-profession col-6">
@@ -12,7 +13,7 @@
         </div>
         <div class="row">
             <div class="coah-price col-6">
-                @Coach.PricePerSession.ToString("####")€ per person
+                @Coach.PricePerSession.ToString("F")€ per person
             </div>
             <div class="col-6 text-right">
                 <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
@@ -34,7 +35,7 @@
             }
         }
 
-        else if(
+        else if (
             user.Role().Result == GlobalConstants.EmployeeRoleName &&
             !NavigationManager.Uri.Contains("Coaches-catalog"))
         {
@@ -47,12 +48,15 @@
 </div>
 
 
-@code { 
+@* Modal *@
+@if (show)
+{
+    <CoachDescriptionModal CoachId="@Coach.Id" SetShow="SetShowValue"></CoachDescriptionModal>
+}
 
-   protected override void OnInitialized()
-    {
-        var url = NavigationManager.Uri;
-    }
+@code {
+
+    private bool show = false;
 
     [Parameter]
     public CoachInListCatalogModel Coach { get; set; }
@@ -71,6 +75,11 @@
 
     [Parameter]
     public EventCallback<CoachesListingCatalogModel> UpdatedOwnerCoachesListingCatalogModel { get; set; }
+
+    protected override void OnInitialized()
+    {
+        var url = NavigationManager.Uri;
+    }
 
     private async Task AddNewEmployeeSession(string coachId, string ownerId)
     {
@@ -103,5 +112,15 @@
     private bool IsCoachAdded()
     {
         return CoachIdsCollection.FirstOrDefault(x => x == Coach.Id) == null;
+    }
+
+    private void ShowPopup()
+    {
+        show = true;
+    }
+
+    private void SetShowValue(bool value)
+    {
+        show = value;
     }
 }

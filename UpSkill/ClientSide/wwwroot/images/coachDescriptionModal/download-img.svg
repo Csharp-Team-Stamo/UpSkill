@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="15" height="18" viewBox="0 0 15 18">
+  <g id="Group_102" data-name="Group 102" transform="translate(-1056 -718)">
+    <g id="Group_99" data-name="Group 99" transform="translate(48 -38)">
+      <g id="Path_3529" data-name="Path 3529" transform="translate(1008 756)" fill="none">
+        <path d="M0,0H10.6L15,4V18H0Z" stroke="none"/>
+        <path d="M 0.9999961853027344 1 L 0.9999961853027344 16.99998092651367 L 14.00001525878906 16.99998092651367 L 14.00001525878906 4.445206642150879 L 10.21041297912598 1 L 0.9999961853027344 1 M -3.814697265625e-06 0 L 10.59702587127686 0 L 15.00001525878906 4.002850532531738 L 15.00001525878906 17.99998092651367 L -3.814697265625e-06 17.99998092651367 L -3.814697265625e-06 0 Z" stroke="none" fill="#000"/>
+      </g>
+      <path id="Path_3530" data-name="Path 3530" d="M5610.342-15479.1v3.822h4.332" transform="translate(-4592.191 16235.528)" fill="none" stroke="#000" stroke-width="1"/>
+    </g>
+    <line id="Line_390" data-name="Line 390" y2="6" transform="translate(1063.5 723)" fill="none" stroke="#000" stroke-width="1"/>
+    <path id="Path_3533" data-name="Path 3533" d="M7787.85-15510l2.677,2.61,2.537-2.61" transform="translate(-6727 16236.5)" fill="none" stroke="#000" stroke-width="1"/>
+    <line id="Line_391" data-name="Line 391" x2="6" transform="translate(1060.5 732)" fill="none" stroke="#000" stroke-width="1"/>
+  </g>
+</svg>
