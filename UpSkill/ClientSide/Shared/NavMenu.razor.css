@@ -89,32 +89,11 @@ div > div {
     }
 }
 
-.pencil {
-    width: 10px;
-    height: 22px;
-    background: dimgray;
-    position: relative;
-    transform: rotate( 30deg);
-    left: 116%;
+.pencil-img {
+    left: 105%;
+    top: 4%;
+    height: 4%;
+    position: absolute;
+    cursor: pointer;
 }
 
-    .pencil::before {
-        content: "";
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        background: dimgray;
-        top: -13px;
-        left: 0%;
-    }
-
-    .pencil::after {
-        content: "";
-        position: absolute;
-        width: 8px;
-        height: 8px;
-        background: dimgray;
-        left: 1px;
-        bottom: -4px;
-        transform: rotate(45deg);
-    }

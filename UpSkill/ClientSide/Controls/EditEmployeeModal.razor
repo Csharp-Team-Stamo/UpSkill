@@ -1,0 +1,33 @@
+﻿<div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.8);"
+     aria-modal="true">
+    <div class="modal-dialog">
+        <div class="modal-body">
+            <div class="row modal-header-custom">
+                <div class="add-emp-text">Add Employees</div>
+                <div @onclick="ClosePopup" class="close header-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </div>
+                <div class="upload-csv-file-btn">
+                    <div class="upload-csv-file-btn-text">
+                        Upload CSV file
+                    </div>
+                </div>
+            </div>
+            <div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code
+{
+    [Parameter]
+    public EventCallback<bool> SetShow { get; set; }
+
+    private void ClosePopup()
+    {
+        SetShow.InvokeAsync(false);
+    }
+
+}
+
