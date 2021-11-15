@@ -8,7 +8,7 @@
 
     @foreach (var coach in allCoaches)
     {
-        <AdminCoachCard Coach="coach" ChangedState="SetState"></AdminCoachCard>
+        <AdminCoachCard Coach="coach" ChangeState="GetUpdatedCoaches"></AdminCoachCard>
     }
 
     <div class="col-sm-12 col-md-6 col-lg-4 mb-2 p-md-2 p-lg-5" style="position: relative;">
@@ -45,13 +45,9 @@
         ("/admin/coach/all");
     }
 
-    private async void SetState(bool childStateChanged)
+    private async void GetUpdatedCoaches(IEnumerable<AdminCoachListingServiceModel> updatedCoahces)
     {
-        if(childStateChanged)
-        {
-            StateHasChanged();
-        }
-
+        this.allCoaches = updatedCoahces;
     }
 
     private void ShowPopup()

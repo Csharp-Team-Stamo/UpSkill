@@ -31,8 +31,20 @@
 
         public async Task<Coach> Create(CoachCreateInputModel coachInput)
         {
-            var category = await this.categoryService.GetCategory(coachInput.CategoryId);
-            var language = await this.languageRepo.All().FirstOrDefaultAsync(l => l.Id == coachInput.LanguageId);
+            var coachExists = await this.CoachExists(
+                coachInput.Email, coachInput.FullName, coachInput.SessionDescription);
+
+            if(coachExists)
+            {
+                return null;
+            }
+
+            var category = await this.categoryService
+                                     .GetCategory(coachInput.CategoryId);
+
+            var language = await this.languageRepo
+                                     .All()
+                                     .FirstOrDefaultAsync(l => l.Id == coachInput.LanguageId);
 
             var coach = CreateCoach(coachInput, category);
 
@@ -53,6 +65,20 @@
                 coach;
         }
 
+        private async Task<bool> CoachExists(
+            string email,
+            string fullName,
+            string sessionDescription)
+        {
+            var coachWithEmail = await this.coachRepo
+                .All()
+                .FirstOrDefaultAsync(c => 
+                    c.Email == email && 
+                    c.FullName == fullName && 
+                    c.SessionDescription == sessionDescription);
+
+            return coachWithEmail != null;
+        }
         public async Task<CoachDetailsServiceModel> GetCoachDetails(string id)
         {
             var coachInDb = await this.GetCoach(id);

@@ -88,7 +88,7 @@
     public AdminCoachListingServiceModel Coach { get; set; }
     
     [Parameter]
-    public EventCallback<bool> ChangedState { get; set; }
+    public EventCallback<IEnumerable<AdminCoachListingServiceModel>> ChangeState { get; set; }
 
     private async Task RemoveCoach(string coachId)
     {
@@ -98,7 +98,11 @@
 
         if(response.IsSuccessStatusCode)
         {
-            await ChangedState.InvokeAsync(true);
+            var updatedCoaches = await this.Client
+                .GetFromJsonAsync<IEnumerable<AdminCoachListingServiceModel>>
+                ("/admin/coach/all");
+
+            await ChangeState.InvokeAsync(updatedCoaches);
         }
         // await CoachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
 
