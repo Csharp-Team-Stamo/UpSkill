@@ -4,7 +4,9 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Contracts;
+    using Infrastructure.Models.CoachDescriptionModal;
     using Infrastructure.Models.Coaches;
+    using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
 
@@ -21,10 +23,8 @@
             this.ownerService = ownerService;
         }
 
-        public CoachesListingCatalogModel GetAll(string userId)
+        public CoachesListingCatalogModel GetAll(string ownerId)
         {
-            var ownerId = OwnerId(userId);
-
             var coaches = new CoachesListingCatalogModel
             {
                 OwnerId = ownerId,
@@ -33,14 +33,32 @@
                 {
                     Id = x.Id,
                     FullName = x.FullName,
+                    ImageUrl = x.AvatarImgUrl,
                     CategoryName = x.Category.Name,
                     Company = x.Company,
                     CompanyLogoUrl = x.CompanyLogoUrl,
                     PricePerSession = x.PricePerSession,
+                    Languages = x.Languages.Select(cl => cl.Language.Name).ToList(),
                 }).ToList()
             };
 
             return coaches;
+        }
+
+        public Task<CoachDescriptionModel> GetByIdAsync(string coachId)
+        {
+            return coachesRepository.All().Where(x => x.Id == coachId).Select(x => new CoachDescriptionModel
+            {
+                Id = x.Id,
+                FullName = x.FullName,
+                CategoryName = x.Category.Name,
+                AvatarImgUrl = x.AvatarImgUrl,
+                Company = x.Company,
+                DiscussionDurationInMinutes = x.DiscussionDurationInMinutes,
+                ResourcesCount = x.ResourcesCount,
+                SessionDescription = x.SessionDescription,
+                SkillsLearn = x.SkillsLearn,
+            }).FirstOrDefaultAsync();
         }
 
         private List<string> OwnerCoachCollectionIds(string ownerId)
@@ -49,9 +67,8 @@
         }
 
 
-        public CoachesListingCatalogModel GetAllByOwnerId(string userId)
+        public CoachesListingCatalogModel GetAllByOwnerId(string ownerId)
         {
-            var ownerId = OwnerId(userId);
 
             var coachesByOwnerId = new CoachesListingCatalogModel
             {
@@ -78,21 +95,13 @@
             await coachesOwnerRepository.SaveChangesAsync();
         }
 
-        public async Task RemoveCoachFromOwnerCoachCollectionAsync(string coachId, string userId)
+        public async Task RemoveCoachFromOwnerCoachCollectionAsync(string coachId, string ownerId)
         {
-            var ownerId = OwnerId(userId);
-
             var coachToRemove = coachesOwnerRepository.All().FirstOrDefault(x => x.CoachId == coachId && x.OwnerId == ownerId);
 
             coachesOwnerRepository.HardDelete(coachToRemove);
 
             await coachesOwnerRepository.SaveChangesAsync();
-        }
-
-        private string OwnerId(string userId)
-        {
-            var ownerId = ownerService.GetId(userId);
-            return ownerId;
         }
     }
 }

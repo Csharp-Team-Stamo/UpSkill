@@ -1,6 +1,7 @@
-﻿@using UpSkill.Infrastructure.Models.Coaches
-<div class="card custom-coach-card container mb-5" style="width: 18rem;">
-    <img class="card-img-top img-background" src="/images/coach.png" alt="Card image cap">
+﻿<div class="card custom-coach-card container mb-5" style="width: 18rem;">
+    <div @onclick="ShowPopup" class="card-img-top card-img-top-custom">
+        <img class="img-custom" src="images/coach.png" />
+    </div>
     <div class="card-body">
         <div class="row">
             <div class="coach-profession col-6">
@@ -12,7 +13,7 @@
         </div>
         <div class="row">
             <div class="coah-price col-6">
-                @Coach.PricePerSession.ToString("####")€ per person
+                @Coach.PricePerSession.ToString("F")€ per person
             </div>
             <div class="col-6 text-right">
                 <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
@@ -29,10 +30,20 @@
             else
             {
                 <div class="text-center">
-                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.Id().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
+                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
                 </div>
             }
         }
+
+        else if (
+            user.Role().Result == GlobalConstants.EmployeeRoleName &&
+            !NavigationManager.Uri.Contains("Coaches-catalog"))
+        {
+            <div class="text-center">
+                <button @onclick="@(() =>AddNewEmployeeSession(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>
+            </div>
+        }
+
     </div>
 </div>
 
@@ -41,7 +52,15 @@
     <SelectCoachSessionModal  SetShow="SetShowValue" ></SelectCoachSessionModal>
 }
 
+@* Modal *@
+@if (show)
+{
+    <CoachDescriptionModal CoachId="@Coach.Id" SetShow="SetShowValue"></CoachDescriptionModal>
+}
+
 @code {
+
+    private bool show = false;
 
     [Parameter]
     public CoachInListCatalogModel Coach { get; set; }
@@ -61,8 +80,43 @@
     [Parameter]
     public EventCallback<CoachesListingCatalogModel> UpdatedOwnerCoachesListingCatalogModel { get; set; }
 
-    private bool show = false;
+    protected override void OnInitialized()
+    {
+        var url = NavigationManager.Uri;
+    }
 
+    private async Task AddNewEmployeeSession(string coachId, string ownerId)
+    {
+        var employeeId = user.Id().Result;
+
+        //await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
+
+        //await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(userId));
+
+    }
+
+    private async Task AddCoach(string coachId, string ownerId)
+    {
+        await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
+
+        await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
+
+    }
+
+
+    private async Task RemoveCoach(string coachId, string ownerId)
+    {
+        await CoachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
+
+        await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
+
+        await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllByOwnerIdAsync(ownerId));
+    }
+
+    private bool IsCoachAdded()
+    {
+        return CoachIdsCollection.FirstOrDefault(x => x == Coach.Id) == null;
+    }
 
     private void ShowPopup()
     {
@@ -73,30 +127,4 @@
     {
         show = value;
     }
-
-    private async Task AddCoach(string coachId, string ownerId)
-    {
-        var userId = user.Id().Result;
-
-        await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
-
-        await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(userId));
-
-    }
-
-
-    private async Task RemoveCoach(string coachId, string userId)
-    {
-        await CoachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, userId);
-
-        await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(userId));
-
-        await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllByOwnerIdAsync(userId));
-    }
-
-    private bool IsCoachAdded()
-    {
-        return CoachIdsCollection.FirstOrDefault(x => x == Coach.Id) == null;
-    }
-
 }

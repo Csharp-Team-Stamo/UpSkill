@@ -28,29 +28,44 @@ namespace UpSkill.Api.Controllers
         private readonly IAccountsService accountService;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly ICompanyService companyService;
+        private readonly IOwnerService ownerService;
+        private readonly IEmployeesService employeesService;
         private readonly IConfigurationSection jwtSettings;
 
-        public AccountsController(IAccountsService accountService, UserManager<ApplicationUser> userManager,
-            IConfiguration configuration, ICompanyService companyService)
+        public AccountsController(
+            IAccountsService accountService,
+            UserManager<ApplicationUser> userManager,
+            IConfiguration configuration,
+            ICompanyService companyService,
+            IOwnerService ownerService,
+            IEmployeesService employeesService)
         {
 
             this.accountService = accountService;
             this.userManager = userManager;
             this.companyService = companyService;
+            this.ownerService = ownerService;
+            this.employeesService = employeesService;
             this.jwtSettings = configuration.GetSection("JWTSettings");
         }
 
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterUser([FromBody] UserRegistrationModel input)
         {
+            var response = new RegistrationResponseModel { };
+
             if (input == null || !ModelState.IsValid)
             {
-                return BadRequest();
+                var errors = ModelState.Values.SelectMany(v => v.Errors.Select(b => b.ErrorMessage));
+                AddErrors(response, errors);
+                return BadRequest(response);
             }
 
             if (!this.accountService.IsEmailAvailable(input.Email))
             {
-                return BadRequest("This email is already taken!");
+                var errors = new List<string>() { GlobalConstants.Errors.EmailIsTaken };
+                AddErrors(response, errors);
+                return BadRequest(response);
             }
 
             var result = await this.accountService.Register(input.FullName, input.Email, input.Password, input.CompanyName);
@@ -58,10 +73,18 @@ namespace UpSkill.Api.Controllers
             if (!result.Succeeded)
             {
                 var errors = result.Errors.Select(e => e.Description);
-                return BadRequest(new RegistrationResponseModel { Errors = errors });
+                response.Errors = errors;
+                return BadRequest(response);
             }
+            response.IsSuccessfulRegistration = true;
 
-            return StatusCode(201);
+            return StatusCode(201, response);
+        }
+
+        private static void AddErrors(RegistrationResponseModel response, IEnumerable<string> errors)
+        {
+            response.Errors = errors;
+            response.IsSuccessfulRegistration = false;
         }
 
         [HttpPost("Request-reset-password")]
@@ -117,22 +140,12 @@ namespace UpSkill.Api.Controllers
             var user = await this.userManager.FindByEmailAsync(userData.Email);
             var unauthorizedResponse = new UserAuthenticationResponseModel();
 
-            //TODO: remove in production evironment. Every user should confirm their email.
-            var claims = await userManager.GetClaimsAsync(user);
-            var role = claims.FirstOrDefault(x => x.Type == ClaimTypes.Role).Value;
 
             if (user == null ||
                 !await this.userManager
                            .CheckPasswordAsync(user, userData.Password))
             {
                 unauthorizedResponse.ErrorMessage = "Username or password is incorrect!";
-                return Unauthorized(unauthorizedResponse);
-            }
-
-
-            else if (!user.EmailConfirmed && role == "Employee")
-            {
-                unauthorizedResponse.ErrorMessage = "Email is not confirmed.";
                 return Unauthorized(unauthorizedResponse);
             }
 
@@ -168,12 +181,25 @@ namespace UpSkill.Api.Controllers
         {
             var claims = this.userManager.GetClaimsAsync(user);
             var claimsAsList = new List<Claim>(claims.Result);
-
+            
             claimsAsList.Add(new Claim(ClaimTypes.Email, user.Email));
             claimsAsList.Add(new Claim("Id", user.Id));
             claimsAsList.Add(new Claim("FullName", user.FullName));
             claimsAsList.Add(new Claim("CompanyId", user.CompanyId.ToString()));
             claimsAsList.Add(new Claim("CompanyName", companyService.GetName(user.CompanyId)));
+
+            var ownerId = string.Empty;
+
+            if (claims.Result.Any(x => x.Value == "Owner"))
+            {
+                 ownerId = this.ownerService.GetId(user.Id);
+            }
+            else if (claims.Result.Any(x => x.Value == "Employee"))
+            {
+                ownerId = this.employeesService.GetOwnerById(user.Id);
+            }
+
+            claimsAsList.Add(new Claim("OwnerId", ownerId));
 
             return claimsAsList;
         }

@@ -1,11 +1,12 @@
-﻿@page "/Courses"
-@layout NoMenuLayout
-
-<QueryPanel></QueryPanel>
+@page "/Courses"
 
 <div class="row">
+    <CoursesTopCard></CoursesTopCard>
+
     @for (int i = 1; i < 10; i++)
     {
         <ResourceCard></ResourceCard>
     }
+
 </div>
+

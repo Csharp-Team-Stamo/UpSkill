@@ -1,6 +1,7 @@
 ﻿namespace UpSkill.Api.Controllers
 {
     using System.Threading.Tasks;
+    using Infrastructure.Models.CoachDescriptionModal;
     using Infrastructure.Models.Coaches;
     using Microsoft.AspNetCore.Mvc;
     using Services.Data.Contracts;
@@ -17,15 +18,21 @@
         }
 
         [HttpGet("GetAll")]
-        public CoachesListingCatalogModel GetAll([FromQuery]string userId)
+        public CoachesListingCatalogModel GetAll([FromQuery]string ownerId)
         {
-            return coachesService.GetAll(userId);
+            return coachesService.GetAll(ownerId);
+        }
+
+        [HttpGet("GetByIdAsync")]
+        public async Task<CoachDescriptionModel> GetByIdAsync(string coachId)
+        {
+           return await coachesService.GetByIdAsync(coachId);
         }
 
         [HttpGet("GetAllByOwnerId")]
-        public CoachesListingCatalogModel GetAllByOwnerId([FromQuery] string userId)
+        public CoachesListingCatalogModel GetAllByOwnerId([FromQuery] string ownerId)
         {
-            return coachesService.GetAllByOwnerId(userId);
+            return coachesService.GetAllByOwnerId(ownerId);
         }
 
         [HttpPost("AddCoachInOwnerCoachesCollectionAsync")]
@@ -35,9 +42,9 @@
         }
         
         [HttpDelete("RemoveCoachFromOwnerCoachCollectionAsync")]
-        public async Task<ActionResult> RemoveCoachFromOwnerCoachCollectionAsync([FromQuery]string coachId, [FromQuery] string userId)
+        public async Task<ActionResult> RemoveCoachFromOwnerCoachCollectionAsync([FromQuery]string coachId, [FromQuery] string ownerId)
         {
-           await coachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, userId);
+           await coachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
 
            return Ok();
         }

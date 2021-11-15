@@ -1,3 +1,5 @@
+@inject NavigationManager NavigationManager
+
 <CascadingAuthenticationState>
     <Router AppAssembly="@typeof(Program).Assembly" PreferExactMatches="@true">
         <Found Context="routeData">
@@ -8,7 +10,7 @@
                 <NotAuthorized>
                     @if (context.User.Identity.IsAuthenticated is false)
                     {
-                        <RedirectToLogin />
+                        NavigationManager.NavigateTo("/login");
                     }
                     else
                     {
