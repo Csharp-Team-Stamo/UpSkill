@@ -8,7 +8,7 @@
 
     @foreach (var coach in allCoaches)
     {
-        <AdminCoachCard Coach="coach"></AdminCoachCard>
+        <AdminCoachCard Coach="coach" ChangedState="SetState"></AdminCoachCard>
     }
 
     <div class="col-sm-12 col-md-6 col-lg-4 mb-2 p-md-2 p-lg-5" style="position: relative;">
@@ -25,17 +25,33 @@
     NavigationManager.NavigateTo("/adminCoach");
 }
 
+@*@if(stateChanged)
+{
+    this.OnInitializedAsync();
+}*@
+
 @code {
     private IEnumerable<AdminCoachListingServiceModel> allCoaches =
         new List<AdminCoachListingServiceModel>();
 
     private bool show = false;
 
+    // private bool stateChanged;
+
     protected override async Task OnInitializedAsync()
     {
         this.allCoaches = await this.Client
         .GetFromJsonAsync<IEnumerable<AdminCoachListingServiceModel>>
         ("/admin/coach/all");
+    }
+
+    private async void SetState(bool childStateChanged)
+    {
+        if(childStateChanged)
+        {
+            StateHasChanged();
+        }
+
     }
 
     private void ShowPopup()

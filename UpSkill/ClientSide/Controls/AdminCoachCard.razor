@@ -80,41 +80,26 @@
                 </button>
             </div>
         }
-
-        @*@if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
-        {
-            if (IsCoachAdded())
-            {
-                <div class="text-center">
-                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
-                </div>
-            }
-            else
-            {
-                <div class="text-center">
-                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
-                </div>
-            }
-        }
-
-        else if (
-            user.Role().Result == GlobalConstants.EmployeeRoleName &&
-            !NavigationManager.Uri.Contains("Coaches-catalog"))
-        {
-            <div class="text-center">
-                <button @onclick="@(() =>AddNewEmployeeSession(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>
-            </div>
-        }*@
-
     </div>
 </div>
 
 @code {
     [Parameter]
     public AdminCoachListingServiceModel Coach { get; set; }
+    
+    [Parameter]
+    public EventCallback<bool> ChangedState { get; set; }
 
     private async Task RemoveCoach(string coachId)
     {
+
+        var response = await this.Client
+            .DeleteAsync($"/admin/coach/delete/{coachId}");
+
+        if(response.IsSuccessStatusCode)
+        {
+            await ChangedState.InvokeAsync(true);
+        }
         // await CoachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
 
         // await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
