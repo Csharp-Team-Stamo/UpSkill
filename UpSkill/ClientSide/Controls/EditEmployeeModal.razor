@@ -8,14 +8,30 @@
                     <span style="font-size: 2rem" aria-hidden="true">&times;</span>
                 </div>
             </div>
-            <div>
-            </div>
+            <EditForm Model="@employeeModel">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="edit-foto-background">
+                            <img class="avatar-no-img" src="images/user-no-img-avatar.svg" />
+                        </div>
+                        <InputFile></InputFile>
+                    </div>
+
+                    <div class="col-8">
+                        <InputText @bind-Value="@employeeModel.FullName"></InputText>
+                        <InputText @bind-Value="@employeeModel.Email"></InputText>
+                        <InputText @bind-Value="@employeeModel.Summary"></InputText>
+                    </div>
+                </div>
+            </EditForm>
         </div>
     </div>
 </div>
 
 @code
 {
+    private EditEmployeeModel employeeModel = new();
+
     [Parameter]
     public EventCallback<bool> SetShow { get; set; }
 

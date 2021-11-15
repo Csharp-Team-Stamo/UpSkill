@@ -5,7 +5,7 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Contracts;
-    using Infrastructure.Models.AddEmployeeModal;
+    using Infrastructure.Models.Employee;
     using Microsoft.AspNetCore.Identity;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;

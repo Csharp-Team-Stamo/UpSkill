@@ -5,7 +5,7 @@
     using System.Net.Http.Json;
     using System.Threading.Tasks;
     using Contracts;
-    using UpSkill.Infrastructure.Models.AddEmployeeModal;
+    using UpSkill.Infrastructure.Models.Employee;
 
     public class EmployeesService : IEmployeesService
     {

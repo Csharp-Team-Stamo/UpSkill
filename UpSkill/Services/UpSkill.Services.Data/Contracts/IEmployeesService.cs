@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Infrastructure.Models.AddEmployeeModal;
+    using Infrastructure.Models.Employee;
 
     public interface IEmployeesService
     {

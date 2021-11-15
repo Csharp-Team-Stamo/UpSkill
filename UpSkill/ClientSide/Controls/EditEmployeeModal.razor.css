@@ -38,63 +38,11 @@
     cursor: pointer;
 }
 
-input, ::deep input {
-    border: 2px solid #296CFB;
-    margin-bottom: 3%;
+.edit-foto-background {
+    background: #296CFB1A 0% 0% no-repeat padding-box;
 }
 
-    input, ::deep input::placeholder {
-        color: #296CFB;
-        padding-left: 8%;
-    }
-
-.add-another-one-employee {
-    text-align: left;
-    font: 70% Montserrat;
-    letter-spacing: 1.1px;
-    color: #296CFB;
-    margin-left: 25%;
-    cursor: pointer;
+.avatar-no-img {
     position: relative;
-    border: none;
-    padding: 0;
-    background: none;
-    outline: none;
-    left: -18%;
-    margin-bottom: 7%;
-}
-.cancel-btn {
-    border: 2px solid #296CFB;
-    position: relative;
-    width: 20%;
-    height: 7%;
-    top: 8%;
-    left: 26%;
-    cursor: pointer;
-    padding: 0;
-    background: none;
-}
-.cancel-btn-text {
-    font: bold 64% Montserrat;
-    letter-spacing: 1.1px;
-    color: #296CFB;
-    position: relative;
-    top: 17%;
-}
-.save-btn {
-    background: #296CFB 0% 0% no-repeat padding-box;
-    position: relative;
-    width: 20%;
-    height: 14%;
-    top: -1%;
-    left: 34%;
-    cursor: pointer;
-    border: none;
-}
-.save-btn-text {
-    font: bold 64% Montserrat;
-    letter-spacing: 1.1px;
-    color: #FFFFFF;
-    position: relative;
-    top: 21%;
+    width: 100%;
 }
