@@ -53,7 +53,15 @@
 </style>
 
 <div class="card custom-coach-card container mb-5" style="width: 18rem;">
-    <img class="card-img-top img-background" src="/images/coach.png" alt="Card image cap">
+    @if (Coach.AvatarUrl != null)
+    {
+        <img class="card-img-top img-background" src="@Coach.AvatarUrl" alt="Card image cap">
+    }
+    else
+    {
+        <img class="card-img-top img-background" src="/images/coach.png" alt="Card image cap">
+    }
+
     <div class="card-body">
         <div class="row">
             <div class="coach-profession col-6">
@@ -76,7 +84,7 @@
         {
             <div class="text-center">
                 <button @onclick="@(() => RemoveCoach(Coach.Id))" class="coach-btn">
-                <span class="coach-btn-text">Remove</span>
+                    <span class="coach-btn-text">Remove</span>
                 </button>
             </div>
         }

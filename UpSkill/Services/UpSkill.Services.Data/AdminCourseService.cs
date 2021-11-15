@@ -12,12 +12,12 @@
 
     public class AdminCourseService : IAdminCourseService
     {
-        private readonly IRepository<Course> courseRepo;
+        private readonly IDeletableEntityRepository<Course> courseRepo;
         private readonly IAdminCategoryService categoryService;
         private readonly IAdminLanguageService languageService;
 
         public AdminCourseService(
-            IRepository<Course> courseRepo,
+            IDeletableEntityRepository<Course> courseRepo,
             IAdminCategoryService categoryService,
             IAdminLanguageService languageService)
         {

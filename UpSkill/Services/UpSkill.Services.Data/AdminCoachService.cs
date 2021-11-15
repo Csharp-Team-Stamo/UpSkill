@@ -116,7 +116,8 @@
                     FullName = c.FullName,
                     CategoryName = c.Category.Name,
                     CompanyLogoUrl = c.CompanyLogoUrl,
-                    Price = c.PricePerSession
+                    Price = c.PricePerSession,
+                    AvatarUrl = c.AvatarImgUrl
                 })
                 .ToListAsync();
 
