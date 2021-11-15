@@ -28,6 +28,11 @@ namespace UpSkill.Api.Areas.Admin.Controllers
 
             var result = await this.statisticsService.GetClientsStatistics(year);
 
+            if(result.Any() == false)
+            {
+                return NotFound();
+            }
+
             return new List<MonthlyClient>(result);
         }
 
@@ -35,6 +40,11 @@ namespace UpSkill.Api.Areas.Admin.Controllers
         public async Task<ActionResult<IEnumerable<AdminCompanyListingModel>>> GetAllClients()
         {
             var allClients = await this.statisticsService.GetAllClients();
+
+            if(allClients.Any() == false)
+            {
+                return NotFound();
+            }
 
             return new List<AdminCompanyListingModel>(allClients);
         }

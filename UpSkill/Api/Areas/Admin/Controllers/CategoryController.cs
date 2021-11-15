@@ -37,14 +37,19 @@
         }
 
         [HttpGet("All")]
-        public async Task<IEnumerable<AdminCategoryListingServiceModel>> All()
+        public async Task<ActionResult<IEnumerable<AdminCategoryListingServiceModel>>> All()
         {
             var allCategories = await this
                 .categoryService
                 .GetAll();
 
+            if(allCategories.Any() == false)
+            {
+                return NotFound();
+            }
+
             return new List<AdminCategoryListingServiceModel>
-                (allCategories.OrderBy(c => c.Name));
+                (allCategories);
         }
     }
 }

@@ -6,6 +6,7 @@
     using Infrastructure.Models.Coach;
     using Services.Data.Contracts;
     using UpSkill.Data.Models;
+    using System.Linq;
 
     public class CoachController : AdminController
     {
@@ -38,6 +39,11 @@
         public async Task<ActionResult<IEnumerable<AdminCoachListingServiceModel>>> All()
         {
             var coaches = await this.coachService.GetAll();
+
+            if(coaches.Any() == false)
+            {
+                return NotFound();
+            }
 
             return new List<AdminCoachListingServiceModel>(coaches);
         }

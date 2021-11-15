@@ -94,6 +94,7 @@
         {
             var allCoaches = await this.coachRepo
                 .All()
+                .OrderBy(c => c.FullName)
                 .Select(c => new AdminCoachListingServiceModel
                 {
                     Id = c.Id,

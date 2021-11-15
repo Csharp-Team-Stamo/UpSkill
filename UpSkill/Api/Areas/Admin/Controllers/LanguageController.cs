@@ -41,6 +41,11 @@
             var allLanguages = await this.languageService
                 .GetAll();
 
+            if(allLanguages.Any() == false)
+            {
+                return NotFound();
+            }
+
             return new List<LanguageListingServiceModel>(allLanguages);
         }
     }
