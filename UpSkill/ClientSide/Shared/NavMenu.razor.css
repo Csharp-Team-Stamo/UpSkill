@@ -88,3 +88,12 @@ div > div {
         display: block;
     }
 }
+
+.pencil-img {
+    left: 105%;
+    top: 4%;
+    height: 4%;
+    position: absolute;
+    cursor: pointer;
+}
+

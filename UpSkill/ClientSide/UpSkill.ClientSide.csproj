@@ -14,6 +14,7 @@
     <None Remove="Controls\CoachesDashboardTable.razor.css" />
     <None Remove="Controls\CoursesDashboardTable.razor.css" />
     <None Remove="Controls\DashboardTable.razor.css" />
+    <None Remove="Controls\EditEmployeeModal.razor.css" />
     <None Remove="Controls\EmployeeDashboardScheduler.razor.css" />
     <None Remove="Controls\Footer.razor.css" />
     <None Remove="Controls\Header.razor.css" />
@@ -35,6 +36,7 @@
     <Content Include="Controls\CoachDescriptionModal.razor.css" />
     <Content Include="Controls\CoachesDashboardTable.razor.css" />
     <Content Include="Controls\CoursesDashboardTable.razor.css" />
+    <Content Include="Controls\EditEmployeeModal.razor.css" />
     <Content Include="Controls\EmployeeDashboardScheduler.razor.css" />
     <Content Include="Controls\Footer.razor.css" />
     <Content Include="Controls\Header.razor.css" />

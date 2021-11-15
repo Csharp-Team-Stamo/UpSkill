@@ -9,6 +9,8 @@
     <li class="nav-item px-3">
         <div class="d-inline-flex p-3 align-content-center">
             <Avatar></Avatar>
+            <img @onclick="ShowPopup" class="pencil-img" src="images/iconmonstr-pencil-2.svg" />
+
             <div class="ml-2 text-left">
                 <div class=" mt-1 pb-1">
                     @user.FullName().Result
@@ -67,10 +69,24 @@
             </li>
         </Authorized>
     </AuthorizeView>
+
+
 </ul>
 
 
 @code {
+
+
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> show { get; set; }
+
+
+    private void ShowPopup()
+    {
+        show.InvokeAsync(true);
+    }
+
 }

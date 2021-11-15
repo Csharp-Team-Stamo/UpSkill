@@ -85,8 +85,8 @@ html, body {
 }
 
 .sticky-content {
-    position: sticky;
-    text-align:center;
+/*    position: sticky;
+*/    text-align:center;
     bottom: var(--footer-height);
     min-height: calc(100vh - var(--footer-height));
     box-sizing: border-box;
@@ -94,3 +94,4 @@ html, body {
     padding: calc(var(--header-height) + var(--padding)) var(--padding) var(--padding);
     margin-top: calc(0px - var(--header-height));
 }
+

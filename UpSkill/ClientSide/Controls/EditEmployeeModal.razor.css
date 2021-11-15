@@ -3,58 +3,39 @@
 }
 .modal-body {
     background: #FFFFFF 0% 0% no-repeat padding-box;
-    height: 350px;
+    height: 370px;
     margin-top: 15%;
-    width: 90%;
+    width: 100%;
     position: absolute;
     pointer-events: auto;
 }
 
 .modal-header-custom {
     background: #296CFB;
-    height: 39%;
+    height: 15%;
     position: relative;
     top: -6%;
-    width: 107.9%;
+    width: 107%;
     left: -0.46%;
 }
 
-.add-emp-text {
+.modal-header-title {
     font: 93% Montserrat;
     letter-spacing: 1.4px;
     color: #FFFFFF;
     position: absolute;
-    left: 33%;
-    top: 68%;
+    left: 6%;
+    top: 38%;
+    max-width: inherit;
 }
 
 .header-btn {
     position: relative;
     left: 94%;
-    top: 5%;
+    top: 25%;
     color: white;
     font-weight: 100;
     cursor: pointer;
-}
-
-.upload-csv-file-btn {
-    border: 2px solid #FFFFFF;
-    position: relative;
-    left: 63%;
-    top: 41%;
-    width: 26%;
-    height: 17%;
-    cursor: pointer;
-}
-
-.upload-csv-file-btn-text {
-    text-align: left;
-    font: bold 50% Montserrat;
-    letter-spacing: 1.1px;
-    color: #FFFFFF;
-    position: relative;
-    left: 17%;
-    top: 18%;
 }
 
 input, ::deep input {
