@@ -14,7 +14,8 @@
                         <div class="edit-foto-background">
                             <img class="avatar-no-img" src="images/user-no-img-avatar.svg" />
                         </div>
-                        <InputFile></InputFile>
+                        <label for="edit">yooo</label>
+                        <InputFile OnChange="Yooo" id="edit" />
                     </div>
 
                     <div class="col-8">
@@ -38,6 +39,11 @@
     private void ClosePopup()
     {
         SetShow.InvokeAsync(false);
+    }
+
+    private void Yooo(InputFileChangeEventArgs e)
+    {
+        Console.WriteLine("yoo");
     }
 }
 
