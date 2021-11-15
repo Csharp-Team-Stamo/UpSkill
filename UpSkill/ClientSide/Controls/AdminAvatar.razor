@@ -1,6 +1,7 @@
-﻿@inject NavigationManager NavigationManager
+﻿@layout AdminAvatar
+@inject NavigationManager NavigationManager
 
-<AuthorizeView>
+<AuthorizeView Roles="Administrator">
     <div class="avatar-container" @onclick=@(() => RedirectToPage("/admin/profile"))>
         <i class="my-2 d-flex justify-content-around">
             <span class="justify-content-center align-self-center">
