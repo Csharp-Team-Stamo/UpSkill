@@ -8,6 +8,8 @@
 
         public string FullName { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public string CategoryName { get; set; }
 
         public string Company { get; set; }

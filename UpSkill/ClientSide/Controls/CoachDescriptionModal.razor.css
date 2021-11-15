@@ -46,31 +46,30 @@
     right: -5%;
 }
 
+.coach-info-div {
+    position: relative;
+    top: 54%;
+    right: -7%;
+    text-align: left;
+}
+
 .coach-div {
     font: 75% Montserrat;
     letter-spacing: 1.1px;
     color: #FFFFFF;
-    position: relative;
-    top: 54%;
-    right: -7%;
 }
 
 .coach-name-div {
     font: bold 75% Montserrat;
     letter-spacing: 1.1px;
     color: #FFFFFF;
-    position: relative;
-    top: 62%;
-    right: -1.2%;
 }
 
 .company-div {
     font: 75% Montserrat;
     letter-spacing: 1.1px;
     color: #FFFFFF;
-    position: relative;
-    top: 73%;
-    right: 8%;
+    margin-top: 10%;
 }
 
 .video-container {

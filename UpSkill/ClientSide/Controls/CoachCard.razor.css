@@ -42,9 +42,20 @@
     box-shadow: 0px 3px 10px #00000029;
 }
 
-.img-background {
-    height: 90%;
-    background: #1CC18A 0% 0% no-repeat padding-box;
-    opacity: 1;
+.img-custom {
     cursor: pointer;
+    top: -13%;
+    width: 89%;
+    height: 113%;
+    left: 5%;
+    position: absolute;
+}
+
+.card-img-top-custom {
+    height: 150px;
+    width: 287px;
+    background-color: #1CC18A;
+    padding-left: 10px;
+    position: relative;
+    left: -6%;
 }
