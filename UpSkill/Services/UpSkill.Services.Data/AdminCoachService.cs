@@ -61,7 +61,8 @@
                 FullName = coachInput.FullName,
                 ImageUrl = coachInput.ImageUrl,
                 Email = coachInput.Email,
-                PricePerSession = coachInput.PricePerSession
+                PricePerSession = coachInput.PricePerSession,
+                CalendlyPopupUrl = coachInput.CalendlyPopupUrl
             };
 
         public async Task<CoachDetailsServiceModel> GetCoachDetails(string id)

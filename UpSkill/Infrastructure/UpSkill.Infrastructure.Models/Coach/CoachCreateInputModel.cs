@@ -30,6 +30,9 @@
         [Range(0.00, 1000.00)]
         public decimal PricePerSession { get; set; }
 
+        [Required]
+        public string CalendlyPopupUrl { get; set; }
+
         public ICollection<int> Languages { get; set; } =
             new List<int>();
     }

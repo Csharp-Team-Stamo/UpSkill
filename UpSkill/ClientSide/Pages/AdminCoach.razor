@@ -54,6 +54,14 @@
     </div>
 
     <div class="form-group row">
+        <label for="calendlypopupurl" class="col-md-2 col-form-label">Calendly URL</label>
+        <div class="col-md-10">
+            <InputText id="calendlypopupurl" class="form-control" @bind-Value="coachInput.CalendlyPopupUrl" />
+            <ValidationMessage For="@(() => coachInput.CalendlyPopupUrl)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
         <label for="CategoryId" class="col-md-2 col-form-label">Category</label>
         <div class="col-md-10">
             <InputSelect id="categoryId" class="form-control" @bind-Value="coachInput.CategoryId">
