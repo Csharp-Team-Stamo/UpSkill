@@ -21,7 +21,7 @@
             @if (Course.IsDeleted == false)
             {
                 <div class="row">
-                    <button class="btn action mx-auto">Remove</button>
+                    <button @onclick="@(() => RemoveCourse(Course.Id))" class="btn action mx-auto">Remove</button>
                 </div>
             }
         </div>
@@ -31,4 +31,22 @@
 @code {
     [Parameter]
     public AdminCourseListingServiceModel Course { get; set; }
+
+    [Parameter]
+    public EventCallback<IEnumerable<AdminCourseListingServiceModel>> ChangeState { get; set; }
+
+    private async Task RemoveCourse(int courseId)
+    {
+        var response = await this.Client
+            .DeleteAsync($"/admin/course/delete/{courseId}");
+
+        if(response.IsSuccessStatusCode)
+        {
+            var updatedCourses = await this.Client
+            .GetFromJsonAsync<IEnumerable<AdminCourseListingServiceModel>>
+            ("/admin/course/all");
+
+            await ChangeState.InvokeAsync(updatedCourses);
+        }
+    }
 }

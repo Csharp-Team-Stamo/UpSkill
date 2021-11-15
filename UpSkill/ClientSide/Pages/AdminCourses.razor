@@ -9,8 +9,7 @@
 
     @foreach(var course in allCourses)
     {
-        <AdminCourseCard Course="course"></AdminCourseCard>
-        @*<ResourceCard Course="course"></ResourceCard>*@
+        <AdminCourseCard Course="course" ChangeState="GetUpdatedCourses"></AdminCourseCard>
     }
 
     <div class="col-sm-12 col-md-6 col-lg-4 mb-2 p-md-2 p-lg-5" style="position: relative;">
@@ -26,13 +25,6 @@
 @if(show)
 {
     NavigationManager.NavigateTo("/adminCourse");
-    // AdminCourse is a safety option for while the AdminCourseModal looks terrible
-    @*<AdminCourse></AdminCourse>*@
-
-    @*<AdminCourseAddModal 
-                    SetShow="SetShowValue" 
-                    GetUpdatedCourses="SetCoursesCollection">
-    </AdminCourseAddModal>*@
 }
 
 @code {
@@ -57,8 +49,8 @@
         show = value;
     }
 
-    private void SetCoursesCollection(IEnumerable<AdminCourseListingServiceModel> value)
+    private void GetUpdatedCourses(IEnumerable<AdminCourseListingServiceModel> updatedCourses)
     {
-        allCourses = value;
+        allCourses = updatedCourses;
     }
 }

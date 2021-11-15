@@ -72,7 +72,7 @@
                 course.Id;
         }
 
-        public async Task<int?> SetDelete(int id)
+        public async Task<int?> SetDeleted(int id)
         {
             var courseToDelete = this.courseRepo
                 .All()

@@ -120,8 +120,8 @@
             return StatusCode(200);
         }
 
-        [HttpDelete("id")]
-        public async Task<ActionResult> SetDelete(int id)
+        [HttpDelete("Delete/{id}")]
+        public async Task<ActionResult> Delete(int id)
         {
             if (id <= 0)
             {
@@ -129,7 +129,7 @@
             }
 
             var deleteResult = await this.courseService
-                                         .SetDelete(id);
+                                         .SetDeleted(id);
 
             if(deleteResult == null)
             {

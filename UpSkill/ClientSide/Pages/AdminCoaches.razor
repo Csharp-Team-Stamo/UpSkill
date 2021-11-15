@@ -25,11 +25,6 @@
     NavigationManager.NavigateTo("/adminCoach");
 }
 
-@*@if(stateChanged)
-{
-    this.OnInitializedAsync();
-}*@
-
 @code {
     private IEnumerable<AdminCoachListingServiceModel> allCoaches =
         new List<AdminCoachListingServiceModel>();
