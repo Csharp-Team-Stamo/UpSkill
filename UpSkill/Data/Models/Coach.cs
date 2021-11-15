@@ -26,7 +26,25 @@
         [Required]
         public string Company { get; set; }
 
+        [Required]
         public string CompanyLogoUrl { get; set; }
+
+        [Required]
+        public string AvatarImgUrl { get; set; }
+
+        [Required]
+        [MaxLength(150)]
+        public string SessionDescription { get; set; }
+
+        [Required]
+        [MaxLength(150)]
+        public string SkillsLearn { get; set; }
+
+        [Required]
+        public string DiscussionDurationInMinutes { get; set; }
+
+        [Required]
+        public string ResourcesCount { get; set; }
 
         [Required]
         public decimal PricePerSession { get; set; }
