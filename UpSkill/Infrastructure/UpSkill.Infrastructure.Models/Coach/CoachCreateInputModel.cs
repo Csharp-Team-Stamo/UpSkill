@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using UpSkill.Infrastructure.Common.Attributes;
 
     public class CoachCreateInputModel
     {
@@ -15,6 +16,8 @@
         [Required]
         public string AvatarImgUrl { get; set; }
 
+        [Required]
+        [IsEmail]
         public string Email { get; set; }
 
         [Required]
@@ -32,10 +35,16 @@
 
         public int LanguageId { get; set; }
 
+        [Required]
         public string SessionDescription { get; set; }
 
+        [Required]
         public string SkillsLearn { get; set; }
+
+        [Required]
         public string DiscussionDurationInMin { get; set; }
+
+        [Required]
         public string ResourcesCount { get; set; }
 
         //public ICollection<int> Languages { get; set; } =
