@@ -36,6 +36,10 @@
     </div>
 </div>
 
+@if (show)
+{
+    <SelectCoachSessionModal  SetShow="SetShowValue" ></SelectCoachSessionModal>
+}
 
 @code {
 
@@ -57,7 +61,18 @@
     [Parameter]
     public EventCallback<CoachesListingCatalogModel> UpdatedOwnerCoachesListingCatalogModel { get; set; }
 
+    private bool show = false;
 
+
+    private void ShowPopup()
+    {
+        show = true;
+    }
+
+    private void SetShowValue(bool value)
+    {
+        show = value;
+    }
 
     private async Task AddCoach(string coachId, string ownerId)
     {
