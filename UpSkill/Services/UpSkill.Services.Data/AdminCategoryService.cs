@@ -48,13 +48,9 @@
         }
 
         public async Task<Category> GetCategory(int id)
-        {
-            var category = await this.categoryRepo
-                                     .All()
-                                     .FirstOrDefaultAsync(c => c.Id == id);
-
-            return category;
-        }
+            => await this.categoryRepo
+                         .All()
+                         .FirstOrDefaultAsync(c => c.Id == id);
 
         public async Task<CategoryDetailsServiceModel> GetCategoryDetails(int id)
         {

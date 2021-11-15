@@ -1,10 +1,7 @@
 ﻿namespace UpSkill.Infrastructure.Models.Coach
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using UpSkill.Infrastructure.Models.Category;
-    using UpSkill.Infrastructure.Models.Language;
 
     public class CoachCreateInputModel
     {
@@ -16,7 +13,7 @@
         public string FullName { get; set; }
 
         [Required]
-        public string ImageUrl { get; set; }
+        public string AvatarImgUrl { get; set; }
 
         public string Email { get; set; }
 
@@ -33,7 +30,15 @@
         [Required]
         public string CalendlyPopupUrl { get; set; }
 
-        public ICollection<int> Languages { get; set; } =
-            new List<int>();
+        public int LanguageId { get; set; }
+
+        public string SessionDescription { get; set; }
+
+        public string SkillsLearn { get; set; }
+        public string DiscussionDurationInMin { get; set; }
+        public string ResourcesCount { get; set; }
+
+        //public ICollection<int> Languages { get; set; } =
+        //    new List<int>();
     }
 }

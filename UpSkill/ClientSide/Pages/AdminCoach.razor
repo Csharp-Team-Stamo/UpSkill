@@ -14,10 +14,10 @@
     </div>
 
     <div class="form-group row">
-        <label for="imageurl" class="col-md-2 col-form-label">Image URL</label>
+        <label for="avatarimgurl" class="col-md-2 col-form-label">Avatar URL</label>
         <div class="col-md-10">
-            <InputText id="imageurl" class="form-control" @bind-Value="coachInput.ImageUrl" />
-            <ValidationMessage For="@(() => coachInput.ImageUrl)" />
+            <InputText id="avatarimgurl" class="form-control" @bind-Value="coachInput.AvatarImgUrl" />
+            <ValidationMessage For="@(() => coachInput.AvatarImgUrl)" />
         </div>
     </div>
 
@@ -25,7 +25,7 @@
         <label for="email" class="col-md-2 col-form-label">Email</label>
         <div class="col-md-10">
             <InputText id="email" class="form-control" @bind-Value="coachInput.Email" />
-            <ValidationMessage For="@(() => coachInput.FullName)" />
+            <ValidationMessage For="@(() => coachInput.Email)" />
         </div>
     </div>
 
@@ -46,9 +46,9 @@
     </div>
 
     <div class="form-group row">
-        <label for="pricePerSession" class="col-md-2 col-form-label">Price per Session</label>
+        <label for="pricepersession" class="col-md-2 col-form-label">Price per Session</label>
         <div class="col-md-10">
-            <InputNumber id="pricePerSession" class="form-control" @bind-Value="coachInput.PricePerSession" />
+            <InputNumber id="pricepersession" class="form-control" @bind-Value="coachInput.PricePerSession" />
             <ValidationMessage For="@(() => coachInput.PricePerSession)" />
         </div>
     </div>
@@ -76,16 +76,48 @@
     </div>
 
     <div class="form-group row">
-        <label for="languages" class="col-md-2 col-form-label">Languages</label>
+        <label for="languageid" class="col-md-2 col-form-label">Languages</label>
         <div class="col-md-10">
-            <InputSelect class="form-control" @bind-Value="coachInput.Languages">
+            <InputSelect id="languageid" class="form-control" @bind-Value="coachInput.LanguageId">
                 <option>---Select Languages---</option>
                 @foreach (var language in LanguagesInDb)
                 {
                     <option value="@language.Id">@language.Name</option>
                 }
             </InputSelect>
-            <ValidationMessage For="@(() => coachInput.Languages)" />
+            <ValidationMessage For="@(() => coachInput.LanguageId)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="sessiondescription" class="col-md-2 col-form-label">Session Description</label>
+        <div class="col-md-10">
+            <InputText id="sessiondescription" class="form-control" @bind-Value="coachInput.SessionDescription" />
+            <ValidationMessage For="@(() => coachInput.SessionDescription)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="skillslearn" class="col-md-2 col-form-label">Skills To Learn</label>
+        <div class="col-md-10">
+            <InputText id="skillslearn" class="form-control" @bind-Value="coachInput.SkillsLearn" />
+            <ValidationMessage For="@(() => coachInput.SkillsLearn)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="discussionduration" class="col-md-2 col-form-label">Discussion Duration in Min</label>
+        <div class="col-md-10">
+            <InputText id="discussionduration" class="form-control" @bind-Value="coachInput.DiscussionDurationInMin" />
+            <ValidationMessage For="@(() => coachInput.DiscussionDurationInMin)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="resourcescount" class="col-md-2 col-form-label">Resources Count</label>
+        <div class="col-md-10">
+            <InputText id="resourcescount" class="form-control" @bind-Value="coachInput.ResourcesCount" />
+            <ValidationMessage For="@(() => coachInput.ResourcesCount)" />
         </div>
     </div>
 
