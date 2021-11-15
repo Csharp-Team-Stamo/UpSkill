@@ -1,4 +1,7 @@
-﻿.modal-body {
+﻿.modal-custom {
+    max-width: inherit;
+}
+.modal-body {
     background: #FFFFFF 0% 0% no-repeat padding-box;
     height: 350px;
     margin-top: 15%;
@@ -23,6 +26,7 @@
     position: absolute;
     left: 33%;
     top: 68%;
+    max-width: inherit;
 }
 
 .header-btn {
