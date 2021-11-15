@@ -1,5 +1,6 @@
 ﻿namespace UpSkill.Data.Models
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using UpSkill.Data.Common.Models;
@@ -7,6 +8,11 @@
 
     public class Coach : BaseDeletableModel<string>
     {
+        public Coach()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
+
         public int CategoryId { get; set; }
 
         public Category Category { get; set; }
@@ -15,6 +21,9 @@
 
         [Required]
         public string FullName { get; set; }
+
+        //[Required]
+        //public string ImageUrl { get; set; }
 
         [Required]
         public string Company { get; set; }
@@ -41,6 +50,9 @@
 
         [Required]
         public decimal PricePerSession { get; set; }
+
+        [Required]
+        public string CalendlyPopupUrl { get; set; }
 
         public ICollection<CoachLanguage> Languages { get; set; } = new HashSet<CoachLanguage>();
 

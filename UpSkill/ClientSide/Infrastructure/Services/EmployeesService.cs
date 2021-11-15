@@ -16,9 +16,12 @@
             this.httpClient = httpClient;
         }
 
-        public async Task<ICollection<AddEmployeeFormModel>> GetCollectionFromDbByCompanyIdAsync(string companyId)
+        public async Task<ICollection<AddEmployeeFormModel>> 
+            GetCollectionFromDbByCompanyIdAsync(string companyId)
         {
-            return await httpClient.GetFromJsonAsync<ICollection<AddEmployeeFormModel>>($"/Employees/GetCollectionByCompanyId/{companyId}");
+            return await httpClient
+                .GetFromJsonAsync<ICollection<AddEmployeeFormModel>>
+                ($"/Employees/GetCollectionByCompanyId/{companyId}");
         }
 
         public async Task<HttpResponseMessage> SaveCollectionInDbAsync(ICollection<AddEmployeeFormModel> employeesCollection)

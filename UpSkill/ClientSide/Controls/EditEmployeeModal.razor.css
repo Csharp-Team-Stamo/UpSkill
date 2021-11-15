@@ -1,0 +1,100 @@
+﻿.modal-custom {
+    max-width: inherit;
+}
+.modal-body {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    height: 370px;
+    margin-top: 15%;
+    width: 100%;
+    position: absolute;
+    pointer-events: auto;
+}
+
+.modal-header-custom {
+    background: #296CFB;
+    height: 15%;
+    position: relative;
+    top: -6%;
+    width: 107%;
+    left: -0.46%;
+}
+
+.modal-header-title {
+    font: 93% Montserrat;
+    letter-spacing: 1.4px;
+    color: #FFFFFF;
+    position: absolute;
+    left: 6%;
+    top: 38%;
+    max-width: inherit;
+}
+
+.header-btn {
+    position: relative;
+    left: 94%;
+    top: 25%;
+    color: white;
+    font-weight: 100;
+    cursor: pointer;
+}
+
+input, ::deep input {
+    border: 2px solid #296CFB;
+    margin-bottom: 3%;
+}
+
+    input, ::deep input::placeholder {
+        color: #296CFB;
+        padding-left: 8%;
+    }
+
+.add-another-one-employee {
+    text-align: left;
+    font: 70% Montserrat;
+    letter-spacing: 1.1px;
+    color: #296CFB;
+    margin-left: 25%;
+    cursor: pointer;
+    position: relative;
+    border: none;
+    padding: 0;
+    background: none;
+    outline: none;
+    left: -18%;
+    margin-bottom: 7%;
+}
+.cancel-btn {
+    border: 2px solid #296CFB;
+    position: relative;
+    width: 20%;
+    height: 7%;
+    top: 8%;
+    left: 26%;
+    cursor: pointer;
+    padding: 0;
+    background: none;
+}
+.cancel-btn-text {
+    font: bold 64% Montserrat;
+    letter-spacing: 1.1px;
+    color: #296CFB;
+    position: relative;
+    top: 17%;
+}
+.save-btn {
+    background: #296CFB 0% 0% no-repeat padding-box;
+    position: relative;
+    width: 20%;
+    height: 14%;
+    top: -1%;
+    left: 34%;
+    cursor: pointer;
+    border: none;
+}
+.save-btn-text {
+    font: bold 64% Montserrat;
+    letter-spacing: 1.1px;
+    color: #FFFFFF;
+    position: relative;
+    top: 21%;
+}

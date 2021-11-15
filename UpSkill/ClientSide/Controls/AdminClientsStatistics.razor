@@ -1,0 +1,34 @@
+﻿@using UpSkill.Infrastructure.Models.Admin
+
+<head>
+    <link href="_content/Radzen.Blazor/css/default.css" rel="stylesheet" />
+</head>
+
+
+<div class="card stats-card my-5">
+    <div class="card-header graph-head">
+        Number of Clients
+    </div>
+    <div class="card-body">
+        <RadzenChart>
+            <RadzenLineSeries Smooth="@smooth" Data="@clientsByMonth" CategoryProperty="MonthName" ValueProperty="ClientsNum" LineType="LineType.Solid">
+
+            </RadzenLineSeries>
+        </RadzenChart>
+    </div>
+</div>
+
+
+@code {
+    bool smooth = false;
+
+    private IEnumerable<MonthlyClient> clientsByMonth = new List<MonthlyClient>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.clientsByMonth = await this.Client
+            .GetFromJsonAsync<IEnumerable<MonthlyClient>>("/admin/statistics/clientsbymonth/2021");
+
+        // StateHasChanged();
+    }
+}

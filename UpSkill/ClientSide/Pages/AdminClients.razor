@@ -1,0 +1,74 @@
+﻿@page "/admin/clients"
+@layout AdminLayout
+
+@using UpSkill.Infrastructure.Models.Company
+
+<div class="mx-auto">
+    <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
+        <thead class="border-bottom-0">
+            <tr class="" style="color: white; background-color: #296cfb">
+                <th class="font-weight-bold text-left pl-4 cell-header-left">
+                    Company Name
+                </th>
+                <th class="text-left font-weight-bold pr-4 cell-header-right">
+                    Email
+                </th>
+                <th>
+                    <div class="add-btn" @onclick="ShowPopup">+</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var company in allClients)
+            {
+                <tr class=" border-bottom-0 underline">
+                    <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
+                        @company.Name
+                    </td>
+                    <td class="text-left pr-4 cell-right">
+                        @company.Email
+                    </td>
+                </tr>
+            }
+            <tr class="text-center">
+                <td colspan="2" style="color: #16D696">
+                    View More
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@if (show)
+{
+    <AdminAddCompanyModal SetShow="SetShowValue" GetUpdatedCompanies="GetUpdatedClients"></AdminAddCompanyModal>
+}
+
+@code {
+    private bool show = false;
+
+    private IEnumerable<AdminCompanyListingModel> allClients =
+        new List<AdminCompanyListingModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.allClients = await Client
+            .GetFromJsonAsync<IEnumerable<AdminCompanyListingModel>>
+            ("/admin/statistics/getallclients");
+    }
+
+    private void ShowPopup()
+    {
+        show = true;
+    }
+
+    private void SetShowValue(bool value)
+    {
+        show = value;
+    }
+
+    private void GetUpdatedClients(IEnumerable<AdminCompanyListingModel> value)
+    {
+        allClients = value;
+    }
+}

@@ -1,0 +1,52 @@
+﻿@*<h3>Admin Revenue Statistics</h3>*@
+
+<style>
+    .stats-card {
+        box-shadow: 0px 3px 10px #00000029;
+    }
+
+    .revenue-graph-head {
+        background-color: #16d696;
+        /*background-color: var(--color-blue-primary);*/
+        color: white;
+        font-weight: 700;
+        padding: 1.5em;
+    }
+</style>
+
+<div class="card stats-card my-5">
+    <div class="card-header revenue-graph-head">
+        Total Revenue
+    </div>
+    <div class="card-body">
+        <RadzenChart>
+            <RadzenLineSeries Data="@items" CategoryProperty="Date" ValueProperty="Revenue" LineType="LineType.Solid">
+
+            </RadzenLineSeries>
+        </RadzenChart>
+    </div>
+</div>
+
+@code {
+    class DataItem
+    {
+        public DateTime Date { get; set; }
+        public decimal Revenue { get; set; }
+    }
+
+    IEnumerable<DataItem> items = new List<DataItem>
+    {
+        new DataItem { Date = new DateTime(2021, 1, 19), Revenue = 200 },
+        new DataItem { Date = new DateTime(2021, 2, 10), Revenue = 205 },
+        new DataItem { Date = new DateTime(2021, 3, 23), Revenue = 120 },
+        new DataItem { Date = new DateTime(2021, 4, 19), Revenue = 300 },
+        new DataItem { Date = new DateTime(2021, 5, 15), Revenue = 378 },
+        new DataItem { Date = new DateTime(2021, 6, 12), Revenue = 233 },
+        new DataItem { Date = new DateTime(2021, 7, 19), Revenue = 402 },
+        new DataItem { Date = new DateTime(2021, 8, 20), Revenue = 420 },
+        new DataItem { Date = new DateTime(2021, 9, 19), Revenue = 488 },
+        new DataItem { Date = new DateTime(2021, 10, 19), Revenue = 500 },
+        new DataItem { Date = new DateTime(2021, 11, 19), Revenue = 509 },
+        new DataItem { Date = new DateTime(2021, 12, 12), Revenue = 555 },
+    };
+}

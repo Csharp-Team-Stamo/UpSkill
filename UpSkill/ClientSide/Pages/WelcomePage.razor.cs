@@ -11,9 +11,6 @@
     {
         private readonly RequestDemoFromModel input = new();
 
-        //[Inject]
-        //private NavigationManager NavigationManager { get; set; }
-
         [Inject]
         public HttpClient client { get; set; }
 

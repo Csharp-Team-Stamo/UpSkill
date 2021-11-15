@@ -7,7 +7,7 @@
         </div>
         <div class="sidebar-1">
             <div class="sticky-content">
-                <NavMenu />
+                <NavMenu show="SetShowValue" />
             </div>
         </div>
     </AuthorizeView>
@@ -17,6 +17,13 @@
         <div class="sticky-content">
             @Body
         </div>
+
+        @* Modal *@
+        @if (show)
+        {
+            <EditEmployeeModal SetShow="SetShowValue"></EditEmployeeModal>
+        }
+
     </div>
     <div class="footer">
         <Footer></Footer>
@@ -28,3 +35,15 @@
                 InfoIcon="school"
                 Timeout="100000"
                 WarningIcon="warning" ></BlazoredToasts>
+
+@code{
+
+    private bool show = false;
+
+
+    private void SetShowValue(bool value)
+    {
+        show = value;
+    }
+
+}
