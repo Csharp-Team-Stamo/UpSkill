@@ -1,14 +1,12 @@
-﻿namespace UpSkill.Infrastructure.Models.Employee
+﻿namespace UpSkill.Infrastructure.Models.ApplicationUser
 {
     using System.ComponentModel.DataAnnotations;
     using Common.Attributes;
     using static Common.GlobalConstants.AddUserForm;
 
-    public class AddEmployeeFormModel
+    public class EditApplicationUserModel
     {
-        public string UserId { get; set; }
-
-        public string CompanyId { get; set; }
+        public string Id { get; set; }
 
         [Required]
         [MinLength(FullNameMinLen, ErrorMessage = "Name must be at least 2 characters")]
@@ -19,6 +17,9 @@
         [IsEmail]
         public string Email { get; set; }
 
-        public bool AddAnotherOneBtn { get; set; } = false;
+        [MaxLength(SummaryMaxLen, ErrorMessage = "Name can be maximum 50 characters")]
+        public string Summary { get; set; }
+
+        public string ImageToBase64 { get; set; }
     }
 }

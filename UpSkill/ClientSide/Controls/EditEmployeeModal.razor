@@ -1,56 +1,71 @@
 ﻿@using System.IO
-<div class="modal fade show container modal-custom" style="display:block; background-color: rgba(10,10,10,.8);"
-     aria-modal="true">
-    <div class="modal-dialog">
-        <div class="modal-body">
-            <div class="row modal-header-custom">
-                <div class="modal-header-title">Personal Information</div>
-                <div @onclick="ClosePopup" class="close header-btn" data-dismiss="modal" aria-label="Close">
-                    <span style="font-size: 2rem" aria-hidden="true">&times;</span>
+@using Microsoft.AspNetCore.Components
+@using UpSkill.Infrastructure.Models.ApplicationUser
+
+@if (editApplicationUserModel == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="modal fade show container modal-custom" style="display:block; background-color: rgba(10,10,10,.8);"
+         aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-body">
+                <div class="row modal-header-custom">
+                    <div class="modal-header-title">Personal Information</div>
+                    <div @onclick="ClosePopup" class="close header-btn" data-dismiss="modal" aria-label="Close">
+                        <span style="font-size: 2rem" aria-hidden="true">&times;</span>
+                    </div>
                 </div>
+                <EditForm Model="@editApplicationUserModel" OnValidSubmit="@HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="edit-foto-background">
+                                @if (imageDataUri == null)
+                                {
+                                    <img class="avatar-no-img" src="images/user-no-img-avatar.svg" />
+                                }
+                                else
+                                {
+                                    <img src="@imageDataUri" />
+                                }
+                            </div>
+                            <label class="edit-btn" for="edit">
+                                <span class="edit-btn-text">Edit Photo</span>
+                            </label>
+                            <InputFile OnChange="LoadImg" id="edit" @bind-Value="@editApplicationUserModel.ImageToBase64" />
+                        </div>
+
+                        <div class="col-8">
+                            <InputText @bind-Value="@editApplicationUserModel.FullName" placeholder="Full Name"></InputText>
+                            <ValidationMessage For="@(() => editApplicationUserModel.FullName)"></ValidationMessage>
+                            <InputText @bind-Value="@editApplicationUserModel.Email" disabled></InputText>
+                            <ValidationMessage For="@(() => editApplicationUserModel.Email)"></ValidationMessage>
+                            <InputTextArea @bind-Value="@editApplicationUserModel.Summary" rows="4" placeholder="Profile Summary"></InputTextArea>
+                            <ValidationMessage For="@(() => editApplicationUserModel.Summary)"></ValidationMessage>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <button class="cancel-btn">
+                            <div @onclick="ClosePopup" class="cancel-btn-text">
+                                Cancel
+                            </div>
+                        </button>
+                        <button type="submit" class="save-btn">
+                            <div class="save-btn-text">
+                                Save
+                            </div>
+                        </button>
+                    </div>
+
+                </EditForm>
             </div>
-            <EditForm Model="@employeeModel">
-                <div class="row">
-                    <div class="col-4">
-                        <div class="edit-foto-background">
-                            @if (imageDataUri == null)
-                            {
-                                <img class="avatar-no-img" src="images/user-no-img-avatar.svg" />
-                            }
-                            else
-                            {
-                                <img src="@imageDataUri" />
-                            }
-                        </div>
-                        <label class="edit-btn" for="edit">
-                            <span class="edit-btn-text">Edit Photo</span>
-                        </label>
-                        <InputFile OnChange="LoadImg" id="edit" />
-                    </div>
-
-                    <div class="col-8">
-                        <InputText @bind-Value="@employeeModel.FullName"></InputText>
-                        <InputText @bind-Value="@employeeModel.Email"></InputText>
-                        <InputTextArea @bind-Value="@employeeModel.Summary" rows="4"></InputTextArea>
-                    </div>
-                </div>
-                <div class="row mt-5">
-                    <button class="cancel-btn">
-                        <div @onclick="ClosePopup" class="cancel-btn-text">
-                            Cancel
-                        </div>
-                    </button>
-                    <button type="submit" class="save-btn">
-                        <div class="save-btn-text">
-                            Save
-                        </div>
-                    </button>
-                </div>
-
-            </EditForm>
         </div>
     </div>
-</div>
+
+}
 
 @code
 {
@@ -58,7 +73,9 @@
 
     string imageDataUri;
 
-    private EditEmployeeModel employeeModel = new ();
+    private EditApplicationUserModel editApplicationUserModel;
+
+    private string imgToSave;
 
     [Parameter]
     public EventCallback<bool> SetShow { get; set; }
@@ -70,6 +87,9 @@
     protected override async Task OnInitializedAsync()
     {
         var userId = user.Id().Result;
+
+        editApplicationUserModel = await Client.GetFromJsonAsync<EditApplicationUserModel>($"/ApplicationUsers/GetById/{userId}");
+        imageDataUri = editApplicationUserModel.ImageToBase64;
 
     }
 
@@ -88,6 +108,14 @@
         await fileStream.CopyToAsync(memoryStream);
 
         imageDataUri = $"data:image/jpeg;base64,{Convert.ToBase64String(memoryStream.ToArray())}";
+
+        imgToSave = imageDataUri;
+    }
+
+    private void HandleValidSubmit()
+    {
+        var modelToSave = editApplicationUserModel;
+        modelToSave.ImageToBase64 = imgToSave;
     }
 }
 

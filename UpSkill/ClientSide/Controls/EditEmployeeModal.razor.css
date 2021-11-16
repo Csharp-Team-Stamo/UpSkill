@@ -80,7 +80,7 @@ input, ::deep input {
 
     input, ::deep input::placeholder {
         color: #296CFB;
-        padding-left: 8%;
+        padding-left: 4%;
     }
 
 textarea, ::deep textarea {
