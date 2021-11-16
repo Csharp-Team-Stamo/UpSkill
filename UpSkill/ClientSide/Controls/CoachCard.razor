@@ -1,4 +1,9 @@
-﻿<div class="card custom-coach-card container mb-5" style="width: 18rem;">
+﻿
+<head>
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+</head>
+
+<div class="card custom-coach-card container mb-5" style="width: 18rem;">
     <div @onclick="ShowPopup" class="card-img-top card-img-top-custom">
         <img class="img-custom" src="images/coach.png" />
     </div>
@@ -39,17 +44,18 @@
             user.Role().Result == GlobalConstants.EmployeeRoleName &&
             !NavigationManager.Uri.Contains("Coaches-catalog"))
         {
-            <div class="text-center">
-                <button @onclick="@(() =>AddNewEmployeeSession(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>
-            </div>
+    <div class="text-center">
+        <button href="" class="coach-btn" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/upskillz/elon-musk-technology-leadership'});return false;">New Slot</button>
+        @*<button @onclick="ShowSessionModal" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>*@
+    </div>
         }
 
     </div>
 </div>
 
-@if (show)
+@if (showSessionModal)
 {
-    <SelectCoachSessionModal  SetShow="SetShowValue" ></SelectCoachSessionModal>
+    <SelectCoachSessionModal  SetShowSessionValue="SetShowSessionValue" ></SelectCoachSessionModal>
 }
 
 @* Modal *@
@@ -58,9 +64,13 @@
     <CoachDescriptionModal CoachId="@Coach.Id" SetShow="SetShowValue"></CoachDescriptionModal>
 }
 
+
 @code {
 
     private bool show = false;
+
+    private bool showSessionModal = false;
+
 
     [Parameter]
     public CoachInListCatalogModel Coach { get; set; }
@@ -126,5 +136,16 @@
     private void SetShowValue(bool value)
     {
         show = value;
+    }
+
+    private void ShowSessionModal()
+    {
+        showSessionModal = true;
+    }
+
+
+    private void SetShowSessionValue(bool value)
+    {
+        showSessionModal = value;
     }
 }
