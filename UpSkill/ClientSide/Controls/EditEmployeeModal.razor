@@ -31,9 +31,22 @@
                     <div class="col-8">
                         <InputText @bind-Value="@employeeModel.FullName"></InputText>
                         <InputText @bind-Value="@employeeModel.Email"></InputText>
-                        <InputText @bind-Value="@employeeModel.Summary"></InputText>
+                        <InputTextArea @bind-Value="@employeeModel.Summary" rows="4" ></InputTextArea>
                     </div>
                 </div>
+                <div class="row mt-5">
+                    <button class="cancel-btn">
+                        <div @onclick="ClosePopup" class="cancel-btn-text">
+                            Cancel
+                        </div>
+                    </button>
+                    <button type="submit" class="save-btn">
+                        <div class="save-btn-text">
+                            Save
+                        </div>
+                    </button>
+                </div>
+
             </EditForm>
         </div>
     </div>

@@ -1,6 +1,7 @@
 ﻿.modal-custom {
     max-width: inherit;
 }
+
 .modal-body {
     background: #FFFFFF 0% 0% no-repeat padding-box;
     height: 370px;
@@ -46,6 +47,7 @@
     position: relative;
     width: 100%;
 }
+
 input, ::deep input[type='file'] {
     width: 1px;
     height: 1px;
@@ -56,17 +58,77 @@ input, ::deep input[type='file'] {
     white-space: nowrap;
     border-width: 0;
 }
+
 .edit-btn {
     background: #296CFB 0% 0% no-repeat padding-box;
     cursor: pointer;
     width: 80%;
     margin-top: 10%;
 }
+
 .edit-btn-text {
     font: bold 85% Montserrat;
     letter-spacing: 1.1px;
     color: #FFFFFF;
 }
 
+input, ::deep input {
+    border: 2px solid #296CFB;
+    width: 70%;
+    margin-bottom: 3%;
+}
 
+    input, ::deep input::placeholder {
+        color: #296CFB;
+        padding-left: 8%;
+    }
 
+textarea, ::deep textarea {
+    border: 2px solid #296CFB;
+    width: 70%;
+    margin-bottom: 3%;
+}
+
+    textarea, ::deep textarea::placeholder {
+        color: #296CFB;
+        padding-left: 8%;
+    }
+
+.cancel-btn {
+    border: 2px solid #296CFB;
+    position: relative;
+    width: 20%;
+    height: 7%;
+    top: 8%;
+    left: 26%;
+    cursor: pointer;
+    padding: 0;
+    background: none;
+}
+
+.cancel-btn-text {
+    font: bold 90% Montserrat;
+    letter-spacing: 1.1px;
+    color: #296CFB;
+    position: relative;
+    top: 17%;
+}
+
+.save-btn {
+    background: #296CFB 0% 0% no-repeat padding-box;
+    position: relative;
+    width: 20%;
+    height: 14%;
+    top: -1%;
+    left: 34%;
+    cursor: pointer;
+    border: none;
+}
+
+.save-btn-text {
+    font: bold 100% Montserrat;
+    letter-spacing: 1.1px;
+    color: #FFFFFF;
+    position: relative;
+    top: 21%;
+}
