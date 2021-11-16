@@ -18,6 +18,12 @@ namespace UpSkill.Api.Controllers
             this.employeesService = employeesService;
         }
 
+        //[HttpGet("GetById")]
+        //public EditEmployeeModel GetById(string userId)
+        //{
+
+        //}
+
         [HttpPost("PostCollection")]
         public async Task<ActionResult<ICollection<string>>> PostCollection(ICollection<AddEmployeeFormModel> employees)
         {

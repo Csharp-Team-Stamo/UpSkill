@@ -19,6 +19,10 @@
 
         public Owner Owner { get; set; }
 
+        public string ImageToBase64 { get; set; }
+
+        public string Summary { get; set; }
+
         public ICollection<CoachEmployee> Coaches { get; set; } = new HashSet<CoachEmployee>();
 
         public ICollection<EmployeeCourse> Students { get; set; } = new HashSet<EmployeeCourse>();
