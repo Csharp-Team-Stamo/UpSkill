@@ -45,7 +45,7 @@
             !NavigationManager.Uri.Contains("Coaches-catalog"))
         {
     <div class="text-center">
-        <button href="" class="coach-btn" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/upskillz/elon-musk-technology-leadership'});return false;">New Slot</button>
+        <button href="" class="coach-btn" onclick="Calendly.initPopupWidget({ url: '@Coach.CalendlyUrl' }); return false;">New Slot</button>
         @*<button @onclick="ShowSessionModal" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>*@
     </div>
         }
