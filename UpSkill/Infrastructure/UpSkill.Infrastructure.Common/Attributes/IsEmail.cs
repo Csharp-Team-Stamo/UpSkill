@@ -1,4 +1,4 @@
-namespace UpSkill.Infrastructure.Common.Attributes
+﻿namespace UpSkill.Infrastructure.Common.Attributes
 {
     using System.ComponentModel.DataAnnotations;
 
@@ -19,7 +19,8 @@ namespace UpSkill.Infrastructure.Common.Attributes
         {
             if (value == null)
             {
-                return ValidationResult.Success;
+                return new ValidationResult(this.ErrorMessage);
+                // return ValidationResult.Success;
             }
 
             var email = (string)value;

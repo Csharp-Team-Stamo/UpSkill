@@ -1,0 +1,264 @@
+﻿@using UpSkill.Infrastructure.Models.Category
+@using UpSkill.Infrastructure.Models.Course
+@using UpSkill.Infrastructure.Models.Language
+
+<style>
+
+    select{
+        border: 2px solid #296CFB;
+        margin-bottom: 3%;
+    }
+
+        select > option {
+            color: #296CFB;
+            padding-left: 8%;
+        }
+
+    .modal-body {
+        background: #FFFFFF 0% 0% no-repeat padding-box;
+        height: 90%;
+        /*height: 350px;*/
+        margin-top: 15%;
+        width: 90%;
+        position: absolute;
+        pointer-events: auto;
+    }
+
+    .modal-header-custom {
+        background: #296CFB;
+        height: 39%;
+        position: relative;
+        top: -6%;
+        width: 107.9%;
+        left: -0.46%;
+    }
+
+    .add-emp-text {
+        font: 93% Montserrat;
+        letter-spacing: 1.4px;
+        color: #FFFFFF;
+        position: absolute;
+        left: 33%;
+        top: 68%;
+    }
+
+    .header-btn {
+        position: relative;
+        left: 94%;
+        top: 5%;
+        color: white;
+        font-weight: 100;
+        cursor: pointer;
+    }
+
+    .upload-csv-file-btn {
+        border: 2px solid #FFFFFF;
+        position: relative;
+        left: 63%;
+        top: 41%;
+        width: 26%;
+        height: 17%;
+        cursor: pointer;
+    }
+
+    .upload-csv-file-btn-text {
+        text-align: left;
+        font: bold 50% Montserrat;
+        letter-spacing: 1.1px;
+        color: #FFFFFF;
+        position: relative;
+        left: 17%;
+        top: 18%;
+    }
+
+    input, ::deep input {
+        border: 2px solid #296CFB;
+        margin-bottom: 3%;
+    }
+
+        input, ::deep input::placeholder {
+            color: #296CFB;
+            padding-left: 8%;
+        }
+
+    .add-another-one-employee {
+        text-align: left;
+        font: 70% Montserrat;
+        letter-spacing: 1.1px;
+        color: #296CFB;
+        margin-left: 25%;
+        cursor: pointer;
+        position: relative;
+        border: none;
+        padding: 0;
+        background: none;
+        outline: none;
+        left: -18%;
+        margin-bottom: 7%;
+    }
+
+    .cancel-btn {
+        border: 2px solid #296CFB;
+        position: relative;
+        width: 20%;
+        height: 7%;
+        top: 8%;
+        left: 26%;
+        cursor: pointer;
+        padding: 0;
+        background: none;
+    }
+
+    .cancel-btn-text {
+        font: bold 64% Montserrat;
+        letter-spacing: 1.1px;
+        color: #296CFB;
+        position: relative;
+        top: 17%;
+    }
+
+    .save-btn {
+        background: #296CFB 0% 0% no-repeat padding-box;
+        position: relative;
+        width: 20%;
+        height: 14%;
+        top: -1%;
+        left: 34%;
+        cursor: pointer;
+        border: none;
+    }
+
+    .save-btn-text {
+        font: bold 64% Montserrat;
+        letter-spacing: 1.1px;
+        color: #FFFFFF;
+        position: relative;
+        top: 21%;
+    }
+</style>
+
+<div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.8);"
+     aria-modal="true">
+    <div class="modal-dialog">
+        <div class="modal-body">
+            <div class="row modal-header-custom">
+                <div class="add-emp-text">Add Course</div>
+                <div @onclick="ClosePopup" class="close header-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </div>
+                <div class="upload-csv-file-btn">
+                    <div class="upload-csv-file-btn-text">
+                        Upload CSV file
+                    </div>
+                </div>
+            </div>
+            <div>
+                <EditForm Model="@courseInput" OnValidSubmit="@Create">
+                    <DataAnnotationsValidator />
+                    <InputText @bind-Value="courseInput.Name" placeholder="Course Name*"></InputText>
+                    <ValidationMessage For="@(() => courseInput.Name)"></ValidationMessage>
+
+                    <InputText @bind-Value="courseInput.Description" placeholder="Description*"></InputText>
+                    <ValidationMessage For="@(() => courseInput.Description)"></ValidationMessage>
+
+                    <InputText @bind-Value="courseInput.ImageUrl" placeholder="Image URL*"></InputText>
+                    <ValidationMessage For="@(() => courseInput.ImageUrl)"></ValidationMessage>
+
+                    <InputSelect @bind-Value="courseInput.CategoryId">
+                        <option>--- Select Category ---</option>
+                        @foreach (var category in categoriesInDb)
+                        {
+                            <option value="@category.Id">@category.Name</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => courseInput.CategoryId)" />
+
+                    <InputSelect @bind-Value="courseInput.LanguageId">
+                        <option>--- Select Language ---</option>
+                        @foreach (var language in languagesInDb)
+                        {
+                            <option value="@language.Id">@language.Name</option>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => courseInput.CategoryId)" />
+
+                    <InputText @bind-Value="courseInput.AuthorFullName" placeholder="Author Full Name*"></InputText>
+                    <ValidationMessage For="@(() => courseInput.AuthorFullName)"></ValidationMessage>
+
+                    <InputText @bind-Value="courseInput.CompanyLogoUrl" placeholder="Author Company Logo URL*"></InputText>
+                    <ValidationMessage For="@(() => courseInput.CompanyLogoUrl)"></ValidationMessage>
+
+                    <InputNumber @bind-Value="courseInput.Price" placeholder="Course Price*"></InputNumber>
+                    <ValidationMessage For="@(() => courseInput.Price)"></ValidationMessage>
+
+                    <InputText @bind-Value="courseInput.VideoUrl" placeholder="Video URL*"></InputText>
+                    <ValidationMessage For="@(() => courseInput.VideoUrl)"></ValidationMessage>
+
+                    <div class="row">
+                        <button class="cancel-btn">
+                            <div @onclick="ClosePopup" class="cancel-btn-text">
+                                Cancel
+                            </div>
+                        </button>
+                        <button type="submit" class="save-btn">
+                            <div class="save-btn-text">
+                                Add Course
+                            </div>
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private CourseCreateInputModel courseInput = new();
+
+    private IEnumerable<AdminCategoryListingServiceModel> categoriesInDb
+            = new List<AdminCategoryListingServiceModel>();
+
+    private IEnumerable<LanguageListingServiceModel> languagesInDb =
+        new List<LanguageListingServiceModel>();
+
+    [Parameter]
+    public EventCallback<bool> SetShow { get; set; }
+
+    [Parameter]
+    public EventCallback<IEnumerable<AdminCourseListingServiceModel>>
+        GetUpdatedCourses { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.categoriesInDb = await this.Client
+            .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>
+            ("/admin/category/all");
+
+        this.languagesInDb = await this.Client
+            .GetFromJsonAsync<IEnumerable<LanguageListingServiceModel>>
+            ("/admin/language/all");
+    }
+
+    async Task Create()
+    {
+        var response = await this.Client
+            .PostAsJsonAsync<CourseCreateInputModel>
+            ("/admin/course/create", courseInput);
+
+        if(response.IsSuccessStatusCode)
+        {
+            var updatedCourses = await this.Client
+            .GetFromJsonAsync<IEnumerable<AdminCourseListingServiceModel>>
+            ("/admin/course/all");
+
+            await GetUpdatedCourses.InvokeAsync(updatedCourses);
+
+            ClosePopup();
+        }
+    }
+
+    private void ClosePopup()
+    {
+        SetShow.InvokeAsync(false);
+    }
+}

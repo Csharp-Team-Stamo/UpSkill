@@ -1,0 +1,74 @@
+﻿@page "/admin/category/all" 
+@layout AdminLayout
+
+@using UpSkill.Infrastructure.Models.Category
+
+<div class="mx-auto">
+    <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
+        <thead class="border-bottom-0">
+            <tr class="" style="color: white; background-color: #296cfb">
+                <th class="font-weight-bold text-left pl-4 cell-header-left">
+                    Category Id
+                </th>
+                <th class="text-left font-weight-bold pr-4 cell-header-right">
+                    Name
+                </th>
+                <th>
+                    <div class="add-btn" @onclick="ShowPopup">+</div>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in allCategories)
+            {
+                <tr class=" border-bottom-0 underline">
+                    <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
+                        @category.Id
+                    </td>
+                    <td class="text-left pr-4 cell-right">
+                        @category.Name
+                    </td>
+                </tr>
+            }
+            <tr class="text-center">
+                <td colspan="2" style="color: #16D696">
+                    View More
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@if(show)
+{
+    <AdminCategoryAddModal SetShow="SetShowValue" GetUpdatedCategories="GetUpdatedCategories"></AdminCategoryAddModal>
+}
+
+@code {
+    private IEnumerable<AdminCategoryListingServiceModel> allCategories =
+        new List<AdminCategoryListingServiceModel>();
+
+    private bool show = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.allCategories = await this.Client
+        .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>
+        ("/admin/category/all");
+    }
+
+    private void ShowPopup()
+    {
+        show = true;
+    }
+
+    private void SetShowValue(bool value)
+    {
+        show = value;
+    }
+
+    private void GetUpdatedCategories(IEnumerable<AdminCategoryListingServiceModel> value)
+    {
+        allCategories = value;
+    }
+}

@@ -1,0 +1,119 @@
+﻿@page "/admin/course/edit/{id:int}"
+@using UpSkill.Infrastructure.Models.Course
+@using UpSkill.Infrastructure.Models.Category
+@using UpSkill.Infrastructure.Models.Coach
+
+<h3>Admin Edit Course</h3>
+
+<EditForm Model="editModel" OnValidSubmit="Edit" class="card card-body bg-light mt-5">
+    <DataAnnotationsValidator />
+
+    <div class="form-group row">
+        <label for="name" class="col-md-2 col-form-label">Name</label>
+        <div class="col-md-10">
+            <InputText id="name" class="form-control" @bind-Value="editModel.Name" />
+            <ValidationMessage For="@(() => editModel.Name)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="description" class="col-md-2 col-form-label">Description</label>
+        <div class="col-md-10">
+            <InputText id="description" class="form-control" @bind-Value="editModel.Description" />
+            <ValidationMessage For="@(() => editModel.Description)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="imageurl" class="col-md-2 col-form-label">Image URL</label>
+        <div class="col-md-10">
+            <InputText id="imageUrl" class="form-control" @bind-Value="editModel.ImageUrl" />
+            <ValidationMessage For="@(() => editModel.ImageUrl)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="CategoryId" class="col-md-2 col-form-label">Category</label>
+        <div class="col-md-10">
+            <InputSelect id="categoryId" class="form-control" @bind-Value="editModel.CategoryId">
+                <option>@editModel.CategoryName</option>
+                @foreach (var category in CategoriesInDb)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => editModel.CategoryId)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="authorfullname" class="col-md-2 col-form-label">Author Full Name</label>
+        <div class="col-md-10">
+            <InputText id="authorfullname" class="form-control" @bind-Value="editModel.AuthorFullName" />
+            <ValidationMessage For="@(() => editModel.AuthorFullName)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="@editModel.CompanyLogoUrl" class="col-md-2 col-form-label">Author Company Logo URL</label>
+        <div class="col-md-10">
+            <InputText id="authorcompany" class="form-control" @bind-Value="editModel.CompanyLogoUrl" />
+            <ValidationMessage For="@(() => editModel.CompanyLogoUrl)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="price" class="col-md-2 col-form-label">Price</label>
+        <div class="col-md-10">
+            <InputNumber id="price" class="form-control" @bind-Value="editModel.Price" />
+            <ValidationMessage For="@(() => editModel.Price)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="videourl" class="col-md-2 col-form-label">Video URL</label>
+        <div class="col-md-10">
+            <InputText id="videourl" class="form-control" @bind-Value="editModel.VideoUrl" />
+            <ValidationMessage For="@(() => editModel.VideoUrl)" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-primary">Edit Course</button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private CourseEditInputModel editModel = new();
+
+    [Parameter]
+    public int Id { get; set; }
+
+    public IEnumerable<AdminCategoryListingServiceModel> CategoriesInDb { get; set; } =
+        new List<AdminCategoryListingServiceModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.editModel = await this.Client
+            .GetFromJsonAsync<CourseEditInputModel>
+            ($"/admin/course/edit/{Id}");
+
+        this.CategoriesInDb = await this.Client
+            .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>
+            ("/admin/category/all");
+    }
+
+    public async Task Edit()
+    {
+        var response = await this.Client
+            .PutAsJsonAsync<CourseEditInputModel>
+            ("/admin/course/edit", editModel);
+
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/admin/course/all");
+        }
+    }
+}

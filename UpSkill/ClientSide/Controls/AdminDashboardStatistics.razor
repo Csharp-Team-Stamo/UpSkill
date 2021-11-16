@@ -1,0 +1,68 @@
+﻿@using UpSkill.Infrastructure.Models.Admin
+
+<div class="mx-auto">
+    <table class="table table_custom table-borderless">
+        <thead class="head">
+            <tr class="">
+                <th class="cell-header ">
+                    Clients
+                </th>
+                <th class="separator">
+
+                </th>
+                <th class="cell-header ">
+                    Revenue
+                </th>
+                <th class="separator">
+
+                </th>
+                <th class="cell-header">
+                    Courses
+                </th>
+                <th class="separator">
+
+                </th>
+                <th class="cell-header">
+                    Coaches
+                </th>
+                <th class="separator">
+
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr class="">
+                <td class="cell first_col">
+                    @stats.ClientsNum
+                </td>
+                <td>
+                </td>
+                <td class="cell first_col">
+                    @stats.Revenue
+                </td>
+                <td>
+                </td>
+                <td class="cell third_col">
+                    @stats.CoursesNum
+                </td>
+                <td>
+                </td>
+                <td class="cell second_col">
+                    @stats.CoachesNum
+                </td>
+                <td>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+@code {
+    private AdminDasboardStatsServiceModel stats = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.stats = await this.Client.GetFromJsonAsync<AdminDasboardStatsServiceModel>
+        ("/admin/statistics/getdashboardstats");
+    }
+}

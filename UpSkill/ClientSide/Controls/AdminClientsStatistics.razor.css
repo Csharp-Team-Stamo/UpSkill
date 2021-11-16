@@ -1,0 +1,11 @@
+﻿.stats-card {
+    box-shadow: 0px 3px 10px #00000029;
+}
+
+.graph-head {
+    /*background-color: #296cfb;*/
+    background-color: var(--color-blue-primary);
+    color: white;
+    font-weight: 700;
+    padding: 1.5em;
+}

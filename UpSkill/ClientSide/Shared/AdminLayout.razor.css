@@ -1,0 +1,94 @@
+﻿/* Remove unnecessary margins/padding */
+html, body {
+    margin: 0;
+    padding: 0
+}
+
+.wrapper {
+    display: grid;
+    /* Header and footer span the entire width, sidebars and content are fixed, with empty space on sides */
+    grid-template-areas:
+        "header header header header header"
+        "sidebar_1 content content content content"
+        "footer footer footer footer footer";
+    /* Only expand middle section vertically (content and sidebars) */
+    grid-template-rows: 0fr 1fr 0fr;
+    /* 100% width, but static widths for content and sidebars */
+    grid-template-columns: 270px;
+    /* Force grid to be at least the height of the screen */
+    min-height: 100vh;
+}
+
+.header {
+    grid-area: header;
+    /* Stick header to top of grid */
+    position: sticky;
+    top: 0;
+    /* Ensure header appears on top of content/sidebars */
+    z-index: 1;
+    /* General appearance */
+    background-color: white;
+    text-align: center;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+/* Save header height to properly set `padding-top` and `margin-top` for sticky content */
+:root {
+    --header-height: calc(1rem * 1.5 + 1rem * 2);
+}
+
+.sidebar-1 {
+    grid-area: sidebar_1;
+    background-color: var(--color-light-blue-nav);
+}
+
+.sidebar-2 {
+    grid-area: sidebar_2;
+}
+
+.sidebar-1,
+.sidebar-2 {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+}
+
+.content {
+    grid-area: content;
+    padding-left: 5em;
+    padding-right: 5em;
+    text-align: center
+    /* General appearance */
+}
+
+.footer {
+    grid-area: footer;
+    z-index: 1;
+    /* Stick footer to bottom of grid */
+    bottom: 0;
+    /* General appearance */
+    /*  text-align: center;
+    font-size: .8rem;*/
+    line-height: 1.5;
+    /*    padding: .5rem;
+*/
+}
+/* Save footer height to properly set `bottom` and `min-height` for sticky content */
+:root {
+    --footer-height: calc(.8rem * 1.5 + .5rem * 2);
+}
+
+.sticky-spacer {
+    flex-grow: 1;
+}
+
+.sticky-content {
+    text-align: center;
+    bottom: var(--footer-height);
+    min-height: calc(100vh - var(--footer-height));
+    box-sizing: border-box;
+    --padding: 10px;
+    padding: calc(var(--header-height) + var(--padding)) var(--padding) var(--padding);
+    margin-top: calc(0px - var(--header-height));
+}
