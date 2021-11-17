@@ -44,10 +44,6 @@ div > div {
     border-bottom-color: darkgray;
 }
 
-    .nav-item:first-of-type {
-        padding-top: 1rem;
-    }
-
     .nav-item:last-of-type {
         padding-bottom: 1rem;
     }
@@ -90,10 +86,12 @@ div > div {
 }
 
 .pencil-img {
-    left: 105%;
-    top: 4%;
-    height: 4%;
-    position: absolute;
+    height: 1em;
     cursor: pointer;
 }
 
+.pencil-container {
+    padding-right: 5%;
+    padding-top: 5%;
+    text-align: end;
+}

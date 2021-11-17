@@ -112,10 +112,15 @@ else
         imgToSave = imageDataUri;
     }
 
-    private void HandleValidSubmit()
+    private async Task HandleValidSubmit()
     {
         var modelToSave = editApplicationUserModel;
         modelToSave.ImageToBase64 = imgToSave;
+
+        await Client.PutAsJsonAsync("/ApplicationUsers/Update", modelToSave);
+
+        ClosePopup();
+
     }
 }
 

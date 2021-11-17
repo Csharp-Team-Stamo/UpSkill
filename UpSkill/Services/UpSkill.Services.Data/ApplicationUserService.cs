@@ -1,6 +1,7 @@
 ﻿namespace UpSkill.Services.Data
 {
     using System.Linq;
+    using System.Threading.Tasks;
     using Contracts;
     using Infrastructure.Models.ApplicationUser;
     using UpSkill.Data.Common.Repositories;
@@ -25,6 +26,19 @@
                 ImageToBase64 = x.ImageToBase64,
                 Summary = x.Summary,
             }).FirstOrDefault();
+        }
+
+        public async Task UpdateUser(EditApplicationUserModel model)
+        {
+            var userToUpdate = appUserRepository.All().FirstOrDefault(x => x.Id == model.Id);
+
+            userToUpdate.FullName = model.FullName;
+            userToUpdate.ImageToBase64 = model.ImageToBase64;
+            userToUpdate.Summary = model.Summary;
+
+            appUserRepository.Update(userToUpdate);
+            await appUserRepository.SaveChangesAsync();
+
         }
     }
 }

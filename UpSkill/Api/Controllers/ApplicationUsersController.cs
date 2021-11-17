@@ -1,5 +1,6 @@
 ﻿namespace UpSkill.Api.Controllers
 {
+    using System.Threading.Tasks;
     using Infrastructure.Models.ApplicationUser;
     using Microsoft.AspNetCore.Mvc;
     using Services.Data.Contracts;
@@ -19,6 +20,12 @@
         public EditApplicationUserModel GetById(string userId)
         {
             return applicationUserService.GetById(userId);
+        }
+
+        [HttpPut("Update")]
+        public async Task Update(EditApplicationUserModel model)
+        {
+           await applicationUserService.UpdateUser(model);
         }
     }
 }

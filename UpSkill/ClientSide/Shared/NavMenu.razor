@@ -6,11 +6,12 @@
 
 
 <ul class="nav flex-column position-fixed border-light">
+    <div class="pencil-container">
+        <img @onclick="ShowPopup" class="pencil-img" src="images/iconmonstr-pencil-2.svg" />
+    </div>
     <li class="nav-item px-3">
         <div class="d-inline-flex p-3 align-content-center">
             <Avatar></Avatar>
-            <img @onclick="ShowPopup" class="pencil-img" src="images/iconmonstr-pencil-2.svg" />
-
             <div class="ml-2 text-left">
                 <div class=" mt-1 pb-1">
                     @user.FullName().Result
@@ -21,7 +22,6 @@
             </div>
         </div>
     </li>
-
     <li class="nav-item px-3">
         <NavLink class="nav-link" href="Dashboard">
             Dashboard
@@ -65,7 +65,8 @@
     <AuthorizeView>
         <Authorized>
             <li class="nav-item px-3">
-                <NavLink class="logout-button nav-link " @onclick="AuthenticationService.Logout"><div>Log Out</div></NavLink>
+                <NavLink class="logout-button nav-link " @onclick="AuthenticationService.Logout">
+                    <div>Log Out</div></NavLink>
             </li>
         </Authorized>
     </AuthorizeView>
