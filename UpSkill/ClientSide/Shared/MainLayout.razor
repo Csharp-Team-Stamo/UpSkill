@@ -1,4 +1,5 @@
-﻿@inherits LayoutComponentBase
+﻿@using UpSkill.Infrastructure.Models.ApplicationUser
+@inherits LayoutComponentBase
 
 <div class="wrapper">
     <AuthorizeView>
@@ -7,7 +8,7 @@
         </div>
         <div class="sidebar-1">
             <div class="sticky-content">
-                <NavMenu show="SetShowValue" />
+                <NavMenu show="SetShowValue" @ref="navMenu"/>
             </div>
         </div>
     </AuthorizeView>
@@ -21,7 +22,7 @@
         @* Modal *@
         @if (show)
         {
-            <EditUserModal SetShow="SetShowValue"></EditUserModal>
+            <EditUserModal SetShow="SetShowValue" updatedUserModel="SetUpdatedUserModel"></EditUserModal>
         }
 
     </div>
@@ -41,9 +42,17 @@
     private bool show = false;
 
 
+    private NavMenu navMenu;
+
+
     private void SetShowValue(bool value)
     {
         show = value;
+    }
+
+    private void SetUpdatedUserModel(EditApplicationUserModel model)
+    {
+        navMenu.Refresh(model);
     }
 
 }

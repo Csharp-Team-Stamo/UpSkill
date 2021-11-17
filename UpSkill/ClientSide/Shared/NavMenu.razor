@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 @using UpSkill.ClientSide.Authentication.Services.Contracts
 @using UpSkill.ClientSide.Controls
+@using UpSkill.Infrastructure.Models.ApplicationUser
 
 @inject IAuthenticationService AuthenticationService
 
@@ -14,7 +15,7 @@
             <Avatar></Avatar>
             <div class="ml-2 text-left">
                 <div class=" mt-1 pb-1">
-                    @user.FullName().Result
+                    @userModel.FullName
                 </div>
                 <div class="my-1">
                     @user.CompanyName().Result
@@ -66,7 +67,8 @@
         <Authorized>
             <li class="nav-item px-3">
                 <NavLink class="logout-button nav-link " @onclick="AuthenticationService.Logout">
-                    <div>Log Out</div></NavLink>
+                    <div>Log Out</div>
+                </NavLink>
             </li>
         </Authorized>
     </AuthorizeView>
@@ -77,6 +79,7 @@
 
 @code {
 
+    private EditApplicationUserModel userModel = new();
 
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
@@ -85,9 +88,23 @@
     public EventCallback<bool> show { get; set; }
 
 
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        userModel = await Client.GetFromJsonAsync<EditApplicationUserModel>($"/ApplicationUsers/GetById/{user.Id().Result}");
+
+    }
+
+
     private void ShowPopup()
     {
         show.InvokeAsync(true);
+    }
+
+    public void Refresh(EditApplicationUserModel model)
+    {
+        userModel = model;
     }
 
 }

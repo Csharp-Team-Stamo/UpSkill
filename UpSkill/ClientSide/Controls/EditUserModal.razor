@@ -80,6 +80,9 @@ else
     [Parameter]
     public EventCallback<bool> SetShow { get; set; }
 
+    [Parameter]
+    public EventCallback<EditApplicationUserModel> updatedUserModel { get; set; }
+
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
 
@@ -117,8 +120,13 @@ else
         var modelToSave = editApplicationUserModel;
         modelToSave.ImageToBase64 = imgToSave;
 
-        await Client.PutAsJsonAsync("/ApplicationUsers/Update", modelToSave);
+         var response = await Client.PutAsJsonAsync("/ApplicationUsers/Update", modelToSave);
 
+        if (response.IsSuccessStatusCode)
+        {
+            await updatedUserModel.InvokeAsync(modelToSave);
+        }
+        //ToDo
         ClosePopup();
 
     }
