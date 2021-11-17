@@ -9,9 +9,11 @@
     using System.Threading.Tasks;
     using Contracts;
     using Microsoft.AspNetCore.WebUtilities;
+    using Newtonsoft.Json;
     using UpSkill.ClientSide.Infrastructure.Features;
     using UpSkill.Infrastructure.Common.Pagination;
     using UpSkill.Infrastructure.Models.AddEmployeeModal;
+    using JsonSerializer = System.Text.Json.JsonSerializer;
 
     public class EmployeesService : IEmployeesService
     {
@@ -37,6 +39,7 @@
             };
             var response = await httpClient.GetAsync(QueryHelpers.AddQueryString("/Employees/GetCollectionByCompanyId", queryStringParam));
             var content = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<List<AddEmployeeFormModel>>(content);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -45,7 +48,7 @@
 
             var pagingResponse = new PagingResponse<AddEmployeeFormModel>
             {
-                Items = JsonSerializer.Deserialize<List<AddEmployeeFormModel>>(content, new JsonSerializerOptions { WriteIndented = true }),
+                Items = JsonConvert.DeserializeObject<List<AddEmployeeFormModel>>(content),
                 MetaData = JsonSerializer.Deserialize<MetaData>(response.Headers.GetValues("X-Pagination").First(), new JsonSerializerOptions { WriteIndented = true })
             };
 
