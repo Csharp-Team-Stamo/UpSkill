@@ -12,7 +12,6 @@
     using UpSkill.Infrastructure.Common;
     using UpSkill.Infrastructure.Common.Pagination;
     using UpSkill.Services.Data.Paging;
-    //using UpSkill.Services.Data.RequestFeatures;
 
     public class EmployeesService : IEmployeesService
     {
@@ -37,15 +36,7 @@
                 new AddEmployeeFormModel { FullName = x.User.FullName, Email = x.User.Email, }).ToList();
 
            return PagedList<AddEmployeeFormModel>.ToPagedList(employees, parameters.PageNumber, parameters.PageSize);
-
         }
-
-        //public ICollection<AddEmployeeFormModel> GetByCompanyId(string companyId)
-        //{
-        //    return employeeRepository.All().Where(x => x.User.CompanyId == int.Parse(companyId)).Select(x =>
-        //        new AddEmployeeFormModel { FullName = x.User.FullName, Email = x.User.Email, }).ToList();
-        //}
-
 
         public string GetOwnerById(string userId)
         {

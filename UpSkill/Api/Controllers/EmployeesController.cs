@@ -9,8 +9,6 @@ namespace UpSkill.Api.Controllers
     using Services.Data.Contracts;
     using UpSkill.Infrastructure.Common.Pagination;
 
-    //using UpSkill.Services.Data.RequestFeatures;
-
     [Route("/[controller]")]
     [ApiController]
     public class EmployeesController : ControllerBase

@@ -1,9 +1,6 @@
-﻿
-namespace UpSkill.ClientSide.Infrastructure.Features
+﻿namespace UpSkill.Infrastructure.Common.Pagination
 {
     using System.Collections.Generic;
-    using UpSkill.Infrastructure.Common.Pagination;
-
     public class PagingResponse<T> where T : class
     {
         public List<T> Items { get; set; }

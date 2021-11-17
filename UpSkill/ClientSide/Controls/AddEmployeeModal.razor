@@ -1,4 +1,4 @@
-﻿@using UpSkill.ClientSide.Infrastructure.Features 
+﻿@using UpSkill.Infrastructure.Common.Pagination
 
 <div class="modal fade show container modal-custom" style="display:block; background-color: rgba(10,10,10,.8);"
      aria-modal="true">
@@ -46,7 +46,7 @@
 @code {
 
     private AddEmployeeFormModel EmployeeFormModel = new();
-    private ICollection<AddEmployeeFormModel> employeeCollection = new List<AddEmployeeFormModel>();
+    private List<AddEmployeeFormModel> employeeCollection = new List<AddEmployeeFormModel>();
 
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
@@ -56,7 +56,7 @@
     public EventCallback<bool> SetShow { get; set; }
 
     [Parameter]
-    public EventCallback<ICollection<AddEmployeeFormModel>> GetUpdatedEmployees { get; set; }
+    public EventCallback<List<AddEmployeeFormModel>> GetUpdatedEmployees { get; set; }
 
     public MetaData MetaData { get; set; } = new MetaData();
     private EmployeesParameters employeesParameters = new EmployeesParameters();

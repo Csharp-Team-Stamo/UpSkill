@@ -1,4 +1,4 @@
-﻿@using UpSkill.ClientSide.Infrastructure.Features
+﻿@using UpSkill.Infrastructure.Common.Pagination
 
 @if (employeesModel == null)
 {
@@ -11,7 +11,7 @@ else
             <thead class="border-bottom-0">
                 <tr class="" style="color: white; background-color: #296cfb">
                     <th class="font-weight-bold text-left pl-4 cell-header-left">
-                        Employees (@employeesModel.Count)
+                        Employees (@MetaData.TotalCount )
                     </th>
                     <th class="text-left font-weight-bold pr-4 cell-header-right">
                         Email
@@ -33,11 +33,24 @@ else
                         </td>
                     </tr>
                 }
-                <tr class="text-center">
-                    <td colspan="2" style="color: #16D696">
-                        View More
+            <tr class="text-center">
+                @if (employeesParameters.PageNumber >= MetaData.TotalPages)
+                {
+                    <td class="" colspan="2" >
+                        <span  @onclick="ShowLess" style="color: #16D696; cursor:pointer">
+                            Show less
+                        </span>
                     </td>
-                </tr>
+                }
+                else
+                {
+                    <td  colspan="2" >
+                        <span @onclick="ViewMore" style="color: #16D696; cursor: pointer;">
+                        Show more
+                        </span>
+                    </td>
+                }
+            </tr>
             </tbody>
         </table>
     </div>
@@ -57,7 +70,7 @@ else
     public Task<AuthenticationState> user { get; set; }
 
     private bool show = false;
-    private ICollection<AddEmployeeFormModel> employeesModel;
+    private List<AddEmployeeFormModel> employeesModel;
 
     public MetaData MetaData { get; set; } = new MetaData();
     private EmployeesParameters employeesParameters = new EmployeesParameters();
@@ -66,13 +79,31 @@ else
     {
         var pagingResponse = await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result, employeesParameters);
         employeesModel = pagingResponse.Items;
-
-        foreach (var item in employeesModel)
-        {
-            Console.WriteLine($"{item.FullName}");
-        }
+        MetaData = pagingResponse.MetaData;
 
         employeesModel = employeesModel.OrderBy(x => x.FullName).ToList();
+    }
+
+    private async Task ViewMore()
+    {
+        if (employeesParameters.PageNumber >= MetaData.TotalPages)
+        {
+
+        }
+        else
+        {
+            employeesParameters.PageNumber = MetaData.CurrentPage + 1;
+            var pagingResponse = await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result, employeesParameters);
+            employeesModel.AddRange(pagingResponse.Items);
+            employeesModel = employeesModel.OrderBy(x => x.FullName).ToList();
+        }
+
+    }
+    private async Task ShowLess()
+    {
+        employeesParameters.PageNumber = 1;
+        MetaData.CurrentPage = 1;
+        employeesModel = employeesModel.Take(MetaData.PageSize).OrderBy(x => x.FullName).ToList();
     }
 
     private void ShowPopup()
@@ -87,6 +118,6 @@ else
 
     private void SetEmployeesCollection(ICollection<AddEmployeeFormModel> response)
     {
-        employeesModel = response;
+        employeesModel = response.ToList();
     }
 }

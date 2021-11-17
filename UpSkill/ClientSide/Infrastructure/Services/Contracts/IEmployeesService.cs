@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.Net.Http;
     using System.Threading.Tasks;
-    using UpSkill.ClientSide.Infrastructure.Features;
     using UpSkill.Infrastructure.Common.Pagination;
     using UpSkill.Infrastructure.Models.AddEmployeeModal;
 
