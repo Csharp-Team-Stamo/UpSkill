@@ -28,22 +28,11 @@
 
 @code
 {
-    private EditApplicationUserModel userModel = new();
-
-    [CascadingParameter]
-    public Task<AuthenticationState> user { get; set; }
-
-
-    protected override async Task OnInitializedAsync()
-    {
-        userModel = await Client.GetFromJsonAsync<EditApplicationUserModel>($"/ApplicationUsers/GetById/{user.Id().Result}");
-    }
 
     private Avatar avatar;
 
     public void Refresh(EditApplicationUserModel model)
     {
-        userModel = model;
         avatar.Refresh(model);
     }
 }

@@ -93,9 +93,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-
         userModel = await Client.GetFromJsonAsync<EditApplicationUserModel>($"/ApplicationUsers/GetById/{user.Id().Result}");
-
     }
 
 
