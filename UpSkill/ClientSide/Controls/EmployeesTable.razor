@@ -1,4 +1,6 @@
-﻿@if (employeesModel == null)
+﻿@using UpSkill.ClientSide.Infrastructure.Features
+
+@if (employeesModel == null)
 {
     <div class="spinner"></div>
 }
@@ -57,9 +59,19 @@ else
     private bool show = false;
     private ICollection<AddEmployeeFormModel> employeesModel;
 
+    public MetaData MetaData { get; set; } = new MetaData();
+    private EmployeesParameters employeesParameters = new EmployeesParameters();
+
     protected override async Task OnInitializedAsync()
     {
-        employeesModel = await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result);
+        var pagingResponse = await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result, employeesParameters);
+        employeesModel = pagingResponse.Items;
+
+        foreach (var item in employeesModel)
+        {
+            Console.WriteLine($"{item.FullName}");
+        }
+
         employeesModel = employeesModel.OrderBy(x => x.FullName).ToList();
     }
 
@@ -73,8 +85,8 @@ else
         show = value;
     }
 
-    private void SetEmployeesCollection(ICollection<AddEmployeeFormModel> value)
+    private void SetEmployeesCollection(ICollection<AddEmployeeFormModel> response)
     {
-        employeesModel = value;
+        employeesModel = response;
     }
 }

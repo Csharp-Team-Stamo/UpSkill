@@ -1,4 +1,6 @@
-﻿<div class="modal fade show container modal-custom" style="display:block; background-color: rgba(10,10,10,.8);"
+﻿@using UpSkill.ClientSide.Infrastructure.Features 
+
+<div class="modal fade show container modal-custom" style="display:block; background-color: rgba(10,10,10,.8);"
      aria-modal="true">
     <div class="modal-dialog">
         <div class="modal-body">
@@ -56,6 +58,8 @@
     [Parameter]
     public EventCallback<ICollection<AddEmployeeFormModel>> GetUpdatedEmployees { get; set; }
 
+    public MetaData MetaData { get; set; } = new MetaData();
+    private EmployeesParameters employeesParameters = new EmployeesParameters();
 
     private void ClosePopup()
     {
@@ -79,7 +83,10 @@
         {
 
             var emailsFromResponseErrorResult = await EmployeesService.SaveCollectionInDbAsync(employeeCollection);
-            await GetUpdatedEmployees.InvokeAsync(await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result));
+
+            var result = await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result, employeesParameters);
+
+            await GetUpdatedEmployees.InvokeAsync(result.Items);
 
             var emailsAsCollection = DeserializeEmails(emailsFromResponseErrorResult);
 
