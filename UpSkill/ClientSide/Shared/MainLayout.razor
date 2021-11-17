@@ -2,16 +2,16 @@
 @inherits LayoutComponentBase
 
 <div class="wrapper">
-    <AuthorizeView>
-        <div class="header">
-            <Header></Header>
-        </div>
-        <div class="sidebar-1">
-            <div class="sticky-content">
-                <NavMenu show="SetShowValue" @ref="navMenu"/>
+        <AuthorizeView>
+            <div class="header">
+                <Header @ref="header"></Header>
             </div>
-        </div>
-    </AuthorizeView>
+            <div class="sidebar-1">
+                <div class="sticky-content">
+                    <NavMenu show="SetShowValue" @ref="navMenu" />
+                </div>
+            </div>
+        </AuthorizeView>
 
     <div class="content">
         <div class="sticky-spacer"></div>
@@ -35,14 +35,16 @@
                 IconType="IconType.Material"
                 InfoIcon="school"
                 Timeout="100000"
-                WarningIcon="warning" ></BlazoredToasts>
+                WarningIcon="warning"></BlazoredToasts>
 
 @code{
 
     private bool show = false;
 
-
     private NavMenu navMenu;
+
+    private Header header;
+
 
 
     private void SetShowValue(bool value)
@@ -53,6 +55,7 @@
     private void SetUpdatedUserModel(EditApplicationUserModel model)
     {
         navMenu.Refresh(model);
+        header.Refresh(model);
     }
 
 }
