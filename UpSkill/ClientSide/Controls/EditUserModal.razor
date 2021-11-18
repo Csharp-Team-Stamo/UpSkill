@@ -1,7 +1,6 @@
 ﻿@using System.IO
 @using Microsoft.AspNetCore.Components
 @using UpSkill.Infrastructure.Models.ApplicationUser
-@using System.ComponentModel.DataAnnotations
 
 @if (editApplicationUserModel == null)
 {
@@ -114,8 +113,6 @@ else
     private async Task LoadImg(InputFileChangeEventArgs e)
     {
         var size = e.File.Size;
-
-
 
         if (size > (1024 * 1000))
         {
