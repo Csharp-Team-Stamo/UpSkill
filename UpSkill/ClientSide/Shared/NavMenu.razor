@@ -8,20 +8,27 @@
 
 <ul class="nav flex-column position-fixed border-light">
     <div class="pencil-container">
-        <img @onclick="ShowPopup" class="pencil-img" src="images/iconmonstr-pencil-2.svg" />
+        <img @onclick="ShowPopup" class="pencil-img" src="images/iconmonstr-pencil-2.svg"/>
     </div>
     <li class="nav-item px-3">
-        <div class="d-inline-flex p-3 align-content-center">
-            <Avatar @ref="avatar"></Avatar>
-            <div class="ml-2 text-left">
-                <div class=" mt-1 pb-1">
-                    @userModel.FullName
-                </div>
-                <div class="my-1">
-                    @user.CompanyName().Result
+        @if (userModel == null)
+        {
+            <div class="spinner"></div>
+        }
+        else
+        {
+            <div class="d-inline-flex p-3 align-content-center">
+                <Avatar @ref="avatar"></Avatar>
+                <div class="ml-2 text-left">
+                    <div class=" mt-1 pb-1">
+                        @userModel.FullName
+                    </div>
+                    <div class="my-1">
+                        @userModel.CompanyName
+                    </div>
                 </div>
             </div>
-        </div>
+        }
     </li>
     <li class="nav-item px-3">
         <NavLink class="nav-link" href="Dashboard">
@@ -73,13 +80,12 @@
         </Authorized>
     </AuthorizeView>
 
-
 </ul>
 
 
 @code {
 
-    private EditApplicationUserModel userModel = new();
+    private EditApplicationUserModel userModel;
 
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }

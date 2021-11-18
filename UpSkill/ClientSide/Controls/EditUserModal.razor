@@ -1,6 +1,7 @@
 ﻿@using System.IO
 @using Microsoft.AspNetCore.Components
 @using UpSkill.Infrastructure.Models.ApplicationUser
+@using System.ComponentModel.DataAnnotations
 
 @if (editApplicationUserModel == null)
 {
@@ -36,6 +37,10 @@ else
                                 <span class="edit-btn-text">Edit Photo</span>
                             </label>
                             <InputFile OnChange="LoadImg" id="edit" @bind-Value="@editApplicationUserModel.ImageToBase64" />
+                            @if (showErrorImgSize)
+                            {
+                                <div class="error-div">@imgError</div>
+                            }
                         </div>
 
                         <div class="col-8">
@@ -71,6 +76,10 @@ else
 {
     long maxSizeFile = 1024 * 1024 * 15;
 
+    private bool showErrorImgSize = false;
+
+    private string imgError = "Image maximum size 1MB";
+
     string imageDataUri;
 
     private EditApplicationUserModel editApplicationUserModel;
@@ -104,6 +113,19 @@ else
 
     private async Task LoadImg(InputFileChangeEventArgs e)
     {
+        var size = e.File.Size;
+
+
+
+        if (size > (1024 * 1000))
+        {
+            showErrorImgSize = true;
+
+            return;
+        }
+
+        showErrorImgSize = false;
+
         var imageFile = await e.File.RequestImageFileAsync("image/jpeg", maxHeight: 170, maxWith: 160);
 
         await using Stream fileStream = imageFile.OpenReadStream(maxSizeFile);
@@ -111,9 +133,12 @@ else
 
         await fileStream.CopyToAsync(memoryStream);
 
+        byte[] imgBytes = memoryStream.ToArray();
+
         imageDataUri = $"data:image/jpeg;base64,{Convert.ToBase64String(memoryStream.ToArray())}";
 
         imgToSave = imageDataUri;
+
     }
 
     private async Task HandleValidSubmit()
@@ -131,7 +156,7 @@ else
         {
             await updatedUserModel.InvokeAsync(modelToSave);
         }
-        //ToDo
+        //ToDo handle exception
         ClosePopup();
 
     }

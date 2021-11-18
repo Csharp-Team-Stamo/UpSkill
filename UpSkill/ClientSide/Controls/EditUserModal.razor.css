@@ -132,3 +132,9 @@ textarea, ::deep textarea {
     position: relative;
     top: 21%;
 }
+.error-div {
+    color: red;
+    font-size: 53%;
+    position: absolute;
+    left: 15%;
+}

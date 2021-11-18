@@ -22,6 +22,7 @@
             {
                 Id = x.Id,
                 FullName = x.FullName,
+                CompanyName = x.Company.Name,
                 Email = x.Email,
                 ImageToBase64 = x.ImageToBase64,
                 Summary = x.Summary,

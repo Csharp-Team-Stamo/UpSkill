@@ -20,6 +20,9 @@
         [MaxLength(SummaryMaxLen, ErrorMessage = "Name can be maximum 50 characters")]
         public string Summary { get; set; }
 
+        public string CompanyName { get; set; }
+
+        //ToDo add size check
         public string ImageToBase64 { get; set; }
     }
 }
