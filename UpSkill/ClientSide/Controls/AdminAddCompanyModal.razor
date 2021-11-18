@@ -79,15 +79,6 @@
 
     }
 
-    //private ICollection<string> DeserializeEmails(HttpResponseMessage emailsForDeserialization)
-    //{
-    //    var emailsAsString = emailsForDeserialization.Content.ReadAsStringAsync().Result;
-
-    //    var emailsAsCollection = JsonConvert.DeserializeObject<List<string>>(emailsAsString);
-
-    //    return emailsAsCollection;
-    //}
-
     private void DisplayToast(HttpResponseMessage responseMessage)
     {
         if(responseMessage.IsSuccessStatusCode)
