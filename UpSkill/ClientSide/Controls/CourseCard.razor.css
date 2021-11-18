@@ -4,33 +4,33 @@
     font: 800 120% Montserrat;
     color: #FFFFFF;
 }
-.coach-company-logo {
+.course-company-logo {
     max-width: 80%;
     max-height: 80%;
 }
 
-.coach-profession {
+.course-profession {
     font: normal bold 70% Montserrat;
     letter-spacing: 0.7px;
     color: #000000;
     opacity: 1;
 }
 
-.coach-name {
+.course-name {
     font: 75% Montserrat;
     letter-spacing: 0.7px;
     color: #000000;
     opacity: 1;
 }
 
-.coah-price {
+.course-price {
     font: 65% Montserrat;
     letter-spacing: 0.7px;
     color: #296CFB;
     opacity: 1;
 }
 
-.coach-btn {
+.course-btn {
     background: #296CFB 0% 0% no-repeat padding-box;
     border: none;
     margin-top: 1em;
@@ -38,7 +38,7 @@
     width: 50%;
 }
 
-.coach-btn-text {
+.course-btn-text {
     font: 95% Montserrat;
     letter-spacing: 1.1px;
     color: #FFFFFF;
@@ -55,7 +55,7 @@
     height: 100%;
 }
 
-.card-img-top-custom {
+.course-img-top-custom {
     height: 150px;
     width: 287px;
     position: relative;

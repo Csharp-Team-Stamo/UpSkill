@@ -1,23 +1,23 @@
 ﻿<div class="card custom-course-card container mb-5" style="width: 18rem;">
-    <div @onclick="ShowPopup" class="card-img-top card-img-top-custom">
+    <div @onclick="ShowPopup" class="card-img-top course-img-top-custom">
         <img class="img-custom" src="images/course-marketing.png" />
         <div class="course-title-in-image">MANAGEMENT</div>
     </div>
     <div class="card-body">
         <div class="row">
-            <div class="coach-profession col-6">
+            <div class="course-profession col-6">
                 CategoryName
             </div>
-            <div class="coach-name col-6 text-right">
+            <div class="course-name col-6 text-right">
                 FullName
             </div>
         </div>
         <div class="row">
-            <div class="coah-price col-6">
+            <div class="course-price col-6">
                 20€ per person
             </div>
             <div class="col-6 text-right">
-                <img class="coach-company-logo" src="images/upskill_logo.jpeg" />
+                <img class="course-company-logo" src="images/upskill_logo.jpeg" />
             </div>
         </div>
         @*@if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
@@ -25,13 +25,13 @@
             if (IsCoachAdded())
             {
                 <div class="text-center">
-                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
+                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="course-btn"><span class="course-btn-text">Add</span></button>
                 </div>
             }
             else
             {
                 <div class="text-center">
-                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
+                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.OwnerId().Result))" class="course-btn"><span class="course-btn-text">Remove</span></button>
                 </div>
             }
         }
@@ -41,12 +41,12 @@
             !NavigationManager.Uri.Contains("Coaches-catalog"))
         {
             <div class="text-center">
-                <button @onclick="@(() =>AddNewEmployeeSession(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>
+                <button @onclick="@(() =>AddNewEmployeeSession(Coach.Id, OwnerId))" class="course-btn"><span class="course-btn-text">New Slot</span></button>
             </div>
         }*@
-        
+
         <div class="text-center">
-            <button class="coach-btn"><span class="coach-btn-text">Add</span></button>
+            <button class="course-btn"><span class="course-btn-text">Add</span></button>
         </div>
 
     </div>
