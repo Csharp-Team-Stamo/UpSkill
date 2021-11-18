@@ -1,4 +1,10 @@
-﻿.coach-company-logo {
+﻿.course-title-in-image {
+    position: relative;
+    top: -55%;
+    font: 800 120% Montserrat;
+    color: #FFFFFF;
+}
+.coach-company-logo {
     max-width: 80%;
     max-height: 80%;
 }
@@ -39,24 +45,19 @@
     opacity: 1;
 }
 
-.custom-coach-card {
+.custom-course-card {
     box-shadow: 0px 3px 10px #00000029;
 }
 
 .img-custom {
     cursor: pointer;
-    top: -13%;
-    width: 89%;
-    height: 113%;
-    left: 5%;
-    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 .card-img-top-custom {
     height: 150px;
     width: 287px;
-    background-color: #1CC18A;
-    padding-left: 10px;
     position: relative;
     left: -6%;
 }

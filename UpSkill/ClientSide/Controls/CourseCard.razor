@@ -1,0 +1,80 @@
+﻿<div class="card custom-course-card container mb-5" style="width: 18rem;">
+    <div @onclick="ShowPopup" class="card-img-top card-img-top-custom">
+        <img class="img-custom" src="images/course-marketing.png" />
+        <div class="course-title-in-image">MANAGEMENT</div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="coach-profession col-6">
+                CategoryName
+            </div>
+            <div class="coach-name col-6 text-right">
+                FullName
+            </div>
+        </div>
+        <div class="row">
+            <div class="coah-price col-6">
+                20€ per person
+            </div>
+            <div class="col-6 text-right">
+                <img class="coach-company-logo" src="images/upskill_logo.jpeg" />
+            </div>
+        </div>
+        @*@if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
+        {
+            if (IsCoachAdded())
+            {
+                <div class="text-center">
+                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
+                </div>
+            }
+        }
+
+        else if (
+            user.Role().Result == GlobalConstants.EmployeeRoleName &&
+            !NavigationManager.Uri.Contains("Coaches-catalog"))
+        {
+            <div class="text-center">
+                <button @onclick="@(() =>AddNewEmployeeSession(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>
+            </div>
+        }*@
+        
+        <div class="text-center">
+            <button class="coach-btn"><span class="coach-btn-text">Add</span></button>
+        </div>
+
+    </div>
+</div>
+
+
+
+@* Modal *@
+@if (show)
+{
+    <CourseDescriptionModal SetShow="SetShowValue"></CourseDescriptionModal>
+}
+
+
+@code
+{
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+    private bool show = false;
+
+    private void ShowPopup()
+    {
+        show = true;
+    }
+
+    private void SetShowValue(bool value)
+    {
+        show = value;
+    }
+}
