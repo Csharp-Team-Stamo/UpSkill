@@ -95,7 +95,8 @@
                 policy.AddPolicy("CorsPolicy", opt => opt
                     .AllowAnyOrigin()
                     .AllowAnyHeader()
-                    .AllowAnyMethod());
+                    .AllowAnyMethod()
+                    .WithExposedHeaders("X-Pagination"));
             });
 
             // Data repositories
@@ -103,8 +104,8 @@
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
-			//Business logic services
-			services.AddTransient<IAccountsService, AccountsService>();
+            //Business logic services
+            services.AddTransient<IAccountsService, AccountsService>();
             services.AddTransient<IAdminCategoryService, AdminCategoryService>();
             services.AddTransient<IAdminCompanyService, AdminCompanyService>();
             services.AddTransient<IAdminCourseService, AdminCourseService>();
@@ -150,14 +151,14 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
-			app.UseEndpoints(endpoints =>
-			{
+            app.UseEndpoints(endpoints =>
+            {
                 endpoints.MapControllerRoute(
                 name: "areas",
                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapControllers();
-			});
-		}
-	}
+            });
+        }
+    }
 }

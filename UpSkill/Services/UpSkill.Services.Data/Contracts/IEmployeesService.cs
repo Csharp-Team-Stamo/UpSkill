@@ -7,10 +7,10 @@
     public interface IEmployeesService
     {
 
-        ICollection<AddEmployeeFormModel> GetByCompanyId(string companyId);
+       PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, EmployeesParameters parameters);
 
-        Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees);
+       Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees);
 
-        string GetOwnerById(string userId);
+       string GetOwnerById(string userId);
     }
 }

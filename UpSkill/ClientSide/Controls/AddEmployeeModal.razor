@@ -1,4 +1,6 @@
-﻿<div class="modal fade show container modal-custom" style="display:block; background-color: rgba(10,10,10,.8);"
+﻿@using UpSkill.Infrastructure.Common.Pagination
+
+<div class="modal fade show container modal-custom" style="display:block; background-color: rgba(10,10,10,.8);"
      aria-modal="true">
     <div class="modal-dialog">
         <div class="modal-body">
@@ -44,7 +46,7 @@
 @code {
 
     private AddEmployeeFormModel EmployeeFormModel = new();
-    private ICollection<AddEmployeeFormModel> employeeCollection = new List<AddEmployeeFormModel>();
+    private List<AddEmployeeFormModel> employeeCollection = new List<AddEmployeeFormModel>();
 
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
@@ -54,8 +56,10 @@
     public EventCallback<bool> SetShow { get; set; }
 
     [Parameter]
-    public EventCallback<ICollection<AddEmployeeFormModel>> GetUpdatedEmployees { get; set; }
+    public EventCallback<List<AddEmployeeFormModel>> GetUpdatedEmployees { get; set; }
 
+    public MetaData MetaData { get; set; } = new MetaData();
+    private EmployeesParameters employeesParameters = new EmployeesParameters();
 
     private void ClosePopup()
     {
@@ -79,7 +83,10 @@
         {
 
             var emailsFromResponseErrorResult = await EmployeesService.SaveCollectionInDbAsync(employeeCollection);
-            await GetUpdatedEmployees.InvokeAsync(await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result));
+
+            var result = await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result, employeesParameters);
+
+            await GetUpdatedEmployees.InvokeAsync(result.Items);
 
             var emailsAsCollection = DeserializeEmails(emailsFromResponseErrorResult);
 
