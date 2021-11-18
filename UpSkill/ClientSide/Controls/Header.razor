@@ -20,10 +20,12 @@
             <LoginDisplay></LoginDisplay>
         </NavLink>
 
-        <NavLink>
-            <Avatar @ref="avatar"></Avatar>
-        </NavLink>
-    </div>
+        <AuthorizeView>
+            <NavLink>
+                <Avatar @ref="avatar"></Avatar>
+            </NavLink>
+        </AuthorizeView>
+</div>
 </div>
 
 @code
