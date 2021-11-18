@@ -21,7 +21,7 @@ else
     <div class="row">
         @foreach (var coach in coaches.Coaches)
         {
-            <CoachCard Coach="coach" OwnerId="@coaches.OwnerId" CoachIdsCollection="@coaches.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches"></CoachCard>
+            <CoachCard Coach="coach" CoachIdsCollection="@coaches.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches"></CoachCard>
         }
     </div>
 }

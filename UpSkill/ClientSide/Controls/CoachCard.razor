@@ -24,7 +24,7 @@
             if (IsCoachAdded())
             {
                 <div class="text-center">
-                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
+                    <button @onclick="@(() =>AddCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
                 </div>
             }
             else
@@ -40,7 +40,7 @@
             !NavigationManager.Uri.Contains("Coaches-catalog"))
         {
             <div class="text-center">
-                <button @onclick="@(() =>AddNewEmployeeSession(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>
+                <button @onclick="@(() =>AddNewEmployeeSession(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>
             </div>
         }
 
@@ -60,9 +60,6 @@
 
     [Parameter]
     public CoachInListCatalogModel Coach { get; set; }
-
-    [Parameter]
-    public string OwnerId { get; set; }
 
     [Parameter]
     public ICollection<string> CoachIdsCollection { get; set; }

@@ -12,10 +12,10 @@
 else
 {
     <div class="row mt-5">
-        @foreach (var coach in coaches)
-        {
-            <CoachCard Coach="coach" OwnerId="@model.OwnerId" CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedCoachesListingCatalogModel="SetCoaches"></CoachCard>
-        }
+
+        <Virtualize Items="coaches" Context="coach">
+            <CoachCard Coach="coach" CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedCoachesListingCatalogModel="SetCoaches"></CoachCard>
+        </Virtualize>
     </div>
 
 }
@@ -27,6 +27,7 @@ else
     public Task<AuthenticationState> user { get; set; }
 
     private CoachesListingCatalogModel model;
+
     private ICollection<CoachInListCatalogModel> coaches = new List<CoachInListCatalogModel>();
 
 

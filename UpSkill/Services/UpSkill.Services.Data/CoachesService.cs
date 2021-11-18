@@ -27,7 +27,6 @@
         {
             var coaches = new CoachesListingCatalogModel
             {
-                OwnerId = ownerId,
                 OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
                 Coaches = coachesRepository.All().Select(x => new CoachInListCatalogModel
                 {
@@ -72,7 +71,6 @@
 
             var coachesByOwnerId = new CoachesListingCatalogModel
             {
-                OwnerId = ownerId,
                 OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
                 Coaches = coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CoachInListCatalogModel
                 {

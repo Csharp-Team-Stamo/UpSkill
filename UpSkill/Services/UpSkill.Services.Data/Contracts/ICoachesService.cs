@@ -6,7 +6,7 @@
 
     public interface ICoachesService
     {
-        CoachesListingCatalogModel GetAll(string userId);
+  CoachesListingCatalogModel GetAll(string userId);
 
         Task<CoachDescriptionModel> GetByIdAsync(string coachId);
 
