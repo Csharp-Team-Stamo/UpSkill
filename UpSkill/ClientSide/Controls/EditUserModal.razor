@@ -92,6 +92,7 @@ else
         var userId = user.Id().Result;
 
         editApplicationUserModel = await Client.GetFromJsonAsync<EditApplicationUserModel>($"/ApplicationUsers/GetById/{userId}");
+
         imageDataUri = editApplicationUserModel.ImageToBase64;
 
     }
@@ -118,9 +119,13 @@ else
     private async Task HandleValidSubmit()
     {
         var modelToSave = editApplicationUserModel;
-        modelToSave.ImageToBase64 = imgToSave;
 
-         var response = await Client.PutAsJsonAsync("/ApplicationUsers/Update", modelToSave);
+        if (imgToSave != null)
+        {
+            modelToSave.ImageToBase64 = imgToSave;
+        }
+
+        var response = await Client.PutAsJsonAsync("/ApplicationUsers/Update", modelToSave);
 
         if (response.IsSuccessStatusCode)
         {
