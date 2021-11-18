@@ -1,6 +1,5 @@
 ﻿namespace UpSkill.Infrastructure.Models.Coach
 {
-    using System;
     using System.ComponentModel.DataAnnotations;
     using UpSkill.Infrastructure.Common.Attributes;
 

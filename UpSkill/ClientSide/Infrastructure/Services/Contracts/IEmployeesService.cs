@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using System.Net.Http;
     using System.Threading.Tasks;
+    using UpSkill.Infrastructure.Models.Employee;
     using UpSkill.Infrastructure.Common.Pagination;
-    using UpSkill.Infrastructure.Models.AddEmployeeModal;
 
     public interface IEmployeesService
     {

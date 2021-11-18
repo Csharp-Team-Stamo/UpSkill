@@ -3,7 +3,7 @@ namespace UpSkill.Api.Controllers
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Infrastructure.Models.AddEmployeeModal;
+    using Infrastructure.Models.Employee;
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
     using Services.Data.Contracts;

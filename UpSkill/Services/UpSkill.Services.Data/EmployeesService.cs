@@ -5,7 +5,7 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Contracts;
-    using Infrastructure.Models.AddEmployeeModal;
+    using Infrastructure.Models.Employee;
     using Microsoft.AspNetCore.Identity;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
@@ -17,15 +17,13 @@
     {
         private readonly IDeletableEntityRepository<Employee> employeeRepository;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IEmailSender mailSender;
         private readonly IAccountsService accountsService;
         private readonly IOwnerService ownerService;
 
-        public EmployeesService(IDeletableEntityRepository<Employee> employeeRepository, UserManager<ApplicationUser> userManager, IEmailSender mailSender, IAccountsService accountsService, IOwnerService ownerService)
+        public EmployeesService(IDeletableEntityRepository<Employee> employeeRepository, UserManager<ApplicationUser> userManager, IAccountsService accountsService, IOwnerService ownerService)
         {
             this.employeeRepository = employeeRepository;
             this.userManager = userManager;
-            this.mailSender = mailSender;
             this.accountsService = accountsService;
             this.ownerService = ownerService;
         }

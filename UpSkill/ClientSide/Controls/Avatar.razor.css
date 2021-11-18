@@ -21,3 +21,12 @@ div {
 .avatar-container:hover {
     cursor: pointer;
 }
+.avatar {
+    vertical-align: middle;
+    width: 51px;
+    height: 51px;
+    border-radius: 50%;
+    position: relative;
+    top: 56%;
+    right: 0%;
+}

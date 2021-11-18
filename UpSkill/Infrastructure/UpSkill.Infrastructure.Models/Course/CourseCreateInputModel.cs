@@ -1,9 +1,6 @@
 ﻿namespace UpSkill.Infrastructure.Models.Course
 {
-    using System;
     using System.ComponentModel.DataAnnotations;
-    using UpSkill.Infrastructure.Models.Category;
-    using UpSkill.Infrastructure.Models.Coach;
 
     public class CourseCreateInputModel
     {

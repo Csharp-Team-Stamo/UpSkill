@@ -1,10 +1,8 @@
-﻿namespace UpSkill.Infrastructure.Models.AddEmployeeModal
+﻿namespace UpSkill.Infrastructure.Models.Employee
 {
     using System.ComponentModel.DataAnnotations;
-
-    using UpSkill.Infrastructure.Common.Attributes;
-
-    using static Common.GlobalConstants.AddEmployeeModal;
+    using Common.Attributes;
+    using static Common.GlobalConstants.AddUserForm;
 
     public class AddEmployeeFormModel
     {

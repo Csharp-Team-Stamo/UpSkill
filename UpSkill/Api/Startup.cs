@@ -117,6 +117,7 @@
             services.AddTransient<IEmployeesService, EmployeesService>();
             services.AddTransient<ILanguagesService, LanguagesService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<IApplicationUserService, ApplicationUserService>();
 
 
             services.AddTransient<IEmailSender, EmailSender>();

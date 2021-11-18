@@ -1,13 +1,6 @@
 ﻿namespace UpSkill.ClientSide.Pages
 {
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Net.Http.Json;
-    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Components;
-    using UpSkill.Infrastructure.Models.Category;
-    using UpSkill.Infrastructure.Models.Coach;
-    using UpSkill.Infrastructure.Models.Course;
 
     public partial class AdminCourseEdit : ComponentBase
     {

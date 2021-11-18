@@ -5,14 +5,12 @@
     using System.Linq;
     using System.Net.Http;
     using System.Net.Http.Json;
-    using System.Text.Json;
     using System.Threading.Tasks;
     using Contracts;
+    using UpSkill.Infrastructure.Models.Employee;
     using Microsoft.AspNetCore.WebUtilities;
     using Newtonsoft.Json;
     using UpSkill.Infrastructure.Common.Pagination;
-    using UpSkill.Infrastructure.Models.AddEmployeeModal;
-    using JsonSerializer = System.Text.Json.JsonSerializer;
 
     public class EmployeesService : IEmployeesService
     {
@@ -32,7 +30,7 @@
             };
             var response = await httpClient.GetAsync(QueryHelpers.AddQueryString("/Employees/GetCollectionByCompanyId", queryStringParam));
             var content = await response.Content.ReadAsStringAsync();
-            var result = JsonConvert.DeserializeObject<List<AddEmployeeFormModel>>(content);
+            JsonConvert.DeserializeObject<List<AddEmployeeFormModel>>(content);
 
             if (!response.IsSuccessStatusCode)
             {

@@ -1,11 +1,6 @@
 ﻿namespace UpSkill.Infrastructure.Models.Company
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using UpSkill.Infrastructure.Common.Attributes;
 
     public class CompanyCreateInputModel

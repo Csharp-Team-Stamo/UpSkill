@@ -2,9 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Infrastructure.Models.AddEmployeeModal;
-    using UpSkill.Infrastructure.Common.Pagination;
-    using UpSkill.Services.Data.Paging;
+    using Infrastructure.Common.Pagination;
+    using Infrastructure.Models.Employee;
+    using Paging;
 
     public interface IEmployeesService
     {

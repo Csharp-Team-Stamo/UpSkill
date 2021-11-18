@@ -1,6 +1,7 @@
 ﻿.modal-custom {
     max-width: inherit;
 }
+
 .modal-body {
     background: #FFFFFF 0% 0% no-repeat padding-box;
     height: 370px;
@@ -38,31 +39,61 @@
     cursor: pointer;
 }
 
+.edit-foto-background {
+    background: #296CFB1A 0% 0% no-repeat padding-box;
+}
+
+.avatar-no-img {
+    position: relative;
+    width: 100%;
+}
+
+input, ::deep input[type='file'] {
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+.edit-btn {
+    background: #296CFB 0% 0% no-repeat padding-box;
+    cursor: pointer;
+    width: 80%;
+    margin-top: 10%;
+}
+
+.edit-btn-text {
+    font: bold 85% Montserrat;
+    letter-spacing: 1.1px;
+    color: #FFFFFF;
+}
+
 input, ::deep input {
     border: 2px solid #296CFB;
+    width: 70%;
     margin-bottom: 3%;
 }
 
     input, ::deep input::placeholder {
         color: #296CFB;
+        padding-left: 4%;
+    }
+
+textarea, ::deep textarea {
+    border: 2px solid #296CFB;
+    width: 70%;
+    margin-bottom: 3%;
+}
+
+    textarea, ::deep textarea::placeholder {
+        color: #296CFB;
         padding-left: 8%;
     }
 
-.add-another-one-employee {
-    text-align: left;
-    font: 70% Montserrat;
-    letter-spacing: 1.1px;
-    color: #296CFB;
-    margin-left: 25%;
-    cursor: pointer;
-    position: relative;
-    border: none;
-    padding: 0;
-    background: none;
-    outline: none;
-    left: -18%;
-    margin-bottom: 7%;
-}
 .cancel-btn {
     border: 2px solid #296CFB;
     position: relative;
@@ -74,13 +105,15 @@ input, ::deep input {
     padding: 0;
     background: none;
 }
+
 .cancel-btn-text {
-    font: bold 64% Montserrat;
+    font: bold 90% Montserrat;
     letter-spacing: 1.1px;
     color: #296CFB;
     position: relative;
     top: 17%;
 }
+
 .save-btn {
     background: #296CFB 0% 0% no-repeat padding-box;
     position: relative;
@@ -91,10 +124,17 @@ input, ::deep input {
     cursor: pointer;
     border: none;
 }
+
 .save-btn-text {
-    font: bold 64% Montserrat;
+    font: bold 100% Montserrat;
     letter-spacing: 1.1px;
     color: #FFFFFF;
     position: relative;
     top: 21%;
+}
+.error-div {
+    color: red;
+    font-size: 53%;
+    position: absolute;
+    left: 15%;
 }

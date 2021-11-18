@@ -1,4 +1,5 @@
-﻿<div class="top-row px-4 auth">
+﻿@using UpSkill.Infrastructure.Models.ApplicationUser
+<div class="top-row px-4 auth">
     <div class="logo-container">
         <div>
             <img class="logo" src="/images/registrationPage/logo.svg" />
@@ -19,8 +20,21 @@
             <LoginDisplay></LoginDisplay>
         </NavLink>
 
-        <NavLink>
-            <Avatar></Avatar>
-        </NavLink>
-    </div>
+        <AuthorizeView>
+            <NavLink>
+                <Avatar @ref="avatar"></Avatar>
+            </NavLink>
+        </AuthorizeView>
 </div>
+</div>
+
+@code
+{
+
+    private Avatar avatar;
+
+    public void Refresh(EditApplicationUserModel model)
+    {
+        avatar.Refresh(model);
+    }
+}

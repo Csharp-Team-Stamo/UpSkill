@@ -1,12 +1,6 @@
 ﻿namespace UpSkill.Infrastructure.Models.Course
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using UpSkill.Infrastructure.Models.Category;
-    using UpSkill.Infrastructure.Models.Coach;
 
     public class CourseDetailsServiceModel
     {

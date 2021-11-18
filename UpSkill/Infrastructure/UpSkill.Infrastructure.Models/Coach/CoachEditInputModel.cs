@@ -1,8 +1,6 @@
 ﻿namespace UpSkill.Infrastructure.Models.Coach
 {
-    using System;
     using System.ComponentModel.DataAnnotations;
-    using Category;
 
     public class CoachEditInputModel
     {
