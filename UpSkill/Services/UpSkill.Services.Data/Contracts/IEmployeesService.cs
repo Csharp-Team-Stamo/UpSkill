@@ -3,13 +3,16 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Infrastructure.Models.AddEmployeeModal;
+    using UpSkill.Infrastructure.Common.Pagination;
+    using UpSkill.Services.Data.Paging;
 
     public interface IEmployeesService
     {
-        ICollection<AddEmployeeFormModel> GetByCompanyId(string companyId);
 
-        Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees);
+       PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, EmployeesParameters parameters);
 
-        string GetOwnerById(string userId);
+       Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees);
+
+       string GetOwnerById(string userId);
     }
 }
