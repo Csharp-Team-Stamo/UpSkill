@@ -76,18 +76,9 @@
     [Parameter]
     public EventCallback<CoachesListingCatalogModel> UpdatedOwnerCoachesListingCatalogModel { get; set; }
 
-    protected override void OnInitialized()
-    {
-        var url = NavigationManager.Uri;
-    }
-
-    private async Task AddNewEmployeeSession(string coachId, string ownerId)
+    private void AddNewEmployeeSession(string coachId, string ownerId)
     {
         var employeeId = user.Id().Result;
-
-        //await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
-
-        //await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(userId));
 
     }
 

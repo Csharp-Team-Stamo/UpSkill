@@ -2,7 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using Infrastructure.Common.Pagination;
     using Infrastructure.Models.Employee;
+    using Paging;
 
     public interface IEmployeesService
     {
