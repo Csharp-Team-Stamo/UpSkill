@@ -19,5 +19,15 @@
         {
             return await httpClient.GetFromJsonAsync<CoursesListingCatalogModel>($"/Courses/GetAll?ownerId={ownerId}");
         }
+
+        public async Task AddCourseInOwnerCoursesCollectionAsync(int courseId, string ownerId)
+        {
+            await httpClient.PostAsJsonAsync($"/Courses/AddCourseInOwnerCoursesCollectionAsync?courseId={courseId}&ownerId={ownerId}", string.Empty);
+        }
+
+        public async Task RemoveCourseFromOwnerCoursesCollectionAsync(int courseId, string ownerId)
+        {
+            await httpClient.DeleteAsync($"/Courses/RemoveCourseFromOwnerCoursesCollectionAsync?courseId={courseId}&ownerId={ownerId}");
+        }
     }
 }

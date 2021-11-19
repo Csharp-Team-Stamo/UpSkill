@@ -11,7 +11,9 @@ else
     <div class="row mt-5">
         @foreach (var course in courses)
         {
-            <CourseCard Course="course"></CourseCard>
+            <CourseCard Course="course"
+                        OwnerId="@model.OwnerId"
+                        CoursesIdsCollection="@model.OwnerCourseCollectionIds" UpdatedCoursesListingCatalogModel="SetCourses" />
         }
     </div>
 
@@ -33,6 +35,11 @@ else
         model = await CoursesService.GetAllAsync(ownerId);
 
         courses = model.Courses;
+    }
+
+    private void SetCourses(CoursesListingCatalogModel updatedModel)
+    {
+        model = updatedModel;
     }
 
 }

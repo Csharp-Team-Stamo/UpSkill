@@ -6,5 +6,9 @@
     public interface ICoursesService
     {
         Task<CoursesListingCatalogModel> GetAllAsync(string ownerId);
+
+        Task AddCourseInOwnerCoursesCollectionAsync(int courseId, string ownerId);
+
+        Task RemoveCourseFromOwnerCoursesCollectionAsync(int courseId, string ownerId);
     }
 }

@@ -24,13 +24,13 @@
             if (IsCoachAdded())
             {
                 <div class="text-center">
-                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
+                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
                 </div>
             }
             else
             {
                 <div class="text-center">
-                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
+                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
                 </div>
             }
         }
@@ -51,7 +51,7 @@
 @* Modal *@
 @if (show)
 {
-    <CoachDescriptionModal CoachId="@Coach.Id" SetShow="SetShowValue"></CoachDescriptionModal>
+    <CoachDescriptionModal CoachId="@Coach.Id" SetShow="SetShowValue"/>
 }
 
 @code {
@@ -85,7 +85,6 @@
     private async Task AddCoach(string coachId, string ownerId)
     {
         await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
-
         await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
 
     }
@@ -94,15 +93,13 @@
     private async Task RemoveCoach(string coachId, string ownerId)
     {
         await CoachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
-
         await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
-
         await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllByOwnerIdAsync(ownerId));
     }
 
     private bool IsCoachAdded()
     {
-        return CoachIdsCollection.FirstOrDefault(x => x == Coach.Id) == null;
+        return CoachIdsCollection.FirstOrDefault(x => x == Coach.Id) != null;
     }
 
     private void ShowPopup()
