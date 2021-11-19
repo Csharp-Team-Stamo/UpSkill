@@ -5,7 +5,7 @@
 
     public interface ICoachesService
     {
-        CoachesListingCatalogModel GetAll(string userId);
+        CoachesListingCatalogModel GetAll(string ownerId);
 
         Task<CoachDescriptionModel> GetByIdAsync(string coachId);
 
@@ -13,7 +13,7 @@
 
         Task AddCoachInOwnerCoachesCollectionAsync(string coachId, string ownerId);
 
-        Task RemoveCoachFromOwnerCoachCollectionAsync(string coachId, string userId);
+        Task RemoveCoachFromOwnerCoachCollectionAsync(string coachId, string ownerId);
     }
 
 }

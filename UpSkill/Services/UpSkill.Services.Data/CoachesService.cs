@@ -58,12 +58,6 @@
             }).FirstOrDefaultAsync();
         }
 
-        private List<string> OwnerCoachCollectionIds(string ownerId)
-        {
-            return coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => x.CoachId).ToList();
-        }
-
-
         public CoachesListingCatalogModel GetAllByOwnerId(string ownerId)
         {
 
@@ -99,6 +93,13 @@
             coachesOwnerRepository.HardDelete(coachToRemove);
 
             await coachesOwnerRepository.SaveChangesAsync();
+        }
+
+        private List<string> OwnerCoachCollectionIds(string ownerId)
+        {
+            return coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId)
+                .Select(x => x.CoachId)
+                .ToList();
         }
     }
 }
