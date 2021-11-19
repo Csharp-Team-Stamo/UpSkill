@@ -1,4 +1,4 @@
-﻿namespace UpSkill.Infrastructure.Models.Coaches
+﻿namespace UpSkill.Infrastructure.Models.Coach
 {
 using System.Collections.Generic;
    public class SortingTermsCoachesModel

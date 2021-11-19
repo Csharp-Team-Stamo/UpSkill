@@ -1,7 +1,7 @@
 ﻿namespace UpSkill.ClientSide.Infrastructure.Services.Contracts
 {
     using System.Threading.Tasks;
-    using UpSkill.Infrastructure.Models.Coaches;
+    using UpSkill.Infrastructure.Models.Coach;
 
     public interface ICoachesService
     {

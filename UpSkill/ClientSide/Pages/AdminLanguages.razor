@@ -52,7 +52,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        this.allLanguages = await this.Client
+        allLanguages = await Client
         .GetFromJsonAsync<IEnumerable<LanguageListingServiceModel>>
         ("/admin/language/all");
     }

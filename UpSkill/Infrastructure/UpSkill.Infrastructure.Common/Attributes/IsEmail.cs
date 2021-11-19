@@ -4,8 +4,8 @@
 
     using System.Text.RegularExpressions;
 
-    using static UpSkill.Infrastructure.Common.GlobalConstants;
-    using static UpSkill.Infrastructure.Common.GlobalConstants.Errors;
+    using static GlobalConstants;
+    using static GlobalConstants.Errors;
 
     public class IsEmail : ValidationAttribute
     {

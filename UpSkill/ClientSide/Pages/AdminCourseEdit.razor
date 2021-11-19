@@ -95,18 +95,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-        this.editModel = await this.Client
+        editModel = await Client
             .GetFromJsonAsync<CourseEditInputModel>
             ($"/admin/course/edit/{Id}");
 
-        this.CategoriesInDb = await this.Client
+        CategoriesInDb = await Client
             .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>
             ("/admin/category/all");
     }
 
     public async Task Edit()
     {
-        var response = await this.Client
+        var response = await Client
             .PutAsJsonAsync<CourseEditInputModel>
             ("/admin/course/edit", editModel);
 
