@@ -1,8 +1,7 @@
 ﻿namespace UpSkill.Services.Data.Contracts
 {
     using System.Threading.Tasks;
-    using Infrastructure.Models.CoachDescriptionModal;
-    using Infrastructure.Models.Coaches;
+    using Infrastructure.Models.Coach;
 
     public interface ICoachesService
     {

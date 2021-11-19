@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using UpSkill.Infrastructure.Models.Company;
+    using Infrastructure.Models.Company;
     using UpSkill.Services.Data.Contracts;
 
     public class CompanyController : AdminController

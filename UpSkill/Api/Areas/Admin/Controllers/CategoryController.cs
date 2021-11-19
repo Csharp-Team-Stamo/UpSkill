@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using UpSkill.Infrastructure.Models.Category;
+    using Infrastructure.Models.Category;
     using UpSkill.Services.Data.Contracts;
 
     public class CategoryController : AdminController

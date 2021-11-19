@@ -1,7 +1,7 @@
 ﻿namespace UpSkill.Infrastructure.Models.Coach
 {
     using System.ComponentModel.DataAnnotations;
-    using UpSkill.Infrastructure.Common.Attributes;
+    using Common.Attributes;
 
     public class CoachCreateInputModel
     {

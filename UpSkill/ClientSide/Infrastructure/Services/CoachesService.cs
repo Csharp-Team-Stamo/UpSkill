@@ -4,7 +4,7 @@
     using System.Net.Http.Json;
     using System.Threading.Tasks;
     using Contracts;
-    using UpSkill.Infrastructure.Models.Coaches;
+    using UpSkill.Infrastructure.Models.Coach;
 
     public class CoachesService : ICoachesService
     {

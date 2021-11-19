@@ -6,9 +6,9 @@
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Category;
-    using UpSkill.Infrastructure.Models.Course;
-    using UpSkill.Services.Data.Contracts;
+    using Infrastructure.Models.Category;
+    using Infrastructure.Models.Course;
+    using Contracts;
 
     public class AdminCourseService : IAdminCourseService
     {
