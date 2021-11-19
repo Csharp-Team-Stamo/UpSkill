@@ -1,0 +1,75 @@
+﻿@page "/watch/course"
+@layout LogoAndAvatarOnlyLayout
+
+<div id="mainGrid">
+
+    <div class="gridCol" id="lectureInfoHolder">
+        <h3 id="mainHL">Marketing</h3>
+        <iframe width="660"
+                height="315"
+                src="https://www.youtube.com/embed/TZCfydWF48c"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+        <div class="my-5 courseInfoPar">
+            <h6>Lecture Description</h6>
+            <p>
+                This course emphasizes the fundamental skills of reading,
+                writing, speaking, listening, thinking, viewing and presenting.
+            </p>
+        </div>
+
+        <div id="instructor-info">
+            <h6>Instructor</h6>
+            <div class="avatar-container">
+                <i class="avatar"></i>
+                <div class="creator">
+                    <div>
+                        Created by
+                    </div>
+                    <div style="font-weight: bold;">
+                        Natashka Nikolevna
+                    </div>
+                    <div class="company">
+                        Google
+                    </div>
+                </div>
+            </div>
+            <p>
+                Charles Du led the design of NASA’s first iPhone app
+                (10+ million downloads, 2+ million hits per day, NASA’s Software of
+                the Year Award) and co-founded the Airbnb for cars. He is an
+                award-winning product manager, UX designer, lecturer, and international
+                keynote speaker.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="gridCol" id="lectureAsideMenu">
+        <h5>Lectures</h5>
+        @for (int i = 0; i < lectureNames.Count(); i++)
+        {
+            int num = i + 1;
+            string name = lectureNames.ElementAt(i);
+
+            <p>@num. <a href="#">@name</a></p>
+            <hr />
+        }
+
+        <a id="viewMoreButton" href="#">View More</a>
+    </div>
+</div>
+
+@code {
+    private IEnumerable<string> lectureNames = new List<string>
+    {
+        "Introduction",
+        "Marketing",
+        "Digital Marketing",
+        "Business Model",
+        "Planning",
+        "Branding"
+    };
+}
