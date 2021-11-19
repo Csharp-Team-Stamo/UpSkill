@@ -17,6 +17,8 @@
     using Microsoft.OpenApi.Models;
     using Services.Data;
     using Services.Data.Contracts;
+    using UpSkill.Services.Data.Admin;
+    using UpSkill.Services.Data.Admin.Contracts;
 
     public class Startup
     {
@@ -111,6 +113,7 @@
             services.AddTransient<IAdminCourseService, AdminCourseService>();
             services.AddTransient<IAdminCoachService, AdminCoachService>();
             services.AddTransient<IAdminLanguageService, AdminLanguageService>();
+            services.AddTransient<IAdminLectureService, AdminLectureService>();
             services.AddTransient<ICoachesService, CoachesService>();
             services.AddTransient<IOwnerService, OwnerService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
