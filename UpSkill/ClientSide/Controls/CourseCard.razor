@@ -1,23 +1,23 @@
 ﻿<div class="card custom-course-card container mb-5" style="width: 18rem;">
     <div @onclick="ShowPopup" class="card-img-top course-img-top-custom">
-        <img class="img-custom" src="images/course-marketing.png" />
-        <div class="course-title-in-image">MANAGEMENT</div>
+        <img class="img-custom" src="@Course.ImageUrl" />
+        <div class="course-title-in-image">@Course.CategoryName</div>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="course-profession col-6">
-                CategoryName
+                @Course.CategoryName
             </div>
             <div class="course-name col-6 text-right">
-                FullName
+                @Course.AuthorFullName
             </div>
         </div>
         <div class="row">
             <div class="course-price col-6">
-                20€ per person
+                @Course.PricePerPerson.ToString("F")€ per person
             </div>
             <div class="col-6 text-right">
-                <img class="course-company-logo" src="images/upskill_logo.jpeg" />
+                <img class="course-company-logo" src="@Course.CompanyLogoUrl" />
             </div>
         </div>
         @*@if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
@@ -65,6 +65,9 @@
 {
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
+
+    [Parameter]
+    public CourseInListCatalogModel Course { get; set; }
 
     private bool show = false;
 

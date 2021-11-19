@@ -38,7 +38,7 @@
                 }).ToList()
             };
 
-            return null;
+            return courses;
         }
 
         private List<int> OwnerCourseCollectionIds(string ownerId)

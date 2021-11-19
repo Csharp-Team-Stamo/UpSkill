@@ -25,6 +25,7 @@
 @using UpSkill.Infrastructure.Common
 @using UpSkill.ClientSide.Infrastructure
 @using UpSkill.Infrastructure.Models.Coach
+@using UpSkill.Infrastructure.Models.Course
 @using UpSkill.Infrastructure.Models.Employee
 @using UpSkill.Infrastructure.Common.Pagination
 @using UpSkill.Infrastructure.Models.WelcomePage
@@ -35,6 +36,7 @@
 @inject NavigationManager NavigationManager
 @* Custom services *@
 @inject ICoachesService CoachesService
+@inject ICoursesService CoursesService
 @inject IEmployeesService EmployeesService
 @* NuGet Packages services *@
 @inject IToastService ToastService

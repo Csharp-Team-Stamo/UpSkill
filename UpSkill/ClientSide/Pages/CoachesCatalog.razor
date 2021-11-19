@@ -27,6 +27,7 @@ else
     public Task<AuthenticationState> user { get; set; }
 
     private CoachesListingCatalogModel model;
+
     private ICollection<CoachInListCatalogModel> coaches = new List<CoachInListCatalogModel>();
 
 
@@ -36,7 +37,7 @@ else
 
         model = await CoachesService.GetAllAsync(ownerId);
 
-        coaches = model.Coaches.ToList();
+        coaches = model.Coaches;
     }
 
     private void SetCoaches(CoachesListingCatalogModel updatedModel)

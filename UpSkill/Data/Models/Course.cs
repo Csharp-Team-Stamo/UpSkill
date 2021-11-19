@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using UpSkill.Data.Common.Models;
 
+    //ToDo Coach PK is a string, but Course PK is a int
     public class Course : BaseDeletableModel<int>
     {
         public int CategoryId { get; set; }
@@ -14,6 +15,7 @@
         public Language Language { get; set; }
 
         [Required]
+        //ToDo Change to FullName
         public string Name { get; set; }
 
         [Required]
