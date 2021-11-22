@@ -1,5 +1,6 @@
 ﻿@page "/Coaches"
 @using UpSkill.Infrastructure.Models.Coaches
+@using UpSkill.Infrastructure.Common.Pagination.Coaches
 
 @if (user.Role().Result == "Owner")
 {
@@ -19,10 +20,9 @@
 else
 {
     <div class="row">
-        @foreach (var coach in coaches.Coaches)
-        {
-            <CoachCard Coach="coach" CoachIdsCollection="@coaches.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches"></CoachCard>
-        }
+        <Virtualize ItemsProvider="LoadProducts" Context="coach">
+            <CoachCard Coach="coach" CoachIdsCollection="@coaches.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches" coachParameters="OnScroll"></CoachCard>
+        </Virtualize>
     </div>
 }
 
@@ -33,11 +33,28 @@ else
 
     private CoachesListingCatalogModel coaches;
 
-    protected override async Task OnInitializedAsync()
-    {
-        var ownerId = user.OwnerId().Result;
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    var ownerId = user.OwnerId().Result;
 
-        coaches = await CoachesService.GetAllByOwnerIdAsync(ownerId);
+    //    coaches = await CoachesService.GetAllByOwnerIdAsync(ownerId);
+    //}
+
+    public int TotalSize { get; set; }
+
+    public CoachesParameters OnScroll { get; set; }
+
+    private async ValueTask<ItemsProviderResult<CoachInListCatalogModel>> LoadProducts(ItemsProviderRequest request)
+    {
+        var productNum = Math.Min(request.Count, TotalSize - request.StartIndex);
+        OnScroll.StartIndex = request.StartIndex;
+        OnScroll.PageSize = productNum == 0 ? request.Count : productNum;
+
+        var virtualizeResult = await CoachesService.GetAllAsync(user.OwnerId().Result, OnScroll);
+        coaches = virtualizeResult;
+        TotalSize = virtualizeResult.Coaches.TotalSize;
+
+        return new ItemsProviderResult<CoachInListCatalogModel>(coaches.Coaches.Items, TotalSize);
     }
 
     private void SetCoaches(CoachesListingCatalogModel updatedCoaches)

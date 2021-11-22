@@ -1,4 +1,16 @@
 {
+  //"iisSettings": {
+  //  "windowsAuthentication": false,
+  //  "anonymousAuthentication": true,
+  //  "iis": {
+  //    "applicationUrl": "http://localhost/UpSkill.ClientSide",
+  //    "sslPort": 0
+  //  },
+  //  "iisExpress": {
+  //    "applicationUrl": "http://localhost:4221/",
+  //    "sslPort": 0
+  //  }
+  //},
   "profiles": {
     "UpSkill.ClientSide": {
       "commandName": "Project",
@@ -7,7 +19,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "dotnetRunMessages": "true",
-      "nativeDebugging": false,
+      "nativeDebugging": true,
       "applicationUrl": "https://localhost:44363;http://localhost:42582",
       "jsWebView2Debugging": true,
       "inspectUri": "{wsProtocol}://{url.hostname}:{url.port}/_framework/debug/ws-proxy?browser={browserInspectUri}"

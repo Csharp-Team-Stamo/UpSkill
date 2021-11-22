@@ -2,6 +2,8 @@
 @layout NoMenuLayout
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
+@using UpSkill.Infrastructure.Common.Pagination.Coaches
+
 
 <CheckboxesPanel SortingTerms="Filter"></CheckboxesPanel>
 
@@ -13,7 +15,7 @@ else
 {
     <div class="row mt-5">
 
-        <Virtualize Items="coaches" Context="coach">
+        <Virtualize ItemsProvider="LoadProducts" Context="coach">
             <CoachCard Coach="coach" CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedCoachesListingCatalogModel="SetCoaches"></CoachCard>
         </Virtualize>
     </div>
@@ -31,13 +33,30 @@ else
     private ICollection<CoachInListCatalogModel> coaches = new List<CoachInListCatalogModel>();
 
 
-    protected override async Task OnInitializedAsync()
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    var ownerId = user.OwnerId().Result;
+
+    //    model = await CoachesService.GetAllAsync(ownerId);
+
+    //    coaches = model.Coaches.Items.ToList();
+    //}
+
+    public int TotalSize { get; set; }
+
+    public CoachesParameters OnScroll { get; set; }
+
+    private async ValueTask<ItemsProviderResult<CoachInListCatalogModel>> LoadProducts(ItemsProviderRequest request)
     {
-        var ownerId = user.OwnerId().Result;
+        var productNum = Math.Min(request.Count, TotalSize - request.StartIndex);
+        OnScroll.StartIndex = request.StartIndex;
+        OnScroll.PageSize = productNum == 0 ? request.Count : productNum;
 
-        model = await CoachesService.GetAllAsync(ownerId);
+        var virtualizeResult = await CoachesService.GetAllAsync(user.OwnerId().Result, OnScroll);
+        coaches = virtualizeResult.Coaches.Items;
+        TotalSize = virtualizeResult.Coaches.TotalSize;
 
-        coaches = model.Coaches.ToList();
+        return new ItemsProviderResult<CoachInListCatalogModel>(coaches, TotalSize);
     }
 
     private void SetCoaches(CoachesListingCatalogModel updatedModel)
@@ -50,7 +69,7 @@ else
     {
         if (input.Categories.Any() && input.Languages.Any())
         {
-            coaches = model.Coaches.Where(x => input.Categories.Contains(x.CategoryName) && input.Languages.Any(l => x.Languages.Contains(l))).ToList();
+            coaches = model.Coaches.Items.Where(x => input.Categories.Contains(x.CategoryName) && input.Languages.Any(l => x.Languages.Contains(l))).ToList();
         }
 
         if (!input.Categories.Any())
@@ -68,11 +87,11 @@ else
     {
         if (input.Categories.Any())
         {
-            coaches = model.Coaches.Where(x => input.Categories.ToList().Contains(x.CategoryName)).ToList();
+            coaches = model.Coaches.Items.Where(x => input.Categories.ToList().Contains(x.CategoryName)).ToList();
         }
         else
         {
-            coaches = model.Coaches;
+            coaches = model.Coaches.Items;
         }
     }
 
@@ -80,11 +99,11 @@ else
     {
         if (input.Languages.Any())
         {
-            coaches = model.Coaches.Where(x => input.Languages.Any(l => x.Languages.Contains(l))).ToList();
+            coaches = model.Coaches.Items.Where(x => input.Languages.Any(l => x.Languages.Contains(l))).ToList();
         }
         else
         {
-            coaches = model.Coaches;
+            coaches = model.Coaches.Items;
         }
     }
 }

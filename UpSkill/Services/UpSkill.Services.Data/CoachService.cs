@@ -9,36 +9,45 @@
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
+    using UpSkill.Infrastructure.Common.Pagination.Coaches;
 
-    public class CoachesService : ICoachesService
+    public class CoachService : ICoachService
     {
         private readonly IDeletableEntityRepository<Coach> coachesRepository;
         private readonly IDeletableEntityRepository<CoachOwner> coachesOwnerRepository;
         private readonly IOwnerService ownerService;
 
-        public CoachesService(IDeletableEntityRepository<Coach> coachesRepository, IDeletableEntityRepository<CoachOwner> coachesOwnerRepository, IOwnerService ownerService)
+        public CoachService(IDeletableEntityRepository<Coach> coachesRepository, IDeletableEntityRepository<CoachOwner> coachesOwnerRepository, IOwnerService ownerService)
         {
             this.coachesRepository = coachesRepository;
             this.coachesOwnerRepository = coachesOwnerRepository;
             this.ownerService = ownerService;
         }
 
-        public CoachesListingCatalogModel GetAll(string ownerId)
+        public CoachesListingCatalogModel GetAll(string ownerId, CoachesParameters parameters)
         {
-            var coaches = new CoachesListingCatalogModel
-            {
-                OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
-                Coaches = coachesRepository.All().Select(x => new CoachInListCatalogModel
+            var coachItems = coachesRepository.All()
+                .OrderBy(p => p.CreatedOn)
+                .Skip(parameters.StartIndex)
+                .Take(parameters.PageSize)
+                .Select(x => new CoachInListCatalogModel
                 {
                     Id = x.Id,
                     FullName = x.FullName,
-                    ImageUrl = x.AvatarImgUrl,
                     CategoryName = x.Category.Name,
                     Company = x.Company,
                     CompanyLogoUrl = x.CompanyLogoUrl,
                     PricePerSession = x.PricePerSession,
-                    Languages = x.Languages.Select(cl => cl.Language.Name).ToList(),
-                }).ToList()
+                })
+                .ToList();
+
+            var coaches = new CoachesListingCatalogModel
+            {
+                OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
+                Coaches = new Infrastructure.Common.Pagination.VirtualizeResponse<CoachInListCatalogModel>()
+                {
+                    Items = coachItems
+                }
             };
 
             return coaches;
@@ -66,21 +75,33 @@
         }
 
 
-        public CoachesListingCatalogModel GetAllByOwnerId(string ownerId)
+        public CoachesListingCatalogModel GetAllByOwnerId(string ownerId, CoachesParameters parameters)
         {
+
+           var coachItems = coachesOwnerRepository.All()
+                .Where(x => x.OwnerId == ownerId)
+                .OrderBy(p => p.CreatedOn)
+                .Skip(parameters.StartIndex)
+                .Take(parameters.PageSize)
+                .Select(x => new CoachInListCatalogModel
+                                 {
+                                     Id = x.Coach.Id,
+                                     FullName = x.Coach.FullName,
+                                     CategoryName = x.Coach.Category.Name,
+                                     Company = x.Coach.Company,
+                                     CompanyLogoUrl = x.Coach.CompanyLogoUrl,
+                                     PricePerSession = x.Coach.PricePerSession,
+                                 })
+                .ToList();
 
             var coachesByOwnerId = new CoachesListingCatalogModel
             {
+                
                 OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
-                Coaches = coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CoachInListCatalogModel
+                Coaches = new Infrastructure.Common.Pagination.VirtualizeResponse<CoachInListCatalogModel>()
                 {
-                    Id = x.Coach.Id,
-                    FullName = x.Coach.FullName,
-                    CategoryName = x.Coach.Category.Name,
-                    Company = x.Coach.Company,
-                    CompanyLogoUrl = x.Coach.CompanyLogoUrl,
-                    PricePerSession = x.Coach.PricePerSession,
-                }).ToList()
+                    Items = coachItems,
+                }
             };
 
             return coachesByOwnerId;

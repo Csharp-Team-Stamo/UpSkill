@@ -5,22 +5,23 @@
     using Infrastructure.Models.Coaches;
     using Microsoft.AspNetCore.Mvc;
     using Services.Data.Contracts;
+    using UpSkill.Infrastructure.Common.Pagination.Coaches;
 
     [Route("[controller]")]
     [ApiController]
     public class CoachesController : ControllerBase
     {
-        private readonly ICoachesService coachesService;
+        private readonly ICoachService coachesService;
 
-        public CoachesController(ICoachesService coachesService)
+        public CoachesController(ICoachService coachesService)
         {
             this.coachesService = coachesService;
         }
 
         [HttpGet("GetAll")]
-        public CoachesListingCatalogModel GetAll([FromQuery]string ownerId)
+        public CoachesListingCatalogModel GetAll([FromQuery]string ownerId, [FromQuery] CoachesParameters parameters)
         {
-            return coachesService.GetAll(ownerId);
+            return coachesService.GetAll(ownerId, parameters);
         }
 
         [HttpGet("GetByIdAsync")]
@@ -30,9 +31,9 @@
         }
 
         [HttpGet("GetAllByOwnerId")]
-        public CoachesListingCatalogModel GetAllByOwnerId([FromQuery] string ownerId)
+        public CoachesListingCatalogModel GetAllByOwnerId([FromQuery] string ownerId, [FromQuery] CoachesParameters parameters)
         {
-            return coachesService.GetAllByOwnerId(ownerId);
+            return coachesService.GetAllByOwnerId(ownerId, parameters);
         }
 
         [HttpPost("AddCoachInOwnerCoachesCollectionAsync")]
@@ -48,6 +49,5 @@
 
            return Ok();
         }
-
     }
 }

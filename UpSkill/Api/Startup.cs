@@ -111,12 +111,12 @@
             services.AddTransient<IAdminCourseService, AdminCourseService>();
             services.AddTransient<IAdminCoachService, AdminCoachService>();
             services.AddTransient<IAdminLanguageService, AdminLanguageService>();
-            services.AddTransient<ICoachesService, CoachesService>();
             services.AddTransient<IOwnerService, OwnerService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
             services.AddTransient<IEmployeesService, EmployeesService>();
             services.AddTransient<ILanguagesService, LanguagesService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<ICoachService, CoachService>();
 
 
             services.AddTransient<IEmailSender, EmailSender>();
