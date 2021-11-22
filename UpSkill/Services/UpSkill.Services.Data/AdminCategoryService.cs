@@ -7,8 +7,8 @@
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Category;
-    using UpSkill.Services.Data.Contracts;
+    using Infrastructure.Models.Category;
+    using Contracts;
 
     public class AdminCategoryService : IAdminCategoryService
     {

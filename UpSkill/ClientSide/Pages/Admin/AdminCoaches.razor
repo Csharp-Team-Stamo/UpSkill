@@ -35,18 +35,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-        this.allCoaches = await this.Client
+        allCoaches = await Client
         .GetFromJsonAsync<IEnumerable<AdminCoachListingServiceModel>>
         ("/admin/coach/all");
     }
 
     private void GetUpdatedCoaches(IEnumerable<AdminCoachListingServiceModel> updatedCoahces)
     {
-        this.allCoaches = updatedCoahces;
+        allCoaches = updatedCoahces;
     }
 
     private void ShowPopup()
     {
-        this.show = true;
+        show = true;
     }
 }

@@ -25,6 +25,9 @@
         [Required]
         public string AuthorFullName { get; set; }
 
+        [Required]
+        public string CompanyName { get; set; }
+
         public string CompanyLogoUrl { get; set; }
 
         [Required]
@@ -32,6 +35,9 @@
 
         [Required]
         public string VideoUrl { get; set; }
+
+        public ICollection<Lecture> Lectures { get; set; } =
+            new List<Lecture>();
 
         public ICollection<CourseOwner> Owners { get; set; } = new HashSet<CourseOwner>();
 

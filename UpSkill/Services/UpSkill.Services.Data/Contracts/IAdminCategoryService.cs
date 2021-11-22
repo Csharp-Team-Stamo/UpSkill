@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Category;
+    using Infrastructure.Models.Category;
 
     public interface IAdminCategoryService
     {

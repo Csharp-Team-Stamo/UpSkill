@@ -4,8 +4,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Contracts;
-    using Infrastructure.Models.CoachDescriptionModal;
-    using Infrastructure.Models.Coaches;
+    using Infrastructure.Models.Coach;
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
@@ -14,13 +13,11 @@
     {
         private readonly IDeletableEntityRepository<Coach> coachesRepository;
         private readonly IDeletableEntityRepository<CoachOwner> coachesOwnerRepository;
-        private readonly IOwnerService ownerService;
 
-        public CoachesService(IDeletableEntityRepository<Coach> coachesRepository, IDeletableEntityRepository<CoachOwner> coachesOwnerRepository, IOwnerService ownerService)
+        public CoachesService(IDeletableEntityRepository<Coach> coachesRepository, IDeletableEntityRepository<CoachOwner> coachesOwnerRepository)
         {
             this.coachesRepository = coachesRepository;
             this.coachesOwnerRepository = coachesOwnerRepository;
-            this.ownerService = ownerService;
         }
 
         public CoachesListingCatalogModel GetAll(string ownerId)
@@ -61,12 +58,6 @@
             }).FirstOrDefaultAsync();
         }
 
-        private List<string> OwnerCoachCollectionIds(string ownerId)
-        {
-            return coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => x.CoachId).ToList();
-        }
-
-
         public CoachesListingCatalogModel GetAllByOwnerId(string ownerId)
         {
 
@@ -102,6 +93,13 @@
             coachesOwnerRepository.HardDelete(coachToRemove);
 
             await coachesOwnerRepository.SaveChangesAsync();
+        }
+
+        private List<string> OwnerCoachCollectionIds(string ownerId)
+        {
+            return coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId)
+                .Select(x => x.CoachId)
+                .ToList();
         }
     }
 }

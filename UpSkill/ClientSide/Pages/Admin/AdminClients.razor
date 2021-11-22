@@ -52,7 +52,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        this.allClients = await Client
+        allClients = await Client
             .GetFromJsonAsync<IEnumerable<AdminCompanyListingModel>>
             ("/admin/statistics/getallclients");
     }

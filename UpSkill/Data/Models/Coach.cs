@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using UpSkill.Data.Common.Models;
-    using static UpSkill.Data.DataConstants;
+    using static DataConstants;
 
     public class Coach : BaseDeletableModel<string>
     {

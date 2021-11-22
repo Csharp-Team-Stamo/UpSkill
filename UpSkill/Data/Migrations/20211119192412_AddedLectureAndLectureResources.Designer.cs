@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UpSkill.Data;
 
 namespace UpSkill.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211119192412_AddedLectureAndLectureResources")]
+    partial class AddedLectureAndLectureResources
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -554,10 +556,6 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CompanyLogoUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CompanyName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
@@ -1272,7 +1270,7 @@ namespace UpSkill.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("UpSkill.Data.Models.Language", "Language")
-                        .WithMany("Courses")
+                        .WithMany()
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1519,8 +1517,6 @@ namespace UpSkill.Data.Migrations
             modelBuilder.Entity("UpSkill.Data.Models.Language", b =>
                 {
                     b.Navigation("Coaches");
-
-                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("UpSkill.Data.Models.Lecture", b =>

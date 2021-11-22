@@ -37,12 +37,12 @@
 
     private async Task RemoveCourse(int courseId)
     {
-        var response = await this.Client
+        var response = await Client
             .DeleteAsync($"/admin/course/delete/{courseId}");
 
         if(response.IsSuccessStatusCode)
         {
-            var updatedCourses = await this.Client
+            var updatedCourses = await Client
             .GetFromJsonAsync<IEnumerable<AdminCourseListingServiceModel>>
             ("/admin/course/all");
 

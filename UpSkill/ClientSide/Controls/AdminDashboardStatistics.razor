@@ -62,7 +62,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        this.stats = await this.Client.GetFromJsonAsync<AdminDasboardStatsServiceModel>
+        stats = await Client.GetFromJsonAsync<AdminDasboardStatsServiceModel>
         ("/admin/statistics/getdashboardstats");
     }
 }

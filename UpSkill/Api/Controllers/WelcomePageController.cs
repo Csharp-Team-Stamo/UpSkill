@@ -2,9 +2,9 @@
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using UpSkill.Infrastructure.Models.WelcomePage;
+    using Infrastructure.Models.WelcomePage;
     using UpSkill.Services.Data.Contracts;
-    using UpSkill.Infrastructure.Common;
+    using Infrastructure.Common;
 
 
     [Route("/[controller]")]

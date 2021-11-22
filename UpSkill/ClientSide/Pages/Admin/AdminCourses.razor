@@ -35,7 +35,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        this.allCourses = await this.Client
+        allCourses = await Client
             .GetFromJsonAsync<IEnumerable<AdminCourseListingServiceModel>>("admin/course/all");
     }
 

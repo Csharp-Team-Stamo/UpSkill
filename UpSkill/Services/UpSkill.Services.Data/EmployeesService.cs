@@ -9,9 +9,9 @@
     using Microsoft.AspNetCore.Identity;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Common;
-    using UpSkill.Infrastructure.Common.Pagination;
-    using UpSkill.Services.Data.Paging;
+    using Infrastructure.Common;
+    using Infrastructure.Common.Pagination;
+    using Paging;
 
     public class EmployeesService : IEmployeesService
     {

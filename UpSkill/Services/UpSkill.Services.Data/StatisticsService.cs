@@ -6,9 +6,9 @@
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Admin;
-    using UpSkill.Infrastructure.Models.Company;
-    using UpSkill.Services.Data.Contracts;
+    using Infrastructure.Models.Admin;
+    using Infrastructure.Models.Company;
+    using Contracts;
 
     public class StatisticsService : IStatisticsService
     {

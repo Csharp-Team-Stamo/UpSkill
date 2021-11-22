@@ -1,4 +1,4 @@
-﻿namespace UpSkill.Infrastructure.Models.CoachDescriptionModal
+﻿namespace UpSkill.Infrastructure.Models.Coach
 {
     public class CoachDescriptionModel
     {
