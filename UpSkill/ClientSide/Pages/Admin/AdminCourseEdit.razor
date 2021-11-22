@@ -1,8 +1,6 @@
 ﻿@page "/admin/course/edit/{id:int}"
-@using UpSkill.Infrastructure.Models.Course
-@using UpSkill.Infrastructure.Models.Category
 
-<h3>Admin Edit Course</h3>
+<h3>Edit Course</h3>
 
 <EditForm Model="editModel" OnValidSubmit="Edit" class="card card-body bg-light mt-5">
     <DataAnnotationsValidator />
@@ -83,36 +81,3 @@
         </div>
     </div>
 </EditForm>
-
-@code {
-    private CourseEditInputModel editModel = new();
-
-    [Parameter]
-    public int Id { get; set; }
-
-    public IEnumerable<AdminCategoryListingServiceModel> CategoriesInDb { get; set; } =
-        new List<AdminCategoryListingServiceModel>();
-
-    protected override async Task OnInitializedAsync()
-    {
-        editModel = await Client
-            .GetFromJsonAsync<CourseEditInputModel>
-            ($"/admin/course/edit/{Id}");
-
-        CategoriesInDb = await Client
-            .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>
-            ("/admin/category/all");
-    }
-
-    public async Task Edit()
-    {
-        var response = await Client
-            .PutAsJsonAsync<CourseEditInputModel>
-            ("/admin/course/edit", editModel);
-
-        if (response.IsSuccessStatusCode)
-        {
-            NavigationManager.NavigateTo("/admin/course/all");
-        }
-    }
-}

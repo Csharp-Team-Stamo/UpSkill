@@ -1,4 +1,4 @@
-﻿namespace UpSkill.ClientSide.Pages
+﻿namespace UpSkill.ClientSide.Pages.Admin
 {
     using System.Collections.Generic;
     using System.Net.Http.Json;
@@ -12,7 +12,7 @@
     {
         private readonly CourseCreateInputModel courseInput = new();
 
-        public IEnumerable<AdminCategoryListingServiceModel> CategoriesInDb { get; set; } 
+        public IEnumerable<AdminCategoryListingServiceModel> CategoriesInDb { get; set; }
             = new List<AdminCategoryListingServiceModel>();
 
         public IEnumerable<LanguageListingServiceModel> LanguagesInDb { get; set; } =
