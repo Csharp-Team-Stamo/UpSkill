@@ -29,6 +29,9 @@
         public string CreatorImageUrl { get; set; }
 
         [Required]
+        public string VideoUrl { get; set; }
+
+        [Required]
         [MaxLength(CourseConstants.SkillsLearnMaxlen)]
         public string SkillsLearn { get; set; }
 
@@ -48,9 +51,6 @@
 
         [Required]
         public decimal Price { get; set; }
-
-        [Required]
-        public string VideoUrl { get; set; }
 
         public ICollection<CourseOwner> Owners { get; set; } = new HashSet<CourseOwner>();
 

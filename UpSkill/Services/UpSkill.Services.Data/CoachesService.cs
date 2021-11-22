@@ -20,9 +20,45 @@
             this.coachesOwnerRepository = coachesOwnerRepository;
         }
 
+        public Task<CoachDescriptionModel> GetByIdAsync(string coachId)
+        {
+            return coachesRepository.All().Where(x => x.Id == coachId).Select(x => new CoachDescriptionModel
+            {
+                Id = x.Id,
+                FullName = x.FullName,
+                CategoryName = x.Category.Name,
+                AvatarImgUrl = x.AvatarImgUrl,
+                Company = x.Company,
+                VideoUrl = x.VideoUrl,
+                DiscussionDurationInMinutes = x.DiscussionDurationInMinutes,
+                ResourcesCount = x.ResourcesCount,
+                SessionDescription = x.SessionDescription,
+                SkillsLearn = x.SkillsLearn,
+            }).FirstOrDefaultAsync();
+        }
+
+        public CoachesListingCatalogModel GetAllByOwnerId(string ownerId)
+        {
+
+            return new CoachesListingCatalogModel
+            {
+                OwnerId = ownerId,
+                OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
+                Coaches = coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CoachInListCatalogModel
+                {
+                    Id = x.Coach.Id,
+                    FullName = x.Coach.FullName,
+                    CategoryName = x.Coach.Category.Name,
+                    Company = x.Coach.Company,
+                    CompanyLogoUrl = x.Coach.CompanyLogoUrl,
+                    PricePerSession = x.Coach.PricePerSession,
+                }).ToList()
+            };
+        }
+
         public CoachesListingCatalogModel GetAll(string ownerId)
         {
-            var coaches = new CoachesListingCatalogModel
+            return new CoachesListingCatalogModel
             {
                 OwnerId = ownerId,
                 OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
@@ -38,45 +74,6 @@
                     Languages = x.Languages.Select(cl => cl.Language.Name).ToList(),
                 }).ToList()
             };
-
-            return coaches;
-        }
-
-        public Task<CoachDescriptionModel> GetByIdAsync(string coachId)
-        {
-            return coachesRepository.All().Where(x => x.Id == coachId).Select(x => new CoachDescriptionModel
-            {
-                Id = x.Id,
-                FullName = x.FullName,
-                CategoryName = x.Category.Name,
-                AvatarImgUrl = x.AvatarImgUrl,
-                Company = x.Company,
-                DiscussionDurationInMinutes = x.DiscussionDurationInMinutes,
-                ResourcesCount = x.ResourcesCount,
-                SessionDescription = x.SessionDescription,
-                SkillsLearn = x.SkillsLearn,
-            }).FirstOrDefaultAsync();
-        }
-
-        public CoachesListingCatalogModel GetAllByOwnerId(string ownerId)
-        {
-
-            var coachesByOwnerId = new CoachesListingCatalogModel
-            {
-                OwnerId = ownerId,
-                OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
-                Coaches = coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CoachInListCatalogModel
-                {
-                    Id = x.Coach.Id,
-                    FullName = x.Coach.FullName,
-                    CategoryName = x.Coach.Category.Name,
-                    Company = x.Coach.Company,
-                    CompanyLogoUrl = x.Coach.CompanyLogoUrl,
-                    PricePerSession = x.Coach.PricePerSession,
-                }).ToList()
-            };
-
-            return coachesByOwnerId;
         }
 
         public async Task AddCoachInOwnerCoachesCollectionAsync(string coachId, string ownerId)

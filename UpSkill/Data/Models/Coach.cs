@@ -36,6 +36,9 @@
         public string AvatarImgUrl { get; set; }
 
         [Required]
+        public string VideoUrl { get; set; }
+
+        [Required]
         [MaxLength(CoachConstants.SessionDescriptionMaxlen)]
         public string SessionDescription { get; set; }
 
