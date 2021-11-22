@@ -20,11 +20,10 @@ else
     <div class="row">
         @foreach (var course in model.Courses)
         {
-            <CourseCard Course="course" OwnerId="@model.OwnerId" CoursesIdsCollection="@model.OwnerCourseCollectionIds" UpdatedOwnerCoursesListingCatalogModel="SetCourses"/>
+            <CourseCard Course="course" OwnerId="@model.OwnerId" CoursesIdsCollection="@model.OwnerCourseCollectionIds" UpdatedOwnerCoursesListingCatalogModel="SetCourses" />
         }
     </div>
 }
-
 
 @code{
 
@@ -44,5 +43,4 @@ else
     {
         model = updatedCourses;
     }
-
 }

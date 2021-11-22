@@ -30,6 +30,7 @@
                 {
                     Id = x.Id,
                     AuthorFullName = x.AuthorFullName,
+                    Name = x.Name,
                     CategoryName = x.Category.Name,
                     CompanyLogoUrl = x.CompanyLogoUrl,
                     ImageUrl = x.ImageUrl,
@@ -51,6 +52,7 @@
                 {
                     Id = x.Course.Id,
                     AuthorFullName = x.Course.AuthorFullName,
+                    Name = x.Course.Name,
                     CategoryName = x.Course.Category.Name,
                     CompanyLogoUrl = x.Course.CompanyLogoUrl,
                     ImageUrl = x.Course.ImageUrl,

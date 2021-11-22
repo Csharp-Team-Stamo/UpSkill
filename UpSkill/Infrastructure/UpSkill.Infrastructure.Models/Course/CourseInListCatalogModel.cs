@@ -8,11 +8,11 @@
 
         public string AuthorFullName { get; set; }
 
+        public string Name { get; set; }
+
         public string ImageUrl { get; set; }
 
         public string CategoryName { get; set; }
-
-        public string CompanyName { get; set; }
 
         public string CompanyLogoUrl { get; set; }
 
