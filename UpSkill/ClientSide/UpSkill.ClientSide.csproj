@@ -20,6 +20,7 @@
     <None Remove="Controls\Header.razor.css" />
     <None Remove="Controls\OwnerDashboardStatistics.razor.css" />
     <None Remove="Controls\CoachCard.razor.css" />
+    <None Remove="Pages\Courses.razor.css" />
     <None Remove="Pages\Forgotten-password.razor.css" />
     <None Remove="Pages\Coaches.razor.css" />
     <None Remove="Pages\LogIn.razor.css" />
@@ -42,6 +43,7 @@
     <Content Include="Controls\Header.razor.css" />
     <Content Include="Controls\OwnerDashboardStatistics.razor.css" />
     <Content Include="Controls\CoachCard.razor.css" />
+    <Content Include="Pages\Courses.razor.css" />
     <Content Include="Pages\Forgotten-password.razor.css" />
     <Content Include="Pages\Coaches.razor.css" />
     <Content Include="Pages\LogIn.razor.css" />

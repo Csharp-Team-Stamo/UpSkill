@@ -15,7 +15,6 @@
         public Language Language { get; set; }
 
         [Required]
-        //ToDo Change to FullName
         public string Name { get; set; }
 
         [Required]

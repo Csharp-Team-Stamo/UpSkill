@@ -9,7 +9,7 @@
 
         Task<CoachDescriptionModel> GetByIdAsync(string coachId);
 
-        CoachesListingCatalogModel GetAllByOwnerId(string userId);
+        CoachesListingCatalogModel GetAllByOwnerId(string ownerId);
 
         Task AddCoachInOwnerCoachesCollectionAsync(string coachId, string ownerId);
 

@@ -31,11 +31,30 @@
                     Id = x.Id,
                     AuthorFullName = x.AuthorFullName,
                     CategoryName = x.Category.Name,
-                    CompanyName = x.CompanyName,
                     CompanyLogoUrl = x.CompanyLogoUrl,
                     ImageUrl = x.ImageUrl,
                     LanguageName = x.Language.Name,
                     PricePerPerson = x.Price,
+                }).ToList()
+            };
+
+            return courses;
+        }
+
+        public CoursesListingCatalogModel GetAllByOwnerId(string ownerId)
+        {
+            var courses = new CoursesListingCatalogModel
+            {
+                OwnerId = ownerId,
+                OwnerCourseCollectionIds = OwnerCourseCollectionIds(ownerId),
+                Courses = coursesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CourseInListCatalogModel
+                {
+                    Id = x.Course.Id,
+                    AuthorFullName = x.Course.AuthorFullName,
+                    CategoryName = x.Course.Category.Name,
+                    CompanyLogoUrl = x.Course.CompanyLogoUrl,
+                    ImageUrl = x.Course.ImageUrl,
+                    PricePerPerson = x.Course.Price,
                 }).ToList()
             };
 

@@ -1,12 +1,48 @@
 @page "/Courses"
 
-<div class="row">
-    <CoursesTopCard></CoursesTopCard>
+@if (user.Role().Result == "Owner")
+{
+    <div class="text-right">
+        <button @onclick="@(() => { NavigationManager.NavigateTo("/Courses-catalog");})" class="btn-add">
+            <div class="btn-text">
+                Manage
+            </div>
+        </button>
+    </div>
+}
 
-    @for (int i = 1; i < 10; i++)
+@if (model == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="row">
+        @foreach (var course in model.Courses)
+        {
+            <CourseCard Course="course" OwnerId="@model.OwnerId" CoursesIdsCollection="@model.OwnerCourseCollectionIds" UpdatedOwnerCoursesListingCatalogModel="SetCourses"/>
+        }
+    </div>
+}
+
+
+@code{
+
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+    private CoursesListingCatalogModel model;
+
+    protected override async Task OnInitializedAsync()
     {
-        <CourseCard></CourseCard>
+        var ownerId = user.OwnerId().Result;
+
+        model = await CoursesService.GetAllByOwnerIdAsync(ownerId);
     }
 
-</div>
+    private void SetCourses(CoursesListingCatalogModel updatedCourses)
+    {
+        model = updatedCourses;
+    }
 
+}

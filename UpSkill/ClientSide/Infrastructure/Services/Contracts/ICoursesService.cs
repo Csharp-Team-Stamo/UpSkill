@@ -7,6 +7,8 @@
     {
         Task<CoursesListingCatalogModel> GetAllAsync(string ownerId);
 
+        Task<CoursesListingCatalogModel> GetAllByOwnerIdAsync(string ownerId);
+
         Task AddCourseInOwnerCoursesCollectionAsync(int courseId, string ownerId);
 
         Task RemoveCourseFromOwnerCoursesCollectionAsync(int courseId, string ownerId);

@@ -20,6 +20,11 @@
             return await httpClient.GetFromJsonAsync<CoursesListingCatalogModel>($"/Courses/GetAll?ownerId={ownerId}");
         }
 
+        public async Task<CoursesListingCatalogModel> GetAllByOwnerIdAsync(string ownerId)
+        {
+            return await httpClient.GetFromJsonAsync<CoursesListingCatalogModel>($"/courses/GetAllByOwnerId?ownerId={ownerId}");
+        }
+
         public async Task AddCourseInOwnerCoursesCollectionAsync(int courseId, string ownerId)
         {
             await httpClient.PostAsJsonAsync($"/Courses/AddCourseInOwnerCoursesCollectionAsync?courseId={courseId}&ownerId={ownerId}", string.Empty);

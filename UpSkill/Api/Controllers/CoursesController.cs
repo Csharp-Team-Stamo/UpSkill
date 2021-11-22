@@ -22,6 +22,12 @@
             return coursesService.GetAll(ownerId);
         }
 
+        [HttpGet("GetAllByOwnerId")]
+        public CoursesListingCatalogModel GetAllByOwnerId([FromQuery] string ownerId)
+        {
+            return coursesService.GetAllByOwnerId(ownerId);
+        }
+
         [HttpPost("AddCourseInOwnerCoursesCollectionAsync")]
         public async Task AddCourseInOwnerCoursesCollectionAsync([FromQuery] int courseId, [FromQuery] string ownerId)
         {

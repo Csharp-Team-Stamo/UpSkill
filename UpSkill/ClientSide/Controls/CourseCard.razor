@@ -14,7 +14,7 @@
         </div>
         <div class="row">
             <div class="course-price col-6">
-                @Course.PricePerPerson.ToString("F")€ per person
+                @Course.PricePerPerson.ToString("##.##")€ per person
             </div>
             <div class="col-6 text-right">
                 <img class="course-company-logo" src="@Course.CompanyLogoUrl" />
@@ -72,6 +72,9 @@
     [Parameter]
     public EventCallback<CoursesListingCatalogModel> UpdatedCoursesListingCatalogModel { get; set; }
 
+    [Parameter]
+    public EventCallback<CoursesListingCatalogModel> UpdatedOwnerCoursesListingCatalogModel { get; set; }
+
     private bool show = false;
 
     private void ShowPopup()
@@ -100,5 +103,6 @@
     {
         await CoursesService.RemoveCourseFromOwnerCoursesCollectionAsync(courseId, ownerId);
         await UpdatedCoursesListingCatalogModel.InvokeAsync(await CoursesService.GetAllAsync(ownerId));
+        await UpdatedOwnerCoursesListingCatalogModel.InvokeAsync(await CoursesService.GetAllByOwnerIdAsync(ownerId));
     }
 }
