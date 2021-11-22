@@ -52,6 +52,10 @@
         [Required]
         public decimal Price { get; set; }
 
+
+        public ICollection<Lecture> Lectures { get; set; } =
+            new List<Lecture>();
+
         public ICollection<CourseOwner> Owners { get; set; } = new HashSet<CourseOwner>();
 
         public ICollection<CourseVote> Votes { get; set; } = new HashSet<CourseVote>();

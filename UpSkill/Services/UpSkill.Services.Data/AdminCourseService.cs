@@ -70,6 +70,7 @@
                 ImageUrl = input.ImageUrl,
                 AuthorFullName = input.AuthorFullName,
                 CompanyLogoUrl = input.CompanyLogoUrl,
+                CompanyName = input.CompanyName,
                 Price = input.Price,
                 VideoUrl = input.VideoUrl,
                 Language = language,
