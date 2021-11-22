@@ -6,8 +6,8 @@
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Language;
-    using UpSkill.Services.Data.Contracts;
+    using Infrastructure.Models.Language;
+    using Contracts;
 
     public class AdminLanguageService : IAdminLanguageService
     {

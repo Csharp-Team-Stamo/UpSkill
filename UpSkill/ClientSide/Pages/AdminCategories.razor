@@ -52,7 +52,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        this.allCategories = await this.Client
+        allCategories = await Client
         .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>
         ("/admin/category/all");
     }

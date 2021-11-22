@@ -101,12 +101,12 @@
     private async Task RemoveCoach(string coachId)
     {
 
-        var response = await this.Client
+        var response = await Client
             .DeleteAsync($"/admin/coach/delete/{coachId}");
 
         if(response.IsSuccessStatusCode)
         {
-            var updatedCoaches = await this.Client
+            var updatedCoaches = await Client
                 .GetFromJsonAsync<IEnumerable<AdminCoachListingServiceModel>>
                 ("/admin/coach/all");
 

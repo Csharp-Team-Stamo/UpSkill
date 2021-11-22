@@ -25,6 +25,9 @@
         [Required]
         public string AuthorFullName { get; set; }
 
+        [Required]
+        public string CompanyName { get; set; }
+
         public string CompanyLogoUrl { get; set; }
 
         [Required]

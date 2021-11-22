@@ -1,6 +1,6 @@
 ﻿namespace UpSkill.Infrastructure.Models.Course
 {
-    using UpSkill.Infrastructure.Models.Category;
+    using Category;
 
     public class CourseDetailsServiceModel
     {
