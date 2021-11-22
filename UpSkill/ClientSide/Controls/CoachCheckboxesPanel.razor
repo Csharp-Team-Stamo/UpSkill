@@ -1,4 +1,5 @@
-﻿<form>
+﻿@using UpSkill.Infrastructure.Models.Sorting
+<form>
     <div class="query-panel row">
         <section class="col-4">
             <h2 class="section-title">Categories</h2>
@@ -39,10 +40,10 @@
 
     private ICollection<string> languages = new List<string>();
 
-    private SortingTermsCoachesModel sortingTerms = new();
+    private SortingTermsCatalogsModel sortingTerms = new();
 
     [Parameter]
-    public EventCallback<SortingTermsCoachesModel> SortingTerms { get; set; }
+    public EventCallback<SortingTermsCatalogsModel> SortingTerms { get; set; }
 
 
     protected override async Task OnInitializedAsync()
@@ -61,8 +62,6 @@
         {
             sortingTerms.Categories.Add(categoryName);
         }
-
-        Console.WriteLine(string.Join(" ", sortingTerms.Categories));
 
         SortingTerms.InvokeAsync(sortingTerms);
     }

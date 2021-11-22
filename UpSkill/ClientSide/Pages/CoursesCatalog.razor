@@ -2,6 +2,8 @@
 @layout NoMenuLayout
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
+<CourseCheckboxesPanel SortingTerms="Filter"></CourseCheckboxesPanel>
+
 @if (model == null)
 {
     <div class="spinner"></div>
@@ -40,6 +42,48 @@ else
     private void SetCourses(CoursesListingCatalogModel updatedModel)
     {
         model = updatedModel;
+    }
+
+    private void Filter(SortingTermsCatalogsModel input)
+    {
+        if (input.Categories.Any() && input.Languages.Any())
+        {
+            courses = model.Courses.Where(x => input.Categories.Contains(x.CategoryName) && input.Languages.Contains(x.LanguageName)).ToList();
+        }
+
+        if (!input.Categories.Any())
+        {
+            FilterCoachesByLanguage(input);
+        }
+
+        if (!input.Languages.Any())
+        {
+            FilterCoachesByCategory(input);
+        }
+    }
+
+    private void FilterCoachesByCategory(SortingTermsCatalogsModel input)
+    {
+        if (input.Categories.Any())
+        {
+            courses = model.Courses.Where(x => input.Categories.ToList().Contains(x.CategoryName)).ToList();
+        }
+        else
+        {
+            courses = model.Courses;
+        }
+    }
+
+    private void FilterCoachesByLanguage(SortingTermsCatalogsModel input)
+    {
+        if (input.Languages.Any())
+        {
+            courses = model.Courses.Where(x => input.Languages.Contains(x.LanguageName)).ToList();
+        }
+        else
+        {
+            courses = model.Courses;
+        }
     }
 
 }
