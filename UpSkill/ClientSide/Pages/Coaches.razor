@@ -5,22 +5,22 @@
     <div class="text-right">
         <button @onclick="@(() => { NavigationManager.NavigateTo("/Coaches-catalog");})" class="btn-add">
             <div class="btn-text">
-                Add
+                Manage
             </div>
         </button>
     </div>
 }
 
-@if (coaches == null)
+@if (model == null)
 {
     <div class="spinner"></div>
 }
 else
 {
     <div class="row">
-        @foreach (var coach in coaches.Coaches)
+        @foreach (var coach in model.Coaches)
         {
-            <CoachCard Coach="coach" OwnerId="@coaches.OwnerId" CoachIdsCollection="@coaches.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches"></CoachCard>
+            <CoachCard Coach="coach" OwnerId="@model.OwnerId" CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches"/>
         }
     </div>
 }
@@ -30,17 +30,17 @@ else
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
 
-    private CoachesListingCatalogModel coaches;
+    private CoachesListingCatalogModel model;
 
     protected override async Task OnInitializedAsync()
     {
         var ownerId = user.OwnerId().Result;
 
-        coaches = await CoachesService.GetAllByOwnerIdAsync(ownerId);
+        model = await CoachesService.GetAllByOwnerIdAsync(ownerId);
     }
 
     private void SetCoaches(CoachesListingCatalogModel updatedCoaches)
     {
-        coaches = updatedCoaches;
+        model = updatedCoaches;
     }
 }

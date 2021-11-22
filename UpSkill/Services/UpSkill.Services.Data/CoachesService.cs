@@ -88,16 +88,16 @@
 
         public async Task RemoveCoachFromOwnerCoachCollectionAsync(string coachId, string ownerId)
         {
-            var coachToRemove = coachesOwnerRepository.All().FirstOrDefault(x => x.CoachId == coachId && x.OwnerId == ownerId);
-
+            var coachToRemove = await coachesOwnerRepository.All()
+                .FirstOrDefaultAsync(x => x.CoachId == coachId && x.OwnerId == ownerId);
             coachesOwnerRepository.HardDelete(coachToRemove);
-
             await coachesOwnerRepository.SaveChangesAsync();
         }
 
         private List<string> OwnerCoachCollectionIds(string ownerId)
         {
-            return coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId)
+            return coachesOwnerRepository.All()
+                .Where(x => x.OwnerId == ownerId)
                 .Select(x => x.CoachId)
                 .ToList();
         }

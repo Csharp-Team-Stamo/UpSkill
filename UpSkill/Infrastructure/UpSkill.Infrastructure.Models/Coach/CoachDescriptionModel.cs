@@ -19,6 +19,5 @@
         public string DiscussionDurationInMinutes { get; set; }
 
         public string ResourcesCount { get; set; }
-
     }
 }

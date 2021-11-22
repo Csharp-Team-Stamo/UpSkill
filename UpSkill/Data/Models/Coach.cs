@@ -26,6 +26,7 @@
         //public string ImageUrl { get; set; }
 
         [Required]
+        //ToDo Change to CompanyName
         public string Company { get; set; }
 
         [Required]

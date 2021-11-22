@@ -1,63 +1,57 @@
 ﻿<div class="card custom-course-card container mb-5" style="width: 18rem;">
     <div @onclick="ShowPopup" class="card-img-top course-img-top-custom">
-        <img class="img-custom" src="images/course-marketing.png" />
-        <div class="course-title-in-image">MANAGEMENT</div>
+        <img class="img-custom" src="@Course.ImageUrl" />
+        <div class="course-title-in-image">@Course.CategoryName</div>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="course-profession col-6">
-                CategoryName
+                @Course.Name
             </div>
             <div class="course-name col-6 text-right">
-                FullName
+                @Course.AuthorFullName
             </div>
         </div>
         <div class="row">
             <div class="course-price col-6">
-                20€ per person
+                @Course.PricePerPerson.ToString("##.##")€ per person
             </div>
             <div class="col-6 text-right">
-                <img class="course-company-logo" src="images/upskill_logo.jpeg" />
+                <img class="course-company-logo" src="@Course.CompanyLogoUrl" />
             </div>
         </div>
-        @*@if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
+        @if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
         {
-            if (IsCoachAdded())
+            if (IsCourseAdded())
             {
                 <div class="text-center">
-                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="course-btn"><span class="course-btn-text">Add</span></button>
+                    <button @onclick="@(() =>RemoveCourse(Course.Id, user.OwnerId().Result))" class="course-btn"><span class="course-btn-text">Remove</span></button>
                 </div>
             }
             else
             {
                 <div class="text-center">
-                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.OwnerId().Result))" class="course-btn"><span class="course-btn-text">Remove</span></button>
+                    <button @onclick="@(() =>AddCourse(Course.Id, OwnerId))" class="course-btn"><span class="course-btn-text">Add</span></button>
                 </div>
             }
         }
 
         else if (
             user.Role().Result == GlobalConstants.EmployeeRoleName &&
-            !NavigationManager.Uri.Contains("Coaches-catalog"))
+            !NavigationManager.Uri.Contains("Courses-catalog"))
         {
             <div class="text-center">
-                <button @onclick="@(() =>AddNewEmployeeSession(Coach.Id, OwnerId))" class="course-btn"><span class="course-btn-text">New Slot</span></button>
+                <button class="course-btn"><span class="course-btn-text">New Slot</span></button>
             </div>
-        }*@
-
-        <div class="text-center">
-            <button class="course-btn"><span class="course-btn-text">Add</span></button>
-        </div>
-
+        }
     </div>
 </div>
-
 
 
 @* Modal *@
 @if (show)
 {
-    <CourseDescriptionModal SetShow="SetShowValue"></CourseDescriptionModal>
+    <CourseDescriptionModal SetShow="SetShowValue" />
 }
 
 
@@ -65,6 +59,21 @@
 {
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
+
+    [Parameter]
+    public CourseInListCatalogModel Course { get; set; }
+
+    [Parameter]
+    public string OwnerId { get; set; }
+
+    [Parameter]
+    public ICollection<int> CoursesIdsCollection { get; set; }
+
+    [Parameter]
+    public EventCallback<CoursesListingCatalogModel> UpdatedCoursesListingCatalogModel { get; set; }
+
+    [Parameter]
+    public EventCallback<CoursesListingCatalogModel> UpdatedOwnerCoursesListingCatalogModel { get; set; }
 
     private bool show = false;
 
@@ -76,5 +85,24 @@
     private void SetShowValue(bool value)
     {
         show = value;
+    }
+
+    private bool IsCourseAdded()
+    {
+        return CoursesIdsCollection.FirstOrDefault(x => x == Course.Id) != 0;
+    }
+
+
+    private async Task AddCourse(int courseId, string ownerId)
+    {
+        await CoursesService.AddCourseInOwnerCoursesCollectionAsync(courseId, ownerId);
+        await UpdatedCoursesListingCatalogModel.InvokeAsync(await CoursesService.GetAllAsync(ownerId));
+    }
+
+    private async Task RemoveCourse(int courseId, string ownerId)
+    {
+        await CoursesService.RemoveCourseFromOwnerCoursesCollectionAsync(courseId, ownerId);
+        await UpdatedCoursesListingCatalogModel.InvokeAsync(await CoursesService.GetAllAsync(ownerId));
+        await UpdatedOwnerCoursesListingCatalogModel.InvokeAsync(await CoursesService.GetAllByOwnerIdAsync(ownerId));
     }
 }
