@@ -5,7 +5,7 @@
 
 <div class="container">
     <div class="row">
-        <img src="@courseDetails.ImageUrl" alt="@courseDetails.Name course illustration"/>
+        <img src="@courseDetails.ImageUrl" alt="@courseDetails.Name course illustration" />
         <p>@courseDetails.Description</p>
     </div>
     <div class="row">
@@ -15,17 +15,16 @@
     </div>
 </div>
 
-@code { 
+@code {
     private CourseDetailsServiceModel courseDetails;
 
     [Parameter]
     public int Id { get; set; }
 
-    //[Inject]
-    //public HttpClient Client { get; set; }
-
     protected override async Task OnInitializedAsync()
     {
-        this.courseDetails = await this.Client.GetFromJsonAsync<CourseDetailsServiceModel>(@"/admin/course/details/{Id}");
+        this.courseDetails = await this.Client.GetFromJsonAsync<CourseDetailsServiceModel>
+            (@"/admin/course/details/{Id}");
     }
 }
+

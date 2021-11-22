@@ -1,17 +1,17 @@
-﻿@page "/admin/clients"
+﻿@page "/admin/category/all"
 @layout AdminLayout
 
-@using UpSkill.Infrastructure.Models.Company
+@using UpSkill.Infrastructure.Models.Category
 
 <div class="mx-auto">
     <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
         <thead class="border-bottom-0">
             <tr class="" style="color: white; background-color: #296cfb">
                 <th class="font-weight-bold text-left pl-4 cell-header-left">
-                    Company Name
+                    Category Id
                 </th>
                 <th class="text-left font-weight-bold pr-4 cell-header-right">
-                    Email
+                    Name
                 </th>
                 <th>
                     <div class="add-btn" @onclick="ShowPopup">+</div>
@@ -19,14 +19,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var company in allClients)
+            @foreach (var category in allCategories)
             {
                 <tr class=" border-bottom-0 underline">
                     <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
-                        @company.Name
+                        @category.Id
                     </td>
                     <td class="text-left pr-4 cell-right">
-                        @company.Email
+                        @category.Name
                     </td>
                 </tr>
             }
@@ -41,20 +41,20 @@
 
 @if (show)
 {
-    <AdminAddCompanyModal SetShow="SetShowValue" GetUpdatedCompanies="GetUpdatedClients"></AdminAddCompanyModal>
+    <AdminCategoryAddModal SetShow="SetShowValue" GetUpdatedCategories="GetUpdatedCategories"></AdminCategoryAddModal>
 }
 
 @code {
-    private bool show = false;
+    private IEnumerable<AdminCategoryListingServiceModel> allCategories =
+        new List<AdminCategoryListingServiceModel>();
 
-    private IEnumerable<AdminCompanyListingModel> allClients =
-        new List<AdminCompanyListingModel>();
+    private bool show = false;
 
     protected override async Task OnInitializedAsync()
     {
-        this.allClients = await Client
-            .GetFromJsonAsync<IEnumerable<AdminCompanyListingModel>>
-            ("/admin/statistics/getallclients");
+        this.allCategories = await this.Client
+        .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>
+        ("/admin/category/all");
     }
 
     private void ShowPopup()
@@ -67,8 +67,8 @@
         show = value;
     }
 
-    private void GetUpdatedClients(IEnumerable<AdminCompanyListingModel> value)
+    private void GetUpdatedCategories(IEnumerable<AdminCategoryListingServiceModel> value)
     {
-        allClients = value;
+        allCategories = value;
     }
 }
