@@ -1,4 +1,4 @@
-﻿namespace UpSkill.ClientSide.Pages
+﻿namespace UpSkill.ClientSide.Pages.Admin
 {
     using System.Collections.Generic;
     using System.Net.Http.Json;
@@ -35,7 +35,7 @@
             var response = await this.Client
                 .PostAsJsonAsync<CoachCreateInputModel>("/admin/coach/create", coachInput);
 
-            if(response.IsSuccessStatusCode)
+            if (response.IsSuccessStatusCode)
             {
                 NavigationManager.NavigateTo("/admin/coach/all");
             }

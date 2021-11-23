@@ -1,17 +1,17 @@
-﻿@page "/admin/language/all"
+﻿@page "/admin/clients"
 @layout AdminLayout
 
-@using UpSkill.Infrastructure.Models.Language
+@using UpSkill.Infrastructure.Models.Company
 
 <div class="mx-auto">
     <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
         <thead class="border-bottom-0">
             <tr class="" style="color: white; background-color: #296cfb">
                 <th class="font-weight-bold text-left pl-4 cell-header-left">
-                    Category Id
+                    Company Name
                 </th>
                 <th class="text-left font-weight-bold pr-4 cell-header-right">
-                    Name
+                    Email
                 </th>
                 <th>
                     <div class="add-btn" @onclick="ShowPopup">+</div>
@@ -19,14 +19,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var language in allLanguages)
+            @foreach (var company in allClients)
             {
                 <tr class=" border-bottom-0 underline">
                     <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
-                        @language.Id
+                        @company.Name
                     </td>
                     <td class="text-left pr-4 cell-right">
-                        @language.Name
+                        @company.Email
                     </td>
                 </tr>
             }
@@ -39,22 +39,22 @@
     </table>
 </div>
 
-@if(show)
+@if (show)
 {
-    <AdminLanguageAddModal SetShow="SetShowValue" GetUpdatedLanguages="GetUpdatedLanguages"></AdminLanguageAddModal>
+    <AdminAddCompanyModal SetShow="SetShowValue" GetUpdatedCompanies="GetUpdatedClients"></AdminAddCompanyModal>
 }
 
 @code {
-    private IEnumerable<LanguageListingServiceModel> allLanguages =
-        new List<LanguageListingServiceModel>();
-
     private bool show = false;
+
+    private IEnumerable<AdminCompanyListingModel> allClients =
+        new List<AdminCompanyListingModel>();
 
     protected override async Task OnInitializedAsync()
     {
-        allLanguages = await Client
-        .GetFromJsonAsync<IEnumerable<LanguageListingServiceModel>>
-        ("/admin/language/all");
+        allClients = await Client
+            .GetFromJsonAsync<IEnumerable<AdminCompanyListingModel>>
+            ("/admin/statistics/getallclients");
     }
 
     private void ShowPopup()
@@ -67,8 +67,8 @@
         show = value;
     }
 
-    private void GetUpdatedLanguages(IEnumerable<LanguageListingServiceModel> value)
+    private void GetUpdatedClients(IEnumerable<AdminCompanyListingModel> value)
     {
-        allLanguages = value;
+        allClients = value;
     }
 }
