@@ -1,9 +1,8 @@
 ﻿.everything {
-  position: relative;
-  text-align: center;
-  color: white;
+    position: relative;
+    text-align: center;
+    color: white;
 }
-
 
 /* Sign Up Button */
 .SignUpButton {
@@ -57,7 +56,6 @@
     transform: translate(-50%, -50%);
 }
 
-
 /* UpSkill Logo */
 .UpSkillLogo {
     position: absolute;
@@ -75,7 +73,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
-
 
 /* PersonMockup */
 .PersonMockUp {
