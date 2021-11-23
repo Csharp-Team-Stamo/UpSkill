@@ -14,11 +14,6 @@
     <None Remove="Controls\Footer.razor.css" />
     <None Remove="Controls\Header.razor.css" />
     <None Remove="Controls\OwnerDashboardStatistics.razor.css" />
-    <None Remove="Pages\Forgotten-password.razor.css" />
-    <None Remove="Pages\LogIn.razor.css" />
-    <None Remove="Pages\ResetPassword.razor.css" />
-    <None Remove="Pages\SignUp.razor.css" />
-    <None Remove="Pages\Registration.razor.css" />
     <None Remove="Pages\WelcomePage.razor.css" />
     <None Remove="Shared\LoginDisplay.razor.css" />
   </ItemGroup>
@@ -29,11 +24,6 @@
     <Content Include="Controls\Footer.razor.css" />
     <Content Include="Controls\Header.razor.css" />
     <Content Include="Controls\OwnerDashboardStatistics.razor.css" />
-    <Content Include="Pages\Forgotten-password.razor.css" />
-    <Content Include="Pages\LogIn.razor.css" />
-    <Content Include="Pages\ResetPassword.razor.css" />
-    <Content Include="Pages\SignUp.razor.css" />
-    <Content Include="Pages\Registration.razor.css" />
     <Content Include="Pages\WelcomePage.razor.css" />
     <Content Include="Shared\LoginDisplay.razor.css" />
   </ItemGroup>
@@ -68,10 +58,6 @@
 
   <ItemGroup>
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Pages\RegisterLogin\" />
   </ItemGroup>
 
 </Project>
