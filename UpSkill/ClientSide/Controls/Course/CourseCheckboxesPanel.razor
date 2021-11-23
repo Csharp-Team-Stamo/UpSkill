@@ -1,0 +1,81 @@
+﻿<form>
+    <div class="query-panel row">
+        <section class="col-4">
+            <h2 class="section-title">Categories</h2>
+            @foreach (var categoryName in categoryNames.OrderBy(x => x))
+            {
+                var id = Guid.NewGuid();
+
+                <div class="form-check">
+                    <input id="@id" class="form-check-input" type="checkbox" 
+                           @onchange="@(() => AddCategoryNameInCollection(categoryName))">
+                    <label for="@id" class="form-check-label" >@categoryName</label>
+                </div>
+            }
+        </section>
+        <div class="vertical-separator col-1"></div>
+        <section class="languages col-4">
+            <h2 class="section-title">Languages</h2>
+            @foreach (var languageName in languages)
+            {
+                var id = Guid.NewGuid();
+
+                <div class="form-check">
+                    <input id="@id" class="form-check-input" type="checkbox"
+                           @onchange="@(() => AddLanguageNameInCollection(languageName))">
+                    <label for="@id" class="form-check-label" >@languageName</label>
+                </div>
+            }
+        </section>
+        <section class="col-3">
+            <img class="course-catalog-img" src="images/CoursesCheckboxImage.svg">
+        </section>
+    </div>
+</form>
+
+@code
+{
+    private ICollection<string> categoryNames = new List<string>();
+
+    private ICollection<string> languages = new List<string>();
+
+    private SortingTermsCatalogsModel sortingTerms = new();
+
+    [Parameter]
+    public EventCallback<SortingTermsCatalogsModel> SortingTerms { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        categoryNames = await Client.GetFromJsonAsync<ICollection<string>>("Category/GetAllNames");
+        languages = await Client.GetFromJsonAsync<ICollection<string>>("Languages/GetAll");
+    }
+
+    protected void AddCategoryNameInCollection(string categoryName)
+    {
+        if (sortingTerms.Categories.Contains(categoryName))
+        {
+            sortingTerms.Categories.Remove(categoryName);
+        }
+        else
+        {
+            sortingTerms.Categories.Add(categoryName);
+        }
+
+        SortingTerms.InvokeAsync(sortingTerms);
+    }
+
+    protected void AddLanguageNameInCollection(string languageName)
+    {
+        if (sortingTerms.Languages.Contains(languageName))
+        {
+            sortingTerms.Languages.Remove(languageName);
+        }
+        else
+        {
+            sortingTerms.Languages.Add(languageName);
+        }
+
+        SortingTerms.InvokeAsync(sortingTerms);
+    }
+}

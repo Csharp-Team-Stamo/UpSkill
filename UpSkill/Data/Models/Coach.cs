@@ -26,6 +26,7 @@
         //public string ImageUrl { get; set; }
 
         [Required]
+        //ToDo Change to CompanyName
         public string Company { get; set; }
 
         [Required]
@@ -33,6 +34,9 @@
 
         [Required]
         public string AvatarImgUrl { get; set; }
+
+        [Required]
+        public string VideoUrl { get; set; }
 
         [Required]
         [MaxLength(CoachConstants.SessionDescriptionMaxlen)]

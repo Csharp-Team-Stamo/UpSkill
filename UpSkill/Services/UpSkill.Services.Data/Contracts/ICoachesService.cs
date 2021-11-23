@@ -5,11 +5,11 @@
 
     public interface ICoachesService
     {
-        CoachesListingCatalogModel GetAll(string ownerId);
-
         Task<CoachDescriptionModel> GetByIdAsync(string coachId);
 
-        CoachesListingCatalogModel GetAllByOwnerId(string userId);
+        CoachesListingCatalogModel GetAllByOwnerId(string ownerId);
+
+        CoachesListingCatalogModel GetAll(string ownerId);
 
         Task AddCoachInOwnerCoachesCollectionAsync(string coachId, string ownerId);
 

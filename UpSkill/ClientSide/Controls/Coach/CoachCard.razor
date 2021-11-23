@@ -1,5 +1,4 @@
-﻿@using UpSkill.Infrastructure.Models.Coach
-<div class="card custom-coach-card container mb-5" style="width: 18rem;">
+﻿<div class="card custom-coach-card container mb-5" style="width: 18rem;">
     <div @onclick="ShowPopup" class="card-img-top card-img-top-custom">
         <img class="img-custom" src="images/coach.png" />
     </div>
@@ -14,7 +13,7 @@
         </div>
         <div class="row">
             <div class="coah-price col-6">
-                @Coach.PricePerSession.ToString("F")€ per person
+                @Coach.PricePerSession.ToString("##,##")€ per session
             </div>
             <div class="col-6 text-right">
                 <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
@@ -25,13 +24,13 @@
             if (IsCoachAdded())
             {
                 <div class="text-center">
-                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
+                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
                 </div>
             }
             else
             {
                 <div class="text-center">
-                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
+                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
                 </div>
             }
         }
@@ -52,7 +51,7 @@
 @* Modal *@
 @if (show)
 {
-    <CoachDescriptionModal CoachId="@Coach.Id" SetShow="SetShowValue"></CoachDescriptionModal>
+    <CoachDescriptionModal CoachId="@Coach.Id" SetShow="SetShowValue"/>
 }
 
 @code {
@@ -86,7 +85,6 @@
     private async Task AddCoach(string coachId, string ownerId)
     {
         await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
-
         await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
 
     }
@@ -95,15 +93,13 @@
     private async Task RemoveCoach(string coachId, string ownerId)
     {
         await CoachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
-
         await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
-
         await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllByOwnerIdAsync(ownerId));
     }
 
     private bool IsCoachAdded()
     {
-        return CoachIdsCollection.FirstOrDefault(x => x == Coach.Id) == null;
+        return CoachIdsCollection.FirstOrDefault(x => x == Coach.Id) != null;
     }
 
     private void ShowPopup()

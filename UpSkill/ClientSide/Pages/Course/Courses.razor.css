@@ -1,0 +1,18 @@
+﻿.btn-div {
+    text-align: right
+}
+
+.btn-add {
+    border: 2px solid #296CFB;
+    background-color: white;
+    width: 15%;
+    margin-top: 3%;
+    margin-bottom: 6%;
+    margin-right: 7%
+}
+
+.btn-text {
+    font: normal normal bold 22px/27px Montserrat;
+    letter-spacing: 1.1px;
+    color: #296CFB;
+}

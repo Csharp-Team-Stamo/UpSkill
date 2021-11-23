@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UpSkill.Data;
 
 namespace UpSkill.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211122105504_AddedPropsInCourse")]
+    partial class AddedPropsInCourse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -343,10 +345,6 @@ namespace UpSkill.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
-
-                    b.Property<string>("VideoUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -938,86 +936,6 @@ namespace UpSkill.Data.Migrations
                     b.ToTable("Languages");
                 });
 
-            modelBuilder.Entity("UpSkill.Data.Models.Lecture", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VideoUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.ToTable("Lectures");
-                });
-
-            modelBuilder.Entity("UpSkill.Data.Models.LectureResource", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<byte[]>("Attachment")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("LectureId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("LectureId");
-
-                    b.ToTable("LectureResources");
-                });
-
             modelBuilder.Entity("UpSkill.Data.Models.LiveSession", b =>
                 {
                     b.Property<string>("Id")
@@ -1420,28 +1338,6 @@ namespace UpSkill.Data.Migrations
                     b.Navigation("Status");
                 });
 
-            modelBuilder.Entity("UpSkill.Data.Models.Lecture", b =>
-                {
-                    b.HasOne("UpSkill.Data.Models.Course", "Course")
-                        .WithMany("Lectures")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-                });
-
-            modelBuilder.Entity("UpSkill.Data.Models.LectureResource", b =>
-                {
-                    b.HasOne("UpSkill.Data.Models.Lecture", "Lecture")
-                        .WithMany("Resources")
-                        .HasForeignKey("LectureId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Lecture");
-                });
-
             modelBuilder.Entity("UpSkill.Data.Models.LiveSession", b =>
                 {
                     b.HasOne("UpSkill.Data.Models.Category", "Category")
@@ -1518,8 +1414,6 @@ namespace UpSkill.Data.Migrations
 
             modelBuilder.Entity("UpSkill.Data.Models.Course", b =>
                 {
-                    b.Navigation("Lectures");
-
                     b.Navigation("Owners");
 
                     b.Navigation("Students");
@@ -1543,11 +1437,6 @@ namespace UpSkill.Data.Migrations
                     b.Navigation("Coaches");
 
                     b.Navigation("Courses");
-                });
-
-            modelBuilder.Entity("UpSkill.Data.Models.Lecture", b =>
-                {
-                    b.Navigation("Resources");
                 });
 
             modelBuilder.Entity("UpSkill.Data.Models.Owner", b =>

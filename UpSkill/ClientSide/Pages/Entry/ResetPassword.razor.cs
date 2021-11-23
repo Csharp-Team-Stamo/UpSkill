@@ -1,4 +1,4 @@
-﻿namespace UpSkill.ClientSide.Pages
+﻿namespace UpSkill.ClientSide.Pages.Entry
 {
     using System.Collections.Generic;
     using System.Net.Http.Json;
