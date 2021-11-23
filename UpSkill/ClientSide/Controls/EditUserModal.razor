@@ -1,0 +1,161 @@
+﻿@using System.IO
+@using Microsoft.AspNetCore.Components
+@using UpSkill.Infrastructure.Models.ApplicationUser
+
+@if (editApplicationUserModel == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="modal fade show container modal-custom" style="display:block; background-color: rgba(10,10,10,.8);"
+         aria-modal="true">
+        <div class="modal-dialog">
+            <div class="modal-body">
+                <div class="row modal-header-custom">
+                    <div class="modal-header-title">Personal Information</div>
+                    <div @onclick="ClosePopup" class="close header-btn" data-dismiss="modal" aria-label="Close">
+                        <span style="font-size: 2rem" aria-hidden="true">&times;</span>
+                    </div>
+                </div>
+                <EditForm Model="@editApplicationUserModel" OnValidSubmit="@HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <div class="row">
+                        <div class="col-4">
+                            <div class="edit-foto-background">
+                                @if (imageDataUri == null)
+                                {
+                                    <img class="avatar-no-img" src="images/user-no-img-avatar.svg" />
+                                }
+                                else
+                                {
+                                    <img src="@imageDataUri" />
+                                }
+                            </div>
+                            <label class="edit-btn" for="edit">
+                                <span class="edit-btn-text">Edit Photo</span>
+                            </label>
+                            <InputFile OnChange="LoadImg" id="edit" @bind-Value="@editApplicationUserModel.ImageToBase64" />
+                            @if (showErrorImgSize)
+                            {
+                                <div class="error-div">@imgError</div>
+                            }
+                        </div>
+
+                        <div class="col-8">
+                            <InputText @bind-Value="@editApplicationUserModel.FullName" placeholder="Full Name"></InputText>
+                            <ValidationMessage For="@(() => editApplicationUserModel.FullName)"></ValidationMessage>
+                            <InputText @bind-Value="@editApplicationUserModel.Email" disabled></InputText>
+                            <ValidationMessage For="@(() => editApplicationUserModel.Email)"></ValidationMessage>
+                            <InputTextArea @bind-Value="@editApplicationUserModel.Summary" rows="4" placeholder="Profile Summary"></InputTextArea>
+                            <ValidationMessage For="@(() => editApplicationUserModel.Summary)"></ValidationMessage>
+                        </div>
+                    </div>
+                    <div class="row mt-5">
+                        <button class="cancel-btn">
+                            <div @onclick="ClosePopup" class="cancel-btn-text">
+                                Cancel
+                            </div>
+                        </button>
+                        <button type="submit" class="save-btn">
+                            <div class="save-btn-text">
+                                Save
+                            </div>
+                        </button>
+                    </div>
+
+                </EditForm>
+            </div>
+        </div>
+    </div>
+
+}
+
+@code
+{
+    long maxSizeFile = 1024 * 1024 * 15;
+
+    private bool showErrorImgSize = false;
+
+    private string imgError = "Image maximum size 1MB";
+
+    string imageDataUri;
+
+    private EditApplicationUserModel editApplicationUserModel;
+
+    private string imgToSave;
+
+    [Parameter]
+    public EventCallback<bool> SetShow { get; set; }
+
+    [Parameter]
+    public EventCallback<EditApplicationUserModel> updatedUserModel { get; set; }
+
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var userId = user.Id().Result;
+
+        editApplicationUserModel = await Client.GetFromJsonAsync<EditApplicationUserModel>($"/ApplicationUsers/GetById/{userId}");
+
+        imageDataUri = editApplicationUserModel.ImageToBase64;
+
+    }
+
+    private void ClosePopup()
+    {
+        SetShow.InvokeAsync(false);
+    }
+
+    private async Task LoadImg(InputFileChangeEventArgs e)
+    {
+        var size = e.File.Size;
+
+        if (size > (1024 * 1000))
+        {
+            showErrorImgSize = true;
+
+            return;
+        }
+
+        showErrorImgSize = false;
+
+        var imageFile = await e.File.RequestImageFileAsync("image/jpeg", maxHeight: 170, maxWith: 160);
+
+        await using Stream fileStream = imageFile.OpenReadStream(maxSizeFile);
+        await using MemoryStream memoryStream = new();
+
+        await fileStream.CopyToAsync(memoryStream);
+
+        byte[] imgBytes = memoryStream.ToArray();
+
+        imageDataUri = $"data:image/jpeg;base64,{Convert.ToBase64String(memoryStream.ToArray())}";
+
+        imgToSave = imageDataUri;
+
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        var modelToSave = editApplicationUserModel;
+
+        if (imgToSave != null)
+        {
+            modelToSave.ImageToBase64 = imgToSave;
+        }
+
+        var response = await Client.PutAsJsonAsync("/ApplicationUsers/Update", modelToSave);
+
+        if (response.IsSuccessStatusCode)
+        {
+            await updatedUserModel.InvokeAsync(modelToSave);
+        }
+        //ToDo handle exception
+        ClosePopup();
+
+    }
+}
+

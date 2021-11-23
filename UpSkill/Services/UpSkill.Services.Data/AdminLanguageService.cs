@@ -1,15 +1,13 @@
 ﻿namespace UpSkill.Services.Data
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Language;
-    using UpSkill.Services.Data.Contracts;
+    using Infrastructure.Models.Language;
+    using Contracts;
 
     public class AdminLanguageService : IAdminLanguageService
     {

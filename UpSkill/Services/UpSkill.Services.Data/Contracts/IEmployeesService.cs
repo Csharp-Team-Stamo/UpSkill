@@ -2,14 +2,17 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Infrastructure.Models.AddEmployeeModal;
+    using Infrastructure.Common.Pagination;
+    using Infrastructure.Models.Employee;
+    using Paging;
 
     public interface IEmployeesService
     {
-        ICollection<AddEmployeeFormModel> GetByCompanyId(string companyId);
 
-        Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees);
+       PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, EmployeesParameters parameters);
 
-        string GetOwnerById(string userId);
+       Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees);
+
+       string GetOwnerById(string userId);
     }
 }

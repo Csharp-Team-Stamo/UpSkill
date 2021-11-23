@@ -38,6 +38,7 @@
             builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
             builder.Services.AddTransient<IEmployeesService, EmployeesService>();
             builder.Services.AddTransient<ICoachesService, CoachesService>();
+            builder.Services.AddTransient<ICoursesService, CoursesService>();
 
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddBlazoredToast();

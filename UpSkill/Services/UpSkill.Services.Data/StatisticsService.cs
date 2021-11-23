@@ -1,16 +1,14 @@
 ﻿namespace UpSkill.Services.Data
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Admin;
-    using UpSkill.Infrastructure.Models.Company;
-    using UpSkill.Services.Data.Contracts;
+    using Infrastructure.Models.Admin;
+    using Infrastructure.Models.Company;
+    using Contracts;
 
     public class StatisticsService : IStatisticsService
     {

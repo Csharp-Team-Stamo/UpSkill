@@ -1,12 +1,10 @@
 ﻿namespace UpSkill.Api.Areas.Admin.Controllers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using UpSkill.Infrastructure.Models.Category;
+    using Infrastructure.Models.Category;
     using UpSkill.Services.Data.Contracts;
 
     public class CategoryController : AdminController

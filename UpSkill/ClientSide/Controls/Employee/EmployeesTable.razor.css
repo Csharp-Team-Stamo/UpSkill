@@ -1,0 +1,83 @@
+﻿.add-btn {
+    height: 30px;
+    line-height: 30px;
+    width: 30px;
+    font-size: 2em;
+    font-weight: bold;
+    border-radius: 50%;
+    background-color: lemonchiffon;
+    color: #296CFB;
+    cursor: pointer;
+}
+
+.underline {
+    text-decoration: none;
+    position: relative;
+}
+
+.showmore-btn {
+    color: #16D696;
+}
+
+.showmore-btn:hover {
+        cursor: pointer;
+        font-weight: 400;
+    }
+
+.underline:after {
+    position: absolute;
+    content: '';
+    height: 1px;
+    /* adjust this to move up and down. 
+               You may have to adjust the line height of the paragraph if you move it down a lot. */
+    bottom: 0px;
+    /****** 
+       optional values below 
+       ******/
+    /* center - (optional) use with adjusting width   */
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    width: 95%;
+    background: black;
+}
+
+.head-underline {
+    text-decoration: none;
+    position: relative;
+}
+
+    .head-underline:after {
+        position: absolute;
+        content: '';
+        height: 1px;
+        /* adjust this to move up and down. 
+               You may have to adjust the line height of the paragraph if you move it down a lot. */
+        bottom: 0px;
+        /****** 
+       optional values below 
+       ******/
+        /* center - (optional) use with adjusting width   */
+        margin: 0 auto;
+        left: 0;
+        right: 0;
+        width: 95%;
+        background: white;
+    }
+
+
+th.cell-header-right {
+    padding-right: 1.5em;
+}
+
+th.cell-header-left {
+    padding-left: 5.5em;
+}
+
+td.cell-right {
+    padding-right: 1.3em;
+}
+
+td.cell-left {
+    padding-left: 5.5em;
+}

@@ -19,7 +19,7 @@ namespace UpSkill.Api.Controllers
     using Data.Models;
     using Infrastructure.Models.Account;
     using UpSkill.Services.Data.Contracts;
-    using UpSkill.Infrastructure.Common;
+    using Infrastructure.Common;
 
     [Route("/[controller]")]
     [ApiController]

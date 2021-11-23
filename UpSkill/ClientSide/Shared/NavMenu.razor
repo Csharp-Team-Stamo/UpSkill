@@ -1,27 +1,37 @@
 ﻿@using Microsoft.AspNetCore.Components.Authorization
 @using UpSkill.ClientSide.Authentication.Services.Contracts
 @using UpSkill.ClientSide.Controls
+@using UpSkill.Infrastructure.Models.ApplicationUser
 
 @inject IAuthenticationService AuthenticationService
 
 
 <ul class="nav flex-column position-fixed border-light">
-    <li class="nav-item px-3">
-        <div class="d-inline-flex p-3 align-content-center">
-            <Avatar></Avatar>
-            <img @onclick="ShowPopup" class="pencil-img" src="images/iconmonstr-pencil-2.svg" />
-
-            <div class="ml-2 text-left">
-                <div class=" mt-1 pb-1">
-                    @user.FullName().Result
-                </div>
-                <div class="my-1">
-                    @user.CompanyName().Result
-                </div>
-            </div>
+    
+    <li><div class="pencil-container">
+            <img @onclick="ShowPopup" class="pencil-img" src="images/iconmonstr-pencil-2.svg"/>
         </div>
     </li>
-
+    <li class="nav-item px-3">
+        @if (userModel == null)
+        {
+            <div class="spinner"></div>
+        }
+        else
+        {
+            <div class="d-inline-flex p-3 align-content-center">
+                <Avatar @ref="avatar"></Avatar>
+                <div class="ml-2 text-left">
+                    <div class=" mt-1 pb-1">
+                        @userModel.FullName
+                    </div>
+                    <div class="my-1">
+                        @userModel.CompanyName
+                    </div>
+                </div>
+            </div>
+        }
+    </li>
     <li class="nav-item px-3">
         <NavLink class="nav-link" href="Dashboard">
             Dashboard
@@ -65,17 +75,19 @@
     <AuthorizeView>
         <Authorized>
             <li class="nav-item px-3">
-                <NavLink class="logout-button nav-link " @onclick="AuthenticationService.Logout"><div>Log Out</div></NavLink>
+                <NavLink class="logout-button nav-link " @onclick="AuthenticationService.Logout">
+                    <div>Log Out</div>
+                </NavLink>
             </li>
         </Authorized>
     </AuthorizeView>
-
 
 </ul>
 
 
 @code {
 
+    private EditApplicationUserModel userModel;
 
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
@@ -83,10 +95,25 @@
     [Parameter]
     public EventCallback<bool> show { get; set; }
 
+    private Avatar avatar;
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        userModel = await Client.GetFromJsonAsync<EditApplicationUserModel>($"/ApplicationUsers/GetById/{user.Id().Result}");
+    }
+
 
     private void ShowPopup()
     {
         show.InvokeAsync(true);
+    }
+
+    public void Refresh(EditApplicationUserModel model)
+    {
+        userModel = model;
+        avatar.Refresh(model);
     }
 
 }

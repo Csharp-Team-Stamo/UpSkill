@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using UpSkill.Data.Common.Models;
-    using static UpSkill.Data.DataConstants;
+    using static DataConstants;
 
     public class Coach : BaseDeletableModel<string>
     {
@@ -26,6 +26,7 @@
         //public string ImageUrl { get; set; }
 
         [Required]
+        //ToDo Change to CompanyName
         public string Company { get; set; }
 
         [Required]
@@ -33,6 +34,9 @@
 
         [Required]
         public string AvatarImgUrl { get; set; }
+
+        [Required]
+        public string VideoUrl { get; set; }
 
         [Required]
         [MaxLength(CoachConstants.SessionDescriptionMaxlen)]

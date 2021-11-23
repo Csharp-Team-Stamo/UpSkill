@@ -1,0 +1,7 @@
+﻿@page "/admin/profile"
+
+@layout AdminLayout
+
+<AuthorizeView Roles="Administrator">
+    <AdminDashboard></AdminDashboard>
+</AuthorizeView>

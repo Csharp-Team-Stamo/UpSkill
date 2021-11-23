@@ -5,33 +5,35 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
     using Contracts;
-    using Infrastructure.Models.AddEmployeeModal;
+    using Infrastructure.Models.Employee;
     using Microsoft.AspNetCore.Identity;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Common;
+    using Infrastructure.Common;
+    using Infrastructure.Common.Pagination;
+    using Paging;
 
     public class EmployeesService : IEmployeesService
     {
         private readonly IDeletableEntityRepository<Employee> employeeRepository;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IEmailSender mailSender;
         private readonly IAccountsService accountsService;
         private readonly IOwnerService ownerService;
 
-        public EmployeesService(IDeletableEntityRepository<Employee> employeeRepository, UserManager<ApplicationUser> userManager, IEmailSender mailSender, IAccountsService accountsService, IOwnerService ownerService)
+        public EmployeesService(IDeletableEntityRepository<Employee> employeeRepository, UserManager<ApplicationUser> userManager, IAccountsService accountsService, IOwnerService ownerService)
         {
             this.employeeRepository = employeeRepository;
             this.userManager = userManager;
-            this.mailSender = mailSender;
             this.accountsService = accountsService;
             this.ownerService = ownerService;
         }
 
-        public ICollection<AddEmployeeFormModel> GetByCompanyId(string companyId)
+        public PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, EmployeesParameters parameters)
         {
-            return employeeRepository.All().Where(x => x.User.CompanyId == int.Parse(companyId)).Select(x =>
+            var employees =  employeeRepository.All().Where(x => x.User.CompanyId == int.Parse(companyId)).Select(x =>
                 new AddEmployeeFormModel { FullName = x.User.FullName, Email = x.User.Email, }).ToList();
+
+           return PagedList<AddEmployeeFormModel>.ToPagedList(employees, parameters.PageNumber, parameters.PageSize);
         }
 
         public string GetOwnerById(string userId)

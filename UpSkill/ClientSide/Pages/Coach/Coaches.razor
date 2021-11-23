@@ -1,0 +1,47 @@
+@page "/Coaches"
+
+@if (user.Role().Result == "Owner")
+{
+    <div class="text-right">
+        <button @onclick="@(() => { NavigationManager.NavigateTo("/Coaches-catalog");})" class="btn-add">
+            <div class="btn-text">
+                Manage
+            </div>
+        </button>
+    </div>
+}
+
+@if (model == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="row">
+        @foreach (var coach in model.Coaches)
+        {
+            <CoachCard Coach="coach" OwnerId="@model.OwnerId" CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches"/>
+        }
+    </div>
+}
+
+@code
+{
+
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+    private CoachesListingCatalogModel model;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var ownerId = user.OwnerId().Result;
+
+        model = await CoachesService.GetAllByOwnerIdAsync(ownerId);
+    }
+
+    private void SetCoaches(CoachesListingCatalogModel updatedCoaches)
+    {
+        model = updatedCoaches;
+    }
+}

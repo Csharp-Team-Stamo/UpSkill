@@ -28,10 +28,12 @@
 
         }
 
-        public class AddEmployeeModal
+        public class AddUserForm
         {
             public const int FullNameMinLen = 2;
             public const int FullNameMaxLen = 20;
+
+            public const int SummaryMaxLen = 50;
         }
 
         public class Errors

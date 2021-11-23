@@ -1,0 +1,88 @@
+﻿@page "/admin/revenue"
+@layout AdminLayout
+
+@using UpSkill.Infrastructure.Models.Admin
+
+<div class="mx-auto my-5">
+    <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
+        <thead class="border-bottom-0">
+            <tr class="" style="color: white; background-color: #296cfb">
+                <th class="font-weight-bold text-left pl-4 cell-header-left">
+                    Course/Coach
+                </th>
+                <th class="text-left font-weight-bold pr-4 cell-header-right">
+                    Revenue
+                </th>
+                <th class="text-left font-weight-bold pr-4 cell-header-right">
+                    Expenses
+                </th>
+                <th class="text-left font-weight-bold pr-4 cell-header-right">
+                    Profit
+                </th>
+                @*<th>
+                        <div class="add-btn" @onclick="ShowPopup">+</div>
+                    </th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var courseData in totalRevenueData.CoursesInfo)
+            {
+                <tr class=" border-bottom-0 underline">
+                    <td class="text-left pl-4 font-weight-bold cell-left">
+                        @courseData.CourseName
+                    </td>
+                    <td class="text-left pr-4 cell-right">
+                        @courseData.Revenue &euro;
+                    </td>
+                    <td class="text-left pr-4 cell-right">
+                        @courseData.Expenses &euro;
+                    </td>
+                    <td class="text-left pr-4 cell-right">
+                        @courseData.Profit &euro;
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td class="text-left pl-4 font-weight-bold cell-left">
+                    Total
+                </td>
+                <td></td>
+                <td></td>
+                <td class="text-left pr-4 cell-right">@totalRevenueData.TotalProfit &euro;</td>
+            </tr>
+            @*<tr class="text-center">
+                    <td colspan="2" style="color: #16D696">
+                        View More
+                    </td>
+                </tr>*@
+        </tbody>
+    </table>
+</div>
+
+@code {
+    private AdminTotalRevenueModel totalRevenueData =
+        new AdminTotalRevenueModel
+        {
+            CoursesInfo = new List<AdminCourseRevenueListingModel>
+            {
+                    new AdminCourseRevenueListingModel
+                    {
+                        CourseName = "Marketing",
+                        Revenue = 10000,
+                        Expenses = 2000
+                    },
+                    new AdminCourseRevenueListingModel
+                    {
+                        CourseName = "Design",
+                        Revenue = 5000,
+                        Expenses = 2000
+                    },
+                    new AdminCourseRevenueListingModel
+                    {
+                        CourseName = "Management",
+                        Revenue = 12000,
+                        Expenses = 10000
+                    }
+                },
+        };
+}

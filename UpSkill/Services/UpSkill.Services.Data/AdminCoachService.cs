@@ -6,27 +6,39 @@
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Category;
-    using UpSkill.Infrastructure.Models.Coach;
-    using UpSkill.Services.Data.Contracts;
+    using Infrastructure.Models.Category;
+    using Infrastructure.Models.Coach;
+    using Contracts;
 
     public class AdminCoachService : IAdminCoachService
     {
         private readonly IAdminCategoryService categoryService;
         private readonly IDeletableEntityRepository<Coach> coachRepo;
         private readonly IDeletableEntityRepository<Language> languageRepo;
+        private readonly IDeletableEntityRepository<CoachEmployee> coachEmployeeRepo;
         private readonly IDeletableEntityRepository<CoachLanguage> coachLanguagesRepo;
+        private readonly IDeletableEntityRepository<CoachOwner> coachOwnerRepo;
+        private readonly IDeletableEntityRepository<LiveSession> sessionRepo;
+        private readonly IDeletableEntityRepository<CoachVote> coachVotesRepo;
 
         public AdminCoachService(
             IAdminCategoryService categoryService,
             IDeletableEntityRepository<Coach> coachRepo,
             IDeletableEntityRepository<Language> languageRepo,
-            IDeletableEntityRepository<CoachLanguage> coachLanguagesRepo)
+            IDeletableEntityRepository<CoachEmployee> coachEmployeeRepo,
+            IDeletableEntityRepository<CoachLanguage> coachLanguagesRepo,
+            IDeletableEntityRepository<CoachOwner> coachOwnerRepo,
+            IDeletableEntityRepository<LiveSession> sessionRepo,
+            IDeletableEntityRepository<CoachVote> coachVotesRepo)
         {
             this.categoryService = categoryService;
             this.coachRepo = coachRepo;
             this.languageRepo = languageRepo;
+            this.coachEmployeeRepo = coachEmployeeRepo;
             this.coachLanguagesRepo = coachLanguagesRepo;
+            this.coachOwnerRepo = coachOwnerRepo;
+            this.sessionRepo = sessionRepo;
+            this.coachVotesRepo = coachVotesRepo;
         }
 
         public async Task<Coach> Create(CoachCreateInputModel coachInput)
@@ -159,12 +171,96 @@
                 return null;
             }
 
+            await DeleteRecordsInCoachEmployeesTable(coachToDelete.Id);
+            await DeleteRecordsInCoachLanguagesTable(coachToDelete.Id);
+            await DeleteRecordsInCoachOwnersTable(coachToDelete.Id);
+            await DeleteCoachLiveSession(coachToDelete.Id);
+            await DeleteCoachInCoachVotesTable(coachToDelete.Id);
+
             this.coachRepo.Delete(coachToDelete);
+
             var deleteResult = await this.coachRepo.SaveChangesAsync();
 
             return deleteResult;
         }
 
+        private async Task DeleteCoachInCoachVotesTable(string coachId)
+        {
+            var coachVotes = await this.coachVotesRepo
+                .All()
+                .Where(cv => cv.CoachId == coachId)
+                .ToListAsync();
+
+            coachVotes.ForEach(cv => this.coachVotesRepo.Delete(cv));
+
+            await this.coachVotesRepo.SaveChangesAsync();
+        }
+
+        private async Task DeleteCoachLiveSession(string coachId)
+        {
+            var liveSession = await this.sessionRepo
+                .All()
+                .FirstOrDefaultAsync(s => s.Coach.Id == coachId);
+
+            if(liveSession == null)
+            {
+                return;
+            }
+
+            this.sessionRepo.Delete(liveSession);
+            await this.sessionRepo.SaveChangesAsync();
+        }
+
+        private async Task DeleteRecordsInCoachEmployeesTable(string coachId)
+        {
+            var coachEmployees = await this.coachEmployeeRepo
+                .All()
+                .Where(ce => ce.Coach.Id == coachId)
+                .ToListAsync();
+
+            if(coachEmployees.Any() == false)
+            {
+                return;
+            }
+
+            coachEmployees.ForEach(ce => this.coachEmployeeRepo.Delete(ce));
+
+            await this.coachEmployeeRepo.SaveChangesAsync();
+        }
+
+        private async Task DeleteRecordsInCoachLanguagesTable(string coachId)
+        {
+            var coachLanguages = await this.coachLanguagesRepo
+                .All()
+                .Where(cl => cl.Coach.Id == coachId)
+                .ToListAsync();
+
+            if(coachLanguages.Any() == false)
+            {
+                return;
+            }
+
+            coachLanguages.ForEach(cl => this.coachLanguagesRepo.Delete(cl));
+
+            await this.coachLanguagesRepo.SaveChangesAsync();
+        }
+
+        private async Task DeleteRecordsInCoachOwnersTable(string coachId)
+        {
+            var coachOwners = await this.coachOwnerRepo
+                .All()
+                .Where(co => co.Coach.Id == coachId)
+                .ToListAsync();
+
+            if(coachOwners.Any() == false)
+            {
+                return;
+            }
+
+            coachOwners.ForEach(co => this.coachOwnerRepo.Delete(co));
+
+            await this.coachOwnerRepo.SaveChangesAsync();
+        }
         public async Task<CoachEditInputModel> GetCoachEditModel(string id)
         {
             var coachToEdit = await this.GetCoach(id);

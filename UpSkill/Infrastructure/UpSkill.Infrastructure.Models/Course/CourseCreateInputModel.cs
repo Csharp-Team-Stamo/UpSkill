@@ -1,9 +1,6 @@
 ﻿namespace UpSkill.Infrastructure.Models.Course
 {
-    using System;
     using System.ComponentModel.DataAnnotations;
-    using UpSkill.Infrastructure.Models.Category;
-    using UpSkill.Infrastructure.Models.Coach;
 
     public class CourseCreateInputModel
     {
@@ -25,6 +22,10 @@
         [Required]
         [Display(Name = "Author Company Logo URL")]
         public string CompanyLogoUrl { get; set; }
+
+        [Required]
+        [Display(Name = "Author Company Name")]
+        public string CompanyName { get; set; }
 
         [Range(0.00, 1000.00)]
         [DataType(DataType.Currency)]

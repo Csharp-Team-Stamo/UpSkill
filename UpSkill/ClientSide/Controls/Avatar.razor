@@ -1,10 +1,18 @@
-﻿@inject NavigationManager NavigationManager
+﻿@using UpSkill.Infrastructure.Models.ApplicationUser
+@inject NavigationManager NavigationManager
 
 <AuthorizeView>
     <div class="avatar-container" @onclick=@(() => RedirectToPage("/Dashboard"))>
         <i class="my-2 d-flex justify-content-around">
             <span class="justify-content-center align-self-center">
-                @user.FullName().Result[0]
+                @if (userModel.ImageToBase64 == null)
+                {
+                    @user.FullName().Result[0]
+                }
+                else
+                {
+                    <img src="@userModel.ImageToBase64" class="avatar" />
+                }
             </span>
         </i>
     </div>
@@ -12,11 +20,27 @@
 
 
 @code{
+
+    private EditApplicationUserModel userModel = new();
+
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        userModel = await Client.GetFromJsonAsync<EditApplicationUserModel>($"/ApplicationUsers/GetById/{user.Id().Result}");
+    }
 
     private void RedirectToPage(string pagePath)
     {
         NavigationManager.NavigateTo(pagePath);
+    }
+
+    public void Refresh(EditApplicationUserModel model)
+    {
+        
+        userModel = model;
+        StateHasChanged();
     }
 }

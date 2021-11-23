@@ -1,0 +1,30 @@
+﻿@page "/admin/course/details/{id:int}"
+@using UpSkill.Infrastructure.Models.Course
+
+<h3>Admin @courseDetails.Name Details</h3>
+
+<div class="container">
+    <div class="row">
+        <img src="@courseDetails.ImageUrl" alt="@courseDetails.Name course illustration" />
+        <p>@courseDetails.Description</p>
+    </div>
+    <div class="row">
+        <p>@courseDetails.AuthorFullName &ndash; @courseDetails.CompanyLogoUrl</p>
+        <p>@courseDetails.Category.Name</p>
+        <p>@courseDetails.Price</p>
+    </div>
+</div>
+
+@code {
+    private CourseDetailsServiceModel courseDetails;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        this.courseDetails = await this.Client.GetFromJsonAsync<CourseDetailsServiceModel>
+            (@"/admin/course/details/{Id}");
+    }
+}
+

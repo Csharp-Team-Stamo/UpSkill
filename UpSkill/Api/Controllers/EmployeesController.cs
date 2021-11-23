@@ -3,9 +3,11 @@ namespace UpSkill.Api.Controllers
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Infrastructure.Models.AddEmployeeModal;
+    using Infrastructure.Models.Employee;
     using Microsoft.AspNetCore.Mvc;
+    using Newtonsoft.Json;
     using Services.Data.Contracts;
+    using Infrastructure.Common.Pagination;
 
     [Route("/[controller]")]
     [ApiController]
@@ -25,10 +27,14 @@ namespace UpSkill.Api.Controllers
             return Ok(emailsFromErrorResult);
         }
 
-        [HttpGet("GetCollectionByCompanyId/{companyId}")]
-        public ICollection<AddEmployeeFormModel> GetCollectionByCompanyId(string companyId)
+        [HttpGet("GetCollectionByCompanyId")]
+        public IActionResult GetCollectionByCompanyId([FromQuery]string companyId, [FromQuery] EmployeesParameters parameters)
         {
-            return employeesService.GetByCompanyId(companyId);
+            var empployees = employeesService.GetByCompanyId(companyId, parameters);
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(empployees.MetaData));
+
+            return Ok(empployees);
+           
         }
     }
 }

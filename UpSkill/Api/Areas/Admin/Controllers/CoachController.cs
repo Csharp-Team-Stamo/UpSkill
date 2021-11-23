@@ -5,7 +5,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Infrastructure.Models.Coach;
     using Services.Data.Contracts;
-    using UpSkill.Data.Models;
     using System.Linq;
 
     public class CoachController : AdminController

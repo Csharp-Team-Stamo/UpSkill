@@ -12,6 +12,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
@@ -53,6 +54,7 @@
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
 
             var jwtSettings = Configuration.GetSection("JWTSettings");
+
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -95,7 +97,8 @@
                 policy.AddPolicy("CorsPolicy", opt => opt
                     .AllowAnyOrigin()
                     .AllowAnyHeader()
-                    .AllowAnyMethod());
+                    .AllowAnyMethod()
+                    .WithExposedHeaders("X-Pagination"));
             });
 
             services.AddHttpClient();
@@ -105,20 +108,22 @@
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
-			//Business logic services
-			services.AddTransient<IAccountsService, AccountsService>();
+            //Business logic services
+            services.AddTransient<IAccountsService, AccountsService>();
             services.AddTransient<IAdminCategoryService, AdminCategoryService>();
             services.AddTransient<IAdminCompanyService, AdminCompanyService>();
             services.AddTransient<IAdminCourseService, AdminCourseService>();
             services.AddTransient<IAdminCoachService, AdminCoachService>();
             services.AddTransient<IAdminLanguageService, AdminLanguageService>();
             services.AddTransient<ICoachesService, CoachesService>();
+            services.AddTransient<ICoursesService ,CoursesService>();
             services.AddTransient<IOwnerService, OwnerService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
             services.AddTransient<IEmployeesService, EmployeesService>();
             services.AddTransient<ILanguagesService, LanguagesService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<ICoachSessionsService, CoachSessionsService>();
+            services.AddTransient<IApplicationUserService, ApplicationUserService>();
 
 
             services.AddTransient<IEmailSender, EmailSender>();
@@ -157,14 +162,14 @@
             app.UseAuthentication();
             app.UseAuthorization();
 
-			app.UseEndpoints(endpoints =>
-			{
+            app.UseEndpoints(endpoints =>
+            {
                 endpoints.MapControllerRoute(
                 name: "areas",
                 pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
                 endpoints.MapControllers();
-			});
-		}
-	}
+            });
+        }
+    }
 }

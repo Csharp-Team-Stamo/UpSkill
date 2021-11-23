@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Coach;
+    using Infrastructure.Models.Coach;
 
     public interface IAdminCoachService
     {

@@ -20,5 +20,12 @@
 
             public const int SkillsLearnMaxlen = 150;
         }
+
+        public class CourseConstants
+        {
+            public const int SessionDescriptionMaxlen = 150;
+
+            public const int SkillsLearnMaxlen = 150;
+        }
     }
 }

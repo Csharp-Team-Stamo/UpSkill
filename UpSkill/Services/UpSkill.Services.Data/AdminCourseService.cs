@@ -6,24 +6,36 @@
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Category;
-    using UpSkill.Infrastructure.Models.Course;
-    using UpSkill.Services.Data.Contracts;
+    using Infrastructure.Models.Category;
+    using Infrastructure.Models.Course;
+    using Contracts;
 
     public class AdminCourseService : IAdminCourseService
     {
         private readonly IDeletableEntityRepository<Course> courseRepo;
         private readonly IAdminCategoryService categoryService;
         private readonly IAdminLanguageService languageService;
+        private readonly IDeletableEntityRepository<CourseOwner> courseOwnersRepo;
+        private readonly IDeletableEntityRepository<CourseVote> courseVotesRepo;
+        private readonly IDeletableEntityRepository<Grade> gradesRepo;
+        private readonly IDeletableEntityRepository<EmployeeCourse> employeeCourseRepo;
 
         public AdminCourseService(
             IDeletableEntityRepository<Course> courseRepo,
             IAdminCategoryService categoryService,
-            IAdminLanguageService languageService)
+            IAdminLanguageService languageService,
+            IDeletableEntityRepository<CourseOwner> courseOwnersRepo,
+            IDeletableEntityRepository<CourseVote> courseVotesRepo,
+            IDeletableEntityRepository<Grade> gradesRepo,
+            IDeletableEntityRepository<EmployeeCourse> employeeCourseRepo)
         {
             this.courseRepo = courseRepo;
             this.categoryService = categoryService;
             this.languageService = languageService;
+            this.courseOwnersRepo = courseOwnersRepo;
+            this.courseVotesRepo = courseVotesRepo;
+            this.gradesRepo = gradesRepo;
+            this.employeeCourseRepo = employeeCourseRepo;
         }
 
         public async Task<IEnumerable<AdminCourseListingServiceModel>> All()
@@ -58,6 +70,7 @@
                 ImageUrl = input.ImageUrl,
                 AuthorFullName = input.AuthorFullName,
                 CompanyLogoUrl = input.CompanyLogoUrl,
+                CompanyName = input.CompanyName,
                 Price = input.Price,
                 VideoUrl = input.VideoUrl,
                 Language = language,
@@ -83,6 +96,11 @@
                 return null;
             }
 
+            await DeleteInCourseOwnersTable(courseToDelete.Id);
+            await DeleteInCourseVotesTable(courseToDelete.Id);
+            await DeleteCourseInGradesTable(courseToDelete.Id);
+            await DeleteInEmployeeCoursesTable(courseToDelete.Id);
+
             courseToDelete.IsDeleted = !courseToDelete.IsDeleted;
 
             this.courseRepo.Update(courseToDelete);
@@ -91,6 +109,74 @@
             return deleteResult <= 0 ?
                 null :
                 deleteResult;
+        }
+
+        private async Task DeleteInEmployeeCoursesTable(int courseId)
+        {
+            var employeeCourses = await this.employeeCourseRepo
+                .All()
+                .Where(ec => ec.Id == courseId)
+                .ToListAsync();
+
+            if(employeeCourses.Any() == false)
+            {
+                return;
+            }
+
+            employeeCourses.ForEach(ec => this.employeeCourseRepo.Delete(ec));
+
+            await this.employeeCourseRepo.SaveChangesAsync();
+        }
+
+        private async Task DeleteCourseInGradesTable(int courseId)
+        {
+            var courseGrades = await this.gradesRepo
+                .All()
+                .Where(g => g.Course.Id == courseId)
+                .ToListAsync();
+
+            if(courseGrades.Any() == false)
+            {
+                return;
+            }
+
+            courseGrades.ForEach(cg => this.gradesRepo.Delete(cg));
+
+            await this.gradesRepo.SaveChangesAsync();
+        }
+
+        private async Task DeleteInCourseVotesTable(int courseId)
+        {
+            var courseVotes = await this.courseVotesRepo
+                .All()
+                .Where(cv => cv.Course.Id == courseId)
+                .ToListAsync();
+
+            if(courseVotes.Any() == false)
+            {
+                return;
+            }
+
+            courseVotes.ForEach(cv => this.courseVotesRepo.Delete(cv));
+
+            await this.courseVotesRepo.SaveChangesAsync();
+        }
+
+        private async Task DeleteInCourseOwnersTable(int courseId)
+        {
+            var courseOwners = await this.courseOwnersRepo
+                .All()
+                .Where(c => c.Id == courseId)
+                .ToListAsync();
+
+            if(courseOwners.Any() == false)
+            {
+                return;
+            }
+
+            courseOwners.ForEach(co => this.courseOwnersRepo.Delete(co));
+
+            await this.courseOwnersRepo.SaveChangesAsync();
         }
 
         public async Task<int?> Edit(CourseEditInputModel input)

@@ -14,8 +14,13 @@
 
 		[Required]
 		public string FullName { get; set; }
-    
-		public int CompanyId { get; set; }
+
+        public string ImageToBase64 { get; set; }
+
+        public string Summary { get; set; }
+
+
+        public int CompanyId { get; set; }
 		public Company Company { get; set; }
 
         // Audit info

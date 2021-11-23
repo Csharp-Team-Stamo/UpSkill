@@ -1,0 +1,149 @@
+﻿
+@inject IJSRuntime Js;
+
+
+<head>
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+</head>
+
+<div class="card custom-coach-card container mb-5" style="width: 18rem;">
+    <div @onclick="ShowPopup" class="card-img-top card-img-top-custom">
+        <img class="img-custom" src="images/coach.png" />
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="coach-profession col-6">
+                @Coach.CategoryName
+            </div>
+            <div class="coach-name col-6 text-right">
+                @Coach.FullName
+            </div>
+        </div>
+        <div class="row">
+            <div class="coah-price col-6">
+                @Coach.PricePerSession.ToString("##,##")€ per session
+            </div>
+            <div class="col-6 text-right">
+                <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
+            </div>
+        </div>
+        @if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
+        {
+            if (IsCoachAdded())
+            {
+                <div class="text-center">
+                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
+                </div>
+            }
+        }
+
+        else if (
+            user.Role().Result == GlobalConstants.EmployeeRoleName &&
+            !NavigationManager.Uri.Contains("Coaches-catalog"))
+        {
+    <div class="text-center">
+        <button href="" class="coach-btn" onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUrl' }); return false;">New Slot</button>
+        @*<button @onclick="ShowSessionModal" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>*@
+    </div>
+        }
+
+    </div>
+</div>
+
+@if (showSessionModal)
+{
+    <SelectCoachSessionModal  SetShowSessionValue="SetShowSessionValue" ></SelectCoachSessionModal>
+}
+
+@* Modal *@
+@if (show)
+{
+    <CoachDescriptionModal CoachId="@Coach.Id" SetShow="SetShowValue"/>
+}
+
+
+@code { 
+
+    public string CalendlyPrefilledUrl { get; set; }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Js.InvokeAsync<bool>("addEventListener");
+    }
+
+    private bool show = false;
+
+    private bool showSessionModal = false;
+
+
+    [Parameter]
+    public CoachInListCatalogModel Coach { get; set; }
+
+    [Parameter]
+    public string OwnerId { get; set; }
+
+    [Parameter]
+    public ICollection<string> CoachIdsCollection { get; set; }
+
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+    [Parameter]
+    public EventCallback<CoachesListingCatalogModel> UpdatedCoachesListingCatalogModel { get; set; }
+
+    [Parameter]
+    public EventCallback<CoachesListingCatalogModel> UpdatedOwnerCoachesListingCatalogModel { get; set; }
+
+    protected override void OnInitialized()
+    {
+        var url = NavigationManager.Uri;
+        CalendlyPrefilledUrl = Coach.CalendlyUrl + "?name=" + user.FullName().Result + "&email=" + user.Email().Result;
+    }
+
+    private async Task AddCoach(string coachId, string ownerId)
+    {
+        await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
+        await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
+
+    }
+
+
+    private async Task RemoveCoach(string coachId, string ownerId)
+    {
+        await CoachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
+        await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
+        await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllByOwnerIdAsync(ownerId));
+    }
+
+    private bool IsCoachAdded()
+    {
+        return CoachIdsCollection.FirstOrDefault(x => x == Coach.Id) != null;
+    }
+
+    private void ShowPopup()
+    {
+        show = true;
+    }
+
+    private void SetShowValue(bool value)
+    {
+        show = value;
+    }
+
+    private void ShowSessionModal()
+    {
+        showSessionModal = true;
+    }
+
+
+    private void SetShowSessionValue(bool value)
+    {
+        showSessionModal = value;
+    }
+}

@@ -1,0 +1,123 @@
+﻿@using UpSkill.Infrastructure.Common.Pagination
+
+@if (employeesModel == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="mx-auto">
+        <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
+            <thead class="border-bottom-0">
+                <tr class="" style="color: white; background-color: #296cfb">
+                    <th class="font-weight-bold text-left pl-4 cell-header-left">
+                        Employees (@MetaData.TotalCount )
+                    </th>
+                    <th class="text-left font-weight-bold pr-4 cell-header-right">
+                        Email
+                    </th>
+                    <th>
+                        <div class="add-btn" @onclick="ShowPopup">+</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var emp in employeesModel)
+                {
+                    <tr class=" border-bottom-0 underline">
+                        <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
+                            @emp.FullName
+                        </td>
+                        <td class="text-left pr-4 cell-right">
+                            @emp.Email
+                        </td>
+                    </tr>
+                }
+            <tr class="text-center">
+                @if (employeesParameters.PageNumber >= MetaData.TotalPages)
+                {
+                    <td class="" colspan="3" >
+                        <span  @onclick="ShowLess" style="color: #16D696; cursor:pointer">
+                            Show less
+                        </span>
+                    </td>
+                }
+                else
+                {
+                    <td  colspan="3" >
+                        <span @onclick="ViewMore" style="color: #16D696; cursor: pointer;">
+                        Show more
+                        </span>
+                    </td>
+                }
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+}
+
+@* Modal *@
+@if (show)
+{
+    <AddEmployeeModal SetShow="SetShowValue" GetUpdatedEmployees="SetEmployeesCollection"></AddEmployeeModal>
+}
+
+
+@code
+{
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+    private bool show = false;
+    private List<AddEmployeeFormModel> employeesModel;
+
+    public MetaData MetaData { get; set; } = new MetaData();
+    private EmployeesParameters employeesParameters = new EmployeesParameters();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var pagingResponse = await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result, employeesParameters);
+        employeesModel = pagingResponse.Items;
+        MetaData = pagingResponse.MetaData;
+
+        employeesModel = employeesModel.OrderBy(x => x.FullName).ToList();
+    }
+
+    private async Task ViewMore()
+    {
+        if (employeesParameters.PageNumber >= MetaData.TotalPages)
+        {
+
+        }
+        else
+        {
+            employeesParameters.PageNumber = MetaData.CurrentPage + 1;
+            var pagingResponse = await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result, employeesParameters);
+            employeesModel.AddRange(pagingResponse.Items);
+            employeesModel = employeesModel.OrderBy(x => x.FullName).ToList();
+        }
+
+    }
+    private void ShowLess()
+    {
+        employeesParameters.PageNumber = 1;
+        MetaData.CurrentPage = 1;
+        employeesModel = employeesModel.Take(MetaData.PageSize).OrderBy(x => x.FullName).ToList();
+    }
+
+    private void ShowPopup()
+    {
+        show = true;
+    }
+
+    private void SetShowValue(bool value)
+    {
+        show = value;
+    }
+
+    private void SetEmployeesCollection(ICollection<AddEmployeeFormModel> response)
+    {
+        employeesModel = response.ToList();
+    }
+}

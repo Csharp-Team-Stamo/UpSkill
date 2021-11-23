@@ -40,6 +40,8 @@
         public DbSet<Grade> Grades { get; init; }
         public DbSet<Invoice> Invoices { get; init; }
         public DbSet<InvoiceStatus> InvoiceStatuses { get; init; }
+        public DbSet<Lecture> Lectures { get; set; }
+        public DbSet<LectureResource> LectureResources { get; set; }
         public DbSet<LiveSession> LiveSessions { get; init; }
         public DbSet<Owner> Owners { get; init; }
         public DbSet<SessionSlot> SessionSlots { get; init; }
