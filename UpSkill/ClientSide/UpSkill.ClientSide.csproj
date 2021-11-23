@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -19,7 +19,6 @@
     <None Remove="Controls\OwnerDashboardStatistics.razor.css" />
     <None Remove="Pages\Courses.razor.css" />
     <None Remove="Pages\Forgotten-password.razor.css" />
-    <None Remove="Pages\Coaches.razor.css" />
     <None Remove="Pages\LogIn.razor.css" />
     <None Remove="Pages\ResetPassword.razor.css" />
     <None Remove="Pages\SignUp.razor.css" />
@@ -39,7 +38,6 @@
     <Content Include="Controls\OwnerDashboardStatistics.razor.css" />
     <Content Include="Pages\Courses.razor.css" />
     <Content Include="Pages\Forgotten-password.razor.css" />
-    <Content Include="Pages\Coaches.razor.css" />
     <Content Include="Pages\LogIn.razor.css" />
     <Content Include="Pages\ResetPassword.razor.css" />
     <Content Include="Pages\SignUp.razor.css" />
