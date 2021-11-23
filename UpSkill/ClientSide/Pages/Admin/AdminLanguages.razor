@@ -1,7 +1,7 @@
-﻿@page "/admin/category/all" 
+﻿@page "/admin/language/all"
 @layout AdminLayout
 
-@using UpSkill.Infrastructure.Models.Category
+@using UpSkill.Infrastructure.Models.Language
 
 <div class="mx-auto">
     <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
@@ -19,14 +19,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var category in allCategories)
+            @foreach (var language in allLanguages)
             {
                 <tr class=" border-bottom-0 underline">
                     <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
-                        @category.Id
+                        @language.Id
                     </td>
                     <td class="text-left pr-4 cell-right">
-                        @category.Name
+                        @language.Name
                     </td>
                 </tr>
             }
@@ -39,22 +39,22 @@
     </table>
 </div>
 
-@if(show)
+@if (show)
 {
-    <AdminCategoryAddModal SetShow="SetShowValue" GetUpdatedCategories="GetUpdatedCategories"></AdminCategoryAddModal>
+    <AdminLanguageAddModal SetShow="SetShowValue" GetUpdatedLanguages="GetUpdatedLanguages"></AdminLanguageAddModal>
 }
 
 @code {
-    private IEnumerable<AdminCategoryListingServiceModel> allCategories =
-        new List<AdminCategoryListingServiceModel>();
+    private IEnumerable<LanguageListingServiceModel> allLanguages =
+        new List<LanguageListingServiceModel>();
 
     private bool show = false;
 
     protected override async Task OnInitializedAsync()
     {
-        allCategories = await Client
-        .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>
-        ("/admin/category/all");
+        allLanguages = await Client
+        .GetFromJsonAsync<IEnumerable<LanguageListingServiceModel>>
+        ("/admin/language/all");
     }
 
     private void ShowPopup()
@@ -67,8 +67,8 @@
         show = value;
     }
 
-    private void GetUpdatedCategories(IEnumerable<AdminCategoryListingServiceModel> value)
+    private void GetUpdatedLanguages(IEnumerable<LanguageListingServiceModel> value)
     {
-        allCategories = value;
+        allLanguages = value;
     }
 }
