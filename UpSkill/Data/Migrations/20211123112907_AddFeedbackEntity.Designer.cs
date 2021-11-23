@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UpSkill.Data;
 
 namespace UpSkill.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211123112907_AddFeedbackEntity")]
+    partial class AddFeedbackEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -411,9 +413,6 @@ namespace UpSkill.Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<string>("LiveSessionId")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -1064,9 +1063,7 @@ namespace UpSkill.Data.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("CoachFeedbackId")
-                        .IsUnique()
-                        .HasFilter("[CoachFeedbackId] IS NOT NULL");
+                    b.HasIndex("CoachFeedbackId");
 
                     b.HasIndex("CoachId");
 
@@ -1437,8 +1434,8 @@ namespace UpSkill.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("UpSkill.Data.Models.CoachFeedback", "CoachFeedback")
-                        .WithOne("liveSession")
-                        .HasForeignKey("UpSkill.Data.Models.LiveSession", "CoachFeedbackId");
+                        .WithMany()
+                        .HasForeignKey("CoachFeedbackId");
 
                     b.HasOne("UpSkill.Data.Models.Coach", "Coach")
                         .WithMany("LiveSessions")
@@ -1486,11 +1483,6 @@ namespace UpSkill.Data.Migrations
                     b.Navigation("Owners");
 
                     b.Navigation("Students");
-                });
-
-            modelBuilder.Entity("UpSkill.Data.Models.CoachFeedback", b =>
-                {
-                    b.Navigation("liveSession");
                 });
 
             modelBuilder.Entity("UpSkill.Data.Models.Company", b =>

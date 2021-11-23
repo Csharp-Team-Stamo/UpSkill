@@ -9,5 +9,9 @@
         public int Value { get; init; }
 
         public string Description { get; init; }
+
+        public string LiveSessionId { get; set; }
+
+        public LiveSession liveSession { get; set; }
     }
 }
