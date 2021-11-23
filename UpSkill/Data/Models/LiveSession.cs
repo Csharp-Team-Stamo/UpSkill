@@ -27,5 +27,11 @@
 
         [Required]
         public DateTime End { get; set; }
+
+        public int? CoachFeedbackId { get; set; }
+
+        public CoachFeedback CoachFeedback{ get; set; }
+
+        public bool GivenFeedback { get; set; }
     }
 }

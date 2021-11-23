@@ -9,7 +9,7 @@ namespace UpSkill.Services.Data.Contracts
 {
     public interface ICoachSessionsService
     {
-        Task AddSession(CoachSessionEventResponseModel coach, CoachSessionInviteeResponseModel student);
+        Task AddSession(CoachSessionEventResponseModel session, CoachSessionInviteeResponseModel student, string coachCalendlyUri);
 
 
     }

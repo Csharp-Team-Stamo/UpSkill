@@ -43,6 +43,7 @@
 
             CoachSessionEventResponseModel eventPayload = null;
             CoachSessionInviteeResponseModel inviteePayload = null;
+            string coachSchedulingUri = string.Empty;
 
             var response = await GetCalendlyPayload(eventUri);
 
@@ -62,7 +63,16 @@
                 inviteePayload = JsonConvert.DeserializeObject<CoachSessionInviteeResponseModel>(contentAsJsonString);
             }
 
-            await coachSessionsService.AddSession(eventPayload, inviteePayload);
+            response = await GetCalendlyPayload(eventPayload.EventType);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var contentAsString = response.Content.ReadAsStringAsync().Result;
+                var contentAsJsonString = JObject.Parse(contentAsString)["resource"].ToString();
+                coachSchedulingUri = JsonConvert.DeserializeObject<CoachSessionEventTypeResponseModel>(contentAsJsonString).SchedulingUrl;
+            }
+
+            await coachSessionsService.AddSession(eventPayload, inviteePayload, coachSchedulingUri);
 
             return StatusCode((int)response.StatusCode, response.Content);
         }

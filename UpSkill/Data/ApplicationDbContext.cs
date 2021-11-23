@@ -46,7 +46,7 @@
         public DbSet<CoachOwner> CoachOwners { get; init; }
         public DbSet<CoachLanguage> CoachLanguages { get; init; }
         public DbSet<CoachEmployee> CoachEmployees { get; init; }
-        public DbSet<CoachVote> CoachVotes { get; init; }
+        public DbSet<CoachFeedback> CoachFeedback { get; init; }
         public DbSet<CourseOwner> CourseOwners { get; init; }
         public DbSet<CourseVote> CourseVotes { get; init; }
         public DbSet<Language> Languages { get; init; }
