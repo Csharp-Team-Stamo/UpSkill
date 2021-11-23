@@ -294,7 +294,8 @@
                 SessionDescription = coachInput.SessionDescription,
                 DiscussionDurationInMinutes = coachInput.DiscussionDurationInMin,
                 SkillsLearn = coachInput.SkillsLearn,
-                ResourcesCount = coachInput.ResourcesCount
+                ResourcesCount = coachInput.ResourcesCount,
+                VideoUrl = coachInput.VideoUri
             };
 
         private async Task<int> AddLanguageTEMP(Coach coach, Language language)

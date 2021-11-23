@@ -34,6 +34,20 @@ namespace UpSkill.Infrastructure.Models.Coach.Sessions
 
         [JsonProperty("event_memberships")]
         public List<EventMembership> EventMemberships { get; set; }
+
+        [JsonProperty("location")]
+        public Location Location { get; set; }
+    }
+    public class Location
+    {
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
+        [JsonProperty("status")]
+        public string Status { get; set; }
+
+        [JsonProperty("join_url")]
+        public string JoinUrl { get; set; }
     }
 
     public class EventMembership
