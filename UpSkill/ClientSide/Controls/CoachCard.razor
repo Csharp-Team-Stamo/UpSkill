@@ -1,4 +1,7 @@
 ﻿
+@inject IJSRuntime Js;
+
+
 <head>
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 </head>
@@ -45,7 +48,7 @@
             !NavigationManager.Uri.Contains("Coaches-catalog"))
         {
     <div class="text-center">
-        <button href="" class="coach-btn" onclick="Calendly.initPopupWidget({ url: '@Coach.CalendlyUrl' }); return false;">New Slot</button>
+        <button href="" class="coach-btn" onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUrl' }); return false;">New Slot</button>
         @*<button @onclick="ShowSessionModal" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>*@
     </div>
         }
@@ -65,7 +68,14 @@
 }
 
 
-@code {
+@code { 
+
+    public string CalendlyPrefilledUrl { get; set; }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Js.InvokeAsync<bool>("addEventListener");
+    }
 
     private bool show = false;
 
@@ -93,16 +103,8 @@
     protected override void OnInitialized()
     {
         var url = NavigationManager.Uri;
-    }
 
-    private async Task AddNewEmployeeSession(string coachId, string ownerId)
-    {
-        var employeeId = user.Id().Result;
-
-        //await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
-
-        //await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(userId));
-
+        CalendlyPrefilledUrl = Coach.CalendlyUrl + "?name=" + user.FullName().Result + "&email=" + user.Email().Result;
     }
 
     private async Task AddCoach(string coachId, string ownerId)
