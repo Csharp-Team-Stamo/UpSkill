@@ -38,6 +38,7 @@
         public string SessionDescription { get; set; }
 
         [Required]
+        [MaxLength(150)]
         public string SkillsLearn { get; set; }
 
         [Required]
