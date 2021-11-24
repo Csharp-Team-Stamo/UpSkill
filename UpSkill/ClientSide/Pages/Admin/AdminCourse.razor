@@ -91,7 +91,7 @@
     <div class="form-group row">
         <label for="@courseInput.DurationInHours" class="col-md-2 col-form-label">Duration In Hours</label>
         <div class="col-md-10">
-            <InputNumber id="durationinhours" class="form-control" @bind-Value="courseInput.DurationInHours" />
+            <InputText id="durationinhours" class="form-control" @bind-Value="courseInput.DurationInHours" />
             <ValidationMessage For="@(() => courseInput.DurationInHours)" />
         </div>
     </div>
@@ -107,7 +107,7 @@
     <div class="form-group row">
         <label for="@courseInput.LecturesCount" class="col-md-2 col-form-label">Number of Lectures</label>
         <div class="col-md-10">
-            <InputNumber id="lecturescount" class="form-control" @bind-Value="courseInput.LecturesCount" />
+            <InputText id="lecturescount" class="form-control" @bind-Value="courseInput.LecturesCount" />
             <ValidationMessage For="@(() => courseInput.LecturesCount)" />
         </div>
     </div>
@@ -115,7 +115,7 @@
     <div class="form-group row">
         <label for="@courseInput.SkillsLearn" class="col-md-2 col-form-label">150 symbols max. skills, sep. by #</label>
         <div class="col-md-10">
-            <InputNumber id="skillslearn" class="form-control" @bind-Value="courseInput.SkillsLearn" />
+            <InputText id="skillslearn" class="form-control" @bind-Value="courseInput.SkillsLearn" />
             <ValidationMessage For="@(() => courseInput.SkillsLearn)" />
         </div>
     </div>
