@@ -1,4 +1,4 @@
-﻿<div class="card custom-course-card container mb-5" style="width: 18rem;">
+﻿<div class="card custom-course-card container mb-5" style="width: 18rem; background-color: @backgroundColor" >
     <div @onclick="ShowPopup" class="card-img-top course-img-top-custom">
         <img class="img-custom" src="@Course.ImageUrl" />
         <div class="course-title-in-image">@Course.Name</div>
@@ -60,7 +60,7 @@
 @* Modal *@
 @if (show)
 {
-    <CourseDescriptionModal CourseId="Course.Id" SetShow="SetShowValue" IsEmployeeEnrolledToCourse="SetIsEmployeeEnrolledToCourse"/>
+    <CourseDescriptionModal CourseId="Course.Id" SetShow="SetShowValue" IsEmployeeEnrolledToCourse="SetIsEmployeeEnrolledToCourse" BackgroundColor="SetBackgroundColor" />
 }
 
 
@@ -69,6 +69,8 @@
     private bool isEmployeeEnrolledToCourse;
 
     private bool show = false;
+
+    private string backgroundColor;
 
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
@@ -92,6 +94,15 @@
     protected override async Task OnInitializedAsync()
     {
         isEmployeeEnrolledToCourse = await Client.GetFromJsonAsync<bool>($"Employees/IsEmployeeEnrolledToCourse?appUserId={user.Id().Result}&courseId={Course.Id}");
+
+        if (isEmployeeEnrolledToCourse)
+        {
+            backgroundColor = "#EAF0FF";
+        }
+        else
+        {
+            backgroundColor = "#fff";
+        }
     }
 
     private void ShowPopup()
@@ -126,5 +137,10 @@
     private void SetIsEmployeeEnrolledToCourse(bool value)
     {
         isEmployeeEnrolledToCourse = value;
+    }
+
+    private void SetBackgroundColor(string value)
+    {
+        backgroundColor = value;
     }
 }
