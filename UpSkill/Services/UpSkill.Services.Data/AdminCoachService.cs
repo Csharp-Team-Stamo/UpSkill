@@ -19,6 +19,7 @@
         private readonly IDeletableEntityRepository<CoachLanguage> coachLanguagesRepo;
         private readonly IDeletableEntityRepository<CoachOwner> coachOwnerRepo;
         private readonly IDeletableEntityRepository<LiveSession> sessionRepo;
+        private readonly IDeletableEntityRepository<CoachVote> coachVotesRepo;
 
         public AdminCoachService(
             IAdminCategoryService categoryService,
@@ -27,7 +28,8 @@
             IDeletableEntityRepository<CoachEmployee> coachEmployeeRepo,
             IDeletableEntityRepository<CoachLanguage> coachLanguagesRepo,
             IDeletableEntityRepository<CoachOwner> coachOwnerRepo,
-            IDeletableEntityRepository<LiveSession> sessionRepo)
+            IDeletableEntityRepository<LiveSession> sessionRepo,
+            IDeletableEntityRepository<CoachVote> coachVotesRepo)
         {
             this.categoryService = categoryService;
             this.coachRepo = coachRepo;
@@ -36,6 +38,7 @@
             this.coachLanguagesRepo = coachLanguagesRepo;
             this.coachOwnerRepo = coachOwnerRepo;
             this.sessionRepo = sessionRepo;
+            this.coachVotesRepo = coachVotesRepo;
         }
 
         public async Task<Coach> Create(CoachCreateInputModel coachInput)
@@ -172,6 +175,8 @@
             await DeleteRecordsInCoachLanguagesTable(coachToDelete.Id);
             await DeleteRecordsInCoachOwnersTable(coachToDelete.Id);
             await DeleteCoachLiveSession(coachToDelete.Id);
+            await DeleteCoachInCoachVotesTable(coachToDelete.Id);
+
             this.coachRepo.Delete(coachToDelete);
 
             var deleteResult = await this.coachRepo.SaveChangesAsync();
@@ -179,17 +184,17 @@
             return deleteResult;
         }
 
-        //private async Task DeleteCoachInCoachVotesTable(string coachId)
-        //{
-        //    var coachVotes = await this.coachVotesRepo
-        //        .All()
-        //        .Where(cv => cv.CoachId == coachId)
-        //        .ToListAsync();
+        private async Task DeleteCoachInCoachVotesTable(string coachId)
+        {
+            var coachVotes = await this.coachVotesRepo
+                .All()
+                .Where(cv => cv.CoachId == coachId)
+                .ToListAsync();
 
-        //    coachVotes.ForEach(cv => this.coachVotesRepo.Delete(cv));
+            coachVotes.ForEach(cv => this.coachVotesRepo.Delete(cv));
 
-        //    await this.coachVotesRepo.SaveChangesAsync();
-        //}
+            await this.coachVotesRepo.SaveChangesAsync();
+        }
 
         private async Task DeleteCoachLiveSession(string coachId)
         {
@@ -294,8 +299,7 @@
                 SessionDescription = coachInput.SessionDescription,
                 DiscussionDurationInMinutes = coachInput.DiscussionDurationInMin,
                 SkillsLearn = coachInput.SkillsLearn,
-                ResourcesCount = coachInput.ResourcesCount,
-                VideoUrl = coachInput.VideoUri
+                ResourcesCount = coachInput.ResourcesCount
             };
 
         private async Task<int> AddLanguageTEMP(Coach coach, Language language)

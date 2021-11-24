@@ -1,28 +1,19 @@
 ﻿namespace UpSkill.Api.Controllers
 {
-    using System.Net.Http;
     using System.Threading.Tasks;
     using Infrastructure.Models.Coach;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Options;
-    using Newtonsoft.Json;
     using Services.Data.Contracts;
-    using UpSkill.Infrastructure.Models.Coach.Sessions;
-    using UpSkill.Services.Data;
 
     [Route("[controller]")]
     [ApiController]
     public class CoachesController : ControllerBase
     {
         private readonly ICoachesService coachesService;
-        private readonly IOptions<CalendlyOptions> options;
-        private readonly IHttpClientFactory clientFactory;
 
-        public CoachesController(ICoachesService coachesService, IOptions<CalendlyOptions> options, IHttpClientFactory clientFactory)
+        public CoachesController(ICoachesService coachesService)
         {
             this.coachesService = coachesService;
-            this.options = options;
-            this.clientFactory = clientFactory;
         }
 
         [HttpGet("GetByIdAsync")]

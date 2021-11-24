@@ -51,7 +51,6 @@
                     CategoryName = x.Coach.Category.Name,
                     Company = x.Coach.Company,
                     CompanyLogoUrl = x.Coach.CompanyLogoUrl,
-                    CalendlyUrl = x.Coach.CalendlyPopupUrl,
                     PricePerSession = x.Coach.PricePerSession,
                 }).ToList()
             };

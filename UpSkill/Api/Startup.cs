@@ -103,8 +103,6 @@
                     .WithExposedHeaders("X-Pagination"));
             });
 
-            services.AddHttpClient();
-
             // Data repositories
             services.AddScoped(typeof(IDeletableEntityRepository<>), typeof(EfDeletableEntityRepository<>));
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
@@ -125,7 +123,6 @@
             services.AddTransient<IEmployeesService, EmployeesService>();
             services.AddTransient<ILanguagesService, LanguagesService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
-            services.AddTransient<ICoachSessionsService, CoachSessionsService>();
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
 
 
@@ -135,11 +132,6 @@
                 options.ApiKey = Configuration["ExternalProviders:SendGrid:ApiKey"];
                 options.SenderEmail = Configuration["ExternalProviders:SendGrid:SenderEmail"];
                 options.SenderName = Configuration["ExternalProviders:SendGrid:SenderName"];
-            });
-
-            services.Configure<CalendlyOptions>(options =>
-            {
-                options.Token = Configuration["ExternalProviders:Calendly:Token"];
             });
 
             services.AddTransient<IEmployeesService, EmployeesService>();

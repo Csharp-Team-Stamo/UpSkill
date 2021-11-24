@@ -48,11 +48,10 @@
         public DbSet<CoachOwner> CoachOwners { get; init; }
         public DbSet<CoachLanguage> CoachLanguages { get; init; }
         public DbSet<CoachEmployee> CoachEmployees { get; init; }
-        public DbSet<CoachFeedback> CoachFeedback { get; init; }
+        public DbSet<CoachVote> CoachVotes { get; init; }
         public DbSet<CourseOwner> CourseOwners { get; init; }
         public DbSet<CourseVote> CourseVotes { get; init; }
         public DbSet<Language> Languages { get; init; }
-        public DbSet<CoachFeedback> coachFeedbacks { get; init; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -129,11 +128,6 @@
             builder.Entity<LiveSession>()
             .Property(c => c.Price)
             .HasPrecision(Precision, Scale);
-
-            builder.Entity<CoachFeedback>()
-                .HasOne(x => x.liveSession)
-                .WithOne(y => y.CoachFeedback)
-                .HasForeignKey<LiveSession>(x => x.CoachFeedbackId);
 
             base.OnModelCreating(builder);
         }

@@ -1,4 +1,4 @@
-﻿<div class="card custom-course-card container mb-5" style="width: 18rem; background-color: @backgroundColor" >
+﻿<div class="card custom-course-card container mb-5" style="width: 18rem;">
     <div @onclick="ShowPopup" class="card-img-top course-img-top-custom">
         <img class="img-custom" src="@Course.ImageUrl" />
         <div class="course-title-in-image">@Course.Name</div>
@@ -40,18 +40,9 @@
             user.Role().Result == GlobalConstants.EmployeeRoleName &&
             !NavigationManager.Uri.Contains("Courses-catalog"))
         {
-            if (isEmployeeEnrolledToCourse)
-            {
-                <div class="text-center">
-                    <button @onclick="GoToCoursesDetails" class="course-btn"><span class="course-btn-text">Continue</span></button>
-                </div>
-            }
-            else
-            {
-                <div class="text-center">
-                    <button @onclick="ShowPopup" class="course-btn"><span class="course-btn-text">Enroll</span></button>
-                </div>
-            }
+            <div class="text-center">
+                <button class="course-btn"><span class="course-btn-text">New Slot</span></button>
+            </div>
         }
     </div>
 </div>
@@ -60,18 +51,12 @@
 @* Modal *@
 @if (show)
 {
-    <CourseDescriptionModal CourseId="Course.Id" SetShow="SetShowValue" IsEmployeeEnrolledToCourse="SetIsEmployeeEnrolledToCourse" BackgroundColor="SetBackgroundColor" />
+    <CourseDescriptionModal CourseId="Course.Id" SetShow="SetShowValue" />
 }
 
 
 @code
 {
-    private bool isEmployeeEnrolledToCourse;
-
-    private bool show = false;
-
-    private string backgroundColor;
-
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
 
@@ -90,27 +75,7 @@
     [Parameter]
     public EventCallback<CoursesListingCatalogModel> UpdatedOwnerCoursesListingCatalogModel { get; set; }
 
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (user.Role().Result == GlobalConstants.EmployeeRoleName)
-        {
-            isEmployeeEnrolledToCourse = await Client.GetFromJsonAsync<bool>($"Employees/IsEmployeeEnrolledToCourse?appUserId={user.Id().Result}&courseId={Course.Id}");
-
-            if (isEmployeeEnrolledToCourse)
-            {
-                backgroundColor = "#EAF0FF";
-            }
-            else
-            {
-                backgroundColor = "#fff";
-            }
-        }
-        else
-        {
-            backgroundColor = "#fff";
-        }
-    }
+    private bool show = false;
 
     private void ShowPopup()
     {
@@ -139,20 +104,5 @@
         await CoursesService.RemoveCourseFromOwnerCoursesCollectionAsync(courseId, ownerId);
         await UpdatedCoursesListingCatalogModel.InvokeAsync(await CoursesService.GetAllAsync(ownerId));
         await UpdatedOwnerCoursesListingCatalogModel.InvokeAsync(await CoursesService.GetAllByOwnerIdAsync(ownerId));
-    }
-
-    private void SetIsEmployeeEnrolledToCourse(bool value)
-    {
-        isEmployeeEnrolledToCourse = value;
-    }
-
-    private void SetBackgroundColor(string value)
-    {
-        backgroundColor = value;
-    }
-
-    private void GoToCoursesDetails()
-    {
-        NavigationManager.NavigateTo("/watch/course");
     }
 }

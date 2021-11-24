@@ -80,9 +80,9 @@ else
                 </div>
                 <div>
                     @if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.EmployeeRoleName &&
-                    NavigationManager.Uri.EndsWith("Courses") && !isEmployeeEnrolledToCourse)
+                     NavigationManager.Uri.EndsWith("Courses"))
                     {
-                        <button class="btn-enroll" @onclick="Enroll">Enroll</button>
+                        <btn class="btn-enroll" @onclick="Enroll">Enroll</btn>
                     }
                 </div>
             </div>
@@ -94,8 +94,6 @@ else
 
 @code {
 
-    private bool isEmployeeEnrolledToCourse;
-
     private CourseDescriptionModel course;
 
     [CascadingParameter]
@@ -105,19 +103,11 @@ else
     public EventCallback<bool> SetShow { get; set; }
 
     [Parameter]
-    public EventCallback<bool> IsEmployeeEnrolledToCourse { get; set; }
-
-    [Parameter]
-    public EventCallback<string> BackgroundColor { get; set; }
-
-    [Parameter]
     public int CourseId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        course = await Client.GetFromJsonAsync<CourseDescriptionModel>($"Courses/GetByIdAsync?coachId={CourseId}");
-
-        isEmployeeEnrolledToCourse = await Client.GetFromJsonAsync<bool>($"Employees/IsEmployeeEnrolledToCourse?appUserId={user.Id().Result}&courseId={course.Id}");
+        course = await Client.GetFromJsonAsync<CourseDescriptionModel>($"/Courses/GetByIdAsync?coachId={CourseId}");
     }
 
     private void ClosePopup()
@@ -125,14 +115,9 @@ else
         SetShow.InvokeAsync(false);
     }
 
-    private async Task Enroll()
+    private void Enroll()
     {
-        await Client.PostAsJsonAsync($"Employees/EnrollToCourseAsync?courseId={course.Id}&appUserId={user.Id().Result}", string.Empty);
 
-        await IsEmployeeEnrolledToCourse.InvokeAsync(true);
-        await BackgroundColor.InvokeAsync("#EAF0FF");
-
-        ClosePopup();
     }
 }
 

@@ -18,9 +18,6 @@
 
         public const string demoSubject = "UpSkill Demo Request";
 
-        public const string coachSessionSubject = "New UpSkill Coach Session: {0} - {1} - {2}";
-        public const string coachSessionNotificationAsHtml = "<div style='text-align: left;'> <h3>Dear {0},</h3> <p>You have a new scheduled event!</p> <p><span style='font-weight:bold'>Event type:</span> {1} </p> <p><span style='font-weight:bold'>Invitee:</span> {2} </p> <p><span style='font-weight:bold'>Invitee email:</span> {3} </p> <p><span style='font-weight:bold'>Event Time/Date:</span> {4} </p> <p><span style='font-weight:bold'>Location:</span>This is a Google Meet web call. <a href='{5}' style='font-weight:bold'>Join now</a></p> <p>Kind regards,</p> <p>Upskill Team</p></div>";
-
         public class WelcomePageConst
         {
             public const int NameMinLen = 2;

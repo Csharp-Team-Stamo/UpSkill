@@ -1,4 +1,4 @@
-@page "/Coaches"
+﻿@page "/Coaches"
 
 @if (user.Role().Result == "Owner")
 {
@@ -27,7 +27,6 @@ else
 
 @code
 {
-
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
 

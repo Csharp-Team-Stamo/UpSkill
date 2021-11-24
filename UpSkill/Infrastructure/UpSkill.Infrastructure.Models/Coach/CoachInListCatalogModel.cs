@@ -16,8 +16,6 @@
 
         public string CompanyLogoUrl { get; set; }
 
-        public string CalendlyUrl { get; set; }
-
         public decimal PricePerSession { get; set; }
 
         public ICollection<string> Languages { get; set; }

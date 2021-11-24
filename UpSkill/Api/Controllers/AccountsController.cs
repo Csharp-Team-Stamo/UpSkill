@@ -196,7 +196,7 @@ namespace UpSkill.Api.Controllers
             }
             else if (claims.Result.Any(x => x.Value == "Employee"))
             {
-                ownerId = this.employeesService.GetOwnerIdByAppUserId(user.Id);
+                ownerId = this.employeesService.GetOwnerById(user.Id);
             }
 
             claimsAsList.Add(new Claim("OwnerId", ownerId));
