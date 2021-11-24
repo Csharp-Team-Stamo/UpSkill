@@ -20,22 +20,27 @@
             this.coursesOwnerRepository = coursesOwnerRepository;
         }
 
-       public Task<CourseDescriptionModel> GetByIdAsync(int courseId)
+       public async Task<CourseDescriptionModel> GetByIdAsync(int courseId)
         {
-            return coursesRepository.All().Where(x => x.Id == courseId).Select(x => new CourseDescriptionModel
-            {
-                Id = x.Id,
-                Name = x.Name,
-                CategoryName = x.Category.Name,
-                AuthorFullName = x.AuthorFullName,
-                Company = x.CompanyName,
-                CreatorAvatarImgUrl = x.CreatorImageUrl,
-                CourseDescription = x.Description,
-                VideoUrl = x.VideoUrl,
-                SkillsLearn = x.SkillsLearn,
-                CourseDurationInHours = x.CourseDurationInHours,
-                LecturesCount = x.LecturesCount,
-            }).FirstOrDefaultAsync();
+            var course = await coursesRepository
+                .All()
+                .Select(x => new CourseDescriptionModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    CategoryName = x.Category.Name,
+                    AuthorFullName = x.AuthorFullName,
+                    Company = x.CompanyName,
+                    CreatorAvatarImgUrl = x.CreatorImageUrl,
+                    CourseDescription = x.Description,
+                    VideoUrl = x.VideoUrl,
+                    SkillsLearn = x.SkillsLearn,
+                    CourseDurationInHours = x.CourseDurationInHours,
+                    LecturesCount = x.LecturesCount,
+                })
+                .FirstOrDefaultAsync(x => x.Id == courseId);
+
+            return course;
         }
 
         public CoursesListingCatalogModel GetAllByOwnerId(string ownerId)
@@ -44,7 +49,10 @@
             {
                 OwnerId = ownerId,
                 OwnerCourseCollectionIds = OwnerCourseCollectionIds(ownerId),
-                Courses = coursesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CourseInListCatalogModel
+                Courses = coursesOwnerRepository
+                .All()
+                .Where(x => x.OwnerId == ownerId)
+                .Select(x => new CourseInListCatalogModel
                 {
                     Id = x.Course.Id,
                     AuthorFullName = x.Course.AuthorFullName,

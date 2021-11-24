@@ -1,4 +1,5 @@
-﻿@using UpSkill.Infrastructure.Models.ApplicationUser
+﻿@inherits LayoutComponentBase
+
 <div class="top-row px-4 auth">
     <div class="logo-container">
         <div>
@@ -10,31 +11,30 @@
     </div>
 
     <div class="">
-        <NavLink href="Courses-catalog">
+        @*<NavLink href="Courses-catalog">
             Courses
         </NavLink>
         <NavLink href="Coaches-catalog">
             Coaches
-        </NavLink>
+        </NavLink>*@
         <NavLink>
             <LoginDisplay></LoginDisplay>
         </NavLink>
 
-        <AuthorizeView>
+        
             <NavLink>
                 <Avatar @ref="avatar"></Avatar>
             </NavLink>
-        </AuthorizeView>
     </div>
 </div>
 
-@code
-{
 
+<div class="text-center">
+    @Body
+</div>
+
+<Footer></Footer>
+
+@code{
     private Avatar avatar;
-
-    public void Refresh(EditApplicationUserModel model)
-    {
-        avatar.Refresh(model);
-    }
 }

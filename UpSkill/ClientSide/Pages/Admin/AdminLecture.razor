@@ -1,0 +1,53 @@
+﻿@page "/create/lecture"
+@layout AdminLayout
+
+@using UpSkill.Infrastructure.Models.Course
+@using UpSkill.Infrastructure.Models.Lecture
+
+<EditForm Model="input" OnValidSubmit="Create" class="card card-body bg-light mt-5">
+    <DataAnnotationsValidator />
+
+    <div class="form-group row">
+        <label for="courseid" class="col-md-2 col-form-label">Course</label>
+        <div class="col-md-10">
+            <InputSelect id="courseid" class="form-control" @bind-Value="input.CourseId">
+                <option>---Select Course---</option>
+                @foreach (var course in allCourses)
+                {
+                    <option value="@course.Id">@course.Name</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => input.CourseId)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="title" class="col-md-2 col-form-label">Title</label>
+        <div class="col-md-10">
+            <InputText id="title" class="form-control" @bind-Value="input.Title" />
+            <ValidationMessage For="@(() => input.Title)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="description" class="col-md-2 col-form-label">Description</label>
+        <div class="col-md-10">
+            <InputText id="description" class="form-control" @bind-Value="input.Description" />
+            <ValidationMessage For="@(() => input.Description)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="videoUrl" class="col-md-2 col-form-label">VideoUrl</label>
+        <div class="col-md-10">
+            <InputText id="videoUrl" class="form-control" @bind-Value="input.VideoUrl" />
+            <ValidationMessage For="@(() => input.VideoUrl)" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-primary">Create Lecture</button>
+        </div>
+    </div>
+</EditForm>
