@@ -59,29 +59,26 @@ using UpSkill.Services.Data.Contracts;
             await this.liveSessionRepository.AddAsync(coachSession);
             await this.liveSessionRepository.SaveChangesAsync();
 
-            //$"New UpSkill Coach Session: {invitee.Name} - {session.StartTime} - {session.Name}";
-            var subject =
-                string.Format(
-                    GlobalConstants.coachSessionSubject,
-                    invitee.Name,
-                    session.StartTime.ToShortDateString(),
-                    session.Name);
+            //var subject =
+            //    string.Format(
+            //        GlobalConstants.coachSessionSubject,
+            //        invitee.Name,
+            //        session.StartTime.ToShortDateString(),
+            //        session.Name);
 
-            var plainText = string.Empty;
-            var startTime = session.StartTime.ToShortTimeString() + " " + session.StartTime.ToLongDateString();
-            var textAsHtml =
-                string.Format(
-                    GlobalConstants.coachSessionNotificationAsHtml,
-                coach.FullName,
-                session.Name,
-                invitee.Name,
-                invitee.Email,
-                startTime,
-                session.Location.JoinUrl);
+            //var plainText = string.Empty;
+            //var startTime = session.StartTime.ToShortTimeString() + " " + session.StartTime.ToLongDateString();
+            //var textAsHtml =
+            //    string.Format(
+            //        GlobalConstants.coachSessionNotificationAsHtml,
+            //    coach.FullName,
+            //    session.Name,
+            //    invitee.Name,
+            //    invitee.Email,
+            //    startTime,
+            //    session.Location.JoinUrl);
 
-            var result = await emailSender.SendMailAsync(subject, coach.Email, coach.FullName, string.Empty, textAsHtml);
-            var response = await result.DeserializeResponseBodyAsync(result.Body);
-            Console.WriteLine();
+            //     await emailSender.SendMailAsync(subject, coach.Email, coach.FullName, string.Empty, textAsHtml);
         }
     }
 }
