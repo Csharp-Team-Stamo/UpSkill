@@ -53,6 +53,20 @@ namespace UpSkill.Api.Controllers
             }
 
             return course;
+        [HttpPost("EnrollToCourseAsync")]
+        public async Task EnrollToCourseAsync(int courseId, string appUserId)
+        {
+            var employeeId = employeesService.GetEmployeeIdByAppUserId(appUserId);
+
+           await employeesService.EnrollToCourseAsync(courseId, employeeId);
+        }
+
+        [HttpGet("IsEmployeeEnrolledToCourse")]
+        public bool IsEmployeeEnrolledToCourse(string appUserId, int courseId)
+        {
+            var employeeId = employeesService.GetEmployeeIdByAppUserId(appUserId);
+
+            return employeesService.IsEmployeeEnrolledForCourse(employeeId, courseId);
         }
     }
 }

@@ -30,6 +30,9 @@
         public decimal PricePerSession { get; set; }
 
         [Required]
+        public string VideoUrl { get; set; }
+
+        [Required]
         public string CalendlyPopupUrl { get; set; }
 
         public int LanguageId { get; set; }
@@ -38,6 +41,7 @@
         public string SessionDescription { get; set; }
 
         [Required]
+        [MaxLength(150)]
         public string SkillsLearn { get; set; }
 
         [Required]
@@ -45,6 +49,8 @@
 
         [Required]
         public string ResourcesCount { get; set; }
+
+        public string VideoUri { get; set; }
 
         //public ICollection<int> Languages { get; set; } =
         //    new List<int>();

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UpSkill.Data;
 
 namespace UpSkill.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211123135921_AddLiveSessionProperties")]
+    partial class AddLiveSessionProperties
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1022,6 +1024,9 @@ namespace UpSkill.Data.Migrations
                     b.Property<string>("CancelationUri")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("CoachFeedbackId")
                         .HasColumnType("int");
 
@@ -1070,6 +1075,8 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("CoachFeedbackId")
                         .IsUnique()
@@ -1437,6 +1444,12 @@ namespace UpSkill.Data.Migrations
 
             modelBuilder.Entity("UpSkill.Data.Models.LiveSession", b =>
                 {
+                    b.HasOne("UpSkill.Data.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("UpSkill.Data.Models.CoachFeedback", "CoachFeedback")
                         .WithOne("liveSession")
                         .HasForeignKey("UpSkill.Data.Models.LiveSession", "CoachFeedbackId");
@@ -1448,6 +1461,8 @@ namespace UpSkill.Data.Migrations
                     b.HasOne("UpSkill.Data.Models.Employee", "Student")
                         .WithMany("LiveSession")
                         .HasForeignKey("StudentId");
+
+                    b.Navigation("Category");
 
                     b.Navigation("Coach");
 

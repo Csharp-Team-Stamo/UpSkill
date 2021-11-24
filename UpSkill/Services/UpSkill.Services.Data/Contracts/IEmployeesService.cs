@@ -8,6 +8,9 @@
 
     public interface IEmployeesService
     {
+       string GetOwnerIdByAppUserId(string userId);
+
+       string GetEmployeeIdByAppUserId(string userId);
 
        PagedList<AddEmployeeFormModel> GetByCompanyId(
            string companyId, EmployeesParameters parameters);
@@ -18,5 +21,8 @@
        string GetOwnerById(string userId);
 
         Task<EmployeeCourseDetailsModel> GetCourseById(int id);
+       Task EnrollToCourseAsync(int courseId, string employeeId);
+
+       bool IsEmployeeEnrolledForCourse(string employeeId, int courseId);
     }
 }

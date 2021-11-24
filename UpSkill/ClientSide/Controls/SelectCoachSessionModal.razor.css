@@ -30,20 +30,22 @@
     font-weight: lighter;
 }
 
-div ::deep .close:hover{
+div ::deep .close:hover {
     opacity: 0.99;
 }
 
 
 .btn-close {
     opacity: .75;
+    color:red
+
 }
 
-.btn-close:hover {
-    opacity: .99;
-    font-weight: 400;
-    cursor: pointer;
-}
+    .btn-close:hover {
+        opacity: .99;
+        font-weight: 400;
+        cursor: pointer;
+    }
 
 .title {
     grid-column: page-start / page-end;
@@ -108,13 +110,13 @@ iframe {
     align-items: center;
     justify-content: center;
     margin-top: 1.5rem;
-    border: none;
 }
 
 div i.avatar {
     text-align: center;
     font-family: Montserrat,sans-serif;
     border-radius: 50%;
+    background-image: url("https://careermanifestations.com/wp-content/uploads/2018/04/Irina.jpg");
     background-size: contain;
     color: white;
     font-size: 1rem;
@@ -185,7 +187,6 @@ div i.avatar {
         height: 8px;
         background: #296CFB;
         margin-left: -13px;
-        margin-right: 5px;
     }
 
 .icon {
@@ -200,13 +201,3 @@ div i.avatar {
 div {
     display: inline-block;
 }
-.avatar {
-    vertical-align: middle;
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    position: relative;
-    top: 56%;
-    right: 0%;
-}
-
