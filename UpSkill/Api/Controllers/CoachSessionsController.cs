@@ -45,6 +45,8 @@
             CoachSessionInviteeResponseModel inviteePayload = null;
             string coachSchedulingUri = string.Empty;
 
+            //TODO: Refactor Calendly Calls 
+
             var response = await GetCalendlyPayload(eventUri);
 
             if (response.IsSuccessStatusCode)

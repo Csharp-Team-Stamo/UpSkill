@@ -59,6 +59,8 @@ using UpSkill.Services.Data.Contracts;
             await this.liveSessionRepository.AddAsync(coachSession);
             await this.liveSessionRepository.SaveChangesAsync();
 
+            // Coach Sendgrid Emails are disable until test/production environment to avoid spam emails
+
             //var subject =
             //    string.Format(
             //        GlobalConstants.coachSessionSubject,

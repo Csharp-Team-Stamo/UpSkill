@@ -48,7 +48,7 @@
             !NavigationManager.Uri.Contains("Coaches-catalog"))
         {
     <div class="text-center">
-        <button href="" class="coach-btn" onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUrl' }); return false;">New Slot</button>
+        <button href="" class="coach-btn" onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>
         @*<button @onclick="ShowSessionModal" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>*@
     </div>
         }
@@ -70,7 +70,7 @@
 
 @code { 
 
-    public string CalendlyPrefilledUrl { get; set; }
+    public string CalendlyPrefilledUriParams { get; set; }
 
     protected override void OnAfterRender(bool firstRender)
     {
@@ -103,7 +103,7 @@
     protected override void OnInitialized()
     {
         var url = NavigationManager.Uri;
-        CalendlyPrefilledUrl = Coach.CalendlyUrl + "?name=" + user.FullName().Result + "&email=" + user.Email().Result;
+        CalendlyPrefilledUriParams = Coach.CalendlyUrl + "?name=" + user.FullName().Result + "&email=" + user.Email().Result;
     }
 
     private async Task AddCoach(string coachId, string ownerId)
