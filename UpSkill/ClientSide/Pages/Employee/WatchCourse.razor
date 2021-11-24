@@ -1,13 +1,14 @@
-﻿@page "/watch/course"
+﻿@page "/watch/course/{id:int}"
 @layout LogoAndAvatarOnlyLayout
 
 <div id="mainGrid">
 
     <div class="gridCol" id="lectureInfoHolder">
-        <h3 id="mainHL">Marketing</h3>
+        <h3 id="mainHL">@courseDetails.CourseName</h3>
         <iframe width="660"
                 height="315"
-                src="https://www.youtube.com/embed/TZCfydWF48c"
+                src="@courseDetails.CourseVideoUrl"
+                @*src="https://www.youtube.com/embed/TZCfydWF48c"*@
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
@@ -15,8 +16,9 @@
         <div class="my-5 courseInfoPar">
             <h6>Lecture Description</h6>
             <p>
-                This course emphasizes the fundamental skills of reading,
-                writing, speaking, listening, thinking, viewing and presenting.
+                @courseDetails.CourseDescription
+                @*This course emphasizes the fundamental skills of reading,
+                writing, speaking, listening, thinking, viewing and presenting.*@
             </p>
         </div>
 
@@ -29,10 +31,10 @@
                         Created by
                     </div>
                     <div style="font-weight: bold;">
-                        Natashka Nikolevna
+                        @courseDetails.AuthorFullName
                     </div>
                     <div class="company">
-                        Google
+                        <img src="@courseDetails.AuthorCompanyLogoUrl" width="60" height="30"/>
                     </div>
                 </div>
             </div>
@@ -49,12 +51,13 @@
 
     <div class="gridCol" id="lectureAsideMenu">
         <h5>Lectures</h5>
-        @for (int i = 0; i < lectureNames.Count(); i++)
+        @for (int i = 0; i < courseDetails.Lectures.Count(); i++)
         {
             int num = i + 1;
-            string name = lectureNames.ElementAt(i);
+            var currentLecture = courseDetails.Lectures.ElementAt(i);
+            string title = currentLecture.Title;
 
-            <p>@num. <a href="#">@name</a></p>
+            <p>@num. <a href="#">@title</a></p>
             <hr />
         }
 
@@ -63,25 +66,25 @@
 </div>
 
 @code {
-    private CourseDetailsServiceModel courseDetails = new();
+    private EmployeeCourseDetailsModel courseDetails = new();
 
     [Parameter]
     public int Id { get; set; }
 
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    this.courseDetails = await this.Client
-    //        .GetFromJsonAsync<CourseDetailsServiceModel>
-    //        ($"/course/getbyidasync/{Id}");
-    //}
-
-    private IEnumerable<string> lectureNames = new List<string>
+    protected override async Task OnInitializedAsync()
     {
-        "Introduction",
-        "Marketing",
-        "Digital Marketing",
-        "Business Model",
-        "Planning",
-        "Branding"
-    };
+        this.courseDetails = await this.Client
+            .GetFromJsonAsync<EmployeeCourseDetailsModel>
+            ($"/employees/getcoursebyid/{Id}");
+    }
+
+    //private IEnumerable<string> lectureNames = new List<string>
+    //{
+    //    "Introduction",
+    //    "Marketing",
+    //    "Digital Marketing",
+    //    "Business Model",
+    //    "Planning",
+    //    "Branding"
+    //};
 }

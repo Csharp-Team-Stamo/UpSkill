@@ -9,10 +9,14 @@
     public interface IEmployeesService
     {
 
-       PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, EmployeesParameters parameters);
+       PagedList<AddEmployeeFormModel> GetByCompanyId(
+           string companyId, EmployeesParameters parameters);
 
-       Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees);
+       Task<ICollection<string>> SaveEmployeesCollectionAsync(
+           ICollection<AddEmployeeFormModel> employees);
 
        string GetOwnerById(string userId);
+
+        Task<EmployeeCourseDetailsModel> GetCourseById(int id);
     }
 }

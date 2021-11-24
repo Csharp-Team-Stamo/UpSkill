@@ -12,36 +12,84 @@
     using Infrastructure.Common;
     using Infrastructure.Common.Pagination;
     using Paging;
+    using Microsoft.EntityFrameworkCore;
+    using UpSkill.Infrastructure.Models.Lecture;
 
     public class EmployeesService : IEmployeesService
     {
         private readonly IDeletableEntityRepository<Employee> employeeRepository;
+        private readonly IDeletableEntityRepository<Course> courseRepo;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IAccountsService accountsService;
         private readonly IOwnerService ownerService;
 
-        public EmployeesService(IDeletableEntityRepository<Employee> employeeRepository, UserManager<ApplicationUser> userManager, IAccountsService accountsService, IOwnerService ownerService)
+        public EmployeesService(
+            IDeletableEntityRepository<Employee> employeeRepository,
+            IDeletableEntityRepository<Course> courseRepo,
+            UserManager<ApplicationUser> userManager, 
+            IAccountsService accountsService, 
+            IOwnerService ownerService)
         {
             this.employeeRepository = employeeRepository;
+            this.courseRepo = courseRepo;
             this.userManager = userManager;
             this.accountsService = accountsService;
             this.ownerService = ownerService;
         }
 
-        public PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, EmployeesParameters parameters)
+        public PagedList<AddEmployeeFormModel> GetByCompanyId(
+            string companyId, EmployeesParameters parameters)
         {
-            var employees =  employeeRepository.All().Where(x => x.User.CompanyId == int.Parse(companyId)).Select(x =>
-                new AddEmployeeFormModel { FullName = x.User.FullName, Email = x.User.Email, }).ToList();
+            var employees =  employeeRepository
+                .All()
+                .Where(x => x.User.CompanyId == int.Parse(companyId))
+                .Select(x =>
+                new AddEmployeeFormModel 
+                { 
+                    FullName = x.User.FullName, 
+                    Email = x.User.Email, 
+                })
+                .ToList();
 
-           return PagedList<AddEmployeeFormModel>.ToPagedList(employees, parameters.PageNumber, parameters.PageSize);
+           return PagedList<AddEmployeeFormModel>
+                .ToPagedList(employees, parameters.PageNumber, parameters.PageSize);
+        }
+
+        public async Task<EmployeeCourseDetailsModel> GetCourseById(int id)
+        {
+            var courseDetails = await this.courseRepo
+                .All()
+                .Select(c => new EmployeeCourseDetailsModel
+                {
+                    CourseId = c.Id,
+                    CourseName = c.Name,
+                    AuthorFullName = c.AuthorFullName,
+                    AuthorImageUrl = c.CreatorImageUrl,
+                    AuthorCompanyLogoUrl = c.CompanyLogoUrl,
+                    CourseDescription = c.Description,
+                    CourseVideoUrl = c.VideoUrl,
+                    Lectures = c.Lectures
+                    .Select(l => new LectureListingModel
+                    {
+                        Id = l.Id,
+                        Title = l.Title,
+                        CourseId = c.Id
+                    })
+                })
+                .FirstOrDefaultAsync(c => c.CourseId == id);
+
+            return courseDetails;
         }
 
         public string GetOwnerById(string userId)
         {
-            return this.employeeRepository.AllAsNoTracking().FirstOrDefault(x => x.UserId == userId).OwnerId;
+            return this.employeeRepository
+                .AllAsNoTracking()
+                .FirstOrDefault(x => x.UserId == userId).OwnerId;
         }
 
-        public async Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees)
+        public async Task<ICollection<string>> SaveEmployeesCollectionAsync(
+            ICollection<AddEmployeeFormModel> employees)
         {
             var emailsFromErrorResult = new List<string>();
 
@@ -81,5 +129,7 @@
 
             return emailsFromErrorResult;
         }
+
+
     }
 }

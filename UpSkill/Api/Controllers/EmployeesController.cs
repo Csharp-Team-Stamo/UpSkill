@@ -34,7 +34,25 @@ namespace UpSkill.Api.Controllers
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(empployees.MetaData));
 
             return Ok(empployees);
-           
+        }
+
+        [HttpGet("GetCourseById/{id}")]
+        public async Task<ActionResult<EmployeeCourseDetailsModel>> GetCourseById(int id)
+        {
+            if(id <= 0)
+            {
+                return BadRequest("A valid Id is required");
+            }
+
+            var course = await this.employeesService
+                .GetCourseById(id);
+
+            if(course == null)
+            {
+                return NotFound();
+            }
+
+            return course;
         }
     }
 }
