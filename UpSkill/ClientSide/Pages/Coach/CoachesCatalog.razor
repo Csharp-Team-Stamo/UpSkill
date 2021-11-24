@@ -1,9 +1,10 @@
 ﻿@page "/Coaches-catalog"
+@using UpSkill.Infrastructure.Models.Sorting
 @layout NoMenuLayout
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
 
-<CheckboxesPanel SortingTerms="Filter" />
+<CoachCheckboxesPanel SortingTerms="Filter" />
 
 @if (model == null)
 {
@@ -48,7 +49,7 @@ else
     }
 
 
-    private void Filter(SortingTermsCoachesModel input)
+    private void Filter(SortingTermsCatalogsModel input)
     {
         if (input.Categories.Any() && input.Languages.Any())
         {
@@ -66,7 +67,7 @@ else
         }
     }
 
-    private void FilterCoachesByCategory(SortingTermsCoachesModel input)
+    private void FilterCoachesByCategory(SortingTermsCatalogsModel input)
     {
         if (input.Categories.Any())
         {
@@ -78,7 +79,7 @@ else
         }
     }
 
-    private void FilterCoachesByLanguage(SortingTermsCoachesModel input)
+    private void FilterCoachesByLanguage(SortingTermsCatalogsModel input)
     {
         if (input.Languages.Any())
         {

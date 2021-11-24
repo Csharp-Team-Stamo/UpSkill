@@ -1,9 +1,9 @@
-﻿namespace UpSkill.ClientSide.Pages
+﻿namespace UpSkill.ClientSide.Pages.Entry
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Components;
     using Infrastructure.Services.Contracts;
+    using Microsoft.AspNetCore.Components;
     using UpSkill.Infrastructure.Models.Account;
 
     public partial class Registration

@@ -1,12 +1,12 @@
 ﻿<div class="card custom-course-card container mb-5" style="width: 18rem;">
     <div @onclick="ShowPopup" class="card-img-top course-img-top-custom">
         <img class="img-custom" src="@Course.ImageUrl" />
-        <div class="course-title-in-image">@Course.CategoryName</div>
+        <div class="course-title-in-image">@Course.Name</div>
     </div>
     <div class="card-body">
         <div class="row">
             <div class="course-profession col-6">
-                @Course.Name
+                @Course.CategoryName
             </div>
             <div class="course-name col-6 text-right">
                 @Course.AuthorFullName
@@ -51,7 +51,7 @@
 @* Modal *@
 @if (show)
 {
-    <CourseDescriptionModal SetShow="SetShowValue" />
+    <CourseDescriptionModal CourseId="Course.Id" SetShow="SetShowValue" />
 }
 
 

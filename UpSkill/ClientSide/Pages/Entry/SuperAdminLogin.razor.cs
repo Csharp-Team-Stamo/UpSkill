@@ -1,8 +1,8 @@
-﻿namespace UpSkill.ClientSide.Pages
+﻿namespace UpSkill.ClientSide.Pages.Entry
 {
     using System.Threading.Tasks;
+    using ClientSide.Authentication.Services.Contracts;
     using Microsoft.AspNetCore.Components;
-    using UpSkill.ClientSide.Authentication.Services.Contracts;
     using UpSkill.Infrastructure.Models.Account;
 
     public partial class SuperAdminLogin

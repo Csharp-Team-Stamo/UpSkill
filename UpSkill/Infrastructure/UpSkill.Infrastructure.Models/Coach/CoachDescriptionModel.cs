@@ -12,6 +12,8 @@
 
         public string AvatarImgUrl { get; set; }
 
+        public string VideoUrl { get; set; }
+
         public string SessionDescription { get; set; }
 
         public string SkillsLearn { get; set; }

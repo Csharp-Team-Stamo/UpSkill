@@ -20,9 +20,46 @@
             this.coursesOwnerRepository = coursesOwnerRepository;
         }
 
+       public Task<CourseDescriptionModel> GetByIdAsync(int courseId)
+        {
+            return coursesRepository.All().Where(x => x.Id == courseId).Select(x => new CourseDescriptionModel
+            {
+                Id = x.Id,
+                Name = x.Name,
+                CategoryName = x.Category.Name,
+                AuthorFullName = x.AuthorFullName,
+                Company = x.CompanyName,
+                CreatorAvatarImgUrl = x.CreatorImageUrl,
+                CourseDescription = x.Description,
+                VideoUrl = x.VideoUrl,
+                SkillsLearn = x.SkillsLearn,
+                CourseDurationInHours = x.CourseDurationInHours,
+                LecturesCount = x.LecturesCount,
+            }).FirstOrDefaultAsync();
+        }
+
+        public CoursesListingCatalogModel GetAllByOwnerId(string ownerId)
+        {
+            return new CoursesListingCatalogModel
+            {
+                OwnerId = ownerId,
+                OwnerCourseCollectionIds = OwnerCourseCollectionIds(ownerId),
+                Courses = coursesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CourseInListCatalogModel
+                {
+                    Id = x.Course.Id,
+                    AuthorFullName = x.Course.AuthorFullName,
+                    Name = x.Course.Name,
+                    CategoryName = x.Course.Category.Name,
+                    CompanyLogoUrl = x.Course.CompanyLogoUrl,
+                    ImageUrl = x.Course.ImageUrl,
+                    PricePerPerson = x.Course.Price,
+                }).ToList()
+            };
+        }
+
         public CoursesListingCatalogModel GetAll(string ownerId)
         {
-            var courses = new CoursesListingCatalogModel
+            return new CoursesListingCatalogModel
             {
                 OwnerId = ownerId,
                 OwnerCourseCollectionIds = OwnerCourseCollectionIds(ownerId),
@@ -38,34 +75,11 @@
                     PricePerPerson = x.Price,
                 }).ToList()
             };
-
-            return courses;
-        }
-
-        public CoursesListingCatalogModel GetAllByOwnerId(string ownerId)
-        {
-            var courses = new CoursesListingCatalogModel
-            {
-                OwnerId = ownerId,
-                OwnerCourseCollectionIds = OwnerCourseCollectionIds(ownerId),
-                Courses = coursesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CourseInListCatalogModel
-                {
-                    Id = x.Course.Id,
-                    AuthorFullName = x.Course.AuthorFullName,
-                    Name = x.Course.Name,
-                    CategoryName = x.Course.Category.Name,
-                    CompanyLogoUrl = x.Course.CompanyLogoUrl,
-                    ImageUrl = x.Course.ImageUrl,
-                    PricePerPerson = x.Course.Price,
-                }).ToList()
-            };
-
-            return courses;
         }
 
         public async Task AddCourseInOwnerCoursesCollectionAsync(int courseId, string ownerId)
         {
-            var courseOwner = new CourseOwner{CourseId = courseId, OwnerId = ownerId};
+            var courseOwner = new CourseOwner { CourseId = courseId, OwnerId = ownerId };
             await coursesOwnerRepository.AddAsync(courseOwner);
             await coursesOwnerRepository.SaveChangesAsync();
         }

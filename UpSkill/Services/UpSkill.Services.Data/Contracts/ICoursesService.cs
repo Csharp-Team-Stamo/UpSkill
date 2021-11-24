@@ -5,9 +5,11 @@
 
     public interface ICoursesService
     {
-        CoursesListingCatalogModel GetAll(string ownerId);
+        Task<CourseDescriptionModel> GetByIdAsync(int courseId);
 
         CoursesListingCatalogModel GetAllByOwnerId(string ownerId);
+
+        CoursesListingCatalogModel GetAll(string ownerId);
 
         Task AddCourseInOwnerCoursesCollectionAsync(int courseId, string ownerId);
 

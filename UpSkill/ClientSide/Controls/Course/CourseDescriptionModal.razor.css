@@ -114,7 +114,6 @@ div i.avatar {
     text-align: center;
     font-family: Montserrat,sans-serif;
     border-radius: 50%;
-    background-image: url("https://careermanifestations.com/wp-content/uploads/2018/04/Irina.jpg");
     background-size: contain;
     color: white;
     font-size: 1rem;
@@ -185,6 +184,7 @@ div i.avatar {
         height: 8px;
         background: #296CFB;
         margin-left: -13px;
+        margin-right: 5px;
     }
 
 .icon {
@@ -199,3 +199,13 @@ div i.avatar {
 div {
     display: inline-block;
 }
+.avatar {
+    vertical-align: middle;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    position: relative;
+    top: 56%;
+    right: 0%;
+}
+

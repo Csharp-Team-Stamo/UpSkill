@@ -2,13 +2,17 @@
 {
     public class CourseDescriptionModel
     {
-        public string Id { get; set; }
+        public int Id { get; set; }
 
         public string CategoryName { get; set; }
 
         public string Name { get; set; }
 
+        public string AuthorFullName { get; set; }
+
         public string Company { get; set; }
+
+        public string VideoUrl { get; set; }
 
         public string CreatorAvatarImgUrl { get; set; }
 
