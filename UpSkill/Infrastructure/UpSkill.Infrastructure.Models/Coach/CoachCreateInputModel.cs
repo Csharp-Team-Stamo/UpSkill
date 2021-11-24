@@ -30,6 +30,9 @@
         public decimal PricePerSession { get; set; }
 
         [Required]
+        public string VideoUrl { get; set; }
+
+        [Required]
         public string CalendlyPopupUrl { get; set; }
 
         public int LanguageId { get; set; }
