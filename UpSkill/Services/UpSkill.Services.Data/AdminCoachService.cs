@@ -295,6 +295,7 @@
                 Company = coachInput.Company,
                 CompanyLogoUrl = coachInput.CompanyLogoUrl,
                 PricePerSession = coachInput.PricePerSession,
+                VideoUrl = coachInput.VideoUrl,
                 CalendlyPopupUrl = coachInput.CalendlyPopupUrl,
                 SessionDescription = coachInput.SessionDescription,
                 DiscussionDurationInMinutes = coachInput.DiscussionDurationInMin,
