@@ -13,9 +13,15 @@ else
     <div class="row mt-5">
         @foreach (var course in courses)
         {
+            var backgroundColor = "#FFFFFF";
+            if (model.OwnerCourseCollectionIds.FirstOrDefault(x => x == course.Id) != 0 && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
+            {
+                backgroundColor = "#EAF0FF";
+            }
+
             <CourseCard Course="course"
                         OwnerId="@model.OwnerId"
-                        CoursesIdsCollection="@model.OwnerCourseCollectionIds" UpdatedCoursesListingCatalogModel="SetCourses" />
+                        CoursesIdsCollection="@model.OwnerCourseCollectionIds" UpdatedCoursesListingCatalogModel="SetCourses" BackgroundColor="@backgroundColor" />
         }
     </div>
 
@@ -64,26 +70,11 @@ else
 
     private void FilterCoachesByCategory(SortingTermsCatalogsModel input)
     {
-        if (input.Categories.Any())
-        {
-            courses = model.Courses.Where(x => input.Categories.ToList().Contains(x.CategoryName)).ToList();
-        }
-        else
-        {
-            courses = model.Courses;
-        }
+        courses = input.Categories.Any() ? model.Courses.Where(x => input.Categories.ToList().Contains(x.CategoryName)).ToList() : model.Courses;
     }
 
     private void FilterCoachesByLanguage(SortingTermsCatalogsModel input)
     {
-        if (input.Languages.Any())
-        {
-            courses = model.Courses.Where(x => input.Languages.Contains(x.LanguageName)).ToList();
-        }
-        else
-        {
-            courses = model.Courses;
-        }
+        courses = input.Languages.Any() ? model.Courses.Where(x => input.Languages.Contains(x.LanguageName)).ToList() : model.Courses;
     }
-
 }

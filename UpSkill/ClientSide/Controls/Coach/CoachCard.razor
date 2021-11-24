@@ -4,7 +4,7 @@
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 </head>
 
-<div class="card custom-coach-card container mb-5" style="width: 18rem; background-color: @backgroundColor">
+<div class="card custom-coach-card container mb-5" style="width: 18rem; background-color: @BackgroundColor">
     <div @onclick="ShowPopup" class="card-img-top card-img-top-custom">
         <img class="img-custom" src="images/coach.png" />
     </div>
@@ -44,7 +44,7 @@
 
         else if (
             user.Role().Result == GlobalConstants.EmployeeRoleName 
-            && !NavigationManager.Uri.Contains("Coaches-catalog"))
+            && !NavigationManager.Uri.EndsWith("Coaches-catalog"))
         {
     <div class="text-center">
         <button href="" class="coach-btn" onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>
@@ -81,7 +81,7 @@
     private bool showSessionModal = false;
 
     [Parameter]
-    public string backgroundColor { get; set; }
+    public string BackgroundColor { get; set; }
 
 
     [Parameter]
@@ -109,9 +109,9 @@
 
         if (user.IsAuthenticated().Result 
             && user.Role().Result == GlobalConstants.BusinessOwnerRoleName
-            && NavigationManager.Uri.Contains("Coaches-catalog"))
+            && NavigationManager.Uri.EndsWith("Coaches-catalog"))
         {
-            backgroundColor = IsCoachAdded() ? "#EAF0FF" : "#FFFFFF";
+            BackgroundColor = IsCoachAdded() ? "#EAF0FF" : "#FFFFFF";
         }
     }
 
@@ -119,7 +119,7 @@
     {
         await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
         await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
-        backgroundColor = "#EAF0FF";
+        BackgroundColor = "#EAF0FF";
 
     }
 
@@ -129,7 +129,7 @@
         await CoachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
         await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
         await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllByOwnerIdAsync(ownerId));
-        backgroundColor = "#FFFFFF";
+        BackgroundColor = "#FFFFFF";
     }
 
     private bool IsCoachAdded()

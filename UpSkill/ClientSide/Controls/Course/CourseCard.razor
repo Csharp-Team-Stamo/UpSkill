@@ -1,4 +1,4 @@
-﻿<div class="card custom-course-card container mb-5" style="width: 18rem; background-color: @backgroundColor">
+﻿<div class="card custom-course-card container mb-5" style="width: 18rem; background-color: @BackgroundColor">
     <div @onclick="ShowPopup" class="card-img-top course-img-top-custom">
         <img class="img-custom" src="@Course.ImageUrl" />
         <div class="course-title-in-image">@Course.Name</div>
@@ -38,7 +38,7 @@
 
         else if (
             user.Role().Result == GlobalConstants.EmployeeRoleName &&
-            !NavigationManager.Uri.Contains("Courses-catalog"))
+            !NavigationManager.Uri.EndsWith("Courses-catalog"))
         {
             if (isEmployeeEnrolledToCourse)
             {
@@ -70,7 +70,8 @@
 
     private bool show = false;
 
-    private string backgroundColor;
+    [Parameter]
+    public string BackgroundColor { get; set; }
 
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
@@ -93,22 +94,23 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (user.Role().Result == GlobalConstants.EmployeeRoleName)
+        if (user.Role().Result == GlobalConstants.EmployeeRoleName
+            && NavigationManager.Uri.EndsWith("Courses"))
         {
             isEmployeeEnrolledToCourse = await Client.GetFromJsonAsync<bool>($"Employees/IsEmployeeEnrolledToCourse?appUserId={user.Id().Result}&courseId={Course.Id}");
 
-            if (isEmployeeEnrolledToCourse)
-            {
-                backgroundColor = "#EAF0FF";
-            }
-            else
-            {
-                backgroundColor = "#fff";
-            }
+            BackgroundColor = isEmployeeEnrolledToCourse ? "#EAF0FF" : "#fff";
         }
         else
         {
-            backgroundColor = "#fff";
+            BackgroundColor = "#FFFFFF";
+        }
+
+        if (user.IsAuthenticated().Result
+            && user.Role().Result == GlobalConstants.BusinessOwnerRoleName
+            && NavigationManager.Uri.EndsWith("Courses-catalog"))
+        {
+            BackgroundColor = IsCourseAdded() ? "#EAF0FF" : "#FFFFFF";
         }
     }
 
@@ -132,6 +134,7 @@
     {
         await CoursesService.AddCourseInOwnerCoursesCollectionAsync(courseId, ownerId);
         await UpdatedCoursesListingCatalogModel.InvokeAsync(await CoursesService.GetAllAsync(ownerId));
+        BackgroundColor = "#EAF0FF";
     }
 
     private async Task RemoveCourse(int courseId, string ownerId)
@@ -139,6 +142,7 @@
         await CoursesService.RemoveCourseFromOwnerCoursesCollectionAsync(courseId, ownerId);
         await UpdatedCoursesListingCatalogModel.InvokeAsync(await CoursesService.GetAllAsync(ownerId));
         await UpdatedOwnerCoursesListingCatalogModel.InvokeAsync(await CoursesService.GetAllByOwnerIdAsync(ownerId));
+        BackgroundColor = "#FFFFFF";
     }
 
     private void SetIsEmployeeEnrolledToCourse(bool value)
@@ -148,7 +152,7 @@
 
     private void SetBackgroundColor(string value)
     {
-        backgroundColor = value;
+        BackgroundColor = value;
     }
 
     private void GoToCoursesDetails()
