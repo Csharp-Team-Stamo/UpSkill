@@ -43,7 +43,7 @@
             if (isEmployeeEnrolledToCourse)
             {
                 <div class="text-center">
-                    <button class="course-btn"><span class="course-btn-text">Continue</span></button>
+                    <button @onclick="GoToCoursesDetails" class="course-btn"><span class="course-btn-text">Continue</span></button>
                 </div>
             }
             else
@@ -93,11 +93,18 @@
 
     protected override async Task OnInitializedAsync()
     {
-        isEmployeeEnrolledToCourse = await Client.GetFromJsonAsync<bool>($"Employees/IsEmployeeEnrolledToCourse?appUserId={user.Id().Result}&courseId={Course.Id}");
-
-        if (isEmployeeEnrolledToCourse)
+        if (user.Role().Result == GlobalConstants.EmployeeRoleName)
         {
-            backgroundColor = "#EAF0FF";
+            isEmployeeEnrolledToCourse = await Client.GetFromJsonAsync<bool>($"Employees/IsEmployeeEnrolledToCourse?appUserId={user.Id().Result}&courseId={Course.Id}");
+
+            if (isEmployeeEnrolledToCourse)
+            {
+                backgroundColor = "#EAF0FF";
+            }
+            else
+            {
+                backgroundColor = "#fff";
+            }
         }
         else
         {
@@ -142,5 +149,10 @@
     private void SetBackgroundColor(string value)
     {
         backgroundColor = value;
+    }
+
+    private void GoToCoursesDetails()
+    {
+        NavigationManager.NavigateTo("/watch/course");
     }
 }
