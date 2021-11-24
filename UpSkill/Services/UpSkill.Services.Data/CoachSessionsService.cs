@@ -68,6 +68,7 @@ using UpSkill.Services.Data.Contracts;
                     session.Name);
 
             var plainText = string.Empty;
+            var startTime = session.StartTime.ToShortTimeString() + " " + session.StartTime.ToLongDateString();
             var textAsHtml =
                 string.Format(
                     GlobalConstants.coachSessionNotificationAsHtml,
@@ -75,7 +76,7 @@ using UpSkill.Services.Data.Contracts;
                 session.Name,
                 invitee.Name,
                 invitee.Email,
-                session.StartTime.ToLongDateString(),
+                startTime,
                 session.Location.JoinUrl);
 
             var result = await emailSender.SendMailAsync(subject, coach.Email, coach.FullName, string.Empty, textAsHtml);

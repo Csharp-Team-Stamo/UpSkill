@@ -53,6 +53,10 @@
                 var contentToDeserialize = JObject.Parse(content)["resource"].ToString();
                 eventPayload = JsonConvert.DeserializeObject<CoachSessionEventResponseModel>(contentToDeserialize);
             }
+            else
+            {
+                return StatusCode(500, response.ReasonPhrase);
+            }
 
             response = await GetCalendlyPayload(inviteeUri);
 
@@ -61,6 +65,10 @@
                 var contentAsString = response.Content.ReadAsStringAsync().Result;
                 var contentAsJsonString = JObject.Parse(contentAsString)["resource"].ToString();
                 inviteePayload = JsonConvert.DeserializeObject<CoachSessionInviteeResponseModel>(contentAsJsonString);
+            }
+            else
+            {
+                return StatusCode(500, response.ReasonPhrase);
             }
 
             response = await GetCalendlyPayload(eventPayload.EventType);
@@ -71,10 +79,14 @@
                 var contentAsJsonString = JObject.Parse(contentAsString)["resource"].ToString();
                 coachSchedulingUri = JsonConvert.DeserializeObject<CoachSessionEventTypeResponseModel>(contentAsJsonString).SchedulingUrl;
             }
+            else
+            {
+                return StatusCode(500, response.ReasonPhrase);
+            }
 
             await coachSessionsService.AddSession(eventPayload, inviteePayload, coachSchedulingUri);
 
-            return StatusCode((int)response.StatusCode, response.Content);
+            return StatusCode(200);
         }
 
         private async Task<HttpResponseMessage> GetCalendlyPayload(string eventUri)

@@ -49,32 +49,6 @@
             await coachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
         }
 
-        [HttpPost("AddSession")]
-        public async Task<IActionResult> AddSession([FromBody] CoachSessionRequestModel input)
-        {
-
-            var eventUri = input.EventUri;
-            var inviteeUri = input.InviteeUri;
-
-            var request = new HttpRequestMessage(HttpMethod.Get,
-            $"{eventUri}");
-            request.Headers.Add("Authorization", $"Bearer {options.Value.Token}");
-
-            var client = clientFactory.CreateClient();
-
-            var response = await client.SendAsync(request);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = response.Content.ReadAsStringAsync().Result;
-                var result = JsonConvert.DeserializeObject<CoachSessionEventResponseModel>(content);
-                return StatusCode(200, "Hi from controller!");
-            }
-
-            return StatusCode((int)response.StatusCode, response.Content);
-        }
-
-
         [HttpDelete("RemoveCoachFromOwnerCoachCollectionAsync")]
         public async Task<ActionResult> RemoveCoachFromOwnerCoachCollectionAsync([FromQuery] string coachId, [FromQuery] string ownerId)
         {
