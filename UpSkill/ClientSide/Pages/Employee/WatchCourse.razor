@@ -63,6 +63,18 @@
 </div>
 
 @code {
+    private CourseDetailsServiceModel courseDetails = new();
+
+    [Parameter]
+    public int Id { get; set; }
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    this.courseDetails = await this.Client
+    //        .GetFromJsonAsync<CourseDetailsServiceModel>
+    //        ($"/course/getbyidasync/{Id}");
+    //}
+
     private IEnumerable<string> lectureNames = new List<string>
     {
         "Introduction",

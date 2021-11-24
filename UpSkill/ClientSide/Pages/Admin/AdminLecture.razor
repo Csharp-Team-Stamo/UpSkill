@@ -11,7 +11,7 @@
         <label for="courseid" class="col-md-2 col-form-label">Course</label>
         <div class="col-md-10">
             <InputSelect id="courseid" class="form-control" @bind-Value="input.CourseId">
-                <option>---Select Category---</option>
+                <option>---Select Course---</option>
                 @foreach (var course in allCourses)
                 {
                     <option value="@course.Id">@course.Name</option>
@@ -47,27 +47,7 @@
 
     <div class="row">
         <div class="col-md-12 text-right">
-            <button type="submit" class="btn btn-primary">Create Course</button>
+            <button type="submit" class="btn btn-primary">Create Lecture</button>
         </div>
     </div>
 </EditForm>
-
-@code { 
-    private LectureCreateInputModel input = new ();
-
-    private IEnumerable<AdminCourseListingServiceModel> allCourses =
-        new List<AdminCourseListingServiceModel>();
-
-    protected override async Task OnInitializedAsync()
-    {
-        this.allCourses = await this.Client
-            .GetFromJsonAsync<IEnumerable<AdminCourseListingServiceModel>>
-            ("/admin/course/all");
-    }
-
-    private async Task Create()
-    {
-        var response = await this.Client
-            .PostAsJsonAsync<LectureCreateInputModel>("/admin/lecture/create", input);
-    }
-}
