@@ -46,6 +46,8 @@
         [Required]
         public string ResourcesCount { get; set; }
 
+        public string VideoUri { get; set; }
+
         //public ICollection<int> Languages { get; set; } =
         //    new List<int>();
     }
