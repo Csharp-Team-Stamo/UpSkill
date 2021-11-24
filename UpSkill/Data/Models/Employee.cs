@@ -23,10 +23,10 @@
 
         public ICollection<EmployeeCourse> Courses { get; set; } = new HashSet<EmployeeCourse>();
 
+        public ICollection<LiveSession> LiveSession { get; set; } = new HashSet<LiveSession>();
+
         public ICollection<Grade> Grades { get; set; } = new HashSet<Grade>();
 
         public ICollection<Invoice> Invoices { get; set; } = new HashSet<Invoice>();
-
-
     }
 }

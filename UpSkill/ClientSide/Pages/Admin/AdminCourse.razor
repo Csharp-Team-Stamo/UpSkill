@@ -63,6 +63,15 @@
             <ValidationMessage For="@(() => courseInput.AuthorFullName)" />
         </div>
     </div>
+
+    <div class="form-group row">
+        <label for="@courseInput.AuthorImageUrl" class="col-md-2 col-form-label">Author Image URL</label>
+        <div class="col-md-10">
+            <InputText id="authorimageurl" class="form-control" @bind-Value="courseInput.AuthorImageUrl" />
+            <ValidationMessage For="@(() => courseInput.AuthorImageUrl)" />
+        </div>
+    </div>
+
     <div class="form-group row">
         <label for="@courseInput.CompanyLogoUrl" class="col-md-2 col-form-label">Author Company Logo URL</label>
         <div class="col-md-10">
@@ -80,12 +89,37 @@
     </div>
 
     <div class="form-group row">
+        <label for="@courseInput.DurationInHours" class="col-md-2 col-form-label">Duration In Hours</label>
+        <div class="col-md-10">
+            <InputText id="durationinhours" class="form-control" @bind-Value="courseInput.DurationInHours" />
+            <ValidationMessage For="@(() => courseInput.DurationInHours)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
         <label for="@courseInput.Price" class="col-md-2 col-form-label">Price</label>
         <div class="col-md-10">
             <InputNumber id="price" class="form-control" @bind-Value="courseInput.Price" />
             <ValidationMessage For="@(() => courseInput.Price)" />
         </div>
     </div>
+
+    <div class="form-group row">
+        <label for="@courseInput.LecturesCount" class="col-md-2 col-form-label">Number of Lectures</label>
+        <div class="col-md-10">
+            <InputText id="lecturescount" class="form-control" @bind-Value="courseInput.LecturesCount" />
+            <ValidationMessage For="@(() => courseInput.LecturesCount)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="@courseInput.SkillsLearn" class="col-md-2 col-form-label">150 symbols max. skills, sep. by #</label>
+        <div class="col-md-10">
+            <InputText id="skillslearn" class="form-control" @bind-Value="courseInput.SkillsLearn" />
+            <ValidationMessage For="@(() => courseInput.SkillsLearn)" />
+        </div>
+    </div>
+
     <div class="form-group row">
         <label for="@courseInput.VideoUrl" class="col-md-2 col-form-label">Video URL</label>
         <div class="col-md-10">

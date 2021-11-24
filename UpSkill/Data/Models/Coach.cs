@@ -64,11 +64,7 @@
 
         public ICollection<CoachEmployee> Students { get; set; } = new HashSet<CoachEmployee>();
 
-        public ICollection<CoachVote> Votes { get; set; } = new HashSet<CoachVote>();
-
         public ICollection<LiveSession> LiveSessions { get; set; } = new HashSet<LiveSession>();
-
-        public ICollection<SessionSlot> SessionSlots { get; set; } = new HashSet<SessionSlot>();
 
         public ICollection<Invoice> Invoices { get; set; } = new HashSet<Invoice>();
     }
