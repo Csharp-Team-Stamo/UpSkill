@@ -1,0 +1,52 @@
+﻿@page "/admin/coach/all"
+@layout AdminNoMenuLayout
+
+@using UpSkill.Infrastructure.Models.Coach
+
+<div class="row">
+    <CoachesTopCard></CoachesTopCard>
+
+    @foreach (var coach in allCoaches)
+    {
+        <AdminCoachCard Coach="coach" ChangeState="GetUpdatedCoaches"></AdminCoachCard>
+    }
+
+    <div class="col-sm-12 col-md-6 col-lg-4 mb-2 p-md-2 p-lg-5" style="position: relative;">
+        <input type="image"
+               src="images/PlusButton.svg"
+               style="position: absolute; top: 40%;"
+               alt="Add Button"
+               @onclick="ShowPopup">
+    </div>
+</div>
+
+@if (show)
+{
+    NavigationManager.NavigateTo("/adminCoach");
+}
+
+@code {
+    private IEnumerable<AdminCoachListingServiceModel> allCoaches =
+        new List<AdminCoachListingServiceModel>();
+
+    private bool show = false;
+
+    // private bool stateChanged;
+
+    protected override async Task OnInitializedAsync()
+    {
+        allCoaches = await Client
+        .GetFromJsonAsync<IEnumerable<AdminCoachListingServiceModel>>
+        ("/admin/coach/all");
+    }
+
+    private void GetUpdatedCoaches(IEnumerable<AdminCoachListingServiceModel> updatedCoahces)
+    {
+        allCoaches = updatedCoahces;
+    }
+
+    private void ShowPopup()
+    {
+        show = true;
+    }
+}

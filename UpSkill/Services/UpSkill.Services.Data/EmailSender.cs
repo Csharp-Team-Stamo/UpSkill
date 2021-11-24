@@ -4,7 +4,7 @@
     using Microsoft.Extensions.Options;
     using SendGrid;
     using SendGrid.Helpers.Mail;
-    using UpSkill.Services.Data.Contracts;
+    using Contracts;
 
     public class EmailSender : IEmailSender
     {

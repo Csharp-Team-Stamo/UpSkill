@@ -1,8 +1,7 @@
 ﻿namespace UpSkill.Api.Controllers
 {
     using System.Threading.Tasks;
-    using Infrastructure.Models.CoachDescriptionModal;
-    using Infrastructure.Models.Coaches;
+    using Infrastructure.Models.Coach;
     using Microsoft.AspNetCore.Mvc;
     using Services.Data.Contracts;
 
@@ -17,16 +16,10 @@
             this.coachesService = coachesService;
         }
 
-        [HttpGet("GetAll")]
-        public CoachesListingCatalogModel GetAll([FromQuery]string ownerId)
-        {
-            return coachesService.GetAll(ownerId);
-        }
-
         [HttpGet("GetByIdAsync")]
         public async Task<CoachDescriptionModel> GetByIdAsync(string coachId)
         {
-           return await coachesService.GetByIdAsync(coachId);
+            return await coachesService.GetByIdAsync(coachId);
         }
 
         [HttpGet("GetAllByOwnerId")]
@@ -35,19 +28,24 @@
             return coachesService.GetAllByOwnerId(ownerId);
         }
 
+        [HttpGet("GetAll")]
+        public CoachesListingCatalogModel GetAll([FromQuery] string ownerId)
+        {
+            return coachesService.GetAll(ownerId);
+        }
+
         [HttpPost("AddCoachInOwnerCoachesCollectionAsync")]
-        public async Task AddCoachInOwnerCoachesCollectionAsync([FromQuery]string coachId, [FromQuery] string ownerId)
+        public async Task AddCoachInOwnerCoachesCollectionAsync([FromQuery] string coachId, [FromQuery] string ownerId)
         {
-           await coachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
+            await coachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
         }
-        
+
         [HttpDelete("RemoveCoachFromOwnerCoachCollectionAsync")]
-        public async Task<ActionResult> RemoveCoachFromOwnerCoachCollectionAsync([FromQuery]string coachId, [FromQuery] string ownerId)
+        public async Task<ActionResult> RemoveCoachFromOwnerCoachCollectionAsync([FromQuery] string coachId, [FromQuery] string ownerId)
         {
-           await coachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
+            await coachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
 
-           return Ok();
+            return Ok();
         }
-
     }
 }

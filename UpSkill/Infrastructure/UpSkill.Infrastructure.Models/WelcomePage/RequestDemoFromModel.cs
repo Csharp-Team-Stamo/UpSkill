@@ -3,7 +3,7 @@
     using System.ComponentModel;
     using System.ComponentModel.DataAnnotations;
 
-    using UpSkill.Infrastructure.Common.Attributes;
+    using Common.Attributes;
 
     using static Common.GlobalConstants.WelcomePageConst;
 

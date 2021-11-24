@@ -1,0 +1,123 @@
+﻿@if (course == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.8);"
+         aria-modal="true">
+
+        <div class="wrapper mx-auto">
+
+            <div @onclick="ClosePopup" class="myclose" data-dismiss="modal" aria-label="Close">
+                <span class="btn-close" aria-hidden="true">&times;</span>
+            </div>
+
+            <div class="title">
+
+                <h2 class="course-title">
+                    @course.Name
+                </h2>
+
+                <div class="avatar-container">
+                    <img src="@course.CreatorAvatarImgUrl" class="avatar">
+                    <div class="creator">
+                        <div>
+                            Created by
+                        </div>
+                        <div style="font-weight: bold;">
+                            @course.AuthorFullName
+                        </div>
+                        <div class="company">
+                            @course.Company
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="description">
+                <div class="sub-title">Course Description</div>
+                <p>
+                    @course.CourseDescription
+                </p>
+            </div>
+
+            <div class="skills">
+                <div class="sub-title">What you will learn</div>
+                @foreach (var skill in course.SkillsLearn.Split("#"))
+                {
+                    <div class="skill">
+                        @skill
+                    </div>
+                }
+            </div>
+
+            <div class="side-container">
+                <div class="video-container">
+                    <iframe src="@course.VideoUrl" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+
+                <div class="course-summary">
+                    <div class="sub-title">This course includes</div>
+
+                    <div class="summary-bullet">
+                        <img class="icon" src="/images/courseDescription/tv-solid.svg" /> @course.CourseDurationInHours hours on-demand video
+                    </div>
+
+                    <div class="summary-bullet">
+                        <img class="icon" src="/images/courseDescription/file-alt-regular.svg" /> @course.LecturesCount lectures
+                    </div>
+
+                    <div class="summary-bullet">
+                        <img class="icon" src="/images/courseDescription/infinity-solid.svg" />
+                        Full lifetime access
+                    </div>
+
+                    <div class="summary-bullet">
+                        <img class="icon" src="/images/courseDescription/trophy-solid.svg" /> Certificate of completion
+                    </div>
+
+                </div>
+                <div>
+                    @if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.EmployeeRoleName &&
+                     NavigationManager.Uri.EndsWith("Courses"))
+                    {
+                        <btn class="btn-enroll" @onclick="Enroll">Enroll</btn>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+}
+
+@code {
+
+    private CourseDescriptionModel course;
+
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> SetShow { get; set; }
+
+    [Parameter]
+    public int CourseId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        course = await Client.GetFromJsonAsync<CourseDescriptionModel>($"/Courses/GetByIdAsync?coachId={CourseId}");
+    }
+
+    private void ClosePopup()
+    {
+        SetShow.InvokeAsync(false);
+    }
+
+    private void Enroll()
+    {
+
+    }
+}
+

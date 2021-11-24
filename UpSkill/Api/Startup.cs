@@ -12,6 +12,7 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
@@ -55,6 +56,7 @@
                 .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>(TokenOptions.DefaultProvider);
 
             var jwtSettings = Configuration.GetSection("JWTSettings");
+
             services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -115,6 +117,7 @@
             services.AddTransient<IAdminLanguageService, AdminLanguageService>();
             services.AddTransient<IAdminLectureService, AdminLectureService>();
             services.AddTransient<ICoachesService, CoachesService>();
+            services.AddTransient<ICoursesService ,CoursesService>();
             services.AddTransient<IOwnerService, OwnerService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
             services.AddTransient<IEmployeesService, EmployeesService>();

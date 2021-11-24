@@ -344,6 +344,10 @@ namespace UpSkill.Data.Migrations
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
+                    b.Property<string>("VideoUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
@@ -556,15 +560,28 @@ namespace UpSkill.Data.Migrations
                     b.Property<string>("CompanyLogoUrl")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CourseDurationInHours")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatorImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
@@ -576,6 +593,10 @@ namespace UpSkill.Data.Migrations
                     b.Property<int>("LanguageId")
                         .HasColumnType("int");
 
+                    b.Property<string>("LecturesCount")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
@@ -586,6 +607,11 @@ namespace UpSkill.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
+
+                    b.Property<string>("SkillsLearn")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("VideoUrl")
                         .IsRequired()
@@ -1268,7 +1294,7 @@ namespace UpSkill.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("UpSkill.Data.Models.Language", "Language")
-                        .WithMany()
+                        .WithMany("Courses")
                         .HasForeignKey("LanguageId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1515,6 +1541,8 @@ namespace UpSkill.Data.Migrations
             modelBuilder.Entity("UpSkill.Data.Models.Language", b =>
                 {
                     b.Navigation("Coaches");
+
+                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("UpSkill.Data.Models.Lecture", b =>

@@ -7,7 +7,7 @@ namespace UpSkill.Api.Controllers
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
     using Services.Data.Contracts;
-    using UpSkill.Infrastructure.Common.Pagination;
+    using Infrastructure.Common.Pagination;
 
     [Route("/[controller]")]
     [ApiController]

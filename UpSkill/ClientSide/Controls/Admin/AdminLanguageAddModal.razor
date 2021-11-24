@@ -1,0 +1,72 @@
+﻿@using UpSkill.Infrastructure.Models.Language
+
+<div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.8);"
+     aria-modal="true">
+    <div class="modal-dialog">
+        <div class="modal-body">
+            <div class="row modal-header-custom">
+                <div class="add-company-text">Add Company</div>
+                <div @onclick="ClosePopup" class="close header-btn" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </div>
+                <div class="upload-csv-file-btn">
+                    <div class="upload-csv-file-btn-text">
+                        Upload CSV file
+                    </div>
+                </div>
+            </div>
+            <div>
+                <EditForm Model="@languageInput" OnValidSubmit="@Create">
+                    <DataAnnotationsValidator />
+                    <InputText @bind-Value="languageInput.Name" placeholder="Language Name*"></InputText>
+                    <ValidationMessage For="@(() => languageInput.Name)"></ValidationMessage>
+                    <div class="row">
+                        <button class="cancel-btn">
+                            <div @onclick="ClosePopup" class="cancel-btn-text">
+                                Cancel
+                            </div>
+                        </button>
+                        <button type="submit" class="save-btn">
+                            <div class="save-btn-text">
+                                Add Language
+                            </div>
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private LanguageCreateInputModel languageInput = new();
+
+    [Parameter]
+    public EventCallback<bool> SetShow { get; set; }
+
+    [Parameter]
+    public EventCallback<IEnumerable<LanguageListingServiceModel>> GetUpdatedLanguages { get; set; }
+
+    private void ClosePopup()
+    {
+        SetShow.InvokeAsync(false);
+    }
+
+    private async Task Create()
+    {
+        var response = await Client
+                .PostAsJsonAsync<LanguageCreateInputModel>
+                ("/admin/language/create", languageInput);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var updatedLanguages = await Client
+            .GetFromJsonAsync<IEnumerable<LanguageListingServiceModel>>
+            ("/admin/language/all");
+
+            await GetUpdatedLanguages.InvokeAsync(updatedLanguages);
+
+            ClosePopup();
+        }
+    }
+}
