@@ -1,12 +1,10 @@
-﻿
-@inject IJSRuntime Js;
-
+﻿@inject IJSRuntime Js;
 
 <head>
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 </head>
 
-<div class="card custom-coach-card container mb-5" style="width: 18rem;">
+<div class="card custom-coach-card container mb-5" style="width: 18rem; background-color: @backgroundColor">
     <div @onclick="ShowPopup" class="card-img-top card-img-top-custom">
         <img class="img-custom" src="images/coach.png" />
     </div>
@@ -27,7 +25,8 @@
                 <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
             </div>
         </div>
-        @if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
+        @if (user.IsAuthenticated().Result 
+             && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
         {
             if (IsCoachAdded())
             {
@@ -44,8 +43,8 @@
         }
 
         else if (
-            user.Role().Result == GlobalConstants.EmployeeRoleName &&
-            !NavigationManager.Uri.Contains("Coaches-catalog"))
+            user.Role().Result == GlobalConstants.EmployeeRoleName 
+            && !NavigationManager.Uri.Contains("Coaches-catalog"))
         {
     <div class="text-center">
         <button href="" class="coach-btn" onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>
@@ -81,6 +80,9 @@
 
     private bool showSessionModal = false;
 
+    [Parameter]
+    public string backgroundColor { get; set; }
+
 
     [Parameter]
     public CoachInListCatalogModel Coach { get; set; }
@@ -104,12 +106,20 @@
     {
         var url = NavigationManager.Uri;
         CalendlyPrefilledUriParams = Coach.CalendlyUrl + "?name=" + user.FullName().Result + "&email=" + user.Email().Result;
+
+        if (user.IsAuthenticated().Result 
+            && user.Role().Result == GlobalConstants.BusinessOwnerRoleName
+            && NavigationManager.Uri.Contains("Coaches-catalog"))
+        {
+            backgroundColor = IsCoachAdded() ? "#EAF0FF" : "#FFFFFF";
+        }
     }
 
     private async Task AddCoach(string coachId, string ownerId)
     {
         await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
         await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
+        backgroundColor = "#EAF0FF";
 
     }
 
@@ -119,6 +129,7 @@
         await CoachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
         await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
         await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllByOwnerIdAsync(ownerId));
+        backgroundColor = "#FFFFFF";
     }
 
     private bool IsCoachAdded()

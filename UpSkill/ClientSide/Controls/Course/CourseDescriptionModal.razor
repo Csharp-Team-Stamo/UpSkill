@@ -117,7 +117,10 @@ else
     {
         course = await Client.GetFromJsonAsync<CourseDescriptionModel>($"Courses/GetByIdAsync?coachId={CourseId}");
 
-        isEmployeeEnrolledToCourse = await Client.GetFromJsonAsync<bool>($"Employees/IsEmployeeEnrolledToCourse?appUserId={user.Id().Result}&courseId={course.Id}");
+        if (user.Role().Result == GlobalConstants.EmployeeRoleName)
+        {
+            isEmployeeEnrolledToCourse = await Client.GetFromJsonAsync<bool>($"Employees/IsEmployeeEnrolledToCourse?appUserId={user.Id().Result}&courseId={course.Id}");
+        }
     }
 
     private void ClosePopup()

@@ -15,9 +15,15 @@ else
     <div class="row mt-5">
         @foreach (var coach in coaches)
         {
+            var backgroundColor = "#FFFFFF";
+            if (model.OwnerCoachCollectionIds.FirstOrDefault(x => x == coach.Id) != null && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
+            {
+                backgroundColor = "#EAF0FF";
+            }
+
             <CoachCard Coach="coach"
                        OwnerId="@model.OwnerId"
-                       CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedCoachesListingCatalogModel="SetCoaches" />
+                       CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedCoachesListingCatalogModel="SetCoaches" backgroundColor="@backgroundColor"/>
         }
     </div>
 
