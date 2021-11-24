@@ -21,7 +21,7 @@
 
         public ICollection<CoachEmployee> Coaches { get; set; } = new HashSet<CoachEmployee>();
 
-        public ICollection<EmployeeCourse> Students { get; set; } = new HashSet<EmployeeCourse>();
+        public ICollection<EmployeeCourse> Courses { get; set; } = new HashSet<EmployeeCourse>();
 
         public ICollection<Grade> Grades { get; set; } = new HashSet<Grade>();
 

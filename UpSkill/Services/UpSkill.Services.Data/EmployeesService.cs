@@ -19,24 +19,31 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IAccountsService accountsService;
         private readonly IOwnerService ownerService;
+        private readonly IDeletableEntityRepository<EmployeeCourse> employeeCourseRepository;
 
-        public EmployeesService(IDeletableEntityRepository<Employee> employeeRepository, UserManager<ApplicationUser> userManager, IAccountsService accountsService, IOwnerService ownerService)
+        public EmployeesService(IDeletableEntityRepository<Employee> employeeRepository, UserManager<ApplicationUser> userManager, IAccountsService accountsService, IOwnerService ownerService, IDeletableEntityRepository<EmployeeCourse> employeeCourseRepository)
         {
             this.employeeRepository = employeeRepository;
             this.userManager = userManager;
             this.accountsService = accountsService;
             this.ownerService = ownerService;
+            this.employeeCourseRepository = employeeCourseRepository;
+        }
+
+        public string GetEmployeeIdByAppUserId(string userId)
+        {
+            return this.employeeRepository.AllAsNoTracking().FirstOrDefault(x => x.UserId == userId).Id;
         }
 
         public PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, EmployeesParameters parameters)
         {
-            var employees =  employeeRepository.All().Where(x => x.User.CompanyId == int.Parse(companyId)).Select(x =>
-                new AddEmployeeFormModel { FullName = x.User.FullName, Email = x.User.Email, }).ToList();
+            var employees = employeeRepository.All().Where(x => x.User.CompanyId == int.Parse(companyId)).Select(x =>
+               new AddEmployeeFormModel { FullName = x.User.FullName, Email = x.User.Email, }).ToList();
 
-           return PagedList<AddEmployeeFormModel>.ToPagedList(employees, parameters.PageNumber, parameters.PageSize);
+            return PagedList<AddEmployeeFormModel>.ToPagedList(employees, parameters.PageNumber, parameters.PageSize);
         }
 
-        public string GetOwnerById(string userId)
+        public string GetOwnerIdByAppUserId(string userId)
         {
             return this.employeeRepository.AllAsNoTracking().FirstOrDefault(x => x.UserId == userId).OwnerId;
         }
@@ -80,6 +87,22 @@
             await employeeRepository.SaveChangesAsync();
 
             return emailsFromErrorResult;
+        }
+
+        public async Task EnrollToCourseAsync(int courseId, string employeeId)
+        {
+            if (!employeeCourseRepository.All().Any(x => x.CourseId == courseId && x.StudentId == employeeId))
+            {
+                var employeeCourse = new EmployeeCourse { CourseId = courseId, StudentId = employeeId };
+                await employeeCourseRepository.AddAsync(employeeCourse);
+                await employeeCourseRepository.SaveChangesAsync();
+            }
+        }
+
+        public bool IsEmployeeEnrolledForCourse(string employeeId, int courseId)
+        {
+            return employeeCourseRepository.All()
+                .Any(x => x.StudentId == employeeId && x.CourseId == courseId);
         }
     }
 }

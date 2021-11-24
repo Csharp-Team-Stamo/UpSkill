@@ -40,9 +40,18 @@
             user.Role().Result == GlobalConstants.EmployeeRoleName &&
             !NavigationManager.Uri.Contains("Courses-catalog"))
         {
-            <div class="text-center">
-                <button class="course-btn"><span class="course-btn-text">New Slot</span></button>
-            </div>
+            if (isEmployeeEnrolledToCourse)
+            {
+                <div class="text-center">
+                    <button class="course-btn"><span class="course-btn-text">Continue</span></button>
+                </div>
+            }
+            else
+            {
+                <div class="text-center">
+                    <button @onclick="ShowPopup" class="course-btn"><span class="course-btn-text">Enroll</span></button>
+                </div>
+            }
         }
     </div>
 </div>
@@ -51,12 +60,16 @@
 @* Modal *@
 @if (show)
 {
-    <CourseDescriptionModal CourseId="Course.Id" SetShow="SetShowValue" />
+    <CourseDescriptionModal CourseId="Course.Id" SetShow="SetShowValue" IsEmployeeEnrolledToCourse="SetIsEmployeeEnrolledToCourse"/>
 }
 
 
 @code
 {
+    private bool isEmployeeEnrolledToCourse;
+
+    private bool show = false;
+
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
 
@@ -75,7 +88,11 @@
     [Parameter]
     public EventCallback<CoursesListingCatalogModel> UpdatedOwnerCoursesListingCatalogModel { get; set; }
 
-    private bool show = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        isEmployeeEnrolledToCourse = await Client.GetFromJsonAsync<bool>($"Employees/IsEmployeeEnrolledToCourse?appUserId={user.Id().Result}&courseId={Course.Id}");
+    }
 
     private void ShowPopup()
     {
@@ -104,5 +121,10 @@
         await CoursesService.RemoveCourseFromOwnerCoursesCollectionAsync(courseId, ownerId);
         await UpdatedCoursesListingCatalogModel.InvokeAsync(await CoursesService.GetAllAsync(ownerId));
         await UpdatedOwnerCoursesListingCatalogModel.InvokeAsync(await CoursesService.GetAllByOwnerIdAsync(ownerId));
+    }
+
+    private void SetIsEmployeeEnrolledToCourse(bool value)
+    {
+        isEmployeeEnrolledToCourse = value;
     }
 }
