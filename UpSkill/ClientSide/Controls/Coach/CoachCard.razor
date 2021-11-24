@@ -5,8 +5,6 @@
 </head>
 
 <div class="card custom-coach-card container mb-5" style="width: 18rem; background-color: @BackgroundColor">
-
-<div class="card custom-coach-card container mb-5" style="width: 18rem;">
     <div @onclick="ShowPopup" class="card-img-top card-img-top-custom">
         <img class="img-custom" src="images/coach.png" />
     </div>
@@ -27,45 +25,54 @@
                 <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
             </div>
         </div>
-        @if (user.IsAuthenticated().Result 
-             && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
+        @if (user.IsAuthenticated().Result
+ && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
         {
             if (IsCoachAdded())
             {
                 <div class="text-center">
-                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
+                    <button @onclick="@(() => RemoveCoach(Coach.Id, user.OwnerId().Result))" 
+                            class="coach-btn">
+                        <span class="coach-btn-text">
+                            Remove
+                        </span>
+                    </button>
                 </div>
             }
             else
             {
                 <div class="text-center">
-                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
+                    <button @onclick="@(() => AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
                 </div>
             }
         }
 
         else if (
-            user.Role().Result == GlobalConstants.EmployeeRoleName 
+            user.Role().Result == GlobalConstants.EmployeeRoleName
             && !NavigationManager.Uri.EndsWith("Coaches-catalog"))
         {
             <div class="text-center">
-                <button @onclick="@(() =>AddNewEmployeeSession(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>
+                <button href="" class="coach-btn" onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>
+                @*<button @onclick="ShowSessionModal" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>*@
             </div>
         }
 
     </div>
-@if (showSessionModal)
-{
-    <SelectCoachSessionModal  SetShowSessionValue="SetShowSessionValue" ></SelectCoachSessionModal>
-}
 </div>
 
+@if (showSessionModal)
+{
+    <SelectCoachSessionModal SetShowSessionValue="SetShowSessionValue"></SelectCoachSessionModal>
+}
 
 @* Modal *@
 @if (show)
 {
-    <CoachDescriptionModal CoachId="@Coach.Id" SetShow="SetShowValue"/>
+    <CoachDescriptionModal CoachId="@Coach.Id" SetShow="SetShowValue" />
 }
+
+
+@code {
 
     public string CalendlyPrefilledUriParams { get; set; }
 
@@ -74,13 +81,12 @@
         Js.InvokeAsync<bool>("addEventListener");
     }
 
-@code {
+    private bool show = false;
 
     private bool showSessionModal = false;
 
     [Parameter]
     public string BackgroundColor { get; set; }
-
 
 
     [Parameter]
@@ -101,19 +107,17 @@
     [Parameter]
     public EventCallback<CoachesListingCatalogModel> UpdatedOwnerCoachesListingCatalogModel { get; set; }
 
+    protected override void OnInitialized()
+    {
         var url = NavigationManager.Uri;
         CalendlyPrefilledUriParams = Coach.CalendlyUrl + "?name=" + user.FullName().Result + "&email=" + user.Email().Result;
 
-        if (user.IsAuthenticated().Result 
+        if (user.IsAuthenticated().Result
             && user.Role().Result == GlobalConstants.BusinessOwnerRoleName
             && NavigationManager.Uri.EndsWith("Coaches-catalog"))
         {
             BackgroundColor = IsCoachAdded() ? "#EAF0FF" : "#FFFFFF";
         }
-        var employeeId = user.Id().Result;
-
-        var url = NavigationManager.Uri;
-        CalendlyPrefilledUriParams = Coach.CalendlyUrl + "?name=" + user.FullName().Result + "&email=" + user.Email().Result;
     }
 
     private async Task AddCoach(string coachId, string ownerId)
@@ -123,7 +127,6 @@
         BackgroundColor = "#EAF0FF";
 
     }
-
 
     private async Task RemoveCoach(string coachId, string ownerId)
     {
@@ -145,6 +148,8 @@
 
     private void SetShowValue(bool value)
     {
+        show = value;
+    }
 
     private void ShowSessionModal()
     {
@@ -155,7 +160,5 @@
     private void SetShowSessionValue(bool value)
     {
         showSessionModal = value;
-    }
-        show = value;
     }
 }

@@ -80,9 +80,9 @@ else
                 </div>
                 <div>
                     @if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.EmployeeRoleName &&
-                     NavigationManager.Uri.EndsWith("Courses"))
+                  NavigationManager.Uri.EndsWith("Courses") && !isEmployeeEnrolledToCourse)
                     {
-                        <btn class="btn-enroll" @onclick="Enroll">Enroll</btn>
+                        <button class="btn-enroll" @onclick="Enroll">Enroll</button>
                     }
                 </div>
             </div>
@@ -138,4 +138,3 @@ else
         ClosePopup();
     }
 }
-
