@@ -25,7 +25,11 @@
             if (IsCourseAdded())
             {
                 <div class="text-center">
-                    <button @onclick="@(() => RemoveCourse(Course.Id, user.OwnerId().Result))" class="course-btn"><span class="course-btn-text">Remove</span></button>
+                    <button @onclick="@(() => RemoveCourse(Course.Id, user.OwnerId().Result))" class="course-btn">
+                        <span class="course-btn-text">
+                            Remove
+                        </span>
+                    </button>
                 </div>
             }
             else
@@ -35,7 +39,6 @@
                 </div>
             }
         }
-
         else if (
             user.Role().Result == GlobalConstants.EmployeeRoleName &&
             !NavigationManager.Uri.EndsWith("Courses-catalog"))
@@ -43,13 +46,21 @@
             if (isEmployeeEnrolledToCourse)
             {
                 <div class="text-center">
-                    <button @onclick="GoToCoursesDetails" class="course-btn"><span class="course-btn-text">Continue</span></button>
+                    <button @onclick="GoToCoursesDetails" class="course-btn">
+                        <span class="course-btn-text">
+                            Continue
+                        </span>
+                    </button>
                 </div>
             }
             else
             {
                 <div class="text-center">
-                    <button @onclick="ShowPopup" class="course-btn"><span class="course-btn-text">Enroll</span></button>
+                    <button @onclick="ShowPopup" class="course-btn">
+                        <span class="course-btn-text">
+                            Enroll
+                        </span>
+                    </button>
                 </div>
             }
         }
@@ -60,7 +71,10 @@
 @* Modal *@
 @if (show)
 {
-    <CourseDescriptionModal CourseId="Course.Id" SetShow="SetShowValue" IsEmployeeEnrolledToCourse="SetIsEmployeeEnrolledToCourse" BackgroundColor="SetBackgroundColor" />
+    <CourseDescriptionModal CourseId="Course.Id" 
+                            SetShow="SetShowValue" 
+                            IsEmployeeEnrolledToCourse="SetIsEmployeeEnrolledToCourse" 
+                            BackgroundColor="SetBackgroundColor" />
 }
 
 
@@ -159,6 +173,6 @@
 
     private void GoToCoursesDetails()
     {
-        NavigationManager.NavigateTo("/watch/course");
+        NavigationManager.NavigateTo($"/watch/course/{Course.Id}");
     }
 }

@@ -16,6 +16,7 @@
         public string AuthorCompanyLogoUrl { get; set; }
         public string AuthorImageUrl { get; set; }
         public string CourseVideoUrl { get; set; }
-        public IEnumerable<LectureListingModel> Lectures { get; set; }
+        public IEnumerable<LectureListingModel> Lectures { get; set; } = new
+            List<LectureListingModel>();
     }
 }
