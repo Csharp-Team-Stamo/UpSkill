@@ -16,7 +16,7 @@
     left: -0.46%;
 }
 
-.add-company-text {
+.add-language-text {
     font: 93% Montserrat;
     letter-spacing: 1.4px;
     color: #FFFFFF;
@@ -108,7 +108,7 @@ input, ::deep input {
     top: -1%;
     left: 34%;
     cursor: pointer;
-    border: none;
+    border: 1px solid #296CFB;
 }
 
 .save-btn-text {
