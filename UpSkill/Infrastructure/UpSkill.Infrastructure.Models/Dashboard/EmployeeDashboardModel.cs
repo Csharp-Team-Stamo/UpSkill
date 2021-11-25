@@ -1,12 +1,10 @@
 ﻿namespace UpSkill.Infrastructure.Models.Dashboard
 {
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using Course;
 
-    class EmployeeDashboardModel
+    public class EmployeeDashboardModel
     {
+        public ICollection<CourseInListCatalogModel> Courses { get; set; }
     }
 }
