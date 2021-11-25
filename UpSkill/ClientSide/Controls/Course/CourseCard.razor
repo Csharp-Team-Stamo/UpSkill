@@ -38,7 +38,8 @@
 
         else if (
             user.Role().Result == GlobalConstants.EmployeeRoleName &&
-            !NavigationManager.Uri.EndsWith("Courses-catalog"))
+            NavigationManager.Uri.EndsWith("Courses")
+            || NavigationManager.Uri.EndsWith("Dashboard"))
         {
             if (isEmployeeEnrolledToCourse)
             {
@@ -95,7 +96,8 @@
     protected override async Task OnInitializedAsync()
     {
         if (user.Role().Result == GlobalConstants.EmployeeRoleName
-            && NavigationManager.Uri.EndsWith("Courses"))
+            && NavigationManager.Uri.EndsWith("Courses") 
+            || NavigationManager.Uri.EndsWith("Dashboard"))
         {
             isEmployeeEnrolledToCourse = await Client.GetFromJsonAsync<bool>($"Employees/IsEmployeeEnrolledToCourse?appUserId={user.Id().Result}&courseId={Course.Id}");
 
