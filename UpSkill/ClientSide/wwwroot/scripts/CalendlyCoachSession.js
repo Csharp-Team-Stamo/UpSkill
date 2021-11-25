@@ -22,6 +22,7 @@ window.addEventListener(
                     body: JSON.stringify(data)
                 }).then(res => {
 
+                    //TODO Add Callback from JS Event listener to Blazor 
                       //if (res.status == 200) {
                       //  DotNet.invokeMethodAsync('UpSkill.ClientSide', 'AddedSession');
                     //}
