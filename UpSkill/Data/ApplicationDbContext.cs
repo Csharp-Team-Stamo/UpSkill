@@ -36,6 +36,7 @@
         public DbSet<Category> Categories { get; init; }
         public DbSet<Course> Courses { get; init; }
         public DbSet<Employee> Employees { get; init; }
+        //ToDo prop name can be renamed to EmployeeCourse
         public DbSet<EmployeeCourse> StudentCourses { get; init; }
         public DbSet<Grade> Grades { get; init; }
         public DbSet<Invoice> Invoices { get; init; }
