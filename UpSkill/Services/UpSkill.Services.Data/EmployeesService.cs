@@ -18,6 +18,7 @@
     public class EmployeesService : IEmployeesService
     {
         private readonly IDeletableEntityRepository<Employee> employeeRepository;
+        private readonly IDeletableEntityRepository<EmployeeCourse> employeeCourseRepository;
         private readonly IDeletableEntityRepository<Course> courseRepo;
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IAccountsService accountsService;
@@ -25,18 +26,30 @@
 
         public EmployeesService(
             IDeletableEntityRepository<Employee> employeeRepository,
+            IDeletableEntityRepository<EmployeeCourse> employeeCourseRepository,
             IDeletableEntityRepository<Course> courseRepo,
             UserManager<ApplicationUser> userManager, 
             IAccountsService accountsService, 
             IOwnerService ownerService)
         {
             this.employeeRepository = employeeRepository;
+            this.employeeCourseRepository = employeeCourseRepository;
             this.courseRepo = courseRepo;
             this.userManager = userManager;
             this.accountsService = accountsService;
             this.ownerService = ownerService;
         }
 
+        public bool IsEmployeeEnrolledForCourse(string employeeId, int courseId)
+        {
+            return employeeCourseRepository.All()
+                .Any(x => x.StudentId == employeeId && x.CourseId == courseId);
+        }
+
+        public string GetEmployeeIdByAppUserId(string userId)
+        {
+            return this.employeeRepository.AllAsNoTracking().FirstOrDefault(x => x.UserId == userId).Id;
+        }
         public PagedList<AddEmployeeFormModel> GetByCompanyId(
             string companyId, EmployeesParameters parameters)
         {

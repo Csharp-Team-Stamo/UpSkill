@@ -12,7 +12,11 @@
        PagedList<AddEmployeeFormModel> GetByCompanyId(
            string companyId, EmployeesParameters parameters);
 
-       Task<ICollection<string>> SaveEmployeesCollectionAsync(
+        bool IsEmployeeEnrolledForCourse(string employeeId, int courseId);
+
+        string GetEmployeeIdByAppUserId(string userId);
+
+        Task<ICollection<string>> SaveEmployeesCollectionAsync(
            ICollection<AddEmployeeFormModel> employees);
 
        string GetOwnerById(string userId);

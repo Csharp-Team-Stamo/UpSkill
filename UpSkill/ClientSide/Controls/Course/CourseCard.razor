@@ -97,7 +97,9 @@
         if (user.Role().Result == GlobalConstants.EmployeeRoleName
             && NavigationManager.Uri.EndsWith("Courses"))
         {
-            isEmployeeEnrolledToCourse = await Client.GetFromJsonAsync<bool>($"Employees/IsEmployeeEnrolledToCourse?appUserId={user.Id().Result}&courseId={Course.Id}");
+            isEmployeeEnrolledToCourse = await Client
+                .GetFromJsonAsync<bool>
+                ($"Employees/IsEmployeeEnrolledToCourse?appUserId={user.Id().Result}&courseId={Course.Id}");
 
             BackgroundColor = isEmployeeEnrolledToCourse ? "#EAF0FF" : "#fff";
         }

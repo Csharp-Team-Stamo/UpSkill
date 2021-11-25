@@ -36,6 +36,14 @@ namespace UpSkill.Api.Controllers
             return Ok(empployees);
         }
 
+        [HttpGet("IsEmployeeEnrolledToCourse")]
+        public bool IsEmployeeEnrolledToCourse(string appUserId, int courseId)
+        {
+            var employeeId = employeesService.GetEmployeeIdByAppUserId(appUserId);
+
+            return employeesService.IsEmployeeEnrolledForCourse(employeeId, courseId);
+        }
+
         [HttpGet("GetCourseById/{id}")]
         public async Task<ActionResult<EmployeeCourseDetailsModel>> GetCourseById(int id)
         {
