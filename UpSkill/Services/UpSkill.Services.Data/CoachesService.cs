@@ -43,11 +43,30 @@
             }).FirstOrDefaultAsync();
         }
 
-        public CoachesListingCatalogModel GetAllByOwnerId(string ownerId, string userId)
+        public CoachesListingCatalogModel GetAllByOwnerId(string ownerId)
+        {
+             var result = new CoachesListingCatalogModel
+            {
+                OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
+                Coaches = coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CoachInListCatalogModel
+                {
+                    Id = x.Coach.Id,
+                    FullName = x.Coach.FullName,
+                    CategoryName = x.Coach.Category.Name,
+                    Company = x.Coach.Company,
+                    CompanyLogoUrl = x.Coach.CompanyLogoUrl,
+                    CalendlyUrl = x.Coach.CalendlyPopupUrl,
+                    PricePerSession = x.Coach.PricePerSession,
+                }).ToList()
+            };
+            return result;
+        }
+
+        public CoachesListingCatalogModel GetAllByEmployeeId(string ownerId, string userId)
         {
             var employeeId = employeeRepository.All().FirstOrDefault(x => x.UserId == userId).Id;
 
-             var result = new CoachesListingCatalogModel
+            var result = new CoachesListingCatalogModel
             {
                 OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
                 Coaches = coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CoachInListCatalogModel
@@ -64,8 +83,6 @@
                     IsNotFirstCoachSession = x.Coach.LiveSessions.Any(x => x.StudentId == employeeId)
                 }).ToList()
             };
-
-
 
             return result;
         }

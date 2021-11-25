@@ -26,44 +26,60 @@
             </div>
         </div>
         @if (user.IsAuthenticated().Result
-         && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
+       && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
         {
             if (IsCoachAdded())
             {   //ToDo Should I delete it from the mapping table ' UpSkill.Data.Common.Models.EmployeeCourse.cs'  as well. Same thing and in CourseCard.razor
+
                 <div class="text-center">
                     <button @onclick="@(() => RemoveCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
                 </div>
             }
+
             else
             {
                 <div class="text-center">
-                    <button @onclick="@(() =>AddCoach(Coach.Id, OwnerId))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
+                    <button @onclick="@(() =>AddCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
                 </div>
             }
         }
 
         else if (
             user.Role().Result == GlobalConstants.EmployeeRoleName
-            && !NavigationManager.Uri.EndsWith("Coaches-catalog"))
+            && NavigationManager.Uri.EndsWith("Coaches"))
         {
-    <div class="text-center">
-        <button href="" class="coach-btn" data-dotnetobject="@DotNetObjectReference.Create(this)" onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>
+                    <div class="text-center">
+                    @*<button href="" class="coach-btn " onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>*@
 
-    </div>
+                        @if (Coach.IsCoachSessionPending)
+                        {
+                            <button href="" class="coach-btn">Pending</button>
+                        }
+                        else if (Coach.IsFeedbackNeeded)
+                        {
+                            <button href="" class="coach-btn feedback">Feedback</button>
+
+                        }
+                        else if (Coach.IsNotFirstCoachSession)
+                        {
+                            <button href="" class="coach-btn " onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>
+                        }
+                        else
+                        {
+                            <button href="" class="coach-btn" @onclick="ShowPopup">Book</button>
+                        }
+
+                    </div>
         }
 
     </div>
 </div>
 
-@if (showSessionModal)
-{
-    <SelectCoachSessionModal SetShowSessionValue="SetShowSessionValue"></SelectCoachSessionModal>
-}
 
 @* Modal *@
 @if (show)
 {
-    <CoachDescriptionModal CoachId="@Coach.Id" SetShow="SetShowValue" />
+    <CoachDescriptionModal CoachId="@Coach.Id" SetShow="SetShowValue" CalendlyAddSessionUri="@CalendlyPrefilledUriParams"/>
 }
 
 
@@ -85,9 +101,6 @@
     public CoachInListCatalogModel Coach { get; set; }
 
     [Parameter]
-    public string OwnerId { get; set; }
-
-    [Parameter]
     public ICollection<string> CoachIdsCollection { get; set; }
 
     [CascadingParameter]
@@ -99,21 +112,8 @@
     [Parameter]
     public EventCallback<CoachesListingCatalogModel> UpdatedOwnerCoachesListingCatalogModel { get; set; }
 
-    protected override void OnInitialized()
-    {
-        var url = NavigationManager.Uri;
-        CalendlyPrefilledUriParams = Coach.CalendlyUrl + "?name=" + user.FullName().Result + "&email=" + user.Email().Result;
-
-        if (user.IsAuthenticated().Result
-            && user.Role().Result == GlobalConstants.BusinessOwnerRoleName
-            && NavigationManager.Uri.EndsWith("Coaches-catalog"))
-        {
-            BackgroundColor = IsCoachAdded() ? "#EAF0FF" : "#FFFFFF";
-        }
-    }
-
-    [Parameter]
-    public static EventCallback<bool> ReceivedResult { get; set; }
+    //[Parameter]
+    //public static EventCallback<bool> ReceivedResult { get; set; }
 
     [JSInvokable]
     public static async Task AddedSession(int statusCode)
@@ -121,6 +121,18 @@
         if (statusCode == 200)
         {
             //await ReceivedResult.InvokeAsync(true);
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        CalendlyPrefilledUriParams = Coach.CalendlyUrl + "?name=" + user.FullName().Result + "&email=" + user.Email().Result;
+
+        if (user.IsAuthenticated().Result
+        && user.Role().Result == GlobalConstants.BusinessOwnerRoleName
+        && NavigationManager.Uri.EndsWith("Coaches-catalog"))
+        {
+            BackgroundColor = IsCoachAdded() ? "#EAF0FF" : "#FFFFFF";
         }
     }
 
@@ -136,6 +148,11 @@
         BackgroundColor = "#EAF0FF";
 
     }
+
+    //public async void GiveFeedback()
+    //{
+
+    //}
 
 
     private async Task RemoveCoach(string coachId, string ownerId)

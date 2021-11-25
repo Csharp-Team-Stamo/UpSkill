@@ -32,9 +32,15 @@
         }
 
         [HttpGet("GetAllByOwnerId")]
-        public CoachesListingCatalogModel GetAllByOwnerId([FromQuery] string ownerId, [FromQuery]string userId)
+        public CoachesListingCatalogModel GetAllByOwnerId([FromQuery] string ownerId)
         {
-            return coachesService.GetAllByOwnerId(ownerId, userId);
+            return coachesService.GetAllByOwnerId(ownerId);
+        }
+
+        [HttpGet("GetAllByEmployeeId")]
+        public CoachesListingCatalogModel GetAllByEmployeeId([FromQuery] string ownerId, [FromQuery] string userId)
+        {
+            return coachesService.GetAllByEmployeeId(ownerId, userId);
         }
 
         [HttpGet("GetAll")]

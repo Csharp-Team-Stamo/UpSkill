@@ -34,6 +34,12 @@
     width: 50%;
 }
 
+.feedback {
+    background: white;
+    color: #296CFB;
+    border: 2px solid #296CFB;
+}
+
 .coach-btn-text {
     font: 95% Montserrat;
     letter-spacing: 1.1px;

@@ -20,13 +20,18 @@ else
     <div class="row">
         @foreach (var coach in model.Coaches)
         {
-            <CoachCard  Coach="coach" CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches" receivedResult=""/>
+            <CoachCard Coach="coach"  CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches" />
         }
     </div>
 }
 
 @code
 {
+
+    private void GetCoaches(bool isSuccessfull)
+    {
+        Console.WriteLine();
+    }
 
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
@@ -39,7 +44,14 @@ else
     {
         var ownerId = user.OwnerId().Result;
         var userId = user.Id().Result;
-        model = await CoachesService.GetAllByOwnerIdAsync(ownerId, userId);
+        @if (user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
+        {
+            model = await CoachesService.GetAllByOwnerIdAsync(ownerId);
+        }
+        else
+        {
+            model = await CoachesService.GetAllByEmployeeIdAsync(ownerId, userId);
+        }
     }
 
     private void SetCoaches(CoachesListingCatalogModel updatedCoaches)

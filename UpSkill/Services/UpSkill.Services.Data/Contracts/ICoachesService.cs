@@ -7,7 +7,9 @@
     {
         Task<CoachDescriptionModel> GetByIdAsync(string coachId);
 
-        CoachesListingCatalogModel GetAllByOwnerId(string ownerId, string userId);
+        CoachesListingCatalogModel GetAllByOwnerId(string ownerId);
+
+        CoachesListingCatalogModel GetAllByEmployeeId(string ownerId, string userId);
 
         CoachesListingCatalogModel GetAll(string ownerId);
 

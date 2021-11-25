@@ -23,7 +23,7 @@
            return await httpClient.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAll?ownerId={ownerId}");
         }
 
-        public async Task<CoachesListingCatalogModel> GetAllByOwnerIdAsync(string ownerId, string userId)
+        public async Task<CoachesListingCatalogModel> GetAllByEmployeeIdAsync(string ownerId, string userId)
         {
             var queryStringParam = new Dictionary<string, string>
             {
@@ -31,12 +31,25 @@
                 ["userId"] = userId
             };
 
+            var response = await httpClient.GetAsync(QueryHelpers.AddQueryString("/Coaches/GetAllByEmployeeId", queryStringParam));
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<CoachesListingCatalogModel>(content);
+
+            return result;
+        }
+
+        public async Task<CoachesListingCatalogModel> GetAllByOwnerIdAsync(string ownerId)
+        {
+            var queryStringParam = new Dictionary<string, string>
+            {
+                ["ownerId"] = ownerId,
+            };
+
             var response = await httpClient.GetAsync(QueryHelpers.AddQueryString("/Coaches/GetAllByOwnerId", queryStringParam));
             var content = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<CoachesListingCatalogModel>(content);
 
             return result;
-            //return await httpClient.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAllByOwnerId?ownerId={ownerId}");
         }
 
         public async Task AddCoachInOwnerCoachesCollectionAsync(string coachId, string ownerId)

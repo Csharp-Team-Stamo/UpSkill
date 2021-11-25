@@ -10,12 +10,6 @@ window.addEventListener(
             if (e.data['event'] == 'calendly.event_scheduled') {
 
 
-                //console.log(e)
-                //console.log(e.currentTarget.getAttribute('data-dotnetobject'))
-                //console.log(dotnetreference)
-                //console.log('After reference')
-
-
                 let data = {
                     eventUri: e.data.payload.event.uri,
                     inviteeUri: e.data.payload.invitee.uri
@@ -28,9 +22,9 @@ window.addEventListener(
                     body: JSON.stringify(data)
                 }).then(res => {
 
-                      if (res.status == 200) {
-                        DotNet.invokeMethodAsync('UpSkill.ClientSide', 'AddedSession');
-                    }
+                      //if (res.status == 200) {
+                      //  DotNet.invokeMethodAsync('UpSkill.ClientSide', 'AddedSession');
+                    //}
 
                 });
             }
