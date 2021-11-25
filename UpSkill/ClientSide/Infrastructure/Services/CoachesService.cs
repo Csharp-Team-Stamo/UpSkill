@@ -1,9 +1,12 @@
 ﻿namespace UpSkill.ClientSide.Infrastructure.Services
 {
+    using System.Collections.Generic;
     using System.Net.Http;
     using System.Net.Http.Json;
     using System.Threading.Tasks;
     using Contracts;
+    using Microsoft.AspNetCore.WebUtilities;
+    using Newtonsoft.Json;
     using UpSkill.Infrastructure.Models.Coach;
 
     public class CoachesService : ICoachesService
@@ -20,9 +23,20 @@
            return await httpClient.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAll?ownerId={ownerId}");
         }
 
-        public async Task<CoachesListingCatalogModel> GetAllByOwnerIdAsync(string ownerId)
+        public async Task<CoachesListingCatalogModel> GetAllByOwnerIdAsync(string ownerId, string userId)
         {
-            return await httpClient.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAllByOwnerId?ownerId={ownerId}");
+            var queryStringParam = new Dictionary<string, string>
+            {
+                ["ownerId"] = ownerId,
+                ["userId"] = userId
+            };
+
+            var response = await httpClient.GetAsync(QueryHelpers.AddQueryString("/Coaches/GetAllByOwnerId", queryStringParam));
+            var content = await response.Content.ReadAsStringAsync();
+            var result = JsonConvert.DeserializeObject<CoachesListingCatalogModel>(content);
+
+            return result;
+            //return await httpClient.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAllByOwnerId?ownerId={ownerId}");
         }
 
         public async Task AddCoachInOwnerCoachesCollectionAsync(string coachId, string ownerId)

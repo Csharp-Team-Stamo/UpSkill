@@ -32,9 +32,9 @@
         }
 
         [HttpGet("GetAllByOwnerId")]
-        public CoachesListingCatalogModel GetAllByOwnerId([FromQuery] string ownerId)
+        public CoachesListingCatalogModel GetAllByOwnerId([FromQuery] string ownerId, [FromQuery]string userId)
         {
-            return coachesService.GetAllByOwnerId(ownerId);
+            return coachesService.GetAllByOwnerId(ownerId, userId);
         }
 
         [HttpGet("GetAll")]

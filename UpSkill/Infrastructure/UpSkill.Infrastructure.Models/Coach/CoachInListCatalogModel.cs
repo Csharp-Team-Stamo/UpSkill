@@ -20,6 +20,12 @@
 
         public decimal PricePerSession { get; set; }
 
+        public bool IsCoachSessionPending { get; set; }
+
+        public bool IsNotFirstCoachSession { get; set; }
+
+        public bool IsFeedbackNeeded { get; set; }
+
         public ICollection<string> Languages { get; set; }
     }
 }

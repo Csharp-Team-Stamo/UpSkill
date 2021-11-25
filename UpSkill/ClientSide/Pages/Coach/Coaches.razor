@@ -3,7 +3,7 @@
 @if (user.Role().Result == "Owner")
 {
     <div class="text-right">
-        <button @onclick="@(() => { NavigationManager.NavigateTo("/Coaches-catalog");})" class="btn-add">
+        <button @onclick="@(() => { NavigationManager.NavigateTo("/Coaches-catalog"); })" class="btn-add">
             <div class="btn-text">
                 Manage
             </div>
@@ -20,7 +20,7 @@ else
     <div class="row">
         @foreach (var coach in model.Coaches)
         {
-            <CoachCard Coach="coach" OwnerId="@model.OwnerId" CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches"/>
+            <CoachCard  Coach="coach" CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches" receivedResult=""/>
         }
     </div>
 }
@@ -33,11 +33,13 @@ else
 
     private CoachesListingCatalogModel model;
 
+
+
     protected override async Task OnInitializedAsync()
     {
         var ownerId = user.OwnerId().Result;
-
-        model = await CoachesService.GetAllByOwnerIdAsync(ownerId);
+        var userId = user.Id().Result;
+        model = await CoachesService.GetAllByOwnerIdAsync(ownerId, userId);
     }
 
     private void SetCoaches(CoachesListingCatalogModel updatedCoaches)

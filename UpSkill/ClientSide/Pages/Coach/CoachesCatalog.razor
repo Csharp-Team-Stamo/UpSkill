@@ -15,8 +15,7 @@ else
     <div class="row mt-5">
         @foreach (var coach in coaches)
         {
-            <CoachCard Coach="coach"
-                       OwnerId="@model.OwnerId"
+            <CoachCard Coach="coach" 
                        CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedCoachesListingCatalogModel="SetCoaches" />
         }
     </div>

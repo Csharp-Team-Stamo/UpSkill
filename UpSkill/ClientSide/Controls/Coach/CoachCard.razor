@@ -48,8 +48,8 @@
             !NavigationManager.Uri.Contains("Coaches-catalog"))
         {
     <div class="text-center">
-        <button href="" class="coach-btn" onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>
-        @*<button @onclick="ShowSessionModal" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>*@
+        <button href="" class="coach-btn" data-dotnetobject="@DotNetObjectReference.Create(this)" onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>
+
     </div>
         }
 
@@ -72,10 +72,7 @@
 
     public string CalendlyPrefilledUriParams { get; set; }
 
-    protected override void OnAfterRender(bool firstRender)
-    {
-        Js.InvokeAsync<bool>("addEventListener");
-    }
+
 
     private bool show = false;
 
@@ -106,6 +103,23 @@
         CalendlyPrefilledUriParams = Coach.CalendlyUrl + "?name=" + user.FullName().Result + "&email=" + user.Email().Result;
     }
 
+    [Parameter]
+    public static EventCallback<bool> ReceivedResult { get; set; }
+
+    [JSInvokable]
+    public static async Task AddedSession(int statusCode)
+    {
+        if (statusCode == 200)
+        {
+            //await ReceivedResult.InvokeAsync(true);
+        }
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Js.InvokeAsync<bool>("addEventListener");
+    }
+
     private async Task AddCoach(string coachId, string ownerId)
     {
         await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
@@ -116,9 +130,11 @@
 
     private async Task RemoveCoach(string coachId, string ownerId)
     {
+        var userId = user.Id().Result;
+
         await CoachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
         await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
-        await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllByOwnerIdAsync(ownerId));
+        await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllByOwnerIdAsync(ownerId, userId));
     }
 
     private bool IsCoachAdded()
