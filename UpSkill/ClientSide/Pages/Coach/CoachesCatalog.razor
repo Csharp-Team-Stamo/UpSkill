@@ -1,5 +1,4 @@
 ﻿@page "/Coaches-catalog"
-@using UpSkill.Infrastructure.Models.Sorting
 @layout NoMenuLayout
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
@@ -15,8 +14,15 @@ else
     <div class="row mt-5">
         @foreach (var coach in coaches)
         {
-            <CoachCard Coach="coach" 
-                       CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedCoachesListingCatalogModel="SetCoaches" />
+            var backgroundColor = "#FFFFFF";
+            if (model.OwnerCoachCollectionIds.FirstOrDefault(x => x == coach.Id) != null && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
+            {
+                backgroundColor = "#EAF0FF";
+            }
+
+            <CoachCard Coach="coach"
+                       OwnerId="@model.OwnerId"
+                       CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedCoachesListingCatalogModel="SetCoaches" BackgroundColor="@backgroundColor" />
         }
     </div>
 
@@ -68,25 +74,11 @@ else
 
     private void FilterCoachesByCategory(SortingTermsCatalogsModel input)
     {
-        if (input.Categories.Any())
-        {
-            coaches = model.Coaches.Where(x => input.Categories.ToList().Contains(x.CategoryName)).ToList();
-        }
-        else
-        {
-            coaches = model.Coaches;
-        }
+        coaches = input.Categories.Any() ? model.Coaches.Where(x => input.Categories.ToList().Contains(x.CategoryName)).ToList() : model.Coaches;
     }
 
     private void FilterCoachesByLanguage(SortingTermsCatalogsModel input)
     {
-        if (input.Languages.Any())
-        {
-            coaches = model.Coaches.Where(x => input.Languages.Any(l => x.Languages.Contains(l))).ToList();
-        }
-        else
-        {
-            coaches = model.Coaches;
-        }
+        coaches = input.Languages.Any() ? model.Coaches.Where(x => input.Languages.Any(l => x.Languages.Contains(l))).ToList() : model.Coaches;
     }
 }
