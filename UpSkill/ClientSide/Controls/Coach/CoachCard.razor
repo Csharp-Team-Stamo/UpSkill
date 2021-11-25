@@ -1,12 +1,10 @@
-﻿
-@inject IJSRuntime Js;
-
+﻿@inject IJSRuntime Js;
 
 <head>
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
 </head>
 
-<div class="card custom-coach-card container mb-5" style="width: 18rem;">
+<div class="card custom-coach-card container mb-5" style="width: 18rem; background-color: @BackgroundColor">
     <div @onclick="ShowPopup" class="card-img-top card-img-top-custom">
         <img class="img-custom" src="images/coach.png" />
     </div>
@@ -27,12 +25,13 @@
                 <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
             </div>
         </div>
-        @if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
+        @if (user.IsAuthenticated().Result
+         && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
         {
             if (IsCoachAdded())
-            {
+            {   //ToDo Should I delete it from the mapping table ' UpSkill.Data.Common.Models.EmployeeCourse.cs'  as well. Same thing and in CourseCard.razor
                 <div class="text-center">
-                    <button @onclick="@(() =>RemoveCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
+                    <button @onclick="@(() => RemoveCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
                 </div>
             }
             else
@@ -44,13 +43,13 @@
         }
 
         else if (
-            user.Role().Result == GlobalConstants.EmployeeRoleName &&
-            !NavigationManager.Uri.Contains("Coaches-catalog"))
+            user.Role().Result == GlobalConstants.EmployeeRoleName
+            && !NavigationManager.Uri.EndsWith("Coaches-catalog"))
         {
-    <div class="text-center">
-        <button href="" class="coach-btn" onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>
-        @*<button @onclick="ShowSessionModal" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>*@
-    </div>
+            <div class="text-center">
+                <button href="" class="coach-btn" onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>
+                @*<button @onclick="ShowSessionModal" class="coach-btn"><span class="coach-btn-text">New Slot</span></button>*@
+            </div>
         }
 
     </div>
@@ -58,17 +57,17 @@
 
 @if (showSessionModal)
 {
-    <SelectCoachSessionModal  SetShowSessionValue="SetShowSessionValue" ></SelectCoachSessionModal>
+    <SelectCoachSessionModal SetShowSessionValue="SetShowSessionValue"></SelectCoachSessionModal>
 }
 
 @* Modal *@
 @if (show)
 {
-    <CoachDescriptionModal CoachId="@Coach.Id" SetShow="SetShowValue"/>
+    <CoachDescriptionModal CoachId="@Coach.Id" SetShow="SetShowValue" />
 }
 
 
-@code { 
+@code {
 
     public string CalendlyPrefilledUriParams { get; set; }
 
@@ -80,6 +79,9 @@
     private bool show = false;
 
     private bool showSessionModal = false;
+
+    [Parameter]
+    public string BackgroundColor { get; set; }
 
 
     [Parameter]
@@ -104,12 +106,20 @@
     {
         var url = NavigationManager.Uri;
         CalendlyPrefilledUriParams = Coach.CalendlyUrl + "?name=" + user.FullName().Result + "&email=" + user.Email().Result;
+
+        if (user.IsAuthenticated().Result
+            && user.Role().Result == GlobalConstants.BusinessOwnerRoleName
+            && NavigationManager.Uri.EndsWith("Coaches-catalog"))
+        {
+            BackgroundColor = IsCoachAdded() ? "#EAF0FF" : "#FFFFFF";
+        }
     }
 
     private async Task AddCoach(string coachId, string ownerId)
     {
         await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
         await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
+        BackgroundColor = "#EAF0FF";
 
     }
 
@@ -119,6 +129,7 @@
         await CoachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
         await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
         await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllByOwnerIdAsync(ownerId));
+        BackgroundColor = "#FFFFFF";
     }
 
     private bool IsCoachAdded()
