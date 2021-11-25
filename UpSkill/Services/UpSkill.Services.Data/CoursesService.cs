@@ -13,14 +13,24 @@
     {
         private readonly IDeletableEntityRepository<Course> coursesRepository;
         private readonly IDeletableEntityRepository<CourseOwner> coursesOwnerRepository;
+        private readonly IDeletableEntityRepository<EmployeeCourse> employeeCoursesRepository;
 
-        public CoursesService(IDeletableEntityRepository<Course> coursesRepository, IDeletableEntityRepository<CourseOwner> coursesOwnerRepository)
+        public CoursesService(IDeletableEntityRepository<Course> coursesRepository, IDeletableEntityRepository<CourseOwner> coursesOwnerRepository,
+            IDeletableEntityRepository<EmployeeCourse> employeeCoursesRepository)
         {
             this.coursesRepository = coursesRepository;
             this.coursesOwnerRepository = coursesOwnerRepository;
+            this.employeeCoursesRepository = employeeCoursesRepository;
         }
 
-       public async Task<CourseDescriptionModel> GetByIdAsync(int courseId)
+        public async Task AddCourseInOwnerCoursesCollectionAsync(int courseId, string ownerId)
+        {
+            var courseOwner = new CourseOwner { CourseId = courseId, OwnerId = ownerId };
+            await coursesOwnerRepository.AddAsync(courseOwner);
+            await coursesOwnerRepository.SaveChangesAsync();
+        }
+
+        public async Task<CourseDescriptionModel> GetByIdAsync(int courseId)
         {
             var course = await coursesRepository
                 .All()
@@ -65,6 +75,21 @@
             };
         }
 
+        public Task<List<CourseInListCatalogModel>> GetAllEnrolledByEmployeeIdAsync(string employeeId)
+        {
+            return employeeCoursesRepository.All().Where(x => x.StudentId == employeeId)
+                .Select(x => new CourseInListCatalogModel
+                {
+                    Id = x.Course.Id,
+                    AuthorFullName = x.Course.AuthorFullName,
+                    Name = x.Course.Name,
+                    CategoryName = x.Course.Category.Name,
+                    CompanyLogoUrl = x.Course.CompanyLogoUrl,
+                    ImageUrl = x.Course.ImageUrl,
+                    PricePerPerson = x.Course.Price,
+                }).ToListAsync();
+        }
+
         public CoursesListingCatalogModel GetAll(string ownerId)
         {
             return new CoursesListingCatalogModel
@@ -85,12 +110,6 @@
             };
         }
 
-        public async Task AddCourseInOwnerCoursesCollectionAsync(int courseId, string ownerId)
-        {
-            var courseOwner = new CourseOwner { CourseId = courseId, OwnerId = ownerId };
-            await coursesOwnerRepository.AddAsync(courseOwner);
-            await coursesOwnerRepository.SaveChangesAsync();
-        }
 
         public async Task RemoveCourseFromOwnerCoursesCollectionAsync(int courseId, string ownerId)
         {

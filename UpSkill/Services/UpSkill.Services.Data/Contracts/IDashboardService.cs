@@ -1,9 +1,10 @@
 ﻿namespace UpSkill.Services.Data.Contracts
 {
+    using System.Threading.Tasks;
     using Infrastructure.Models.Dashboard;
 
     public interface IDashboardService
     {
-        EmployeeDashboardModel GetEmployeeDashboardInfoById(string employeeId);
+        Task<EmployeeDashboardModel> GetEmployeeDashboardInfoByIdAsync(string employeeId);
     }
 }
