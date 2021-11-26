@@ -44,6 +44,7 @@ else
     {
         var ownerId = user.OwnerId().Result;
         var userId = user.Id().Result;
+
         @if (user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
         {
             model = await CoachesService.GetAllByOwnerIdAsync(ownerId);
