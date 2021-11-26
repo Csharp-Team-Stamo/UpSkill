@@ -1,4 +1,6 @@
 ﻿@using UpSkill.Infrastructure.Models.Coach
+@inject IJSRuntime Js
+
 @if (coach == null)
 {
     <div class="spinner"></div>
@@ -43,13 +45,14 @@ else
                     </div>
 
                     @if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.EmployeeRoleName &&
-                      NavigationManager.Uri.EndsWith("Coaches"))
+                    NavigationManager.Uri.EndsWith("Coaches") &&
+                    !CoachDetails.IsCoachSessionPending &&
+                    CoachDetails.IsFeedbackNeeded)
                     {
-                        <div class="book-btn">
+                        <div class="book-btn" onclick="Calendly.initPopupWidget({ url: '@CalendlyAddSessionUri' }); return false;">
                             <div class="book-btn-text">Book</div>
                         </div>
                     }
-
                 </div>
 
                 <div class="col-6 description-div">
@@ -71,12 +74,16 @@ else
             </div>
         </div>
     </div>
-
 }
 
 @code
 {
+
+
     private CoachDescriptionModel coach;
+
+    [Parameter]
+    public string CalendlyAddSessionUri { get; set; }
 
     [Parameter]
     public EventCallback<bool> SetShow { get; set; }
@@ -85,13 +92,12 @@ else
     public Task<AuthenticationState> user { get; set; }
 
     [Parameter]
-    public string CoachId { get; set; }
+    public CoachInListCatalogModel CoachDetails { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        coach = await Client.GetFromJsonAsync<CoachDescriptionModel>($"/Coaches/GetByIdAsync?coachId={CoachId}");
+        coach = await Client.GetFromJsonAsync<CoachDescriptionModel>($"/Coaches/GetByIdAsync?coachId={CoachDetails.Id}");
     }
-
 
     private void ClosePopup()
     {

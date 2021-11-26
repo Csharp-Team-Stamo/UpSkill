@@ -13,15 +13,21 @@
     {
         private readonly IDeletableEntityRepository<Coach> coachesRepository;
         private readonly IDeletableEntityRepository<CoachOwner> coachesOwnerRepository;
+        private readonly IDeletableEntityRepository<Employee> employeeRepository;
 
-        public CoachesService(IDeletableEntityRepository<Coach> coachesRepository, IDeletableEntityRepository<CoachOwner> coachesOwnerRepository)
+        public CoachesService(
+            IDeletableEntityRepository<Coach> coachesRepository,
+            IDeletableEntityRepository<CoachOwner> coachesOwnerRepository,
+            IDeletableEntityRepository<Employee> employeeRepository)
         {
             this.coachesRepository = coachesRepository;
             this.coachesOwnerRepository = coachesOwnerRepository;
+            this.employeeRepository = employeeRepository;
         }
 
         public Task<CoachDescriptionModel> GetByIdAsync(string coachId)
         {
+
             return coachesRepository.All().Where(x => x.Id == coachId).Select(x => new CoachDescriptionModel
             {
                 Id = x.Id,
@@ -39,10 +45,8 @@
 
         public CoachesListingCatalogModel GetAllByOwnerId(string ownerId)
         {
-
-            return new CoachesListingCatalogModel
+             var result = new CoachesListingCatalogModel
             {
-                OwnerId = ownerId,
                 OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
                 Coaches = coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CoachInListCatalogModel
                 {
@@ -55,13 +59,38 @@
                     PricePerSession = x.Coach.PricePerSession,
                 }).ToList()
             };
+            return result;
+        }
+
+        public CoachesListingCatalogModel GetAllByEmployeeId(string ownerId, string userId)
+        {
+            var employeeId = employeeRepository.All().FirstOrDefault(x => x.UserId == userId).Id;
+
+            var result = new CoachesListingCatalogModel
+            {
+                OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
+                Coaches = coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CoachInListCatalogModel
+                {
+                    Id = x.Coach.Id,
+                    FullName = x.Coach.FullName,
+                    CategoryName = x.Coach.Category.Name,
+                    Company = x.Coach.Company,
+                    CompanyLogoUrl = x.Coach.CompanyLogoUrl,
+                    CalendlyUrl = x.Coach.CalendlyPopupUrl,
+                    PricePerSession = x.Coach.PricePerSession,
+                    IsFeedbackNeeded = x.Coach.LiveSessions.Any(x => x.StudentId == employeeId && x.GivenFeedback == false),
+                    IsCoachSessionPending = x.Coach.LiveSessions.Any(x => x.StudentId == employeeId && x.Start > System.DateTime.UtcNow),
+                    IsNotFirstCoachSession = x.Coach.LiveSessions.Any(x => x.StudentId == employeeId)
+                }).ToList()
+            };
+
+            return result;
         }
 
         public CoachesListingCatalogModel GetAll(string ownerId)
         {
             return new CoachesListingCatalogModel
             {
-                OwnerId = ownerId,
                 OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
                 Coaches = coachesRepository.All().Select(x => new CoachInListCatalogModel
                 {

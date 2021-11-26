@@ -37,6 +37,12 @@
             return coachesService.GetAllByOwnerId(ownerId);
         }
 
+        [HttpGet("GetAllByEmployeeId")]
+        public CoachesListingCatalogModel GetAllByEmployeeId([FromQuery] string ownerId, [FromQuery] string userId)
+        {
+            return coachesService.GetAllByEmployeeId(ownerId, userId);
+        }
+
         [HttpGet("GetAll")]
         public CoachesListingCatalogModel GetAll([FromQuery] string ownerId)
         {

@@ -9,6 +9,8 @@
 
         CoachesListingCatalogModel GetAllByOwnerId(string ownerId);
 
+        CoachesListingCatalogModel GetAllByEmployeeId(string ownerId, string userId);
+
         CoachesListingCatalogModel GetAll(string ownerId);
 
         Task AddCoachInOwnerCoachesCollectionAsync(string coachId, string ownerId);
