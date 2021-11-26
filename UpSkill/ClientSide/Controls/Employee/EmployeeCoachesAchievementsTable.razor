@@ -19,20 +19,20 @@
         </tr>
         </thead>
         <tbody>
-        @foreach (var course in courses)
+        @foreach (var coach in Coaches)
         {
             <tr class=" underline">
                 <td class="cell-left-coach">
-                    @course.Key
+                    @coach.CoachName
                 </td>
                 <td class="cell-left">
-                    @course.Value
+                    @coach.FirstLiveSessionDate
                 </td>
                 <td class="cell-left">
-                    @course.Value
+                    @coach.LastLiveSessionDate
                 </td>
                 <td class="cell-left-sessions">
-                    @course.Value
+                    @coach.SessionsCompleted
                 </td>
             </tr>
         }
@@ -43,6 +43,9 @@
 
 
 @code {
+
+    [Parameter]
+    public List<CoachInEmployeeAchievementsModel> Coaches { get; set; }
 
     private Dictionary<string, int> courses = new Dictionary<string, int>()
 

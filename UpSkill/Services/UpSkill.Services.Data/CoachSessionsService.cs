@@ -1,17 +1,13 @@
 ﻿
 namespace UpSkill.Services.Data
 {
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+    using System.Linq;
+    using System.Threading.Tasks;
 
-using UpSkill.Data.Common.Repositories;
-using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Common;
+    using UpSkill.Data.Common.Repositories;
+    using UpSkill.Data.Models;
     using UpSkill.Infrastructure.Models.Coach.Sessions;
-using UpSkill.Services.Data.Contracts;
+    using UpSkill.Services.Data.Contracts;
 
     public class CoachSessionsService : ICoachSessionsService
     {

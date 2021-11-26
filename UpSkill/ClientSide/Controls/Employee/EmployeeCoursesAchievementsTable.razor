@@ -1,53 +1,59 @@
-﻿<div class="mx-auto">
-    <table class="table table_custom table-borderless">
-        <thead class="head">
-            <tr class="">
-                <th class="cell-header-left">
-                    Course
-                </th>
-                <th class="cell-header-left">
-                    Star Date
-                </th>
-                <th class="cell-header-left">
-                    End Date
-                </th>
-                <th class="cell-header-left">
-                    Grade
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var course in courses)
-            {
-                <tr class=" underline">
-                    <td class="cell-left-course">
-                        @course.Key
-                    </td>
-                    <td class="cell-left">
-                        @course.Value
-                    </td>
-                    <td class="cell-left">
-                        @course.Value
-                    </td>
-                    <td class="cell-left-grade">
-                        @course.Value
-                    </td>
+﻿@if (Courses == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="mx-auto">
+        <table class="table table_custom table-borderless">
+            <thead class="head">
+                <tr class="">
+                    <th class="cell-header-left">
+                        Course
+                    </th>
+                    <th class="cell-header-left">
+                        Star Date
+                    </th>
+                    <th class="cell-header-left">
+                        End Date
+                    </th>
+                    <th class="cell-header-left">
+                        Grade
+                    </th>
                 </tr>
-            }
-            <tr><td></td></tr>
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var course in Courses)
+                {
+                    fieldColor = course.Grade == "Pending" ? "#296CFB" : "black";
 
+                    <tr class=" underline">
+                        <td class="cell-left-course">
+                            <span style="color: @fieldColor">@course.CourseName</span>
+                        </td>
+                        <td class="cell-left">
+                            @course.StartDate
+                        </td>
+                        <td class="cell-left">
+                            @course.EndDate
+                        </td>
+                        <td class="cell-left-grade">
+                            <span style="color: @fieldColor">@course.Grade</span>
+                        </td>
+                    </tr>
+                }
+                <tr><td></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+}
 
 @code {
 
-    private Dictionary<string, int> courses = new Dictionary<string, int>()
+    private string fieldColor;
 
-{
-        { "HTML & CSS", 5 },
-        { "Photoshop", 3},
-        { "C# - Basics", 13 },
-        { "Data Structures", 2 }
-    };
+    [Parameter]
+    public List<CourseInEmployeeAchievementsModel> Courses { get; set; }
+
 }

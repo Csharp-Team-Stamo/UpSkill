@@ -5,9 +5,7 @@
     using Infrastructure.Models.Coach;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Options;
-    using Newtonsoft.Json;
     using Services.Data.Contracts;
-    using UpSkill.Infrastructure.Models.Coach.Sessions;
     using UpSkill.Services.Data;
 
     [Route("[controller]")]

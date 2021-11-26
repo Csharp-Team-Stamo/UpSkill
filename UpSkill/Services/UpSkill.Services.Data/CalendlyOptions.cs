@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-
-namespace UpSkill.Services.Data
+﻿namespace UpSkill.Services.Data
 {
    public class CalendlyOptions
     {

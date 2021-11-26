@@ -8,16 +8,18 @@
 
     public interface IEmployeesService
     {
-       string GetOwnerIdByAppUserId(string userId);
+        Task<EmployeeAchievementsModel> GetEmployeeAchievementsInfoAsync(string employeeId);
 
-       string GetEmployeeIdByAppUserId(string userId);
+        string GetOwnerIdByAppUserId(string userId);
 
-       PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, EmployeesParameters parameters);
+        string GetEmployeeIdByAppUserId(string userId);
 
-       Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees);
+        PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, EmployeesParameters parameters);
 
-       Task EnrollToCourseAsync(int courseId, string employeeId);
+        Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees);
 
-       bool IsEmployeeEnrolledForCourse(string employeeId, int courseId);
+        Task EnrollToCourseAsync(int courseId, string employeeId);
+
+        bool IsEmployeeEnrolledForCourse(string employeeId, int courseId);
     }
 }

@@ -51,5 +51,13 @@ namespace UpSkill.Api.Controllers
 
             return employeesService.IsEmployeeEnrolledForCourse(employeeId, courseId);
         }
+
+        [HttpGet("GetAchievementsModelAsync")]
+        public async Task<EmployeeAchievementsModel> GetAchievementsModelAsync(string userId)
+        {
+            var employeeId = employeesService.GetEmployeeIdByAppUserId(userId);
+
+            return await employeesService.GetEmployeeAchievementsInfoAsync(employeeId);
+        }
     }
 }

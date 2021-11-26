@@ -1,8 +1,27 @@
 ﻿@page "/Grades"
 
-<EmployeeCoursesAchievementsTable />
-<EmployeeCoachesAchievementsTable/>
+@if (model == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <EmployeeCoursesAchievementsTable Courses="model.Courses"/>
+    <EmployeeCoachesAchievementsTable Coaches="model.Coaches"/>
+}
 
 @code {
+
+    private EmployeeAchievementsModel model;
+
+    private List<CourseInEmployeeAchievementsModel> courses;
+
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        model = await Client.GetFromJsonAsync<EmployeeAchievementsModel>($"Employees/GetAchievementsModelAsync?userId={user.Id().Result}");
+    }
 
 }
