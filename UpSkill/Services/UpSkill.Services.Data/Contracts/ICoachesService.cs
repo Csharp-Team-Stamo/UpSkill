@@ -1,5 +1,6 @@
 ﻿namespace UpSkill.Services.Data.Contracts
 {
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using Infrastructure.Models.Coach;
 
@@ -12,6 +13,8 @@
         CoachesListingCatalogModel GetAllByEmployeeId(string ownerId, string userId);
 
         CoachesListingCatalogModel GetAll(string ownerId);
+
+        Task<ICollection<CoachInListCatalogModel>> GetAllWithExistingSessions(string employeeId);
 
         Task AddCoachInOwnerCoachesCollectionAsync(string coachId, string ownerId);
 
