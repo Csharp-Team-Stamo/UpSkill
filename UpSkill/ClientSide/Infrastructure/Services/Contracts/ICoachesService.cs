@@ -8,7 +8,7 @@
         Task<CoachesListingCatalogModel> GetAllAsync(string ownerId);
 
         Task<CoachesListingCatalogModel> GetAllByOwnerIdAsync(string ownerId);
-
+        Task<CoachesListingCatalogModel> GetAllByEmployeeIdAsync(string ownerId, string userId);
         Task AddCoachInOwnerCoachesCollectionAsync(string coachId, string ownerId);
 
         Task RemoveCoachFromOwnerCoachCollectionAsync(string coachId, string ownerId);

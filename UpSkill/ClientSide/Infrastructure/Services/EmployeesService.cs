@@ -30,7 +30,6 @@
             };
             var response = await httpClient.GetAsync(QueryHelpers.AddQueryString("/Employees/GetCollectionByCompanyId", queryStringParam));
             var content = await response.Content.ReadAsStringAsync();
-            JsonConvert.DeserializeObject<List<AddEmployeeFormModel>>(content);
 
             if (!response.IsSuccessStatusCode)
             {
