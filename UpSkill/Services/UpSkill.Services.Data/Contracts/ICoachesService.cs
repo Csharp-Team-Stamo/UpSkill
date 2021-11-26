@@ -9,7 +9,7 @@
 
         CoachesListingCatalogModel GetAllByOwnerId(string ownerId);
 
-        CoachesListingCatalogModel GetAllByEmployeeId(string ownerId, string userId);
+        CoachesListingCatalogModel GetAllByEmployeeId(string ownerId, string employeeId);
 
         CoachesListingCatalogModel GetAll(string ownerId);
 

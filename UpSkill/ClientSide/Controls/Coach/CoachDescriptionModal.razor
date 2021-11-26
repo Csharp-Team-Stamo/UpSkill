@@ -47,7 +47,7 @@ else
                     @if (user.IsAuthenticated().Result && user.Role().Result == GlobalConstants.EmployeeRoleName &&
                     NavigationManager.Uri.EndsWith("Coaches") &&
                     !CoachDetails.IsCoachSessionPending &&
-                    CoachDetails.IsFeedbackNeeded)
+                    !CoachDetails.IsFeedbackNeeded)
                     {
                         <div class="book-btn" onclick="Calendly.initPopupWidget({ url: '@CalendlyAddSessionUri' }); return false;">
                             <div class="book-btn-text">Book</div>

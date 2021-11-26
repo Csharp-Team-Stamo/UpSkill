@@ -18,7 +18,8 @@
         public CoachesService(
             IDeletableEntityRepository<Coach> coachesRepository,
             IDeletableEntityRepository<CoachOwner> coachesOwnerRepository,
-            IDeletableEntityRepository<Employee> employeeRepository)
+            IDeletableEntityRepository<Employee> employeeRepository,
+            IEmployeesService employeesService)
         {
             this.coachesRepository = coachesRepository;
             this.coachesOwnerRepository = coachesOwnerRepository;
@@ -62,10 +63,8 @@
             return result;
         }
 
-        public CoachesListingCatalogModel GetAllByEmployeeId(string ownerId, string userId)
+        public CoachesListingCatalogModel GetAllByEmployeeId(string ownerId, string employeeId)
         {
-            var employeeId = employeeRepository.All().FirstOrDefault(x => x.UserId == userId).Id;
-
             var result = new CoachesListingCatalogModel
             {
                 OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
@@ -80,13 +79,36 @@
                     PricePerSession = x.Coach.PricePerSession,
                     IsFeedbackNeeded = x.Coach.LiveSessions.Any(x => x.StudentId == employeeId && x.GivenFeedback == false),
                     IsCoachSessionPending = x.Coach.LiveSessions.Any(x => x.StudentId == employeeId && x.Start > System.DateTime.UtcNow),
-                    IsNotFirstCoachSession = x.Coach.LiveSessions.Any(x => x.StudentId == employeeId)
+                    IsFirstCoachSession = x.Coach.LiveSessions.Any(x => x.StudentId == employeeId) == true ? false : true
                 }).ToList()
             };
 
             return result;
         }
 
+<<<<<<< Updated upstream
+=======
+        public async Task<ICollection<CoachInListCatalogModel>> GetAllWithExistingSessions(string employeeId)
+        {
+            return await this.coachesRepository.All()
+                .Where(ls => ls.LiveSessions.Any(ls => ls.StudentId == employeeId))
+                .Select(x => new CoachInListCatalogModel
+                {
+                    Id = x.Id,
+                    FullName = x.FullName,
+                    CategoryName = x.Category.Name,
+                    Company = x.Company,
+                    CompanyLogoUrl = x.CompanyLogoUrl,
+                    CalendlyUrl = x.CalendlyPopupUrl,
+                    PricePerSession = x.PricePerSession,
+                    IsFeedbackNeeded = x.LiveSessions.Any(x => x.StudentId == employeeId && x.GivenFeedback == false),
+                    IsCoachSessionPending = x.LiveSessions.Any(x => x.StudentId == employeeId && x.Start > System.DateTime.UtcNow),
+                    IsFirstCoachSession = x.LiveSessions.Any(x => x.StudentId == employeeId)
+                })
+                .ToListAsync();
+        }
+
+>>>>>>> Stashed changes
         public CoachesListingCatalogModel GetAll(string ownerId)
         {
             return new CoachesListingCatalogModel

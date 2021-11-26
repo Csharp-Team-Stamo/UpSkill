@@ -48,6 +48,7 @@
             user.Role().Result == GlobalConstants.EmployeeRoleName
             && NavigationManager.Uri.EndsWith("Coaches"))
         {
+<<<<<<< Updated upstream
                     <div class="text-center">
                     @*<button href="" class="coach-btn " onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>*@
 
@@ -70,6 +71,29 @@
                         }
 
                     </div>
+=======
+            <div class="text-center">
+                @*<button href="" class="coach-btn " onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>*@
+
+                @if (Coach.IsCoachSessionPending)
+                {
+                    <button href="" class="coach-btn">Pending</button>
+                }
+                else if (Coach.IsFeedbackNeeded)
+                {
+                    <button href="" class="coach-btn feedback">Feedback</button>
+                }
+                else if (Coach.IsFirstCoachSession)
+                {
+                    <button href="" class="coach-btn " onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>
+                }
+                else
+                {
+                    <button href="" class="coach-btn" @onclick="ShowPopup">Book</button>
+                }
+
+            </div>
+>>>>>>> Stashed changes
         }
 
     </div>
@@ -134,6 +158,13 @@
         {
             BackgroundColor = IsCoachAdded() ? "#EAF0FF" : "#FFFFFF";
         }
+<<<<<<< Updated upstream
+=======
+        else if (Coach.IsCoachSessionPending || Coach.IsFirstCoachSession)
+        {
+            BackgroundColor = "#EAF0FF";
+        }
+>>>>>>> Stashed changes
     }
 
     protected override void OnAfterRender(bool firstRender)

@@ -17,12 +17,14 @@
         private readonly ICoachesService coachesService;
         private readonly IOptions<CalendlyOptions> options;
         private readonly IHttpClientFactory clientFactory;
+        private readonly IEmployeesService employeesService;
 
-        public CoachesController(ICoachesService coachesService, IOptions<CalendlyOptions> options, IHttpClientFactory clientFactory)
+        public CoachesController(ICoachesService coachesService, IOptions<CalendlyOptions> options, IHttpClientFactory clientFactory, IEmployeesService employeesService)
         {
             this.coachesService = coachesService;
             this.options = options;
             this.clientFactory = clientFactory;
+            this.employeesService = employeesService;
         }
 
         [HttpGet("GetByIdAsync")]
@@ -40,7 +42,8 @@
         [HttpGet("GetAllByEmployeeId")]
         public CoachesListingCatalogModel GetAllByEmployeeId([FromQuery] string ownerId, [FromQuery] string userId)
         {
-            return coachesService.GetAllByEmployeeId(ownerId, userId);
+            var employeeId = employeesService.GetEmployeeIdByAppUserId(userId);
+            return coachesService.GetAllByEmployeeId(ownerId, employeeId);
         }
 
         [HttpGet("GetAll")]
