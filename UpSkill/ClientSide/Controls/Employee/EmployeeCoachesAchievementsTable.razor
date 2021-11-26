@@ -1,0 +1,55 @@
+﻿<div class="mx-auto">
+    <table class="table table_custom table-borderless">
+        <thead class="head">
+        <tr class="">
+            <th class="cell-header-left">
+                Coach
+            </th>
+            <th class="cell-header-left">
+                 First
+                Session
+            </th>
+            <th class="cell-header-left">
+                 Last
+                Session
+            </th>
+            <th class="cell-header-left">
+                Sessions
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var course in courses)
+        {
+            <tr class=" underline">
+                <td class="cell-left-coach">
+                    @course.Key
+                </td>
+                <td class="cell-left">
+                    @course.Value
+                </td>
+                <td class="cell-left">
+                    @course.Value
+                </td>
+                <td class="cell-left-sessions">
+                    @course.Value
+                </td>
+            </tr>
+        }
+        <tr><td></td></tr>
+        </tbody>
+    </table>
+</div>
+
+
+@code {
+
+    private Dictionary<string, int> courses = new Dictionary<string, int>()
+
+    {
+        { "HTML & CSS", 5 },
+        { "Photoshop", 3},
+        { "C# - Basics", 13 },
+        { "Data Structures", 2 }
+    };
+}
