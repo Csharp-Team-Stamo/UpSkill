@@ -1,5 +1,6 @@
 ﻿namespace UpSkill.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -85,6 +86,26 @@
             };
 
             return result;
+        }
+
+        public async Task<ICollection<CoachInListCatalogModel>> GetAllWithExistingSessions(string employeeId)
+        {
+            return await this.coachesRepository.All()
+                .Where(ls => ls.LiveSessions.Any(ls => ls.StudentId == employeeId))
+                .Select(x => new CoachInListCatalogModel
+                {
+                    Id = x.Id,
+                    FullName = x.FullName,
+                    CategoryName = x.Category.Name,
+                    Company = x.Company,
+                    CompanyLogoUrl = x.CompanyLogoUrl,
+                    CalendlyUrl = x.CalendlyPopupUrl,
+                    PricePerSession = x.PricePerSession,
+                    IsFeedbackNeeded = x.LiveSessions.Any(x => x.StudentId == employeeId && x.GivenFeedback == false),
+                    IsCoachSessionPending = x.LiveSessions.Any(x => x.StudentId == employeeId && x.Start > System.DateTime.UtcNow),
+                    IsNotFirstCoachSession = x.LiveSessions.Any(x => x.StudentId == employeeId)
+                })
+                .ToListAsync();
         }
 
         public CoachesListingCatalogModel GetAll(string ownerId)
