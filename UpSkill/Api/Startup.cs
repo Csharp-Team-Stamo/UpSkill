@@ -12,7 +12,6 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
@@ -111,6 +110,7 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             //Business logic services
+            services.AddTransient<IApplicationUserService, ApplicationUserService>();
             services.AddTransient<IAccountsService, AccountsService>();
             services.AddTransient<IAdminCategoryService, AdminCategoryService>();
             services.AddTransient<IAdminCompanyService, AdminCompanyService>();
@@ -118,15 +118,15 @@
             services.AddTransient<IAdminCoachService, AdminCoachService>();
             services.AddTransient<IAdminLanguageService, AdminLanguageService>();
             services.AddTransient<IAdminLectureService, AdminLectureService>();
-            services.AddTransient<ICoachesService, CoachesService>();
-            services.AddTransient<ICoursesService ,CoursesService>();
-            services.AddTransient<IOwnerService, OwnerService>();
-            services.AddTransient<IStatisticsService, StatisticsService>();
-            services.AddTransient<IEmployeesService, EmployeesService>();
-            services.AddTransient<ILanguagesService, LanguagesService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<ICoachSessionsService, CoachSessionsService>();
-            services.AddTransient<IApplicationUserService, ApplicationUserService>();
+            services.AddTransient<ICoachesService, CoachesService>();
+            services.AddTransient<ICoursesService, CoursesService>();
+            services.AddTransient<IDashboardService, DashboardService>();
+            services.AddTransient<IEmployeesService, EmployeesService>();
+            services.AddTransient<ILanguagesService, LanguagesService>();
+            services.AddTransient<IOwnerService, OwnerService>();
+            services.AddTransient<IStatisticsService, StatisticsService>();
 
 
             services.AddTransient<IEmailSender, EmailSender>();
