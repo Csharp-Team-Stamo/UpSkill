@@ -7,13 +7,13 @@ h6 {
 }
 
 
-#mainGrid {
+/*#mainGrid {
     display: grid;
     grid-template-columns: 2fr 1fr;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
+}*/
 
 div#lectureInfoHolder {
     display: grid;

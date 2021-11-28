@@ -1,68 +1,65 @@
 ﻿@page "/watch/course/{id:int}"
 @layout LogoAndAvatarOnlyLayout
 
-<div id="mainGrid">
+<div class="gridCol" id="lectureInfoHolder">
+    <h3 id="mainHL">@courseDetails.CourseName</h3>
+    <iframe width="660"
+            height="315"
+            src="@courseDetails.CourseVideoUrl"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+    </iframe>
 
-    <div class="gridCol" id="lectureInfoHolder">
-        <h3 id="mainHL">@courseDetails.CourseName</h3>
-        <iframe width="660"
-                height="315"
-                src="@courseDetails.CourseVideoUrl"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-        </iframe>
-
-        <div class="my-5 courseInfoPar">
-            <h6>Lecture Description</h6>
-            <p>
-                @courseDetails.CourseDescription
-                @*This course emphasizes the fundamental skills of reading,
+    <div class="my-5 courseInfoPar">
+        <h6>Lecture Description</h6>
+        <p>
+            @courseDetails.CourseDescription
+            @*This course emphasizes the fundamental skills of reading,
                 writing, speaking, listening, thinking, viewing and presenting.*@
-            </p>
-        </div>
+        </p>
+    </div>
 
-        <div id="instructor-info">
-            <h6>Instructor</h6>
-            <div class="avatar-container">
-                <i class="avatar"></i>
-                <div class="creator">
-                    <div>
-                        Created by
-                    </div>
-                    <div style="font-weight: bold;">
-                        @courseDetails.AuthorFullName
-                    </div>
-                    <div class="company">
-                        <img src="@courseDetails.AuthorCompanyLogoUrl" width="60" height="30"/>
-                    </div>
+    <div id="instructor-info">
+        <h6>Instructor</h6>
+        <div class="avatar-container">
+            <i class="avatar"></i>
+            <div class="creator">
+                <div>
+                    Created by
+                </div>
+                <div style="font-weight: bold;">
+                    @courseDetails.AuthorFullName
+                </div>
+                <div class="company">
+                    <img src="@courseDetails.AuthorCompanyLogoUrl" width="60" height="30" />
                 </div>
             </div>
-            <p>
-                Charles Du led the design of NASA’s first iPhone app
-                (10+ million downloads, 2+ million hits per day, NASA’s Software of
-                the Year Award) and co-founded the Airbnb for cars. He is an
-                award-winning product manager, UX designer, lecturer, and international
-                keynote speaker.
-            </p>
         </div>
-
+        <p>
+            Charles Du led the design of NASA’s first iPhone app
+            (10+ million downloads, 2+ million hits per day, NASA’s Software of
+            the Year Award) and co-founded the Airbnb for cars. He is an
+            award-winning product manager, UX designer, lecturer, and international
+            keynote speaker.
+        </p>
     </div>
 
-    <div class="gridCol" id="lectureAsideMenu">
-        <h5>Lectures</h5>
-        @for (int i = 0; i < courseDetails.Lectures.Count(); i++)
-        {
-            int num = i + 1;
-            var currentLecture = courseDetails.Lectures.ElementAt(i);
-            string title = currentLecture.Title;
+</div>
 
-            <p>@num. <a href="#">@title</a></p>
-            <hr />
-        }
+<div class="gridCol" id="lectureAsideMenu">
+    <h5>Lectures</h5>
+    @for (int i = 0; i < courseDetails.Lectures.Count(); i++)
+    {
+        int num = i + 1;
+        var currentLecture = courseDetails.Lectures.ElementAt(i);
+        string title = currentLecture.Title;
 
-        <a id="viewMoreButton" href="#">View More</a>
-    </div>
+        <p>@num. <a href=@($"/courseLecture/{currentLecture.Id}")>@title</a></p>
+        <hr />
+    }
+
+    <a id="viewMoreButton" href="#">View More</a>
 </div>
 
 @code {
@@ -76,6 +73,18 @@
         this.courseDetails = await this.Client
             .GetFromJsonAsync<EmployeeCourseDetailsModel>
             ($"/employees/getcoursebyid/{Id}");
+    }
+
+    static void Main()
+    {
+        using (var db = new CatsDbContext())
+        {
+            var cat = new Cat { Id = 16 };
+
+            db.Remove(cat);
+
+            db.SaveChanges();
+        }
     }
 
     //private IEnumerable<string> lectureNames = new List<string>
