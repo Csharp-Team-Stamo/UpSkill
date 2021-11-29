@@ -26,7 +26,6 @@ else
                 @foreach (var course in Courses)
                 {
                     fieldColor = course.Grade == "Pending" ? "#296CFB" : "black";
-
                     <tr class=" underline">
                         <td class="cell-left-course">
                             <span style="color: @fieldColor">@course.CourseName</span>
@@ -38,7 +37,7 @@ else
                             @course.EndDate
                         </td>
                         <td class="cell-left-grade">
-                            <span style="color: @fieldColor">@course.Grade</span>
+                            <span style="color: @fieldColor">@(course.Grade == "Pending" ? course.Grade : course.Grade + " / 100")</span>
                         </td>
                     </tr>
                 }
@@ -52,6 +51,7 @@ else
 @code {
 
     private string fieldColor;
+    private string grade;
 
     [Parameter]
     public List<CourseInEmployeeAchievementsModel> Courses { get; set; }
