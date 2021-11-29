@@ -122,6 +122,7 @@
             services.AddTransient<IStatisticsService, StatisticsService>();
             services.AddTransient<IEmployeesService, EmployeesService>();
             services.AddTransient<ILanguagesService, LanguagesService>();
+            services.AddTransient<ILectureService, LectureService>();
             services.AddTransient<ICategoriesService, CategoriesService>();
             services.AddTransient<IApplicationUserService, ApplicationUserService>();
 

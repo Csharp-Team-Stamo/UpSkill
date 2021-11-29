@@ -75,18 +75,6 @@
             ($"/employees/getcoursebyid/{Id}");
     }
 
-    static void Main()
-    {
-        using (var db = new CatsDbContext())
-        {
-            var cat = new Cat { Id = 16 };
-
-            db.Remove(cat);
-
-            db.SaveChanges();
-        }
-    }
-
     //private IEnumerable<string> lectureNames = new List<string>
     //{
     //    "Introduction",
