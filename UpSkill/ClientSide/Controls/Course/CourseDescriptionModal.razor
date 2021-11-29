@@ -130,7 +130,8 @@ else
 
     private async Task Enroll()
     {
-        await Client.PostAsJsonAsync($"Employees/EnrollToCourseAsync?courseId={course.Id}&appUserId={user.Id().Result}", string.Empty);
+        await Client
+            .PostAsJsonAsync($"Employees/EnrollToCourseAsync?courseId={course.Id}&appUserId={user.Id().Result}", string.Empty);
 
         await IsEmployeeEnrolledToCourse.InvokeAsync(true);
         await BackgroundColor.InvokeAsync("#EAF0FF");

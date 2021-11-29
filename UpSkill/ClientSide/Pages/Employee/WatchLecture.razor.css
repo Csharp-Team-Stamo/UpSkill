@@ -23,10 +23,10 @@ div#lectureInfoHolder {
     margin: 2em auto;
 }
 
-    /*div#lectureInfoHolder > image {
+    div#lectureInfoHolder > image {
         display: inline-block;
         width: 85%;
-    }*/
+    }
 
 div#lectureAsideMenu {
     background-color: #e6eefe;
@@ -37,20 +37,21 @@ div#lectureAsideMenu {
     font-weight: 500;
 }
 
-    div#lectureAsideMenu > p > a.lecturePointer {
+    div#lectureAsideMenu > p > a {
         color: #000;
         padding: 5%;
         text-decoration: none;
-        cursor: grab;
-    } 
-
-    h3#mainHL {
-        text-align: start;
-        font-weight: 800;
-        text-transform: uppercase;
-        margin-top: 2em;
-        margin-bottom: 1.6em;
     }
+
+
+
+h3#mainHL {
+    text-align: start;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-top: 2em;
+    margin-bottom: 1.6em;
+}
 
 a#viewMoreButton {
     display: block;

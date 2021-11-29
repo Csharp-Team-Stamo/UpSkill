@@ -48,7 +48,9 @@
 
         public string GetEmployeeIdByAppUserId(string userId)
         {
-            return this.employeeRepository.AllAsNoTracking().FirstOrDefault(x => x.UserId == userId).Id;
+            return this.employeeRepository
+                .AllAsNoTracking()
+                .FirstOrDefault(x => x.UserId == userId).Id;
         }
         public PagedList<AddEmployeeFormModel> GetByCompanyId(
             string companyId, EmployeesParameters parameters)
@@ -142,7 +144,5 @@
 
             return emailsFromErrorResult;
         }
-
-
     }
 }

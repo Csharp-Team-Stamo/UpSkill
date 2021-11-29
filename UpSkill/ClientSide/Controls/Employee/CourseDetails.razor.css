@@ -1,0 +1,7 @@
+﻿div#lectureInfoHolder {
+    display: grid;
+    grid-template-columns: 1fr;
+    text-align: start;
+    width: 85%;
+    margin: 2em auto;
+}
