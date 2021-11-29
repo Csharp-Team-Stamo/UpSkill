@@ -5,3 +5,57 @@
     width: 85%;
     margin: 2em auto;
 }
+
+div.avatar-container {
+    display: flex;
+    margin-top: 2rem;
+}
+
+h3#mainHL {
+    text-align: start;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-top: 2em;
+    margin-bottom: 1.6em;
+}
+
+div i.avatar {
+    text-align: center;
+    font-family: Montserrat,sans-serif;
+    border-radius: 50%;
+    background-image: url("https://careermanifestations.com/wp-content/uploads/2018/04/Irina.jpg");
+    background-size: contain;
+    color: white;
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 3px;
+    height: 75px;
+    width: 75px;
+    font-style: normal;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+div.creator {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #000;
+    font-size: 1em;
+    display: flex;
+    flex-direction: column;
+    margin-left: 1em;
+    justify-content: center;
+    line-height: 1rem;
+    font-size: 0.8em;
+    text-align: left;
+}
+
+div.company {
+    font-size: 0.7em;
+    margin-top: 0.6em;
+}
+
+div.courseInfoPar > p,
+div#instructor-info > p {
+    margin-top: 1.5em;
+    font-weight: 500;
+}
