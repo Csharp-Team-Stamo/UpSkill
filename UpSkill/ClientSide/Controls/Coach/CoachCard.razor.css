@@ -26,10 +26,15 @@
 
 .coach-btn {
     background: #296CFB 0% 0% no-repeat padding-box;
-    border: none;
+    border: 2px solid #296CFB;
     margin-top: 1em;
     opacity: 1;
     width: 50%;
+}
+
+.feedback {
+    background: white;
+    color: #296CFB;
 }
 
 .coach-btn-text {

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UpSkill.Data;
 
 namespace UpSkill.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211126152556_AddedPropInEmployeeCourse")]
+    partial class AddedPropInEmployeeCourse
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -393,6 +395,41 @@ namespace UpSkill.Data.Migrations
                     b.ToTable("CoachEmployees");
                 });
 
+            modelBuilder.Entity("UpSkill.Data.Models.CoachFeedback", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LiveSessionId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ModifiedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
+
+                    b.ToTable("CoachFeedback");
+                });
+
             modelBuilder.Entity("UpSkill.Data.Models.CoachLanguage", b =>
                 {
                     b.Property<int>("Id")
@@ -463,45 +500,6 @@ namespace UpSkill.Data.Migrations
                     b.HasIndex("OwnerId");
 
                     b.ToTable("CoachOwners");
-                });
-
-            modelBuilder.Entity("UpSkill.Data.Models.CoachVote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("CoachId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Value")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CoachId");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("CoachVotes");
                 });
 
             modelBuilder.Entity("UpSkill.Data.Models.Company", b =>
@@ -1032,7 +1030,10 @@ namespace UpSkill.Data.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("CategoryId")
+                    b.Property<string>("CancelationUri")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CoachFeedbackId")
                         .HasColumnType("int");
 
                     b.Property<string>("CoachId")
@@ -1047,8 +1048,17 @@ namespace UpSkill.Data.Migrations
                     b.Property<DateTime>("End")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("EventSessionType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("GivenFeedback")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<string>("JoinSessionUri")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -1056,6 +1066,9 @@ namespace UpSkill.Data.Migrations
                     b.Property<decimal>("Price")
                         .HasPrecision(18, 4)
                         .HasColumnType("decimal(18,4)");
+
+                    b.Property<string>("ReschedulingUri")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
@@ -1069,7 +1082,9 @@ namespace UpSkill.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CoachFeedbackId")
+                        .IsUnique()
+                        .HasFilter("[CoachFeedbackId] IS NOT NULL");
 
                     b.HasIndex("CoachId");
 
@@ -1121,9 +1136,6 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("CoachId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -1147,8 +1159,6 @@ namespace UpSkill.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CoachId");
 
                     b.HasIndex("IsDeleted");
 
@@ -1277,21 +1287,6 @@ namespace UpSkill.Data.Migrations
                     b.Navigation("Coach");
 
                     b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("UpSkill.Data.Models.CoachVote", b =>
-                {
-                    b.HasOne("UpSkill.Data.Models.Coach", "Coach")
-                        .WithMany("Votes")
-                        .HasForeignKey("CoachId");
-
-                    b.HasOne("UpSkill.Data.Models.ApplicationUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Coach");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("UpSkill.Data.Models.Course", b =>
@@ -1453,23 +1448,21 @@ namespace UpSkill.Data.Migrations
 
             modelBuilder.Entity("UpSkill.Data.Models.LiveSession", b =>
                 {
-                    b.HasOne("UpSkill.Data.Models.Category", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                    b.HasOne("UpSkill.Data.Models.CoachFeedback", "CoachFeedback")
+                        .WithOne("liveSession")
+                        .HasForeignKey("UpSkill.Data.Models.LiveSession", "CoachFeedbackId");
 
                     b.HasOne("UpSkill.Data.Models.Coach", "Coach")
                         .WithMany("LiveSessions")
                         .HasForeignKey("CoachId");
 
                     b.HasOne("UpSkill.Data.Models.Employee", "Student")
-                        .WithMany()
+                        .WithMany("LiveSession")
                         .HasForeignKey("StudentId");
 
-                    b.Navigation("Category");
-
                     b.Navigation("Coach");
+
+                    b.Navigation("CoachFeedback");
 
                     b.Navigation("Student");
                 });
@@ -1487,13 +1480,6 @@ namespace UpSkill.Data.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("UpSkill.Data.Models.SessionSlot", b =>
-                {
-                    b.HasOne("UpSkill.Data.Models.Coach", null)
-                        .WithMany("SessionSlots")
-                        .HasForeignKey("CoachId");
-                });
-
             modelBuilder.Entity("UpSkill.Data.Models.ApplicationUser", b =>
                 {
                     b.Navigation("Claims");
@@ -1509,11 +1495,12 @@ namespace UpSkill.Data.Migrations
 
                     b.Navigation("Owners");
 
-                    b.Navigation("SessionSlots");
-
                     b.Navigation("Students");
+                });
 
-                    b.Navigation("Votes");
+            modelBuilder.Entity("UpSkill.Data.Models.CoachFeedback", b =>
+                {
+                    b.Navigation("liveSession");
                 });
 
             modelBuilder.Entity("UpSkill.Data.Models.Company", b =>

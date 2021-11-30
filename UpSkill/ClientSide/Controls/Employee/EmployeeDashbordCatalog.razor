@@ -1,0 +1,36 @@
+﻿@using UpSkill.Infrastructure.Models.Dashboard
+@if (model == null)
+{
+    <div class="spinner"></div>
+}
+else
+{
+    <div class="row">
+        @foreach (var course in model.Courses)
+        {
+            <CourseCard Course="course" />
+        }
+
+        @foreach (var coach in model.Coaches)
+        {
+            <CoachCard Coach="coach"/>
+        }
+    </div>
+}
+@code {
+
+    private EmployeeDashboardModel model;
+
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        if (user.Role().Result == GlobalConstants.EmployeeRoleName)
+        {
+            model = await Client.GetFromJsonAsync<EmployeeDashboardModel>($"Dashboard/GetEpEmployeeDashboardInfoAsync?appUserId={user.Id().Result}");
+        }
+    }
+
+}

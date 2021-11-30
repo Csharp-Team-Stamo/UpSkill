@@ -1,7 +1,5 @@
 ﻿namespace UpSkill.Infrastructure.Models.Course
 {
-    using System.Collections.Generic;
-
     public class CourseInListCatalogModel
     {
         public int Id { get; set; }

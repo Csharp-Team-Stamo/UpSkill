@@ -12,7 +12,6 @@
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.DependencyInjection.Extensions;
     using Microsoft.Extensions.Hosting;
     using Microsoft.IdentityModel.Tokens;
     using Microsoft.OpenApi.Models;
@@ -109,6 +108,7 @@
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             //Business logic services
+            services.AddTransient<IApplicationUserService, ApplicationUserService>();
             services.AddTransient<IAccountsService, AccountsService>();
             services.AddTransient<IAdminCategoryService, AdminCategoryService>();
             services.AddTransient<IAdminCompanyService, AdminCompanyService>();
@@ -116,15 +116,17 @@
             services.AddTransient<IAdminCoachService, AdminCoachService>();
             services.AddTransient<IAdminLanguageService, AdminLanguageService>();
             services.AddTransient<IAdminLectureService, AdminLectureService>();
+            services.AddTransient<ICategoriesService, CategoriesService>();
+            services.AddTransient<ICoachSessionsService, CoachSessionsService>();
             services.AddTransient<ICoachesService, CoachesService>();
-            services.AddTransient<ICoursesService ,CoursesService>();
-            services.AddTransient<IOwnerService, OwnerService>();
-            services.AddTransient<IStatisticsService, StatisticsService>();
+            services.AddTransient<ICompanyService, CompanyService>();
+            services.AddTransient<ICoursesService, CoursesService>();
+            services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<IEmployeesService, EmployeesService>();
             services.AddTransient<ILanguagesService, LanguagesService>();
             services.AddTransient<ILectureService, LectureService>();
-            services.AddTransient<ICategoriesService, CategoriesService>();
-            services.AddTransient<IApplicationUserService, ApplicationUserService>();
+            services.AddTransient<IOwnerService, OwnerService>();
+            services.AddTransient<IStatisticsService, StatisticsService>();
 
 
             services.AddTransient<IEmailSender, EmailSender>();
@@ -134,10 +136,6 @@
                 options.SenderEmail = Configuration["ExternalProviders:SendGrid:SenderEmail"];
                 options.SenderName = Configuration["ExternalProviders:SendGrid:SenderName"];
             });
-
-            services.AddTransient<IEmployeesService, EmployeesService>();
-
-            services.AddTransient<ICompanyService, CompanyService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

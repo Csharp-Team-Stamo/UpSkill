@@ -3,7 +3,9 @@
     using System.Threading.Tasks;
     using Infrastructure.Models.Coach;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Options;
     using Services.Data.Contracts;
+    using UpSkill.Services.Data;
 
     [Route("[controller]")]
     [ApiController]
@@ -26,6 +28,12 @@
         public CoachesListingCatalogModel GetAllByOwnerId([FromQuery] string ownerId)
         {
             return coachesService.GetAllByOwnerId(ownerId);
+        }
+
+        [HttpGet("GetAllByEmployeeId")]
+        public CoachesListingCatalogModel GetAllByEmployeeId([FromQuery] string ownerId, [FromQuery] string userId)
+        {
+            return coachesService.GetAllByEmployeeId(ownerId, userId);
         }
 
         [HttpGet("GetAll")]
