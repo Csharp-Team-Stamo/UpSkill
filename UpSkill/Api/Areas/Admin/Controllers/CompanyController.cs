@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Infrastructure.Models.Company;
-    using UpSkill.Services.Data.Contracts;
+    using UpSkill.Services.Data.Admin.Contracts;
 
     public class CompanyController : AdminController
     {

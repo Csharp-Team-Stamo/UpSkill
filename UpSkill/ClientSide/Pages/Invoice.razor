@@ -1,7 +1,80 @@
 ﻿@page "/Invoice"
 
-<h3>Invoice</h3>
+@using UpSkill.Infrastructure.Models.Owner
 
-@code {
+<div class="mx-auto">
+    <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
+        <thead class="border-bottom-0">
+            <tr class="" style="color: white; background-color: #296cfb">
+                <th class="font-weight-bold text-left pl-4 cell-header-left">
+                    Course/Coach
+                </th>
+                <th class="text-left font-weight-bold pr-4 cell-header-right">
+                    Date
+                </th>
+                <th class="text-left font-weight-bold pr-4 cell-header-right">
+                    Price
+                    @*<div class="add-btn" @onclick="ShowPopup">+</div>*@
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in invoiceModel.MonthlyCoursesToPay)
+            {
+                <tr class=" border-bottom-0 underline">
+                    <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
+                        @course.CourseName
+                    </td>
+                    <td class="text-left pr-4 cell-right">
+                        @course.IssueDate.ToShortDateString()
+                    </td>
+                    <td>
+                        @($"{course.Price:f0}")&euro;
+                    </td>
+                </tr>
+            }
 
+            @foreach (var coach in invoiceModel.MonthlySessionsToPay)
+            {
+                <tr class=" border-bottom-0 underline">
+                    <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
+                        @coach.CoachName
+                    </td>
+                    <td class="text-left pr-4 cell-right">
+                        @coach.IssueDate.ToShortDateString()
+                    </td>
+                    <td>
+                        @($"{coach.Price:f0}")&euro;
+                    </td>
+                </tr>
+            }
+            <tr class=" border-bottom-0 underline">
+                <td class="text-left pl-4 font-weight-bold cell-left">Total</td>
+                <td></td>
+                <td>@($"{invoiceModel.TotalMonthlyAmount:f0}")&euro;</td>
+            </tr>
+            <tr class="text-center">
+                <td colspan="2" style="color: #16D696">
+                    View More
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@code { 
+    private OwnerInvoiceDetailsModel invoiceModel = new();
+
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // TODO get the OwnerId
+        var userId = this.user.Id().Result;
+
+        this.invoiceModel = await this.Client
+        .GetFromJsonAsync<OwnerInvoiceDetailsModel>
+        ($"/ownerdashboard/GetInvoiceInfo/{userId}");
+    }
 }

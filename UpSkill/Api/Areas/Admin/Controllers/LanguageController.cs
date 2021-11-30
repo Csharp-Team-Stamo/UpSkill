@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Infrastructure.Models.Language;
-    using UpSkill.Services.Data.Contracts;
+    using UpSkill.Services.Data.Admin.Contracts;
 
     public class LanguageController : AdminController
     {

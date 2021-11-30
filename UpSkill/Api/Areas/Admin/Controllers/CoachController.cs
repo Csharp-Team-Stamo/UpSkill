@@ -4,7 +4,7 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Infrastructure.Models.Coach;
-    using Services.Data.Contracts;
+    using Services.Data.Admin.Contracts;
     using System.Linq;
 
     public class CoachController : AdminController
