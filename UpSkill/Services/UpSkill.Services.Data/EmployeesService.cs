@@ -14,7 +14,6 @@
     using Infrastructure.Common.Pagination;
     using Microsoft.EntityFrameworkCore;
     using Paging;
-    using Microsoft.EntityFrameworkCore;
     using UpSkill.Infrastructure.Models.Lecture;
 
     public class EmployeesService : IEmployeesService
@@ -25,7 +24,6 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IAccountsService accountsService;
         private readonly IOwnerService ownerService;
-        private readonly IDeletableEntityRepository<EmployeeCourse> employeeCourseRepository;
         private readonly IDeletableEntityRepository<Coach> coachRepository;
 
         public EmployeesService(
@@ -37,8 +35,6 @@
             IDeletableEntityRepository<Coach> coachRepository)
         {
             this.employeeRepository = employeeRepository;
-            this.employeeCourseRepository = employeeCourseRepository;
-            this.courseRepo = courseRepo;
             this.userManager = userManager;
             this.accountsService = accountsService;
             this.ownerService = ownerService;
@@ -181,6 +177,16 @@
             await employeeRepository.SaveChangesAsync();
 
             return emailsFromErrorResult;
+        }
+
+        public async Task EnrollToCourseAsync(int courseId, string employeeId)
+        {
+            if (!employeeCourseRepository.All().Any(x => x.CourseId == courseId && x.StudentId == employeeId))
+            {
+                var employeeCourse = new EmployeeCourse { CourseId = courseId, StudentId = employeeId };
+                await employeeCourseRepository.AddAsync(employeeCourse);
+                await employeeCourseRepository.SaveChangesAsync();
+            }
         }
     }
 }

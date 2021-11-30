@@ -21,5 +21,7 @@
         Task EnrollToCourseAsync(int courseId, string employeeId);
 
         bool IsEmployeeEnrolledForCourse(string employeeId, int courseId);
+
+        Task<EmployeeCourseDetailsModel> GetCourseById(int id);
     }
 }
