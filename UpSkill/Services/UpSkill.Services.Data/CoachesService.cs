@@ -9,21 +9,27 @@
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
+    using UpSkill.Infrastructure.Common.Pagination;
+    using UpSkill.Infrastructure.Models.Dashboard;
+    using UpSkill.Services.Data.Paging;
 
     public class CoachesService : ICoachesService
     {
         private readonly IDeletableEntityRepository<Coach> coachesRepository;
         private readonly IDeletableEntityRepository<CoachOwner> coachesOwnerRepository;
         private readonly IDeletableEntityRepository<Employee> employeeRepository;
+        private readonly IDeletableEntityRepository<LiveSession> liveSessionsRepository;
 
         public CoachesService(
             IDeletableEntityRepository<Coach> coachesRepository,
             IDeletableEntityRepository<CoachOwner> coachesOwnerRepository,
-            IDeletableEntityRepository<Employee> employeeRepository)
+            IDeletableEntityRepository<Employee> employeeRepository,
+            IDeletableEntityRepository<LiveSession> liveSessionsRepository)
         {
             this.coachesRepository = coachesRepository;
             this.coachesOwnerRepository = coachesOwnerRepository;
             this.employeeRepository = employeeRepository;
+            this.liveSessionsRepository = liveSessionsRepository;
         }
 
         public Task<CoachDescriptionModel> GetByIdAsync(string coachId)
@@ -148,6 +154,17 @@
                 .Where(x => x.OwnerId == ownerId)
                 .Select(x => x.CoachId)
                 .ToList();
+        }
+
+        public PagedList<CoachDashboardStatItemModel> GetDashboardCoaches(string ownerId, int month, TableEntityParameters parameters)
+        {
+            var coaches = this.liveSessionsRepository.All()
+             .Where(x => x.Student.OwnerId == ownerId && x.End.Month == month)
+             .GroupBy(x => x.Coach.FullName)
+             .Select(x => new CoachDashboardStatItemModel { Name = x.Key, Sessions = x.Count() })
+             .ToList();
+
+            return PagedList<CoachDashboardStatItemModel>.ToPagedList(coaches, parameters.PageNumber, parameters.PageSize);
         }
     }
 }

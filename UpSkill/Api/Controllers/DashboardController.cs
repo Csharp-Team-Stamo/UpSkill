@@ -15,15 +15,18 @@
         private readonly IDashboardService dashboardService;
         private readonly IEmployeesService employeesService;
         private readonly ICoursesService coursesService;
+        private readonly ICoachesService coachesService;
 
         public DashboardController( 
             IDashboardService dashboardService,
             IEmployeesService employeesService,
-            ICoursesService coursesService)
+            ICoursesService coursesService,
+            ICoachesService coachesService)
         {
             this.dashboardService = dashboardService;
             this.employeesService = employeesService;
             this.coursesService = coursesService;
+            this.coachesService = coachesService;
         }
 
         [HttpGet("GetEpEmployeeDashboardInfoAsync")]
@@ -46,6 +49,17 @@
         {
             var monthAsInt = int.Parse(month);
             var courses = this.coursesService.GetDashboardCourses(ownerId, monthAsInt, parameters);
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(courses.MetaData));
+
+            return Ok(courses);
+        }
+
+
+        [HttpGet("GetOwnerCoachesStatistics")]
+        public IActionResult GetOwnerCoachesStatistics([FromQuery] string ownerId, string month, [FromQuery] TableEntityParameters parameters)
+        {
+            var monthAsInt = int.Parse(month);
+            var courses = this.coachesService.GetDashboardCoaches(ownerId, monthAsInt, parameters);
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(courses.MetaData));
 
             return Ok(courses);

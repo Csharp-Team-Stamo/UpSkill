@@ -132,7 +132,7 @@
         public PagedList<CourseDashboardStatItemModel> GetDashboardCourses(string ownerId, int month, TableEntityParameters parameters)
         {
             var courses = this.employeeCoursesRepository.All()
-                .Where(x => x.Student.OwnerId == ownerId && x.EnrollDate.Month == month)
+                .Where(x => x.Student.OwnerId == ownerId && x.EndDate.Month == month)
                 .GroupBy(x => x.Course.Name)
                 .Select(x => new CourseDashboardStatItemModel { Name = x.Key, Enrolled = x.Count() })
                 .ToList();

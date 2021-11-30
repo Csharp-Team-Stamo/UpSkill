@@ -19,6 +19,34 @@ namespace UpSkill.ClientSide.Infrastructure.Services
         {
             this.httpClient = httpClient;
         }
+
+        public async Task<PagingResponse<CoachDashboardStatItemModel>> GetOwnerCoachesStatsAsync(string ownerId, string month, TableEntityParameters parameters)
+        {
+            var queryStringParam = new Dictionary<string, string>
+            {
+                ["ownerId"] = ownerId,
+                ["month"] = month,
+                ["pageNumber"] = parameters.PageNumber.ToString()
+            };
+
+            var response = await httpClient
+                .GetAsync(QueryHelpers.AddQueryString("/Dashboard/GetOwnerCoachesStatistics", queryStringParam));
+            var content = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new ApplicationException(content);
+            }
+
+            var pagingResponse = new PagingResponse<CoachDashboardStatItemModel>
+            {
+                Items = JsonConvert.DeserializeObject<List<CoachDashboardStatItemModel>>(content),
+                MetaData = JsonConvert.DeserializeObject<MetaData>(response.Headers.GetValues("X-Pagination").First())
+            };
+
+            return pagingResponse;
+        }
+
         public async Task<PagingResponse<CourseDashboardStatItemModel>> GetOwnerCoursesStatsAsync(string ownerId, string month, TableEntityParameters parameters)
         {
             var queryStringParam = new Dictionary<string, string>

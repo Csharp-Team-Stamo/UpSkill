@@ -10,5 +10,7 @@ using System.Threading.Tasks;
     {
         Task<PagingResponse<CourseDashboardStatItemModel>> GetOwnerCoursesStatsAsync(string ownerId, string month, TableEntityParameters parameters);
 
+        Task<PagingResponse<CoachDashboardStatItemModel>> GetOwnerCoachesStatsAsync(string ownerId, string month, TableEntityParameters parameters);
+
     }
 }
