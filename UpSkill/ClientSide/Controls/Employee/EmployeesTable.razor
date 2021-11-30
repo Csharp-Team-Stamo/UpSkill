@@ -73,7 +73,7 @@ else
     private List<AddEmployeeFormModel> employeesModel;
 
     public MetaData MetaData { get; set; } = new MetaData();
-    private EmployeesParameters employeesParameters = new EmployeesParameters();
+    private TableEntityParameters employeesParameters = new ();
 
     protected override async Task OnInitializedAsync()
     {
@@ -86,19 +86,15 @@ else
 
     private async Task ViewMore()
     {
-        if (employeesParameters.PageNumber >= MetaData.TotalPages)
-        {
-
-        }
-        else
+        if (employeesParameters.PageNumber <= MetaData.TotalPages)
         {
             employeesParameters.PageNumber = MetaData.CurrentPage + 1;
             var pagingResponse = await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result, employeesParameters);
             employeesModel.AddRange(pagingResponse.Items);
             employeesModel = employeesModel.OrderBy(x => x.FullName).ToList();
         }
-
     }
+
     private void ShowLess()
     {
         employeesParameters.PageNumber = 1;

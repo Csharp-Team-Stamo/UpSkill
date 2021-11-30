@@ -8,6 +8,9 @@
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
+    using UpSkill.Infrastructure.Common.Pagination;
+    using UpSkill.Infrastructure.Models.Dashboard;
+    using UpSkill.Services.Data.Paging;
 
     public class CoursesService : ICoursesService
     {
@@ -124,6 +127,17 @@
             return coursesOwnerRepository.All().Where(x => x.OwnerId == ownerId)
                 .Select(x => x.CourseId)
                 .ToList();
+        }
+
+        public PagedList<CourseDashboardStatItemModel> GetDashboardCourses(string ownerId, int month, TableEntityParameters parameters)
+        {
+            var courses = this.employeeCoursesRepository.All()
+                .Where(x => x.Student.OwnerId == ownerId && x.EnrollDate.Month == month)
+                .GroupBy(x => x.Course.Name)
+                .Select(x => new CourseDashboardStatItemModel { Name = x.Key, Enrolled = x.Count() })
+                .ToList();
+
+            return PagedList<CourseDashboardStatItemModel>.ToPagedList(courses, parameters.PageNumber, parameters.PageSize);
         }
     }
 }

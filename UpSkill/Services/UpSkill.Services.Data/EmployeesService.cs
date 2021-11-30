@@ -24,11 +24,13 @@
         private readonly IDeletableEntityRepository<EmployeeCourse> employeeCourseRepository;
         private readonly IDeletableEntityRepository<Coach> coachRepository;
 
-        public EmployeesService(IDeletableEntityRepository<Employee> employeeRepository, UserManager<ApplicationUser> userManager,
+        public EmployeesService(
+            IDeletableEntityRepository<Employee> employeeRepository,
+            UserManager<ApplicationUser> userManager,
             IAccountsService accountsService,
             IOwnerService ownerService,
-            IDeletableEntityRepository<EmployeeCourse> employeeCourseRepository
-            , IDeletableEntityRepository<Coach> coachRepository)
+            IDeletableEntityRepository<EmployeeCourse> employeeCourseRepository,
+            IDeletableEntityRepository<Coach> coachRepository)
         {
             this.employeeRepository = employeeRepository;
             this.userManager = userManager;
@@ -43,7 +45,7 @@
             return this.employeeRepository.AllAsNoTracking().FirstOrDefault(x => x.UserId == userId).Id;
         }
 
-        public PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, EmployeesParameters parameters)
+        public PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, TableEntityParameters parameters)
         {
             var employees = employeeRepository.All().Where(x => x.User.CompanyId == int.Parse(companyId)).Select(x =>
                new AddEmployeeFormModel { FullName = x.User.FullName, Email = x.User.Email, }).ToList();
