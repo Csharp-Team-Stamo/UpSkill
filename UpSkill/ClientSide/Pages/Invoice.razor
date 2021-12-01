@@ -3,6 +3,75 @@
 @using UpSkill.Infrastructure.Models.Owner
 
 <div class="mx-auto">
+    <table class="table table_custom table-borderless">
+        <thead class="head">
+            <tr>
+                <th scope="col" colspan="3" class="text-center head-underline">
+                    <span class="previous-month" @onclick="() => PreviousMonth()">
+                        &lt;
+                    </span>
+                    <span>
+                        @monthAsString
+                    </span>
+                    <span class="next-month" @onclick="() => NextMonth()">
+                        &gt;
+                    </span>
+                </th>
+            </tr>
+            <tr class="">
+                <th class="cell-header-left">
+                    Course/Coach
+                </th>
+                <th class="cell-header-center">
+                    Date
+                </th>
+                <th class="cell-header-center">
+                    Price
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in invoiceModel.MonthlyCoursesToPay)
+            {
+                <tr class="border-bottom-0 underline">
+                    <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
+                        @course.CourseName
+                    </td>
+                    <td class="text-left pr-4 cell-right">
+                        @course.IssueDate.ToShortDateString()
+                    </td>
+                    <td>
+                        @($"{course.Price:f0}")&euro;
+                    </td>
+                </tr>
+            }
+
+            @foreach (var coach in invoiceModel.MonthlySessionsToPay)
+            {
+                <tr class="border-bottom-0 underline">
+                    <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
+                        @coach.CoachName
+                    </td>
+                    <td class="text-left pr-4 cell-right">
+                        @coach.IssueDate.ToShortDateString()
+                    </td>
+                    <td>
+                        @($"{coach.Price:f0}")&euro;
+                    </td>
+                </tr>
+            }
+            <tr class="">
+                <td class="text-left pl-4 font-weight-bold cell-left">Total</td>
+                <td></td>
+                <td>@($"{invoiceModel.TotalMonthlyAmount:f0}")&euro;</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+<!--<div class="mx-auto">
     <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
         <thead class="border-bottom-0">
             <tr class="" style="color: white; background-color: #296cfb">
@@ -13,9 +82,9 @@
                     Date
                 </th>
                 <th class="text-left font-weight-bold pr-4 cell-header-right">
-                    Price
+                    Price-->
                     @*<div class="add-btn" @onclick="ShowPopup">+</div>*@
-                </th>
+                <!--</th>
             </tr>
         </thead>
         <tbody>
@@ -60,7 +129,7 @@
             </tr>
         </tbody>
     </table>
-</div>
+</div>-->
 
 @code { 
     private OwnerInvoiceDetailsModel invoiceModel = new();
@@ -68,13 +137,58 @@
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
 
+    public string userId => this.user.Id().Result;
+
+    private int monthNum;
+    private DateTime currentDate => DateTime.UtcNow;
+    private string monthAsString => DateTimeFormatInfo.InvariantInfo.GetMonthName(monthNum);
+
     protected override async Task OnInitializedAsync()
     {
         // TODO get the OwnerId
-        var userId = this.user.Id().Result;
+        // var userId = this.user.Id().Result;
 
+        monthNum = currentDate.Month;
+
+        await GetInvoice(userId, monthNum);
+    }
+
+    private async Task GetInvoice(string userId, int monthNum)
+    {
         this.invoiceModel = await this.Client
         .GetFromJsonAsync<OwnerInvoiceDetailsModel>
-        ($"/ownerdashboard/GetInvoiceInfo/{userId}");
+        ($"/ownerdashboard/GetInvoiceInfo/{userId}/{monthNum}");
+    }
+
+    async Task PreviousMonth()
+    {
+        if(monthNum == 1)
+        {
+            monthNum = 12;
+        }
+        else
+        {
+            monthNum--;
+        }
+
+
+        await GetInvoice(userId, monthNum);
+        StateHasChanged();
+    }
+
+    async Task NextMonth()
+    {
+        if(monthNum == 12)
+        {
+            monthNum = 1;
+        }
+        else
+        {
+            monthNum++;
+        }
+
+        await GetInvoice(userId, monthNum);
+
+        StateHasChanged();
     }
 }

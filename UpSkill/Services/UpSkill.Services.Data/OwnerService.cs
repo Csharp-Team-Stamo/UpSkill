@@ -31,7 +31,7 @@
             return ownerRepository.All().FirstOrDefault(x => x.UserId == userId)?.Id;
         }
 
-        public async Task<OwnerInvoiceDetailsModel> GetInvoiceInfo(string ownerId)
+        public async Task<OwnerInvoiceDetailsModel> GetInvoiceInfo(string ownerId, int monthNum)
         {
             var invoiceInfo = new OwnerInvoiceDetailsModel();
 
@@ -39,7 +39,7 @@
                 .All()
                 .Where(ec =>
                             ec.Student.Owner.Id == ownerId &&
-                            ec.CreatedOn.Month == DateTime.UtcNow.Month)
+                            ec.CreatedOn.Month == monthNum)
                 .Select(ec => new CourseInvoiceModel
                 {
                     CourseId = ec.Course.Id,
@@ -54,7 +54,7 @@
                 .All()
                 .Where(s =>
                             s.Student.Owner.Id == ownerId &&
-                            s.End.Month == DateTime.UtcNow.Month)
+                            s.End.Month == monthNum)
                 .Select(s => new LiveSessionInvoiceModel
                 {
                     SessionId = s.Id,

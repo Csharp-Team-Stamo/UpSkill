@@ -6,7 +6,7 @@
     public interface IOwnerService
     {
         string GetId(string userId);
-        Task<OwnerInvoiceDetailsModel> GetInvoiceInfo(string ownerId);
+        Task<OwnerInvoiceDetailsModel> GetInvoiceInfo(string ownerId, int monthNum);
         Task<string> GetOwnerId(string userId);
     }
 }

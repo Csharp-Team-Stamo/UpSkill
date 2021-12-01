@@ -25,12 +25,15 @@
             this.ownerService = ownerService;
         }
 
-        [HttpGet("GetInvoiceInfo/{userId}")]
-        public async Task<ActionResult<OwnerInvoiceDetailsModel>> GetInvoiceInfo(string userId)
+        [HttpGet("GetInvoiceInfo/{userId}/{monthNum}")]
+        public async Task<ActionResult<OwnerInvoiceDetailsModel>> GetInvoiceInfo(
+            string userId, int monthNum)
         {
-            if(userId == null)
+            if(userId == null ||
+                monthNum <= 0 ||
+                monthNum > 12)
             {
-                return BadRequest("Valid Owner Id is required.");
+                return BadRequest("Valid Owner Id and month number is required.");
             }
 
             var user = await this.userManager
@@ -49,7 +52,7 @@
             }
 
             var invoiceInfo = await this.ownerService
-                .GetInvoiceInfo(ownerId);
+                .GetInvoiceInfo(ownerId, monthNum);
 
             return invoiceInfo;
         }
