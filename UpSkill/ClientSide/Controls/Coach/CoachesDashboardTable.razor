@@ -3,13 +3,13 @@
         <thead class="head">
             <tr>
                 <th scope="col" colspan="2" class="text-center head-underline">
-                    <span class="previous-month">
+                    <span class="previous-month" @onclick="() => PreviousMonth()">
                         &lt;
                     </span>
                     <span>
-                        September
+                        @monthAsString
                     </span>
-                    <span class="next-month">
+                    <span class="next-month" @onclick="() => NextMonth()">
                         &gt;
                     </span>
                 </th>
@@ -28,17 +28,38 @@
             {
                 <tr class=" underline">
                     <td class="cell-left">
-                        @coach.Key
+                        @coach.Name
                     </td>
                     <td class="cell-right">
-                        @coach.Value
+                        @coach.Sessions
                     </td>
                 </tr>
             }
             <tr>
-                <td colspan="2" class="view-more cell ">
-                    View More
-                </td>
+                @if (parameters.PageNumber >= MetaData.TotalPages && MetaData.TotalCount > parameters.PageSize)
+                {
+                    <td class="" colspan="3">
+                        <span @onclick="ShowLess" style="color: #16D696; cursor:pointer">
+                            Show less
+                        </span>
+                    </td>
+                }
+                else if (MetaData.TotalCount <= parameters.PageSize)
+                {
+                    <td colspan="3">
+                        <span style="color: gray;">
+                            Show more
+                        </span>
+                    </td>
+                }
+                else
+                {
+                    <td colspan="3">
+                        <span @onclick="ViewMore" style="color: #16D696; cursor: pointer;">
+                            Show more
+                        </span>
+                    </td>
+                }
             </tr>
         </tbody>
     </table>
@@ -47,12 +68,82 @@
 
 @code {
 
-    private Dictionary<string, int> coaches = new Dictionary<string, int>()
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
 
-{
-        { "Nikolay Kostov", 5 },
-        { "Stamo Petkov", 3},
-        { "Ivaylo Papazov", 13 },
-        { "Svetlin Nakov", 2 }
-    };
+    private List<CoachDashboardStatItemModel> coaches = new();
+
+    public MetaData MetaData { get; set; } = new MetaData();
+    private TableEntityParameters parameters = new();
+
+    private int month;
+    private string monthAsString => DateTimeFormatInfo.InvariantInfo.GetMonthName(month);
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        month = DateTime.UtcNow.Month;
+
+        var pagingResponse = await DashboardService
+            .GetOwnerCoachesStatsAsync(user.OwnerId().Result, month.ToString(), parameters);
+        coaches = pagingResponse.Items;
+        MetaData = pagingResponse.MetaData;
+        coaches = coaches.OrderBy(x => x.Name).ToList();
+
+    }
+
+    private async Task PreviousMonth()
+    {
+        month--;
+        @if (month == 0)
+        {
+            month = 12;
+        }
+
+        parameters = new();
+        var pagingResponse = await DashboardService
+           .GetOwnerCoachesStatsAsync(user.OwnerId().Result, month.ToString(), parameters);
+        coaches = pagingResponse.Items;
+        MetaData = pagingResponse.MetaData;
+        coaches = coaches.OrderBy(x => x.Name).ToList();
+    }
+
+    private async Task NextMonth()
+    {
+        month++;
+
+        @if (month == 12)
+        {
+            month = 1;
+        }
+
+        parameters = new();
+        var pagingResponse = await DashboardService
+           .GetOwnerCoachesStatsAsync(user.OwnerId().Result, month.ToString(), parameters);
+        coaches = pagingResponse.Items;
+        MetaData = pagingResponse.MetaData;
+        coaches = coaches.OrderBy(x => x.Name).ToList();
+    }
+
+    private async Task ViewMore()
+    {
+        if (parameters.PageNumber <= MetaData.TotalPages)
+        {
+            parameters.PageNumber = MetaData.CurrentPage + 1;
+            var pagingResponse = await DashboardService
+                .GetOwnerCoachesStatsAsync(user.OwnerId().Result, month.ToString(), parameters);
+            coaches.AddRange(pagingResponse.Items);
+            coaches = coaches.OrderBy(x => x.Name).ToList();
+        }
+    }
+
+    private void ShowLess()
+    {
+        parameters.PageNumber = 1;
+        MetaData.CurrentPage = 1;
+        coaches = coaches
+        .Take(MetaData.PageSize)
+        .OrderBy(x => x.Name)
+        .ToList();
+    }
 }

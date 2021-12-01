@@ -2,7 +2,7 @@
 
 @if (user.Role().Result == "Owner")
 {
-    <OwnerDashboardStatistics></OwnerDashboardStatistics>
+    <OwnerDashboardStatistics ></OwnerDashboardStatistics>
     <CoursesDashboardTable></CoursesDashboardTable>
     <CoachesDashboardTable></CoachesDashboardTable>
 }
@@ -14,4 +14,5 @@ else
 @code {
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
+
 }

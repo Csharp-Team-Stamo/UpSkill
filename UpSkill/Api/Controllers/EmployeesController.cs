@@ -8,6 +8,7 @@ namespace UpSkill.Api.Controllers
     using Newtonsoft.Json;
     using Services.Data.Contracts;
     using Infrastructure.Common.Pagination;
+    using UpSkill.Infrastructure.Models.Course;
 
     [Route("/[controller]")]
     [ApiController]
@@ -28,12 +29,12 @@ namespace UpSkill.Api.Controllers
         }
 
         [HttpGet("GetCollectionByCompanyId")]
-        public IActionResult GetCollectionByCompanyId([FromQuery]string companyId, [FromQuery] EmployeesParameters parameters)
+        public IActionResult GetCollectionByCompanyId([FromQuery]string companyId, [FromQuery] TableEntityParameters parameters)
         {
-            var empployees = employeesService.GetByCompanyId(companyId, parameters);
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(empployees.MetaData));
+            var employees = employeesService.GetByCompanyId(companyId, parameters);
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(employees.MetaData));
 
-            return Ok(empployees);
+            return Ok(employees);
         }
 
         [HttpPost("EnrollToCourseAsync")]
@@ -58,6 +59,25 @@ namespace UpSkill.Api.Controllers
             var employeeId = employeesService.GetEmployeeIdByAppUserId(userId);
 
             return await employeesService.GetEmployeeAchievementsInfoAsync(employeeId);
+        }
+
+        [HttpGet("GetCourseById/{id}")]
+        public async Task<ActionResult<CourseWatchDetailsModel>> GetCourseById(int id)
+        {
+            if (id <= 0)
+            {
+                return BadRequest("A valid Id is required");
+            }
+
+            var course = await this.employeesService
+                .GetCourseById(id);
+
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            return course;
         }
     }
 }
