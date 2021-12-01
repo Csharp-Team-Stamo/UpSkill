@@ -39,6 +39,7 @@
             builder.Services.AddTransient<IEmployeesService, EmployeesService>();
             builder.Services.AddTransient<ICoachesService, CoachesService>();
             builder.Services.AddTransient<ICoursesService, CoursesService>();
+            builder.Services.AddTransient<IDashboardService, DashboardService>();
 
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddBlazoredToast();
