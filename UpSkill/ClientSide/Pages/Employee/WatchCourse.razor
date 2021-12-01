@@ -1,22 +1,27 @@
-﻿@page "/watch/course"
+﻿@page "/watch/course/{Id:int}"
 @layout LogoAndAvatarOnlyLayout
 
-<div id="mainGrid">
-
+@if (lectureDetails.Id <= 0)
+{
     <div class="gridCol" id="lectureInfoHolder">
-        <h3 id="mainHL">Marketing</h3>
+        <h3 id="mainHL">@courseDetails.CourseName</h3>
         <iframe width="660"
                 height="315"
-                src="https://www.youtube.com/embed/TZCfydWF48c"
+                src="@courseDetails.CourseVideoUrl"
                 title="YouTube video player"
                 frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                allow="accelerometer;
+                       autoplay;
+                       clipboard-write;
+                       encrypted-media;
+                       gyroscope; picture-in-picture" allowfullscreen>
+
+        </iframe>
 
         <div class="my-5 courseInfoPar">
-            <h6>Lecture Description</h6>
+            <h6>Course Description</h6>
             <p>
-                This course emphasizes the fundamental skills of reading,
-                writing, speaking, listening, thinking, viewing and presenting.
+                @courseDetails.CourseDescription
             </p>
         </div>
 
@@ -29,10 +34,11 @@
                         Created by
                     </div>
                     <div style="font-weight: bold;">
-                        Natashka Nikolevna
+                        @courseDetails.AuthorFullName
                     </div>
                     <div class="company">
-                        Google
+                        <img src="@courseDetails.AuthorCompanyLogoUrl"
+                             width="60" height="30" />
                     </div>
                 </div>
             </div>
@@ -44,44 +50,54 @@
                 keynote speaker.
             </p>
         </div>
-
     </div>
+}
+else
+{
+    <LectureDetails CourseModel="courseDetails" Lecture="lectureDetails" />
+}
 
     <div class="gridCol" id="lectureAsideMenu">
         <h5>Lectures</h5>
-        @for (int i = 0; i < lectureNames.Count(); i++)
+        @for (int i = 0; i < courseDetails.Lectures.Count(); i++)
         {
             int num = i + 1;
-            string name = lectureNames.ElementAt(i);
+            var currentLecture = courseDetails.Lectures.ElementAt(i);
+            var lectureId = currentLecture.Id;
+            string title = currentLecture.Title;
 
-            <p>@num. <a href="#">@name</a></p>
+            <p>
+                @num.
+                
+                <a class="lecturePointer" @onclick="@(() => GetLectureDetails(lectureId))">
+                    @title
+                </a>
+            </p>
             <hr />
         }
 
         <a id="viewMoreButton" href="#">View More</a>
     </div>
-</div>
 
 @code {
-    private CourseDetailsServiceModel courseDetails = new();
+    private CourseWatchDetailsModel courseDetails = new();
+
+    private LectureDetailsModel lectureDetails = new();
 
     [Parameter]
     public int Id { get; set; }
 
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    this.courseDetails = await this.Client
-    //        .GetFromJsonAsync<CourseDetailsServiceModel>
-    //        ($"/course/getbyidasync/{Id}");
-    //}
-
-    private IEnumerable<string> lectureNames = new List<string>
+    protected override async Task OnInitializedAsync()
     {
-        "Introduction",
-        "Marketing",
-        "Digital Marketing",
-        "Business Model",
-        "Planning",
-        "Branding"
-    };
+        this.courseDetails = await this.Client
+            .GetFromJsonAsync<CourseWatchDetailsModel>
+            ($"/employees/getcoursebyid/{Id}");
+    }
+
+    private async Task GetLectureDetails(int lectureId)
+    {
+        this.lectureDetails = await this.Client
+        .GetFromJsonAsync<LectureDetailsModel>
+        ($"/courses/getlecturebyId/{courseDetails.CourseId}/{lectureId}");
+    }
 }

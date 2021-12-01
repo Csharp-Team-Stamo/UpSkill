@@ -14,6 +14,8 @@
     using Infrastructure.Common.Pagination;
     using Microsoft.EntityFrameworkCore;
     using Paging;
+    using UpSkill.Infrastructure.Models.Course;
+    using UpSkill.Infrastructure.Models.Lecture;
 
     public class EmployeesService : IEmployeesService
     {
@@ -23,6 +25,7 @@
         private readonly IOwnerService ownerService;
         private readonly IDeletableEntityRepository<EmployeeCourse> employeeCourseRepository;
         private readonly IDeletableEntityRepository<Coach> coachRepository;
+        private readonly IDeletableEntityRepository<Course> courseRepo;
 
         public EmployeesService(
             IDeletableEntityRepository<Employee> employeeRepository,
@@ -30,7 +33,8 @@
             IAccountsService accountsService,
             IOwnerService ownerService,
             IDeletableEntityRepository<EmployeeCourse> employeeCourseRepository,
-            IDeletableEntityRepository<Coach> coachRepository)
+            IDeletableEntityRepository<Coach> coachRepository,
+            IDeletableEntityRepository<Course> courseRepo)
         {
             this.employeeRepository = employeeRepository;
             this.userManager = userManager;
@@ -38,6 +42,7 @@
             this.ownerService = ownerService;
             this.employeeCourseRepository = employeeCourseRepository;
             this.coachRepository = coachRepository;
+            this.courseRepo = courseRepo;
         }
 
         public string GetEmployeeIdByAppUserId(string userId)
@@ -145,6 +150,32 @@
         {
             return employeeCourseRepository.All()
                 .Any(x => x.StudentId == employeeId && x.CourseId == courseId);
+        }
+
+        public async Task<CourseWatchDetailsModel> GetCourseById(int id)
+        {
+            var courseDetails = await this.courseRepo
+                .All()
+                .Select(c => new CourseWatchDetailsModel
+                {
+                    CourseId = c.Id,
+                    CourseName = c.Name,
+                    AuthorFullName = c.AuthorFullName,
+                    AuthorImageUrl = c.CreatorImageUrl,
+                    AuthorCompanyLogoUrl = c.CompanyLogoUrl,
+                    CourseDescription = c.Description,
+                    CourseVideoUrl = c.VideoUrl,
+                    Lectures = c.Lectures
+                    .Select(l => new LectureListingModel
+                    {
+                        Id = l.Id,
+                        Title = l.Title,
+                        CourseId = c.Id
+                    })
+                })
+                .FirstOrDefaultAsync(c => c.CourseId == id);
+
+            return courseDetails;
         }
     }
 }
