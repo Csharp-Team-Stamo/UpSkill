@@ -14,7 +14,7 @@
 
         string GetEmployeeIdByAppUserId(string userId);
 
-        PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, EmployeesParameters parameters);
+        PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, TableEntityParameters parameters);
 
         Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees);
 

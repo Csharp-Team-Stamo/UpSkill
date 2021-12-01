@@ -21,7 +21,7 @@
             this.httpClient = httpClient;
         }
 
-        public async Task<PagingResponse<AddEmployeeFormModel>> GetCollectionFromDbByCompanyIdAsync(string companyId, EmployeesParameters parameters)
+        public async Task<PagingResponse<AddEmployeeFormModel>> GetCollectionFromDbByCompanyIdAsync(string companyId, TableEntityParameters parameters)
         {
             var queryStringParam = new Dictionary<string, string>
             {

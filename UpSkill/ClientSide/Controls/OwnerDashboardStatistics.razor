@@ -15,7 +15,7 @@
 
                 </th>
                 <th class="cell-header">
-                    Active Courses
+                    Active Coaches
                 </th>
             </tr>
         </thead>
@@ -23,17 +23,17 @@
         <tbody>
             <tr class="">
                 <td class="cell first_col">
-                    3
+                    @statistics.Employees
                 </td>
                 <td>
                 </td>
                 <td class="cell second_col">
-                    6
+                    @statistics.Courses
                 </td>
                 <td>
                 </td>
                 <td class="cell third_col">
-                    12
+                    @statistics.Coaches
                 </td>
             </tr>
         </tbody>
@@ -43,6 +43,20 @@
 
 @code {
 
+
+    private OwnerDashboardStatisticsModel statistics = new();
+
+    [CascadingParameter]
+    public Task<AuthenticationState> user { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+            var ownerId = user.OwnerId().Result;
+            statistics = await Client.GetFromJsonAsync<OwnerDashboardStatisticsModel>($"/Dashboard/GetOwnerStatistics?ownerId={ownerId}");
+        
+    }
 }
 
 

@@ -28,12 +28,12 @@ namespace UpSkill.Api.Controllers
         }
 
         [HttpGet("GetCollectionByCompanyId")]
-        public IActionResult GetCollectionByCompanyId([FromQuery]string companyId, [FromQuery] EmployeesParameters parameters)
+        public IActionResult GetCollectionByCompanyId([FromQuery]string companyId, [FromQuery] TableEntityParameters parameters)
         {
-            var empployees = employeesService.GetByCompanyId(companyId, parameters);
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(empployees.MetaData));
+            var employees = employeesService.GetByCompanyId(companyId, parameters);
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(employees.MetaData));
 
-            return Ok(empployees);
+            return Ok(employees);
         }
 
         [HttpPost("EnrollToCourseAsync")]
