@@ -25,6 +25,7 @@
         private readonly IOwnerService ownerService;
         private readonly IDeletableEntityRepository<EmployeeCourse> employeeCourseRepository;
         private readonly IDeletableEntityRepository<Coach> coachRepository;
+        private readonly IDeletableEntityRepository<Course> courseRepo;
 
         public EmployeesService(
             IDeletableEntityRepository<Employee> employeeRepository,
