@@ -125,6 +125,7 @@
             services.AddTransient<IDashboardService, DashboardService>();
             services.AddTransient<IEmployeesService, EmployeesService>();
             services.AddTransient<ILanguagesService, LanguagesService>();
+            services.AddTransient<ILectureService, LectureService>();
             services.AddTransient<IOwnerService, OwnerService>();
             services.AddTransient<IStatisticsService, StatisticsService>();
 

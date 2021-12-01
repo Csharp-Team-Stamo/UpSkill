@@ -59,6 +59,14 @@
     opacity: 1;
 }
 
+#mainGrid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 @media (max-width: 640.98px) {
     .top-row:not(.auth) {
         display: none;
