@@ -4,16 +4,21 @@
     using Infrastructure.Models.Course;
     using Microsoft.AspNetCore.Mvc;
     using Services.Data.Contracts;
+    using UpSkill.Infrastructure.Models.Lecture;
 
     [Route("[controller]")]
     [ApiController]
     public class CoursesController : ControllerBase
     {
         private readonly ICoursesService coursesService;
+        private readonly ILectureService lectureService;
 
-        public CoursesController(ICoursesService coursesService)
+        public CoursesController(
+            ICoursesService coursesService,
+            ILectureService lectureService)
         {
             this.coursesService = coursesService;
+            this.lectureService = lectureService;
         }
 
         [HttpGet("GetByIdAsync")]
@@ -46,6 +51,27 @@
             await coursesService.RemoveCourseFromOwnerCoursesCollectionAsync(courseId, ownerId);
 
             return Ok();
+        }
+
+        [HttpGet("GetLectureById/{courseId}/{lectureId}")]
+        public async Task<ActionResult<LectureDetailsModel>> GetLectureById(
+            int courseId, int lectureId)
+        {
+            if (courseId < 1 || lectureId < 1)
+            {
+                return BadRequest("Both valid Course Id and Lecture Id are required.");
+            }
+
+            var lecture = await this.lectureService
+                .GetLectureById(courseId, lectureId);
+
+            if (lecture == null)
+            {
+                return NotFound(
+                    "Either the lecture, or at least one of the Ids you provided, does not exist.");
+            }
+
+            return lecture;
         }
     }
 }

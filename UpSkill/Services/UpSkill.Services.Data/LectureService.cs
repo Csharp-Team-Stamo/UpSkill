@@ -6,8 +6,9 @@
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
     using UpSkill.Infrastructure.Models.Lecture;
+    using UpSkill.Services.Data.Contracts;
 
-    public class LectureService
+    public class LectureService : ILectureService
     {
         private readonly IDeletableEntityRepository<Lecture> lectureRepo;
 
