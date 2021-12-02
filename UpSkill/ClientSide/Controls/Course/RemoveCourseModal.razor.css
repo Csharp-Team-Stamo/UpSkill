@@ -7,7 +7,7 @@
     pointer-events: auto;
 }
 
-.modal-text{
+.modal-text {
     color: white;
 }
 
@@ -50,7 +50,6 @@
 .btn-close {
     background: white;
     color: #296CFB;
-
     margin-right: 3rem;
 }
 
@@ -67,4 +66,12 @@
     margin-right: 10px;
     align-items: end;
     font-weight: lighter;
+    line-height: 3rem;
+    transition: font-weight 0.25s
 }
+
+
+    .myclose:hover {
+        cursor: pointer;
+        font-weight: 500;
+    }

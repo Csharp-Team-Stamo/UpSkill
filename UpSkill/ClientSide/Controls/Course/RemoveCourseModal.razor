@@ -3,10 +3,10 @@
 
     <div class="wrapper mx-auto">
         <div class="top">
-            <div @onclick="() => ShowModal(false)" class="myclose" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
+            <div  class="myclose" data-dismiss="modal" aria-label="Close">
+                <span @onclick="() => ShowModal(false)" class="close-btn" aria-hidden="true">&times;</span>
             </div>
-            <div>
+            <div class="modal-text">
                 Are you sure you want to remove this course?
             </div>
         </div>
