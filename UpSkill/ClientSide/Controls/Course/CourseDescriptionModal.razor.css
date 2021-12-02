@@ -37,11 +37,12 @@ div ::deep .close:hover{
 
 .btn-close {
     opacity: .75;
+    transition: font-weight 0.25s;
 }
 
 .btn-close:hover {
     opacity: .99;
-    font-weight: 400;
+    font-weight: 500;
     cursor: pointer;
 }
 

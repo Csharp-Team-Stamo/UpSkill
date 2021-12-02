@@ -58,12 +58,13 @@
                 else if (Coach.IsFeedbackNeeded)
                 {
                     <button href="" class="coach-btn feedback">Feedback</button>
-
                 }
+
                 else if (Coach.IsNotFirstCoachSession)
                 {
-                    <button href="" class="coach-btn " onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>
+                    <button href="" class="coach-btn "  onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>
                 }
+
                 else
                 {
                     <button href="" class="coach-btn" @onclick="ShowPopup">Book</button>
@@ -112,17 +113,19 @@
     [Parameter]
     public EventCallback<CoachesListingCatalogModel> UpdatedOwnerCoachesListingCatalogModel { get; set; }
 
-    //[Parameter]
-    //public static EventCallback<bool> ReceivedResult { get; set; }
+    [Parameter]
+    public static EventCallback<bool> ReceivedResult { get; set; }
 
-    [JSInvokable]
-    public static async Task AddedSession(int statusCode)
-    {
-        if (statusCode == 200)
-        {
-            //await ReceivedResult.InvokeAsync(true);
-        }
-    }
+    //[JSInvokable]
+    //public static async Task AddedSession(int statusCode)
+    //{
+    //    var instance = DotNetObjectReference.Create(this);
+
+    //    if (statusCode == 200)
+    //    {
+    //        await ReceivedResult.InvokeAsync(true);
+    //    }
+    //}
 
     protected override void OnInitialized()
     {
