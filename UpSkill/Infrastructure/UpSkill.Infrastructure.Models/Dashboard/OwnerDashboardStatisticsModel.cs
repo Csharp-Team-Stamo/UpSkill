@@ -13,5 +13,7 @@ namespace UpSkill.Infrastructure.Models.Dashboard
         public int Courses { get; set; }
 
         public int Coaches { get; set; }
+
+        public bool isReady { get; set; }
     }
 }
