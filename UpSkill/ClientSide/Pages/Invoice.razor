@@ -1,6 +1,9 @@
 ﻿@page "/Invoice"
 
 @using UpSkill.Infrastructure.Models.Owner
+@using UpSkill.ClientSide.Controls.Owner
+
+<OwnerInvoiceStatus MonthNum="monthNum"></OwnerInvoiceStatus>
 
 <div class="mx-auto">
     <table class="table table_custom table-borderless">
@@ -134,14 +137,15 @@
 @code { 
     private OwnerInvoiceDetailsModel invoiceModel = new();
 
+    private int monthNum;
+    private DateTime currentDate => DateTime.UtcNow;
+    private string monthAsString => DateTimeFormatInfo.InvariantInfo.GetMonthName(monthNum);
+    
+
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
 
     public string userId => this.user.Id().Result;
-
-    private int monthNum;
-    private DateTime currentDate => DateTime.UtcNow;
-    private string monthAsString => DateTimeFormatInfo.InvariantInfo.GetMonthName(monthNum);
 
     protected override async Task OnInitializedAsync()
     {

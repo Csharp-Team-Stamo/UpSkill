@@ -1,31 +1,28 @@
-﻿@using UpSkill.Infrastructure.Models.Admin
-
-<div class="mx-auto">
+﻿<div class="mx-auto">
     <table class="table table_custom table-borderless">
         <thead class="head">
             <tr class="">
                 <th class="cell-header ">
-                    Clients
+                    Invoice Status
                 </th>
                 <th class="separator">
 
                 </th>
                 <th class="cell-header ">
-                    Revenue
+                    Due Date
                 </th>
                 <th class="separator">
 
                 </th>
                 <th class="cell-header">
-                    Courses
                 </th>
-                <th class="separator">
+                @*<th class="separator">
 
                 </th>
                 <th class="cell-header">
                     Coaches
                 </th>
-                @*<th class="separator">
+                <th class="separator">
 
                 </th>*@
             </tr>
@@ -34,35 +31,56 @@
         <tbody>
             <tr class="">
                 <td class="cell first_col">
-                    @stats.ClientsNum
+                    @invoiceStatus
                 </td>
                 <td>
                 </td>
                 <td class="cell first_col">
-                    @stats.Revenue
+                    @invoiceDueDate
                 </td>
                 <td>
                 </td>
                 <td class="cell third_col">
-                    @stats.CoursesNum
+                    <a id="exportButton" href="/">
+                        Export
+                    </a>
                 </td>
                 <td>
                 </td>
-                <td class="cell second_col">
+                @*<td class="cell second_col">
                     @stats.CoachesNum
                 </td>
                 <td>
-                </td>
+                </td>*@
             </tr>
         </tbody>
     </table>
 </div>
-@code {
-    private AdminDasboardStatsServiceModel stats = new();
 
-    protected override async Task OnInitializedAsync()
+@code {
+    private string invoiceDueDate;
+
+    private string invoiceStatus;
+
+    [Parameter]
+    public int MonthNum { get; set; }
+
+
+    protected override void OnParametersSet()
     {
-        stats = await Client.GetFromJsonAsync<AdminDasboardStatsServiceModel>
-        ("/admin/statistics/getdashboardstats");
+        var now = DateTime.Now;
+
+        var daysInMonth = DateTime.DaysInMonth(now.Year, MonthNum);
+
+        if(now.Month <= MonthNum)
+        {
+            invoiceStatus = "Pending";
+        }
+        else
+        {
+            invoiceStatus = "Paid";
+        }
+
+        this.invoiceDueDate = $"{daysInMonth}.{MonthNum}.{now.Year}";
     }
 }
