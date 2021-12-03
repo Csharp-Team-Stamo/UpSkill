@@ -8,23 +8,30 @@
     <div @onclick="ShowPopup" class="card-img-top card-img-top-custom">
         <img class="img-custom" src="images/coach.png" />
     </div>
-    <div class="card-body">
-        <div class="row">
-            <div class="coach-profession col-6">
-                @Coach.CategoryName
+    <div class="card-body" style="
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: flex-end;
+">
+        <div class="mb-5">
+            <div class="row">
+                <div class="coach-profession col-6">
+                    @Coach.CategoryName
+                </div>
+                <div class="coach-name col-6 text-right">
+                    @Coach.FullName
+                </div>
             </div>
-            <div class="coach-name col-6 text-right">
-                @Coach.FullName
+            <div class="row">
+                <div class="coah-price col-6">
+                    @Coach.PricePerSession.ToString("##,##")€ per session
+                </div>
+                <div class="col-6 text-right">
+                    <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="coah-price col-6">
-                @Coach.PricePerSession.ToString("##,##")€ per session
-            </div>
-            <div class="col-6 text-right">
-                <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
-            </div>
-        </div>
+        <div>
         @if (user.IsAuthenticated().Result
      && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
         {
@@ -67,11 +74,42 @@
 
                 else
                 {
-                    <button href="" class="coach-btn" @onclick="ShowPopup">Book</button>
+                    <div class="text-center">
+                        <button @onclick="@(() =>AddCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
+                    </div>
                 }
+            }
 
-            </div>
-        }
+            else if (
+                user.Role().Result == GlobalConstants.EmployeeRoleName
+                && (NavigationManager.Uri.EndsWith("Coaches") || NavigationManager.Uri.EndsWith("Dashboard")))
+            {
+                <div class="text-center">
+                    @*<button href="" class="coach-btn " onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>*@
+
+                    @if (Coach.IsCoachSessionPending)
+                    {
+                        <button href="" class="coach-btn">Pending</button>
+                    }
+                    else if (Coach.IsFeedbackNeeded)
+                    {
+                        <button href="" class="coach-btn feedback">Feedback</button>
+                    }
+
+                    else if (Coach.IsNotFirstCoachSession)
+                    {
+                        <button href="" class="coach-btn " onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>
+                    }
+
+                    else
+                    {
+                        <button href="" class="coach-btn" @onclick="ShowPopup">Book</button>
+                    }
+
+                </div>
+            }
+        </div>
+       
 
     </div>
 </div>
@@ -146,6 +184,10 @@
 
     protected override void OnAfterRender(bool firstRender)
     {
+
+        var result = Js.InvokeAsync<bool>("attachObjectReference", DotNetObjectReference.Create(this));
+        Console.WriteLine(result);
+
         Js.InvokeAsync<bool>("addEventListener");
     }
 
