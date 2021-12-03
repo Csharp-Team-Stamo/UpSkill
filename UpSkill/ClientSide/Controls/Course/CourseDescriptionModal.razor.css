@@ -34,7 +34,6 @@ div ::deep .close:hover{
     opacity: 0.99;
 }
 
-
 .btn-close {
     opacity: .75;
     transition: font-weight 0.25s;
@@ -210,4 +209,3 @@ div {
     top: 56%;
     right: 0%;
 }
-

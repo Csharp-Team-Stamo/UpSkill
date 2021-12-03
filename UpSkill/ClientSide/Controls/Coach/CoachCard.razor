@@ -32,15 +32,44 @@
             </div>
         </div>
         <div>
-            @if (user.IsAuthenticated().Result
-    && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
-            {
-                if (IsCoachAdded())
-                {   //ToDo Should I delete it from the mapping table ' UpSkill.Data.Common.Models.EmployeeCourse.cs'  as well. Same thing and in CourseCard.razor
+        @if (user.IsAuthenticated().Result
+     && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
+        {
+            if (IsCoachAdded())
+            {   //ToDo Should I delete it from the mapping table ' UpSkill.Data.Common.Models.EmployeeCourse.cs'  as well. Same thing and in CourseCard.razor
 
-                    <div class="text-center">
-                        <button @onclick="@(() => RemoveCoach(Coach.Id, user.OwnerId().Result))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
-                    </div>
+                <div class="text-center">
+                    <button @onclick="@(() => ShowRemoveCoachPopup(true))" class="coach-btn"><span class="coach-btn-text">Remove</span></button>
+                </div>
+            }
+
+            else
+            {
+                <div class="text-center">
+                    <button @onclick="@(() =>AddCoach(Coach.Id))" class="coach-btn"><span class="coach-btn-text">Add</span></button>
+                </div>
+            }
+        }
+
+        else if (
+            user.Role().Result == GlobalConstants.EmployeeRoleName
+            && (NavigationManager.Uri.EndsWith("Coaches") || NavigationManager.Uri.EndsWith("Dashboard")))
+        {
+            <div class="text-center">
+                @*<button href="" class="coach-btn " onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>*@
+
+                @if (Coach.IsCoachSessionPending)
+                {
+                    <button href="" class="coach-btn">Pending</button>
+                }
+                else if (Coach.IsFeedbackNeeded)
+                {
+                    <button href="" class="coach-btn feedback">Feedback</button>
+                }
+
+                else if (Coach.IsNotFirstCoachSession)
+                {
+                    <button href="" class="coach-btn " onclick="Calendly.initPopupWidget({ url: '@CalendlyPrefilledUriParams' }); return false;">New Slot</button>
                 }
 
                 else
@@ -85,27 +114,28 @@
     </div>
 </div>
 
-
 @* Modal *@
 @if (show)
 {
     <CoachDescriptionModal CoachDetails="@Coach" SetShow="SetShowValue" CalendlyAddSessionUri="@CalendlyPrefilledUriParams" />
 }
 
+@if (showRemoveCoachModal)
+{
+    <RemoveCoachModal CoachId="@Coach.Id" RemoveCoach="RemoveCoach"  ShowRemoveModal="ShowRemoveCoachPopup" />
+}
 
 @code {
-
-    public string CalendlyPrefilledUriParams { get; set; }
-
-
+    private bool showRemoveCoachModal = false;
 
     private bool show = false;
 
     private bool showSessionModal = false;
 
+    public string CalendlyPrefilledUriParams { get; set; }
+
     [Parameter]
     public string BackgroundColor { get; set; }
-
 
     [Parameter]
     public CoachInListCatalogModel Coach { get; set; }
@@ -161,8 +191,9 @@
         Js.InvokeAsync<bool>("addEventListener");
     }
 
-    private async Task AddCoach(string coachId, string ownerId)
+    private async Task AddCoach(string coachId)
     {
+        var ownerId = user.OwnerId().Result;
         await CoachesService.AddCoachInOwnerCoachesCollectionAsync(coachId, ownerId);
         await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
         BackgroundColor = "#EAF0FF";
@@ -174,15 +205,19 @@
 
     //}
 
-
-    private async Task RemoveCoach(string coachId, string ownerId)
+    private async Task RemoveCoach(string coachId)
     {
-        var userId = user.Id().Result;
+        var ownerId = user.OwnerId().Result;
 
         await CoachesService.RemoveCoachFromOwnerCoachCollectionAsync(coachId, ownerId);
         await UpdatedCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllAsync(ownerId));
         await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllByOwnerIdAsync(ownerId));
         BackgroundColor = "#FFFFFF";
+    }
+
+    private void ShowRemoveCoachPopup(bool show)
+    {
+        showRemoveCoachModal = show;
     }
 
     private bool IsCoachAdded()
@@ -204,7 +239,6 @@
     {
         showSessionModal = true;
     }
-
 
     private void SetShowSessionValue(bool value)
     {

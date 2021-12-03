@@ -1,0 +1,70 @@
+﻿.modal-body {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    margin-top: 15%;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    pointer-events: auto;
+}
+
+.modal-text {
+    color: white;
+}
+
+.wrapper {
+    font-family: Montserrat;
+    display: grid;
+    grid-template-areas:
+        "top"
+        "bottom";
+    grid-template-rows: 1fr 1fr;
+    background: white;
+    margin-top: 10%;
+    max-width: 30%;
+    height: 35%;
+}
+
+.top {
+    background-color: #296CFB;
+}
+
+.bottom {
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.button {
+    background: #296CFB 0% 0% no-repeat padding-box;
+    border: 2px solid #296CFB;
+    opacity: 1;
+    color: white;
+    width: 6rem;
+}
+
+.btn-close {
+    background: white;
+    color: #296CFB;
+    margin-right: 3rem;
+}
+
+.myclose {
+    grid-column: 5/6;
+    grid-row: 1/3;
+    color: white;
+    font-size: 3rem;
+    display: flex;
+    justify-content: right;
+    margin-right: 10px;
+    align-items: end;
+    font-weight: lighter;
+    line-height: 3rem;
+    transition: font-weight 0.25s
+}
+
+    .myclose:hover {
+        cursor: pointer;
+        font-weight: 500;
+    }
