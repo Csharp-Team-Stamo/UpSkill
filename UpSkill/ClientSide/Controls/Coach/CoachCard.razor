@@ -76,7 +76,6 @@
     </div>
 </div>
 
-
 @* Modal *@
 @if (show)
 {
@@ -89,19 +88,16 @@
 }
 
 @code {
-
-    public string CalendlyPrefilledUriParams { get; set; }
-
     private bool showRemoveCoachModal = false;
-
 
     private bool show = false;
 
     private bool showSessionModal = false;
 
+    public string CalendlyPrefilledUriParams { get; set; }
+
     [Parameter]
     public string BackgroundColor { get; set; }
-
 
     [Parameter]
     public CoachInListCatalogModel Coach { get; set; }
@@ -167,7 +163,6 @@
 
     //}
 
-
     private async Task RemoveCoach(string coachId)
     {
         var ownerId = user.OwnerId().Result;
@@ -177,7 +172,6 @@
         await UpdatedOwnerCoachesListingCatalogModel.InvokeAsync(await CoachesService.GetAllByOwnerIdAsync(ownerId));
         BackgroundColor = "#FFFFFF";
     }
-
 
     private void ShowRemoveCoachPopup(bool show)
     {
@@ -203,7 +197,6 @@
     {
         showSessionModal = true;
     }
-
 
     private void SetShowSessionValue(bool value)
     {
