@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace UpSkill.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -27,7 +27,7 @@ namespace UpSkill.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -39,13 +39,33 @@ namespace UpSkill.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CoachFeedback",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Value = table.Column<byte>(type: "tinyint", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    LiveSessionId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CoachFeedback", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Companies",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    UIC = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UIC = table.Column<string>(type: "nvarchar(9)", maxLength: 9, nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -63,7 +83,7 @@ namespace UpSkill.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -80,7 +100,7 @@ namespace UpSkill.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -117,10 +137,19 @@ namespace UpSkill.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Company = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AvatarImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    CompanyLogoUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    VideoUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SessionDescription = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    SkillsLearn = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    DiscussionDurationInMinutes = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ResourcesCount = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
                     PricePerSession = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
+                    CalendlyPopupUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -142,8 +171,10 @@ namespace UpSkill.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    ImageToBase64 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CompanyId = table.Column<int>(type: "int", nullable: false),
+                    Summary = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -170,6 +201,48 @@ namespace UpSkill.Data.Migrations
                         name: "FK_AspNetUsers_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Courses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
+                    SkillsLearn = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    CourseDurationInHours = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    LecturesCount = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AuthorFullName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    AuthorImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CompanyName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
+                    CompanyLogoUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    VideoUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    LanguageId = table.Column<int>(type: "int", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Courses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Courses_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Courses_Languages_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Languages",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -205,68 +278,6 @@ namespace UpSkill.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Courses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
-                    CoachId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AuthorFullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AuthorCompany = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
-                    VideoUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Courses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Courses_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Courses_Coaches_CoachId",
-                        column: x => x.CoachId,
-                        principalTable: "Coaches",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SessionSlots",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Start = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    End = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CoachId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SessionSlots", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_SessionSlots_Coaches_CoachId",
-                        column: x => x.CoachId,
-                        principalTable: "Coaches",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
@@ -274,11 +285,18 @@ namespace UpSkill.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUserClaims_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_AspNetUserClaims_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -352,42 +370,11 @@ namespace UpSkill.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CoachVotes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CoachId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Value = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CoachVotes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_CoachVotes_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_CoachVotes_Coaches_CoachId",
-                        column: x => x.CoachId,
-                        principalTable: "Coaches",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Owners",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CompanyId = table.Column<int>(type: "int", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -419,7 +406,7 @@ namespace UpSkill.Data.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CourseId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Value = table.Column<int>(type: "int", nullable: false),
+                    Value = table.Column<byte>(type: "tinyint", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -436,6 +423,32 @@ namespace UpSkill.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_CourseVotes_Courses_CourseId",
+                        column: x => x.CourseId,
+                        principalTable: "Courses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Lectures",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CourseId = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    VideoUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lectures", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Lectures_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
@@ -507,9 +520,9 @@ namespace UpSkill.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CompanyId = table.Column<int>(type: "int", nullable: true),
-                    OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -534,6 +547,79 @@ namespace UpSkill.Data.Migrations
                         name: "FK_Employees_Owners_OwnerId",
                         column: x => x.OwnerId,
                         principalTable: "Owners",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Invoices",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    StatusId = table.Column<int>(type: "int", nullable: false),
+                    BuyerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    TransactionDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CoachId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CompanyId = table.Column<int>(type: "int", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Invoices", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Invoices_Coaches_CoachId",
+                        column: x => x.CoachId,
+                        principalTable: "Coaches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Invoices_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Invoices_InvoiceStatuses_StatusId",
+                        column: x => x.StatusId,
+                        principalTable: "InvoiceStatuses",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Invoices_Owners_BuyerId",
+                        column: x => x.BuyerId,
+                        principalTable: "Owners",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LectureResources",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LectureId = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DownloadUrl = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LectureResources", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LectureResources_Lectures_LectureId",
+                        column: x => x.LectureId,
+                        principalTable: "Lectures",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -569,14 +655,16 @@ namespace UpSkill.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Grades",
+                name: "EmployeeCourses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     CourseId = table.Column<int>(type: "int", nullable: false),
-                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    Value = table.Column<double>(type: "float", nullable: false),
+                    EnrollDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Grade = table.Column<byte>(type: "tinyint", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -584,71 +672,17 @@ namespace UpSkill.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Grades", x => x.Id);
+                    table.PrimaryKey("PK_EmployeeCourses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Grades_Courses_CourseId",
+                        name: "FK_EmployeeCourses_Courses_CourseId",
                         column: x => x.CourseId,
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Grades_Employees_StudentId",
+                        name: "FK_EmployeeCourses_Employees_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Invoices",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    StatusId = table.Column<int>(type: "int", nullable: false),
-                    BuyerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TransactionTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CoachId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CompanyId = table.Column<int>(type: "int", nullable: true),
-                    EmployeeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Invoices", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Invoices_Coaches_CoachId",
-                        column: x => x.CoachId,
-                        principalTable: "Coaches",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Invoices_Companies_CompanyId",
-                        column: x => x.CompanyId,
-                        principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Invoices_Employees_EmployeeId",
-                        column: x => x.EmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Invoices_InvoiceStatuses_StatusId",
-                        column: x => x.StatusId,
-                        principalTable: "InvoiceStatuses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Invoices_Owners_BuyerId",
-                        column: x => x.BuyerId,
-                        principalTable: "Owners",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -658,13 +692,18 @@ namespace UpSkill.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    CoachId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    CoachId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Topic = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
                     Start = table.Column<DateTime>(type: "datetime2", nullable: false),
                     End = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EventSessionType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    JoinSessionUri = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CancelationUri = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReschedulingUri = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CoachFeedbackId = table.Column<int>(type: "int", nullable: true),
+                    GivenFeedback = table.Column<bool>(type: "bit", nullable: false),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
@@ -674,49 +713,19 @@ namespace UpSkill.Data.Migrations
                 {
                     table.PrimaryKey("PK_LiveSessions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_LiveSessions_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_LiveSessions_Coaches_CoachId",
                         column: x => x.CoachId,
                         principalTable: "Coaches",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_LiveSessions_CoachFeedback_CoachFeedbackId",
+                        column: x => x.CoachFeedbackId,
+                        principalTable: "CoachFeedback",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_LiveSessions_Employees_StudentId",
-                        column: x => x.StudentId,
-                        principalTable: "Employees",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StudentCourses",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    StudentId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    CourseId = table.Column<int>(type: "int", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StudentCourses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_StudentCourses_Courses_CourseId",
-                        column: x => x.CourseId,
-                        principalTable: "Courses",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_StudentCourses_Employees_StudentId",
                         column: x => x.StudentId,
                         principalTable: "Employees",
                         principalColumn: "Id",
@@ -734,6 +743,11 @@ namespace UpSkill.Data.Migrations
                 column: "NormalizedName",
                 unique: true,
                 filter: "[NormalizedName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_ApplicationUserId",
+                table: "AspNetUserClaims",
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -803,6 +817,11 @@ namespace UpSkill.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CoachFeedback_IsDeleted",
+                table: "CoachFeedback",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CoachLanguages_CoachId",
                 table: "CoachLanguages",
                 column: "CoachId");
@@ -833,21 +852,6 @@ namespace UpSkill.Data.Migrations
                 column: "OwnerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CoachVotes_CoachId",
-                table: "CoachVotes",
-                column: "CoachId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CoachVotes_IsDeleted",
-                table: "CoachVotes",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CoachVotes_UserId",
-                table: "CoachVotes",
-                column: "UserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Companies_IsDeleted",
                 table: "Companies",
                 column: "IsDeleted");
@@ -873,14 +877,14 @@ namespace UpSkill.Data.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_CoachId",
-                table: "Courses",
-                column: "CoachId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Courses_IsDeleted",
                 table: "Courses",
                 column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Courses_LanguageId",
+                table: "Courses",
+                column: "LanguageId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseVotes_CourseId",
@@ -896,6 +900,21 @@ namespace UpSkill.Data.Migrations
                 name: "IX_CourseVotes_UserId",
                 table: "CourseVotes",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeCourses_CourseId",
+                table: "EmployeeCourses",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeCourses_IsDeleted",
+                table: "EmployeeCourses",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EmployeeCourses_StudentId",
+                table: "EmployeeCourses",
+                column: "StudentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_CompanyId",
@@ -918,21 +937,6 @@ namespace UpSkill.Data.Migrations
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Grades_CourseId",
-                table: "Grades",
-                column: "CourseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Grades_IsDeleted",
-                table: "Grades",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Grades_StudentId",
-                table: "Grades",
-                column: "StudentId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Invoices_BuyerId",
                 table: "Invoices",
                 column: "BuyerId");
@@ -946,11 +950,6 @@ namespace UpSkill.Data.Migrations
                 name: "IX_Invoices_CompanyId",
                 table: "Invoices",
                 column: "CompanyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Invoices_EmployeeId",
-                table: "Invoices",
-                column: "EmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Invoices_IsDeleted",
@@ -973,9 +972,31 @@ namespace UpSkill.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_LiveSessions_CategoryId",
+                name: "IX_LectureResources_IsDeleted",
+                table: "LectureResources",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LectureResources_LectureId",
+                table: "LectureResources",
+                column: "LectureId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Lectures_CourseId",
+                table: "Lectures",
+                column: "CourseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Lectures_IsDeleted",
+                table: "Lectures",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LiveSessions_CoachFeedbackId",
                 table: "LiveSessions",
-                column: "CategoryId");
+                column: "CoachFeedbackId",
+                unique: true,
+                filter: "[CoachFeedbackId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_LiveSessions_CoachId",
@@ -1006,31 +1027,6 @@ namespace UpSkill.Data.Migrations
                 name: "IX_Owners_UserId",
                 table: "Owners",
                 column: "UserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SessionSlots_CoachId",
-                table: "SessionSlots",
-                column: "CoachId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_SessionSlots_IsDeleted",
-                table: "SessionSlots",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentCourses_CourseId",
-                table: "StudentCourses",
-                column: "CourseId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentCourses_IsDeleted",
-                table: "StudentCourses",
-                column: "IsDeleted");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_StudentCourses_StudentId",
-                table: "StudentCourses",
-                column: "StudentId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -1060,52 +1056,52 @@ namespace UpSkill.Data.Migrations
                 name: "CoachOwners");
 
             migrationBuilder.DropTable(
-                name: "CoachVotes");
-
-            migrationBuilder.DropTable(
                 name: "CourseOwners");
 
             migrationBuilder.DropTable(
                 name: "CourseVotes");
 
             migrationBuilder.DropTable(
-                name: "Grades");
+                name: "EmployeeCourses");
 
             migrationBuilder.DropTable(
                 name: "Invoices");
 
             migrationBuilder.DropTable(
+                name: "LectureResources");
+
+            migrationBuilder.DropTable(
                 name: "LiveSessions");
-
-            migrationBuilder.DropTable(
-                name: "SessionSlots");
-
-            migrationBuilder.DropTable(
-                name: "StudentCourses");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Languages");
-
-            migrationBuilder.DropTable(
                 name: "InvoiceStatuses");
 
             migrationBuilder.DropTable(
-                name: "Courses");
+                name: "Lectures");
+
+            migrationBuilder.DropTable(
+                name: "Coaches");
+
+            migrationBuilder.DropTable(
+                name: "CoachFeedback");
 
             migrationBuilder.DropTable(
                 name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "Coaches");
+                name: "Courses");
 
             migrationBuilder.DropTable(
                 name: "Owners");
 
             migrationBuilder.DropTable(
                 name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Languages");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -13,7 +13,6 @@
         [MaxLength(NameMaxLen)]
         public string Name { get; set; }
 
-        [Required]
         [IsEmail]
         public string Email { get; set; }
 
