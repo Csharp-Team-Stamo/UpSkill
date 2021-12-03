@@ -37,7 +37,9 @@ else
                             @course.EndDate
                         </td>
                         <td class="cell-left-grade">
-                            <span style="color: @fieldColor">@(course.Grade == "Pending" ? course.Grade : course.Grade + " / 100")</span>
+                            <span style="color: 
+                                @fieldColor">@(course.Grade == "Pending" ? course.Grade : course.Grade + " / 100")
+                            </span>
                         </td>
                     </tr>
                 }
@@ -51,7 +53,6 @@ else
 @code {
 
     private string fieldColor;
-    private string grade;
 
     [Parameter]
     public List<CourseInEmployeeAchievementsModel> Courses { get; set; }

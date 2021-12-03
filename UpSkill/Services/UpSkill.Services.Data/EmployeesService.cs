@@ -70,7 +70,8 @@
                     Grade = x.Grade == null ? "Pending" : x.Grade.ToString(),
                 }).ToListAsync(),
                 Coaches = await coachRepository.All()
-                    .Where(x => x.LiveSessions.Any(ls => ls.StudentId == employeeId && ls.End < DateTime.Now)).Select(x => new CoachInEmployeeAchievementsModel
+                    .Where(x => x.LiveSessions.Any(ls => ls.StudentId == employeeId && ls.End < DateTime.Now))
+                    .Select(x => new CoachInEmployeeAchievementsModel
                     {
                         CoachName = x.FullName,
                         FirstLiveSessionDate = x.LiveSessions
@@ -161,7 +162,7 @@
                     CourseId = c.Id,
                     CourseName = c.Name,
                     AuthorFullName = c.AuthorFullName,
-                    AuthorImageUrl = c.CreatorImageUrl,
+                    AuthorImageUrl = c.AuthorImageUrl,
                     AuthorCompanyLogoUrl = c.CompanyLogoUrl,
                     CourseDescription = c.Description,
                     CourseVideoUrl = c.VideoUrl,

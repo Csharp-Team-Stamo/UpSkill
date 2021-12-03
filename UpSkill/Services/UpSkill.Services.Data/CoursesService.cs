@@ -44,7 +44,7 @@
                     CategoryName = x.Category.Name,
                     AuthorFullName = x.AuthorFullName,
                     Company = x.CompanyName,
-                    CreatorAvatarImgUrl = x.CreatorImageUrl,
+                    CreatorAvatarImgUrl = x.AuthorImageUrl,
                     CourseDescription = x.Description,
                     VideoUrl = x.VideoUrl,
                     SkillsLearn = x.SkillsLearn,

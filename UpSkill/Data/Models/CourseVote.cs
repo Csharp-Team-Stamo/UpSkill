@@ -11,7 +11,6 @@
         public string UserId { get; init; }
         public ApplicationUser User { get; init; }
 
-        [Required]
-        public int Value { get; init; }
+        public byte Value { get; init; }
     }
 }

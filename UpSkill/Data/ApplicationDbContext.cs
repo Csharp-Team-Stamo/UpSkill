@@ -37,15 +37,13 @@
         public DbSet<Course> Courses { get; init; }
         public DbSet<Employee> Employees { get; init; }
         //ToDo prop name can be renamed to EmployeeCourse
-        public DbSet<EmployeeCourse> StudentCourses { get; init; }
-        public DbSet<Grade> Grades { get; init; }
+        public DbSet<EmployeeCourse> EmployeeCourses { get; init; }
         public DbSet<Invoice> Invoices { get; init; }
         public DbSet<InvoiceStatus> InvoiceStatuses { get; init; }
         public DbSet<Lecture> Lectures { get; set; }
         public DbSet<LectureResource> LectureResources { get; set; }
         public DbSet<LiveSession> LiveSessions { get; init; }
         public DbSet<Owner> Owners { get; init; }
-        public DbSet<SessionSlot> SessionSlots { get; init; }
         public DbSet<CoachOwner> CoachOwners { get; init; }
         public DbSet<CoachLanguage> CoachLanguages { get; init; }
         public DbSet<CoachEmployee> CoachEmployees { get; init; }

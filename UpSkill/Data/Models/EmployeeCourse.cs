@@ -1,6 +1,7 @@
 ﻿namespace UpSkill.Data.Models
 {
     using System;
+    using System.ComponentModel.DataAnnotations;
     using UpSkill.Data.Common.Models;
 
     public class EmployeeCourse : BaseDeletableModel<int>
@@ -11,6 +12,8 @@
             EndDate = EnrollDate.AddMonths(1);
         }
 
+
+        [Required]
         public string StudentId { get; set; }
         public Employee Student { get; set; }
 

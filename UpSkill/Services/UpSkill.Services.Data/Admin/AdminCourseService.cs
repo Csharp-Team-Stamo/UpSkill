@@ -17,7 +17,6 @@
         private readonly IAdminLanguageService languageService;
         private readonly IDeletableEntityRepository<CourseOwner> courseOwnersRepo;
         private readonly IDeletableEntityRepository<CourseVote> courseVotesRepo;
-        private readonly IDeletableEntityRepository<Grade> gradesRepo;
         private readonly IDeletableEntityRepository<EmployeeCourse> employeeCourseRepo;
 
         public AdminCourseService(
@@ -26,7 +25,6 @@
             IAdminLanguageService languageService,
             IDeletableEntityRepository<CourseOwner> courseOwnersRepo,
             IDeletableEntityRepository<CourseVote> courseVotesRepo,
-            IDeletableEntityRepository<Grade> gradesRepo,
             IDeletableEntityRepository<EmployeeCourse> employeeCourseRepo)
         {
             this.courseRepo = courseRepo;
@@ -34,7 +32,6 @@
             this.languageService = languageService;
             this.courseOwnersRepo = courseOwnersRepo;
             this.courseVotesRepo = courseVotesRepo;
-            this.gradesRepo = gradesRepo;
             this.employeeCourseRepo = employeeCourseRepo;
         }
 
@@ -69,7 +66,7 @@
                 Description = input.Description,
                 ImageUrl = input.ImageUrl,
                 AuthorFullName = input.AuthorFullName,
-                CreatorImageUrl = input.AuthorImageUrl,
+                AuthorImageUrl = input.AuthorImageUrl,
                 CompanyLogoUrl = input.CompanyLogoUrl,
                 CompanyName = input.CompanyName,
                 LecturesCount = input.LecturesCount,
@@ -102,7 +99,6 @@
 
             await DeleteInCourseOwnersTable(courseToDelete.Id);
             await DeleteInCourseVotesTable(courseToDelete.Id);
-            await DeleteCourseInGradesTable(courseToDelete.Id);
             await DeleteInEmployeeCoursesTable(courseToDelete.Id);
 
             courseToDelete.IsDeleted = !courseToDelete.IsDeleted;
@@ -130,23 +126,6 @@
             employeeCourses.ForEach(ec => this.employeeCourseRepo.Delete(ec));
 
             await this.employeeCourseRepo.SaveChangesAsync();
-        }
-
-        private async Task DeleteCourseInGradesTable(int courseId)
-        {
-            var courseGrades = await this.gradesRepo
-                .All()
-                .Where(g => g.Course.Id == courseId)
-                .ToListAsync();
-
-            if(courseGrades.Any() == false)
-            {
-                return;
-            }
-
-            courseGrades.ForEach(cg => this.gradesRepo.Delete(cg));
-
-            await this.gradesRepo.SaveChangesAsync();
         }
 
         private async Task DeleteInCourseVotesTable(int courseId)
