@@ -107,7 +107,7 @@
                     Id = coachInDb.Category.Id,
                     Name = coachInDb.Category.Name
                 },
-                Company = coachInDb.Company,
+                Company = coachInDb.CompanyName,
                 PricePerSession = coachInDb.PricePerSession
             };
 
@@ -145,7 +145,7 @@
             coachToEdit.FullName = editInput.FullName;
             coachToEdit.AvatarImgUrl = editInput.ImageUrl;
             coachToEdit.PricePerSession = editInput.PricePerSession;
-            coachToEdit.Company = editInput.Company;
+            coachToEdit.CompanyName = editInput.Company;
             
             if(coachToEdit.Category.Id != editInput.CategoryId)
             {
@@ -287,7 +287,7 @@
                 FullName = coachInput.FullName,
                 Email = coachInput.Email,
                 AvatarImgUrl = coachInput.AvatarImgUrl,
-                Company = coachInput.Company,
+                CompanyName = coachInput.Company,
                 CompanyLogoUrl = coachInput.CompanyLogoUrl,
                 PricePerSession = coachInput.PricePerSession,
                 CalendlyPopupUrl = coachInput.CalendlyPopupUrl,
@@ -345,7 +345,7 @@
             => new()
             {
                 Id = coachInDb.Id,
-                Company = coachInDb.Company,
+                Company = coachInDb.CompanyName,
                 FullName = coachInDb.FullName,
                 ImageUrl = coachInDb.AvatarImgUrl,
                 PricePerSession = coachInDb.PricePerSession,

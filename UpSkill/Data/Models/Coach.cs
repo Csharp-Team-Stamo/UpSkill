@@ -13,27 +13,26 @@
             this.Id = Guid.NewGuid().ToString();
         }
 
-        public int CategoryId { get; set; }
-
-        public Category Category { get; set; }
-
-        public string Email { get; set; }
-
         [Required]
         public string FullName { get; set; }
 
-        //[Required]
-        //public string ImageUrl { get; set; }
+        [Required]
+        public string AvatarImgUrl { get; set; }
+        public string Email { get; set; }
 
         [Required]
         //ToDo Change to CompanyName
-        public string Company { get; set; }
+
+        public string CompanyName { get; set; }
 
         [Required]
         public string CompanyLogoUrl { get; set; }
 
-        [Required]
-        public string AvatarImgUrl { get; set; }
+        public int CategoryId { get; set; }
+
+        public Category Category { get; set; }
+
+
 
         [Required]
         public string VideoUrl { get; set; }

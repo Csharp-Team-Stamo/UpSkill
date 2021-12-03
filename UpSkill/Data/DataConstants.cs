@@ -27,5 +27,15 @@
 
             public const int SkillsLearnMaxlen = 150;
         }
+
+        public class UserConstants
+        {
+            public const int UserFullNameMaxLen = 50;
+        }
+
+        public class CategoryConstants
+        {
+            public const int NameMaxLen = 30;
+        }
     }
 }
