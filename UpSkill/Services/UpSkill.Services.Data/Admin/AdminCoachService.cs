@@ -1,4 +1,4 @@
-﻿namespace UpSkill.Services.Data
+﻿namespace UpSkill.Services.Data.Admin
 {
     using System.Collections.Generic;
     using System.Linq;

@@ -1,4 +1,4 @@
-﻿namespace UpSkill.Services.Data
+﻿namespace UpSkill.Services.Data.Admin
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -8,7 +8,7 @@
     using UpSkill.Data.Models;
     using Infrastructure.Models.Category;
     using Infrastructure.Models.Course;
-    using Contracts;
+    using UpSkill.Services.Data.Admin.Contracts;
 
     public class AdminCourseService : IAdminCourseService
     {

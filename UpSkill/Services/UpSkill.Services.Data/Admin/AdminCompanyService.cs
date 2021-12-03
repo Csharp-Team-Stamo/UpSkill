@@ -1,10 +1,11 @@
-﻿using System.Threading.Tasks;
-using UpSkill.Data.Common.Repositories;
-using UpSkill.Data.Models;
-using UpSkill.Infrastructure.Models.Company;
-
-namespace UpSkill.Services.Data.Contracts
+﻿namespace UpSkill.Services.Data.Admin
 {
+    using System.Threading.Tasks;
+    using UpSkill.Data.Common.Repositories;
+    using UpSkill.Data.Models;
+    using UpSkill.Infrastructure.Models.Company;
+    using UpSkill.Services.Data.Admin.Contracts;
+
     public class AdminCompanyService : IAdminCompanyService
     {
         private readonly IDeletableEntityRepository<Company> companyRepo;
