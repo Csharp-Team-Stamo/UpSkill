@@ -7,6 +7,7 @@
     {
         public string Id { get; set; }
 
+        [Required]
         public int CategoryId { get; set; }
 
         [Required]
@@ -26,7 +27,7 @@
         public string CompanyLogoUrl { get; set; }
 
         [DataType(DataType.Currency)]
-        [Range(0.00, 1000.00)]
+        [Range(typeof(decimal), "0.00", "1000.00")]
         public decimal PricePerSession { get; set; }
 
         [Required]
@@ -35,6 +36,7 @@
         [Required]
         public string CalendlyPopupUrl { get; set; }
 
+        [Required]
         public int LanguageId { get; set; }
 
         [Required]
@@ -49,10 +51,5 @@
 
         [Required]
         public string ResourcesCount { get; set; }
-
-        public string VideoUri { get; set; }
-
-        //public ICollection<int> Languages { get; set; } =
-        //    new List<int>();
     }
 }

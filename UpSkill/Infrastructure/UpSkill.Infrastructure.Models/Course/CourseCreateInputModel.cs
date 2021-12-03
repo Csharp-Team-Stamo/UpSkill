@@ -4,7 +4,8 @@
 
     public class CourseCreateInputModel
     {
-       public int CategoryId { get; set; }
+        [Required]
+        public int CategoryId { get; set; }
 
         [Required]
         public string Name { get; set; }
@@ -45,6 +46,7 @@
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
+        [Required]
         public int LanguageId { get; set; }
 
         [Required]
