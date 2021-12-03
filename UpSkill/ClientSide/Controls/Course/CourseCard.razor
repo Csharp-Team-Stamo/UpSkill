@@ -1,5 +1,5 @@
 ﻿<div class="card custom-course-card container mb-5" style="width: 18rem; background-color: @BackgroundColor">
-    <div @onclick="ShowPopup" class="card-img-top course-img-top-custom">
+    <div @onclick="ShowDescriptionPopup" class="card-img-top course-img-top-custom">
         <img class="img-custom" src="@Course.ImageUrl" />
         <div class="course-title-in-image">@Course.Name</div>
     </div>
@@ -25,7 +25,7 @@
             if (IsCourseAdded())
             {
                 <div class="text-center">
-                    <button @onclick="@(() =>RemoveCourse(Course.Id, user.OwnerId().Result))" class="course-btn"><span class="course-btn-text">Remove</span></button>
+                    <button @onclick="() => ShowRemoveCoursePopup(true)" class="course-btn"><span class="course-btn-text">Remove</span></button>
                 </div>
             }
             else
@@ -50,7 +50,7 @@
             else
             {
                 <div class="text-center">
-                    <button @onclick="ShowPopup" class="course-btn"><span class="course-btn-text">Enroll</span></button>
+                    <button @onclick="ShowDescriptionPopup" class="course-btn"><span class="course-btn-text">Enroll</span></button>
                 </div>
             }
         }
@@ -59,9 +59,14 @@
 
 
 @* Modal *@
-@if (show)
+@if (showDiscriptionModal)
 {
     <CourseDescriptionModal CourseId="Course.Id" SetShow="SetShowValue" IsEmployeeEnrolledToCourse="SetIsEmployeeEnrolledToCourse" BackgroundColor="SetBackgroundColor" />
+}
+
+@if (showRemoveCourseModal)
+{
+    <RemoveCourseModal CourseId="Course.Id" RemoveCourse="RemoveCourse" ShowRemoveModal="ShowRemoveCoursePopup"/>
 }
 
 
@@ -69,7 +74,10 @@
 {
     private bool isEmployeeEnrolledToCourse;
 
-    private bool show = false;
+    private bool showDiscriptionModal = false;
+
+    private bool showRemoveCourseModal = false;
+
 
     [Parameter]
     public string BackgroundColor { get; set; }
@@ -96,7 +104,7 @@
     protected override async Task OnInitializedAsync()
     {
         if (user.Role().Result == GlobalConstants.EmployeeRoleName
-            && NavigationManager.Uri.EndsWith("Courses") 
+            && NavigationManager.Uri.EndsWith("Courses")
             || NavigationManager.Uri.EndsWith("Dashboard"))
         {
             isEmployeeEnrolledToCourse = await Client.GetFromJsonAsync<bool>($"Employees/IsEmployeeEnrolledToCourse?appUserId={user.Id().Result}&courseId={Course.Id}");
@@ -116,14 +124,19 @@
         }
     }
 
-    private void ShowPopup()
+    private void ShowDescriptionPopup()
     {
-        show = true;
+        showDiscriptionModal = true;
+    }
+
+    private void ShowRemoveCoursePopup(bool show)
+    {
+        showRemoveCourseModal = show;
     }
 
     private void SetShowValue(bool value)
     {
-        show = value;
+        showDiscriptionModal = value;
     }
 
     private bool IsCourseAdded()
@@ -139,8 +152,11 @@
         BackgroundColor = "#EAF0FF";
     }
 
-    private async Task RemoveCourse(int courseId, string ownerId)
+    private async Task RemoveCourse(int courseId)
     {
+
+        var ownerId = user.OwnerId().Result;
+
         await CoursesService.RemoveCourseFromOwnerCoursesCollectionAsync(courseId, ownerId);
         await UpdatedCoursesListingCatalogModel.InvokeAsync(await CoursesService.GetAllAsync(ownerId));
         await UpdatedOwnerCoursesListingCatalogModel.InvokeAsync(await CoursesService.GetAllByOwnerIdAsync(ownerId));

@@ -23,18 +23,41 @@
         <tbody>
             <tr class="">
                 <td class="cell first_col">
+                    @if (statistics.isReady == false)
+                    {
+                        <div class="spinner-custom"></div>
+                    }
+                    else
+                    {
                     @statistics.Employees
+                    }
                 </td>
+
                 <td>
                 </td>
                 <td class="cell second_col">
-                    @statistics.Courses
-                </td>
+                    @if (statistics.isReady == false)
+                    {
+                        <div class="spinner-custom"></div>
+                    }
+                    else
+                    {
+                        @statistics.Courses
+                    }
+                    </td>
+
                 <td>
                 </td>
                 <td class="cell third_col">
-                    @statistics.Coaches
-                </td>
+                    @if (statistics.isReady == false)
+                    {
+                        <div class="spinner-custom"></div>
+                    }
+                    else
+                    {
+                        @statistics.Coaches
+                    }
+                    </td>
             </tr>
         </tbody>
     </table>
@@ -44,7 +67,7 @@
 @code {
 
 
-    private OwnerDashboardStatisticsModel statistics = new();
+    private OwnerDashboardStatisticsModel statistics = new() {isReady = false };
 
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
@@ -53,9 +76,9 @@
     protected override async Task OnInitializedAsync()
     {
 
-            var ownerId = user.OwnerId().Result;
-            statistics = await Client.GetFromJsonAsync<OwnerDashboardStatisticsModel>($"/Dashboard/GetOwnerStatistics?ownerId={ownerId}");
-        
+        var ownerId = user.OwnerId().Result;
+        statistics = await Client.GetFromJsonAsync<OwnerDashboardStatisticsModel>($"/Dashboard/GetOwnerStatistics?ownerId={ownerId}");
+        statistics.isReady = true;
     }
 }
 

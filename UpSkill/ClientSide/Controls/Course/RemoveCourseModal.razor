@@ -1,0 +1,49 @@
+﻿<div class="modal fade show" style="display:block; background-color: rgba(10,10,10,.8);"
+     aria-modal="true">
+
+    <div class="wrapper mx-auto">
+        <div class="top">
+            <div  class="myclose" data-dismiss="modal" aria-label="Close">
+                <span @onclick="() => ShowModal(false)" class="close-btn" aria-hidden="true">&times;</span>
+            </div>
+
+            <div class="modal-text">
+                Are you sure you want to remove this course?
+            </div>
+        </div>
+
+        <div class="bottom">
+            <div class="text-center">
+                <button @onclick="() => ShowModal(false)" class="button btn-close">Close</button>
+            </div>
+
+            <div class="text-center">
+                <button @onclick="() => RemoveCourseCallback(CourseId)" class="button">Remove</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public int CourseId { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> ShowRemoveModal { get; set; }
+
+    [Parameter]
+    public EventCallback<int> RemoveCourse { get; set; }
+
+    private async Task RemoveCourseCallback(int courseId)
+    {
+        await RemoveCourse.InvokeAsync(courseId);
+        await ShowModal(false);
+    }
+
+    private async Task ShowModal(bool show)
+    {
+        await ShowRemoveModal.InvokeAsync(show);
+    }
+}
