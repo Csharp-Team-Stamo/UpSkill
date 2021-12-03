@@ -2,12 +2,14 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Common.Models;
+    using static DataConstants.CoachFeedBackConstants;
 
     public class CoachFeedback : BaseDeletableModel<int>
     {
-        [Required]
-        public int Value { get; init; }
+        public byte Value { get; init; }
 
+        [Required]
+        [MaxLength(FeedBackMaxLen)]
         public string Description { get; init; }
 
         public string LiveSessionId { get; set; }

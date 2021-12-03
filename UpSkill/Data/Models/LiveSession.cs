@@ -11,9 +11,12 @@
         {
             Id = Guid.NewGuid().ToString();
         }
+
+        [Required]
         public string CoachId { get; set; }
         public Coach Coach { get; set; }
 
+        [Required]
         public string StudentId { get; set; }
         public Employee Student { get; set; }
 
@@ -23,11 +26,10 @@
         [Required]
         public decimal Price { get; set; }
 
-        [Required]
         public DateTime Start { get; set; }
 
-        [Required]
         public DateTime End { get; set; }
+
 
         public string EventSessionType { get; set; }
 
