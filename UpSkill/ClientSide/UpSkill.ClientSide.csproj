@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <None Remove="Controls\Avatar.razor.css" />
+    <None Remove="Controls\Coach\RemoveCoachModal.razor.css" />
     <None Remove="Controls\Course\RemoveCourseModal.razor.css" />
     <None Remove="Controls\DashboardTable.razor.css" />
     <None Remove="Controls\EditUserModal.razor.css" />
@@ -23,6 +24,7 @@
 
   <ItemGroup>
     <Content Include="Controls\Avatar.razor.css" />
+    <Content Include="Controls\Coach\RemoveCoachModal.razor.css" />
     <Content Include="Controls\Course\RemoveCourseModal.razor.css" />
     <Content Include="Controls\EditUserModal.razor.css" />
     <Content Include="Controls\Employee\EmployeeCoachesAchievementsTable.razor.css" />
