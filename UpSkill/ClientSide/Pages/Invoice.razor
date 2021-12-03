@@ -25,7 +25,7 @@
                 <th class="cell-header-left">
                     Course/Coach
                 </th>
-                <th class="cell-header-center">
+                <th class="text-left cell-header-center">
                     Date
                 </th>
                 <th class="cell-header-center">
@@ -41,7 +41,7 @@
                         @course.CourseName
                     </td>
                     <td class="text-left pr-4 cell-right">
-                        @course.IssueDate.ToShortDateString()
+                        @course.IssueDate.ToString("dd.MM.yyyy")
                     </td>
                     <td>
                         @($"{course.Price:f0}")&euro;

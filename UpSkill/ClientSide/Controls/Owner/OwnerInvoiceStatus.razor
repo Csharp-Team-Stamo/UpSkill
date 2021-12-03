@@ -1,86 +1,41 @@
 ﻿<div class="mx-auto">
-    <table class="table table_custom table-borderless">
-        <thead class="head">
-            <tr class="">
-                <th class="cell-header ">
-                    Invoice Status
-                </th>
-                <th class="separator">
-
-                </th>
-                <th class="cell-header ">
-                    Due Date
-                </th>
-                <th class="separator">
-
-                </th>
-                <th class="cell-header">
-                </th>
-                @*<th class="separator">
-
-                </th>
-                <th class="cell-header">
-                    Coaches
-                </th>
-                <th class="separator">
-
-                </th>*@
-            </tr>
-        </thead>
-
-        <tbody>
-            <tr class="">
-                <td class="cell first_col">
-                    @invoiceStatus
-                </td>
-                <td>
-                </td>
-                <td class="cell first_col">
-                    @invoiceDueDate
-                </td>
-                <td>
-                </td>
-                <td class="cell third_col">
-                    <a id="exportButton" href="/">
-                        Export
-                    </a>
-                </td>
-                <td>
-                </td>
-                @*<td class="cell second_col">
-                    @stats.CoachesNum
-                </td>
-                <td>
-                </td>*@
-            </tr>
-        </tbody>
-    </table>
+    <div id="invoiceStatusGrid">
+        <div class="invoiceGridCol">
+            <div>Invoice Status</div>
+            <div class="textBlue">@invoiceStatus</div>
+        </div>
+        <div class="invoiceGridCol">
+            <div>Due Date</div>
+            <div class="textBlue">@invoiceDueDate</div>
+        </div>
+        <div id="invoiceGridButton">
+            <a id="exportButton" href="/">
+                Export
+            </a>
+        </div>
+    </div>
 </div>
 
 @code {
-    private string invoiceDueDate;
+     private string invoiceDueDate;
+     private string invoiceStatus;
 
-    private string invoiceStatus;
+     [Parameter]
+     public int MonthNum { get; set; }
 
-    [Parameter]
-    public int MonthNum { get; set; }
+     protected override void OnParametersSet()
+     {
+         var now=DateTime.Now;
+         var daysInMonth=DateTime.DaysInMonth(now.Year, MonthNum);
+         if(now.Month <= MonthNum)
+         {
+             invoiceStatus = "Pending";
+         }
+         else
+         {
+             invoiceStatus = "Paid";
+         }
 
-
-    protected override void OnParametersSet()
-    {
-        var now = DateTime.Now;
-
-        var daysInMonth = DateTime.DaysInMonth(now.Year, MonthNum);
-
-        if(now.Month <= MonthNum)
-        {
-            invoiceStatus = "Pending";
-        }
-        else
-        {
-            invoiceStatus = "Paid";
-        }
-
-        this.invoiceDueDate = $"{daysInMonth}.{MonthNum}.{now.Year}";
+         this.invoiceDueDate = $"{daysInMonth}.{MonthNum}.{now.Year}";
     }
 }
