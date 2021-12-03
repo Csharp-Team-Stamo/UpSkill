@@ -96,7 +96,9 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        coach = await Client.GetFromJsonAsync<CoachDescriptionModel>($"/Coaches/GetByIdAsync?coachId={CoachDetails.Id}");
+        coach = await Client
+            .GetFromJsonAsync<CoachDescriptionModel>
+            ($"/Coaches/GetByIdAsync?coachId={CoachDetails.Id}");
     }
 
     private void ClosePopup()

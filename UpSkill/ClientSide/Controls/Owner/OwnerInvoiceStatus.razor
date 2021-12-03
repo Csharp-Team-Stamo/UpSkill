@@ -1,0 +1,41 @@
+﻿<div class="mx-auto">
+    <div id="invoiceStatusGrid">
+        <div class="invoiceGridCol">
+            <div>Invoice Status</div>
+            <div class="textBlue">@invoiceStatus</div>
+        </div>
+        <div class="invoiceGridCol">
+            <div>Due Date</div>
+            <div class="textBlue">@invoiceDueDate</div>
+        </div>
+        <div id="invoiceGridButton">
+            <a id="exportButton" href="/">
+                Export
+            </a>
+        </div>
+    </div>
+</div>
+
+@code {
+     private string invoiceDueDate;
+     private string invoiceStatus;
+
+     [Parameter]
+     public int MonthNum { get; set; }
+
+     protected override void OnParametersSet()
+     {
+         var now=DateTime.Now;
+         var daysInMonth=DateTime.DaysInMonth(now.Year, MonthNum);
+         if(now.Month <= MonthNum)
+         {
+             invoiceStatus = "Pending";
+         }
+         else
+         {
+             invoiceStatus = "Paid";
+         }
+
+         this.invoiceDueDate = $"{daysInMonth}.{MonthNum}.{now.Year}";
+    }
+}

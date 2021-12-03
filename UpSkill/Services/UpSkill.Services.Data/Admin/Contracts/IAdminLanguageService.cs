@@ -1,4 +1,4 @@
-﻿namespace UpSkill.Services.Data.Contracts
+﻿namespace UpSkill.Services.Data.Admin.Contracts
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;

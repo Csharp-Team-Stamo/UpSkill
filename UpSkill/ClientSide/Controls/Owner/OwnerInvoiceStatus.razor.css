@@ -1,0 +1,95 @@
+﻿div#invoiceStatusGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    padding: 3em; 
+    column-gap: 1em;
+    box-shadow: 0px 3px 10px #00000029;
+}
+
+div.invoiceGridCol {
+    display: grid;
+    grid-template-columns: 1fr;
+    border-right: 1px solid black;
+    text-align: start;
+    font-size: 1em;
+    font-weight: 700;
+}
+
+div.textBlue{
+    color: #296cfb;
+}
+
+div#invoiceGridButton{
+
+}
+
+a#exportButton {
+    text-decoration: none;
+    max-width: 50%;
+    margin: auto;
+    padding: .2em .6em;
+    border: 2px solid var(--color-blue-primary);
+    border-radius: 4px;
+    color: var(--color-blue-primary);
+    cursor: grab;
+}
+
+/*.head {
+    color: black;
+    font-weight: 700;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.table_custom {
+    box-shadow: 0px 3px 10px #00000029;
+    margin-top: 5em;
+    line-height: 1.5em;
+}
+
+.separator {
+    text-decoration: none;
+    position: relative;
+}
+
+    .separator:after {
+        content: '';
+        bottom: -50px;
+        right: -0.75px;
+        height: 150%;
+        background: gray;
+        width: 1.5px;
+        text-align: right;
+        position: absolute;
+    }
+
+.cell-header {
+    vertical-align: top;
+    text-align: left;
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+    padding-top: 1rem;
+}
+
+.cell {
+    color: #16D696;*/ /*color variable didn't work for some reason*/
+    /*font-weight: 700;
+    text-align: left;
+    font-size: 1em;
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+    padding-top: 1rem;
+    color: var(--color-blue-primary);
+}*/
+
+/*.first_col {
+    color: black;
+}
+
+.second_col {
+    color: var(--color-blue-primary);
+}
+
+.third_col {
+    color: var(--color-blue-green-aqua);
+}*/

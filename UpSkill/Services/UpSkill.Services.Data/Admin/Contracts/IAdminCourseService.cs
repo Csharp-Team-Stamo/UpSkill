@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using UpSkill.Data.Models;
-using UpSkill.Infrastructure.Models.Course;
-
-namespace UpSkill.Services.Data.Contracts
+﻿namespace UpSkill.Services.Data.Admin.Contracts
 {
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using UpSkill.Data.Models;
+    using UpSkill.Infrastructure.Models.Course;
+
     public interface IAdminCourseService
     {
         Task<int?> Create(CourseCreateInputModel input);

@@ -47,7 +47,8 @@ namespace UpSkill.ClientSide.Infrastructure.Services
             return pagingResponse;
         }
 
-        public async Task<PagingResponse<CourseDashboardStatItemModel>> GetOwnerCoursesStatsAsync(string ownerId, string month, TableEntityParameters parameters)
+        public async Task<PagingResponse<CourseDashboardStatItemModel>> GetOwnerCoursesStatsAsync(
+            string ownerId, string month, TableEntityParameters parameters)
         {
             var queryStringParam = new Dictionary<string, string>
             {

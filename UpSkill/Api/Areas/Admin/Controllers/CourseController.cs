@@ -5,7 +5,7 @@
     using System.Threading.Tasks;
     using Infrastructure.Models.Course;
     using Microsoft.AspNetCore.Mvc;
-    using Services.Data.Contracts;
+    using Services.Data.Admin.Contracts;
 
     public class CourseController : AdminController
     {
