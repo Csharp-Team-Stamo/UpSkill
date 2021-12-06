@@ -59,6 +59,7 @@
                 {
                     Id = x.Coach.Id,
                     FullName = x.Coach.FullName,
+                    ImageUrl = x.Coach.AvatarImgUrl,
                     CategoryName = x.Coach.Category.Name,
                     Company = x.Coach.CompanyName,
                     CompanyLogoUrl = x.Coach.CompanyLogoUrl,
@@ -80,6 +81,7 @@
                 {
                     Id = x.Coach.Id,
                     FullName = x.Coach.FullName,
+                    ImageUrl = x.Coach.AvatarImgUrl,
                     CategoryName = x.Coach.Category.Name,
                     Company = x.Coach.CompanyName,
                     CompanyLogoUrl = x.Coach.CompanyLogoUrl,
@@ -103,6 +105,7 @@
                     Id = x.Id,
                     FullName = x.FullName,
                     CategoryName = x.Category.Name,
+                    ImageUrl = x.AvatarImgUrl,
                     Company = x.CompanyName,
                     CompanyLogoUrl = x.CompanyLogoUrl,
                     CalendlyUrl = x.CalendlyPopupUrl,
