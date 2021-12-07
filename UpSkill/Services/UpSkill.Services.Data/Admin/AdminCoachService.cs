@@ -287,7 +287,7 @@
                 FullName = coachInput.FullName,
                 Email = coachInput.Email,
                 AvatarImgUrl = coachInput.AvatarImgUrl,
-                CompanyName = coachInput.Company,
+                CompanyName = coachInput.CompanyName,
                 CompanyLogoUrl = coachInput.CompanyLogoUrl,
                 PricePerSession = coachInput.PricePerSession,
                 CalendlyPopupUrl = coachInput.CalendlyPopupUrl,

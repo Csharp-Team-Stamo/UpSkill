@@ -18,6 +18,7 @@
 
         [Required]
         public string AvatarImgUrl { get; set; }
+
         public string Email { get; set; }
 
         [Required]
