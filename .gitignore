@@ -355,3 +355,11 @@ MigrationBackup/
 appsettings.Production.json
 appsettings.Development.json
 UpSkill_App.sln
+UpSkill/ClientSide/wwwroot/appsettings.Development.json
+UpSkill/ClientSide/wwwroot/appsettings.Development.json
+UpSkill/ClientSide/wwwroot/appsettings.Development.json
+UpSkill/Api/Properties/serviceDependencies.UpSkillApi - Web Deploy.json
+UpSkill/Api/Properties/ServiceDependencies/UpSkillApi - Web Deploy/apis1.arm.json
+UpSkill/Api/Properties/ServiceDependencies/UpSkillApi - Web Deploy/mssql1.arm.json
+UpSkill/Api/Properties/ServiceDependencies/UpSkillApi - Web Deploy/profile.arm.json
+UpSkill/Api/Properties/serviceDependencies.json

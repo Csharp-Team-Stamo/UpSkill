@@ -11,6 +11,7 @@
     using Infrastructure.Common;
     using Contracts;
     using System;
+    using Microsoft.Extensions.Configuration;
 
     public class AccountsService : IAccountsService
     {
@@ -18,13 +19,15 @@
         private readonly IRepository<Company> companyRepo;
         private readonly IEmailSender mailSender;
         private readonly IDeletableEntityRepository<Owner> ownerRepository;
+        private readonly IConfiguration configuration;
 
-        public AccountsService(UserManager<ApplicationUser> userManager, IRepository<Company> companyRepo, IEmailSender mailSender, IDeletableEntityRepository<Owner> ownerRepository)
+        public AccountsService(UserManager<ApplicationUser> userManager, IRepository<Company> companyRepo, IEmailSender mailSender, IDeletableEntityRepository<Owner> ownerRepository, IConfiguration configuration)
         {
             this.userManager = userManager;
             this.companyRepo = companyRepo;
             this.mailSender = mailSender;
             this.ownerRepository = ownerRepository;
+            this.configuration = configuration;
         }
 
         public bool IsEmailAvailable(string email)
@@ -136,8 +139,9 @@
 
         public async Task ResetPassword(ApplicationUser user, string emailContent)
         {
+            //TODO 
                 var passwordResetToken = await userManager.GeneratePasswordResetTokenAsync(user);
-                var passwordResetUrl = "https://localhost:44363/reset-password?email=" + user.Email + "&token=" + passwordResetToken;
+                var passwordResetUrl = this.configuration["ClientSide:URL"] + "/reset-password?email=" + user.Email + "&token=" + passwordResetToken;
 
                 var content = string.Format(emailContent, user.FullName, passwordResetUrl);
 
