@@ -4,9 +4,7 @@
 
 @if (AuthErrorExists)
 {
-    <div class="alert alert-danger" role="alert">
-        <p>@Error</p>
-    </div>
+    ToastService.ShowError(Error);
 }
 
 <EditForm Model="userAuthentication" OnValidSubmit="ExecuteLogin">
