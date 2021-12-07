@@ -27,8 +27,7 @@
         }
 
         public async Task<IEnumerable<AdminCompanyListingModel>> GetAllClients()
-        {
-            var allClients = await this.companyRepo
+            => await this.companyRepo
                 .All()
                 .Select(c => new AdminCompanyListingModel
                 {
@@ -39,78 +38,66 @@
                 .OrderBy(c => c.Name)
                 .ToListAsync();
 
-            return allClients;
-        }
-
         public async Task<IEnumerable<MonthlyClient>>
             GetClientsStatistics(int? year)
         {
-            var yearlyClients = await this.companyRepo
-                .All()
-                .Where(c => c.CreatedOn.Year == year)
-                .ToListAsync();
+            var yearlyClients = await GetCompaniesForYear(year);
 
-            var clientsInMemory = yearlyClients
-                .GroupBy(c => c.CreatedOn.Month);
+            var clientsInMemory = yearlyClients.GroupBy(c => c.CreatedOn.Month);
 
             var result = new List<MonthlyClient>();
 
-            foreach(var client in clientsInMemory)
-            {
-                var record = new MonthlyClient
-                {
-                    ClientsNum = client.Select(c => c).Count(),
-                    MonthName = ConvertMonthNumToName(client.Key)
-                };
+            clientsInMemory.ToList()
+                           .ForEach(c => result
+                                .Add(new MonthlyClient
+                                {
+                                    ClientsNum = c.Select(c => c).Count(),
+                                    MonthName = ConvertMonthNumToName(c.Key)
+                                }));
 
-                result.Add(record);
-            }
+            //foreach(var client in clientsInMemory)
+            //{
+            //    var record = new MonthlyClient
+            //    {
+            //        ClientsNum = client.Select(c => c).Count(),
+            //        MonthName = ConvertMonthNumToName(client.Key)
+            //    };
+
+            //    result.Add(record);
+            //}
                 
             return result;
         }
 
+        private async Task<IEnumerable<Company>> GetCompaniesForYear(int? year)
+            => await this.companyRepo
+                .All()
+                .Where(c => c.CreatedOn.Year == year)
+                .ToListAsync();
+
         public async Task<AdminDasboardStatsServiceModel> GetDashboardStats()
-        {
-            var statsModel = new AdminDasboardStatsServiceModel();
-
-            statsModel.ClientsNum = await this.GetClientsNum();
-            statsModel.CoursesNum = await this.GetCoursesNum();
-            statsModel.CoachesNum = await this.GetCoachesNum();
-            statsModel.Revenue = 1000;
-
-            return statsModel;
-        }
+            => new AdminDasboardStatsServiceModel
+            {
+                ClientsNum = await this.GetClientsNum(),
+                CoursesNum = await this.GetCoursesNum(),
+                CoachesNum = await this.GetCoachesNum(),
+                Revenue = 1000
+            };
 
         private async Task<int> GetCoachesNum()
-        {
-            var coachesNum = this.coachesRepo.All().Count();
-
-            await Task.Delay(0);
-
-            return coachesNum;
-        }
+            => await this.coachesRepo
+                         .All()
+                         .CountAsync();
 
         private async Task<int> GetCoursesNum()
-        {
-            var allCoursesCount = this.coursesRepo
-                .All()
-                .Count();
-
-            await Task.Delay(0);
-
-            return allCoursesCount;
-        }
+            => await this.coursesRepo
+                         .All()
+                         .CountAsync();
 
         private async Task<int> GetClientsNum()
-        {
-            var res = this.companyRepo
-                .All()
-                .Count();
-
-            await Task.Delay(0);
-
-            return res;
-        }
+            => await this.companyRepo
+                         .All()
+                         .CountAsync() - 1;
 
         private string ConvertMonthNumToName(int monthAsNum)
         {

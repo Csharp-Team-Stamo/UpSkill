@@ -1,5 +1,6 @@
 ﻿namespace UpSkill.ClientSide.Pages.Admin
 {
+    using System;
     using System.Collections.Generic;
     using System.Net.Http.Json;
     using System.Threading.Tasks;
@@ -32,6 +33,8 @@
 
         public async Task Create()
         {
+            Console.WriteLine(coachInput);
+
             var response = await this.Client
                 .PostAsJsonAsync<CoachCreateInputModel>("/admin/coach/create", coachInput);
 

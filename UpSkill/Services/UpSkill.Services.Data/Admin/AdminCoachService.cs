@@ -287,7 +287,7 @@
                 FullName = coachInput.FullName,
                 Email = coachInput.Email,
                 AvatarImgUrl = coachInput.AvatarImgUrl,
-                CompanyName = coachInput.Company,
+                CompanyName = coachInput.CompanyName,
                 CompanyLogoUrl = coachInput.CompanyLogoUrl,
                 PricePerSession = coachInput.PricePerSession,
                 CalendlyPopupUrl = coachInput.CalendlyPopupUrl,
@@ -295,6 +295,7 @@
                 DiscussionDurationInMinutes = coachInput.DiscussionDurationInMin,
                 SkillsLearn = coachInput.SkillsLearn,
                 ResourcesCount = coachInput.ResourcesCount,
+                VideoUrl = coachInput.VideoUrl
             };
 
         private async Task<int> AddLanguageTEMP(Coach coach, Language language)
