@@ -24,10 +24,12 @@
 @code {
     bool smooth = false;
 
-    private IEnumerable<MonthlyClient> clientsByMonth = new List<MonthlyClient>();
+    private IEnumerable<MonthlyClient> clientsByMonth;
 
     protected override async Task OnInitializedAsync()
     {
+        clientsByMonth = new List<MonthlyClient>();
+
         clientsByMonth = await Client
             .GetFromJsonAsync<IEnumerable<MonthlyClient>>
             ("/admin/statistics/clientsbymonth/2021");

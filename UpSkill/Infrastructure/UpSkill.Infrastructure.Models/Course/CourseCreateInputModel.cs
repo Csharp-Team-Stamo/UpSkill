@@ -17,7 +17,7 @@
         private const int DurationMaxLen = 3;
         private const int LectureNumMinLen = 1;
         private const int LecturesNumMaxLen = 3;
-        private const int SkillsMinLen = 25;
+        private const int SkillsMinLen = 10;
         private const int SkillsMaxLen = 150;
 
         [Required(ErrorMessage = nameof(CategoryId) + RequiredErrorMessage)]
@@ -25,15 +25,13 @@
         public int CategoryId { get; set; }
 
         [Required(ErrorMessage = nameof(Name) + RequiredErrorMessage)]
-        [StringLength(NameMaxLen,
-                      MinimumLength = NameMinLen,
-                      ErrorMessage = "Name should be {1} to {0} symbols long.")]
+        [MinLength(NameMinLen)]
+        [MaxLength(NameMaxLen)]
         public string Name { get; set; }
 
         [Required(ErrorMessage = nameof(Description) + RequiredErrorMessage)]
-        [StringLength(DescriptionMaxLen,
-                      MinimumLength = DescriptionMinLen,
-                      ErrorMessage = "Description should be {1} to {0} symbols long.")]
+        [MinLength(DescriptionMinLen)]
+        [MaxLength(DescriptionMaxLen)]
         public string Description { get; set; }
 
         [Required(ErrorMessage = nameof(ImageUrl) + RequiredErrorMessage)]
@@ -42,9 +40,8 @@
         public string ImageUrl { get; set; }
 
         [Required(ErrorMessage = nameof(AuthorFullName) + RequiredErrorMessage)]
-        [StringLength(AuthorNameMaxLen,
-                      MinimumLength = AuthorNameMinLen,
-                      ErrorMessage = "Author name should be {1} to {0} symbols long.")]
+        [MinLength(AuthorCompanyNameMinLen)]
+        [MaxLength(AuthorCompanyNameMaxLen)]
         [Display(Name = "Author Full Name")]
         public string AuthorFullName { get; set; }
 
@@ -59,30 +56,26 @@
         public string CompanyLogoUrl { get; set; }
 
         [Required(ErrorMessage = nameof(CompanyName) + RequiredErrorMessage)]
-        [StringLength(AuthorCompanyNameMaxLen,
-                      MinimumLength = AuthorCompanyNameMinLen,
-                      ErrorMessage = "Author company name should be {1} to {0} symbols long.")]
+        [MinLength(AuthorCompanyNameMinLen)]
+        [MaxLength(AuthorCompanyNameMaxLen)]
         [Display(Name = "Author Company Name")]
         public string CompanyName { get; set; }
 
         [Required(ErrorMessage = nameof(DurationInHours) + RequiredErrorMessage)]
-        [StringLength(DurationMaxLen,
-                      MinimumLength = DurationMinLen,
-                      ErrorMessage = "Duration should be {1} to {0} symbols long.")]
+        [MinLength(DurationMinLen)]
+        [MaxLength(DurationMaxLen)]
         [Display(Name = "Duration In Hours")]
         public string DurationInHours { get; set; }
 
         [Required(ErrorMessage = nameof(LecturesCount) + RequiredErrorMessage)]
-        [StringLength(LecturesNumMaxLen,
-            MinimumLength = LectureNumMinLen,
-            ErrorMessage = "Count should be {1} to {0} symbols long.")]
+        [MinLength(LectureNumMinLen)]
+        [MaxLength(LecturesNumMaxLen)]
         [Display(Name = "Lectures Count")]
         public string LecturesCount { get; set; }
 
         [Required(ErrorMessage = nameof(SkillsLearn) + RequiredErrorMessage)]
-        [StringLength(SkillsMaxLen,
-            MinimumLength = SkillsMinLen,
-            ErrorMessage = "Skills should be {0} to {1} symbols long, separated by #.")]
+        [MinLength(SkillsMinLen)]
+        [MaxLength(SkillsMaxLen)]
         [Display(Name = "Skills To Learn")]
         public string SkillsLearn { get; set; }
 

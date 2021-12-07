@@ -10,9 +10,8 @@
         private const int NameMaxLen = 30;
 
         [Required(ErrorMessage = nameof(Name) + RequiredErrorMessage)]
-        [StringLength(NameMaxLen,
-                      MinimumLength = NameMinLen,
-                      ErrorMessage = "Name should be {1} to {0} symbols long.")]
+        [MinLength(NameMinLen)]
+        [MaxLength(NameMaxLen)]
         public string Name { get; set; }
 
         public string UIC { get; set; }

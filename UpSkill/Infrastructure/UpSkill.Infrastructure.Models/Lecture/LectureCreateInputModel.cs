@@ -15,15 +15,13 @@ namespace UpSkill.Infrastructure.Models.Lecture
         public int CourseId { get; set; }
 
         [Required(ErrorMessage = nameof(Title) + RequiredErrorMessage)]
-        [StringLength(TitleMaxLen,
-                      MinimumLength = TitleMinLen,
-                      ErrorMessage = "Title should be {1} to {0} symbols long.")]
+        [MinLength(TitleMinLen)]
+        [MaxLength(TitleMaxLen)]
         public string Title { get; set; }
 
         [Required(ErrorMessage = nameof(Description) + RequiredErrorMessage)]
-        [StringLength(DescriptionMaxLen,
-                      MinimumLength = DescriptionMinLen,
-                      ErrorMessage = "Description should be {1} to {0} symbols long.")]
+        [MinLength(DescriptionMinLen)]
+        [MaxLength(DescriptionMaxLen)]
         public string Description { get; set; }
 
         [Required(ErrorMessage = nameof(VideoUrl) + RequiredErrorMessage)]

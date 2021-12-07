@@ -10,7 +10,7 @@
         private const int CompanyNameMaxLen = 30;
         private const int SessionDescriptionMinLen = 25;
         private const int SessionDescriptionMaxLen = 150;
-        private const int SessionSkillsMinLen = 25;
+        private const int SessionSkillsMinLen = 10;
         private const int SessionSkillsMaxLen = 150;
 
         [Required(ErrorMessage = nameof(CategoryId) + RequiredErrorMessage)]
@@ -30,9 +30,8 @@
         public string Email { get; set; }
 
         [Required(ErrorMessage = nameof(CompanyName) + RequiredErrorMessage)]
-        [StringLength(CompanyNameMaxLen, 
-                      MinimumLength = CompanyNameMinLen, 
-                      ErrorMessage = "Company Name should be {1} to {0} symbols long.")]
+        [MinLength(CompanyNameMinLen)]
+        [MaxLength(CompanyNameMaxLen)]
         [Display(Name = "Company Name")]
         public string CompanyName { get; set; }
 
@@ -58,16 +57,14 @@
         public int LanguageId { get; set; }
 
         [Required(ErrorMessage = nameof(SessionDescription) + RequiredErrorMessage)]
-        [StringLength(SessionDescriptionMaxLen,
-                      MinimumLength = SessionDescriptionMinLen,
-                      ErrorMessage = "Description sould be {1} to {0} symbols long.")]
+        [MinLength(SessionDescriptionMinLen)]
+        [MaxLength(SessionDescriptionMaxLen)]
         [Display(Name = "Session Description")]
         public string SessionDescription { get; set; }
 
         [Required(ErrorMessage = "Skills are required")]
-        [StringLength(SessionSkillsMaxLen,
-                      MinimumLength = SessionSkillsMinLen,
-                      ErrorMessage = "Skills should be {1} to {0} symbols long.")]
+        [MinLength(SessionSkillsMinLen)]
+        [MaxLength(SessionSkillsMaxLen)]
         public string SkillsLearn { get; set; }
 
         [Required(ErrorMessage = nameof(DiscussionDurationInMin) + RequiredErrorMessage)]

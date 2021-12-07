@@ -9,9 +9,8 @@ namespace UpSkill.Infrastructure.Models.Category
         private const int NameMaxLen = 30;
 
         [Required(ErrorMessage = RequiredErrorMessage)]
-        [StringLength(NameMaxLen, 
-            MinimumLength = NameMinLen, 
-            ErrorMessage = "Name should be {1} to {0} characters long")]
+        [MinLength(NameMinLen)]
+        [MaxLength(NameMaxLen)]
         public string Name { get; set; }
     }
 }
