@@ -2,12 +2,14 @@
 @layout EmptyLayout
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
-@if (ShowRegistrationErrors)
+@if (ShowErrors)
 {
     @foreach (var error in Errors)
     {
         ToastService.ShowError(error);
     }
+
+    ShowErrors = false;
 }
 
 <div class="wrapper">

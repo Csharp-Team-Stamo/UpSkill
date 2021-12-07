@@ -10,12 +10,12 @@
     {
         private readonly UserConfirmPassRequestModel model = new();
 
-        public bool ShowRegistrationErrors { get; set; }
+        public bool ShowErrors { get; set; }
         public IEnumerable<string> Errors { get; set; }
 
         public async Task ConfirmPassword()
         {
-            ShowRegistrationErrors = false;
+            ShowErrors = false;
             var response = await Client.PostAsJsonAsync("/Accounts/Reset-password", model);
 
             if (!response.IsSuccessStatusCode)
@@ -24,7 +24,7 @@
                 var errors = JsonConvert.DeserializeObject<List<string>>(resultAsString);
 
                 Errors = errors;
-                ShowRegistrationErrors = true;
+                ShowErrors = true;
             }
             else
             {

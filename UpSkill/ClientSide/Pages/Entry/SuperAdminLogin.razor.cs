@@ -13,13 +13,13 @@
         public IAuthenticationService AuthenticationService { get; set; }
 
         
-        public bool AuthErrorExists { get; set; }
+        public bool ShowErrors { get; set; }
 
         public string Error { get; set; }
 
         public async Task ExecuteSuperAdminLogin()
         {
-            AuthErrorExists = false;
+            ShowErrors = false;
 
             var result = await AuthenticationService
                 .Login(this.userAuthentication);
@@ -27,7 +27,7 @@
             if (result.AuthIsSuccessful == false)
             {
                 Error = result.ErrorMessage;
-                AuthErrorExists = true;
+                ShowErrors = true;
             }
             else
             {
