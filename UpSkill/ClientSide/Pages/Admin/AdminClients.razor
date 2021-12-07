@@ -21,14 +21,18 @@
         <tbody>
             @foreach (var company in allClients)
             {
-                <tr class=" border-bottom-0 underline">
-                    <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
-                        @company.Name
-                    </td>
-                    <td class="text-left pr-4 cell-right">
-                        @company.Email
-                    </td>
-                </tr>
+                if (this.adminCompanyName != company.Name)
+                {
+                    <tr class=" border-bottom-0 underline">
+                        <td class="text-left pl-4 font-weight-bold cell-left" 
+                            style="color: #16D696;">
+                            @company.Name
+                        </td>
+                        <td class="text-left pr-4 cell-right">
+                            @company.Email
+                        </td>
+                    </tr>
+                }
             }
             <tr class="text-center">
                 <td colspan="2" style="color: #16D696">
@@ -41,20 +45,35 @@
 
 @if (show)
 {
-    <AdminAddCompanyModal SetShow="SetShowValue" GetUpdatedCompanies="GetUpdatedClients"></AdminAddCompanyModal>
+    <AdminAddCompanyModal 
+                          SetShow="SetShowValue" 
+                          GetUpdatedCompanies="GetUpdatedClients">
+    </AdminAddCompanyModal>
 }
 
 @code {
     private bool show = false;
+    private string adminCompanyName;
 
     private IEnumerable<AdminCompanyListingModel> allClients =
         new List<AdminCompanyListingModel>();
+
+    [CascadingParameter]
+    public Task<AuthenticationState> User { get; set; }
+
+    void GetCompName()
+    {
+        this.adminCompanyName = User.CompanyName().Result;
+    }
+        
 
     protected override async Task OnInitializedAsync()
     {
         allClients = await Client
             .GetFromJsonAsync<IEnumerable<AdminCompanyListingModel>>
             ("/admin/statistics/getallclients");
+
+        this.GetCompName();
     }
 
     private void ShowPopup()

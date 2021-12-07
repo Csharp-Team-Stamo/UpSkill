@@ -3,41 +3,53 @@
 
 @using UpSkill.Infrastructure.Models.Language
 
-<div class="mx-auto">
-    <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
-        <thead class="border-bottom-0">
-            <tr class="" style="color: white; background-color: #296cfb">
-                <th class="font-weight-bold text-left pl-4 cell-header-left">
-                    Category Id
-                </th>
-                <th class="text-left font-weight-bold pr-4 cell-header-right">
-                    Name
-                </th>
-                <th>
-                    <div class="add-btn" @onclick="ShowPopup">+</div>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var language in allLanguages)
-            {
-                <tr class=" border-bottom-0 underline">
-                    <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
-                        @language.Id
-                    </td>
-                    <td class="text-left pr-4 cell-right">
-                        @language.Name
+@if (allLanguages.Count() <= 0)
+{
+    <div class="mx-auto">
+        <p>There are currently no languages to show.</p>
+        <div class="add-btn" @onclick="ShowPopup">+</div>
+    </div>
+}
+else
+{
+    <div class="mx-auto">
+        <table class="table table-borderless shadow mt-4" style="line-height: 2.5em">
+            <thead class="border-bottom-0">
+                <tr class="" style="color: white; background-color: #296cfb">
+                    <th class="font-weight-bold text-left pl-4 cell-header-left">
+                        Language Id
+                    </th>
+                    <th class="text-left font-weight-bold pr-4 cell-header-right">
+                        Name
+                    </th>
+                    <th>
+                        <div class="add-btn" @onclick="ShowPopup">+</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var language in allLanguages)
+                {
+                    <tr class=" border-bottom-0 underline">
+                        <td class="text-left pl-4 font-weight-bold cell-left" style="color: #16D696;">
+                            @language.Id
+                        </td>
+                        <td class="text-left pr-4 cell-right">
+                            @language.Name
+                        </td>
+                    </tr>
+                }
+                <tr class="text-center">
+                    <td colspan="2" style="color: #16D696">
+                        View More
                     </td>
                 </tr>
-            }
-            <tr class="text-center">
-                <td colspan="2" style="color: #16D696">
-                    View More
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+    </div>
+}
+
+
 
 @if (show)
 {

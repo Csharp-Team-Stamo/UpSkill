@@ -10,7 +10,6 @@
         public class CoachConstants
         {
             public const int SessionDescriptionMaxlen = 150;
-
             public const int SkillsLearnMaxlen = 150;
             public const int CompanyNameMaxLen = 30;
             public const int ResourceCountMaxLen = 3;
@@ -23,8 +22,8 @@
 
         public class Company
         {
-            public const int UIC_Length = 9;
             public const int NameMaxLen = 30;
+            public const int UIC_Length = 9;
         }
 
         public class CourseConstants
