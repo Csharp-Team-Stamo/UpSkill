@@ -80,14 +80,6 @@
 
             services.AddControllers();
 
-            services.AddCors(policy =>
-            {
-                policy.AddPolicy("CorsPolicy", opt => opt
-                    .AllowAnyOrigin()
-                    .AllowAnyHeader()
-                    .AllowAnyMethod());
-            });
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "UpSkillApi", Version = "v1" });
