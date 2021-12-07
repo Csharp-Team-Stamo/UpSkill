@@ -13,18 +13,18 @@
         [Inject]
         public IRegistrationService AuthenticationService { get; set; }
 
-        public bool ShowRegistrationErrors { get; set; }
+        public bool ShowErrors { get; set; }
         public IEnumerable<string> Errors { get; set; }
 
         public async Task Register()
         {
-            ShowRegistrationErrors = false;
+            ShowErrors = false;
 
             var result = await AuthenticationService.RegisterUser(userForRegistration);
             if (!result.IsSuccessfulRegistration)
             {
                 Errors = result.Errors;
-                ShowRegistrationErrors = true;
+                ShowErrors = true;
             }
             else
             {
