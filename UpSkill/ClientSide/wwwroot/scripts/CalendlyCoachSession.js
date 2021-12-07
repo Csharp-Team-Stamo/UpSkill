@@ -1,4 +1,6 @@
-﻿function isCalendlyEvent(e) {
+﻿
+
+function isCalendlyEvent(e) {
     return e.data.event &&
         e.data.event.indexOf('calendly') === 0;
 };
@@ -15,7 +17,8 @@ window.addEventListener(
                     inviteeUri: e.data.payload.invitee.uri
                 };
 
-
+               
+                //fetch("https://upskillapi.azurewebsites.net/CoachSessions/AddSession", {
                 fetch("https://localhost:5001/CoachSessions/AddSession", {
                     method: "POST",
                     headers: { 'Content-Type': 'application/json' },

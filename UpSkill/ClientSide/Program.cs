@@ -22,7 +22,12 @@
 			var builder = WebAssemblyHostBuilder.CreateDefault(args);
 			builder.RootComponents.Add<App>("#app");
 
-			builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001") });
+            builder.Services.AddScoped(sp => {
+                var client = new HttpClient { BaseAddress = new Uri(builder.Configuration["WebApi:URL"]) };
+                //client.DefaultRequestHeaders.Add("Origin", "https://upskillclientside.azurewebsites.net");
+                return client;
+            });
+
             builder.Services.AddScoped<IRegistrationService, RegistrationService>();
             builder.Services.AddSingleton<IAuthenticationService, AuthenticationService>();
 
