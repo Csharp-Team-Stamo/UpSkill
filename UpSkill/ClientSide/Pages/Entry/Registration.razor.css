@@ -16,6 +16,7 @@
 }
 
 .wrapper {
+    position: absolute;
     padding: 0;
     margin: 0;
     text-align: center;
@@ -75,5 +76,9 @@ input, ::deep input {
         display: block;
         align-self: center;
         width: 100%;
+    }
+    .wrapper {
+        right: 25%;
+        top: 10%;
     }
 }
