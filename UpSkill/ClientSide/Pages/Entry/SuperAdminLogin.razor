@@ -2,11 +2,11 @@
 @layout EmptyLayout
 @attribute [Microsoft.AspNetCore.Authorization.AllowAnonymous]
 
-@if (AuthErrorExists)
+@if (ShowErrors)
 {
-    <div class="alert alert-danger" role="alert">
-        <p>@Error</p>
-    </div>
+    ToastService.ShowError(Error);
+
+    ShowErrors = false;
 }
 
 <EditForm Model="userAuthentication" OnValidSubmit="ExecuteSuperAdminLogin">
