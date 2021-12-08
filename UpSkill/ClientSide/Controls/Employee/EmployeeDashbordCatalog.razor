@@ -5,17 +5,24 @@
 }
 else
 {
-    <div class="row">
-        @foreach (var course in model.Courses)
-        {
-            <CourseCard Course="course" />
-        }
+    if (!model.Coaches.Any() && !model.Courses.Any())
+    {
+        <div>You don't have any enrolled courses or booked coaches yet.</div>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var course in model.Courses)
+            {
+                <CourseCard Course="course" />
+            }
 
-        @foreach (var coach in model.Coaches)
-        {
-            <CoachCard Coach="coach"/>
-        }
-    </div>
+            @foreach (var coach in model.Coaches)
+            {
+                <CoachCard Coach="coach" />
+            }
+        </div>
+    }
 }
 @code {
 

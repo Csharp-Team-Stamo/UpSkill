@@ -17,12 +17,26 @@
 }
 else
 {
-    <div class="row">
-        @foreach (var coach in model.Coaches)
+    if (!model.Coaches.Any())
+    {
+        if (user.Role().Result == GlobalConstants.EmployeeRoleName)
         {
-            <CoachCard Coach="coach"  CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches" />
+            <div>Your employer has not added any coach yet.</div>
         }
-    </div>
+        else if (user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
+        {
+            <div>Please click the Manage button to add coaches that can be book by your employees.</div>
+        }
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var coach in model.Coaches)
+            {
+                <CoachCard Coach="coach" CoachIdsCollection="@model.OwnerCoachCollectionIds" UpdatedOwnerCoachesListingCatalogModel="SetCoaches" />
+            }
+        </div>
+    }
 }
 
 @code

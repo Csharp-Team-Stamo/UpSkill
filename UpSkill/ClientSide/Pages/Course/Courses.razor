@@ -17,12 +17,26 @@
 }
 else
 {
-    <div class="row">
-        @foreach (var course in model.Courses)
+    if (!model.Courses.Any())
+    {
+        if (user.Role().Result == GlobalConstants.EmployeeRoleName)
         {
-            <CourseCard Course="course" OwnerId="@model.OwnerId" CoursesIdsCollection="@model.OwnerCourseCollectionIds" UpdatedOwnerCoursesListingCatalogModel="SetCourses" />
+            <div>Your employer has not added any courses yet.</div>
         }
-    </div>
+        else if (user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
+        {
+            <div>Please click the Manage button to add courses that can be enrolled by your employees.</div>
+        }
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var course in model.Courses)
+            {
+                <CourseCard Course="course" OwnerId="@model.OwnerId" CoursesIdsCollection="@model.OwnerCourseCollectionIds" UpdatedOwnerCoursesListingCatalogModel="SetCourses" />
+            }
+        </div>
+    }
 }
 
 @code{
