@@ -20,7 +20,8 @@
         private const int SkillsMinLen = 10;
         private const int SkillsMaxLen = 150;
 
-        [Required(ErrorMessage = nameof(CategoryId) + RequiredErrorMessage)]
+        [Required]
+        [Range(1, 100, ErrorMessage = "Category" + RequiredErrorMessage)]
         [Display(Name = "Category Id")]
         public int CategoryId { get; set; }
 
@@ -40,8 +41,8 @@
         public string ImageUrl { get; set; }
 
         [Required(ErrorMessage = nameof(AuthorFullName) + RequiredErrorMessage)]
-        [MinLength(AuthorCompanyNameMinLen)]
-        [MaxLength(AuthorCompanyNameMaxLen)]
+        [MinLength(AuthorNameMinLen)]
+        [MaxLength(AuthorNameMaxLen)]
         [Display(Name = "Author Full Name")]
         public string AuthorFullName { get; set; }
 
@@ -79,11 +80,12 @@
         [Display(Name = "Skills To Learn")]
         public string SkillsLearn { get; set; }
 
-        [Range(typeof(decimal), "0.00", "9999.00")]
+        [Range(typeof(decimal), "0", "9999")]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
-        [Required(ErrorMessage = nameof(LanguageId) + RequiredErrorMessage)]
+        [Required]
+        [Range(1, 100, ErrorMessage = "Language" + RequiredErrorMessage)]
         [Display(Name = "Language Id")]
         public int LanguageId { get; set; }
 
