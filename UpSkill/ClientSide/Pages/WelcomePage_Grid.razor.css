@@ -1,0 +1,122 @@
+﻿body {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+h1 {
+    font-weight: 700;
+}
+
+p {
+    font-weight: 500;
+}
+
+button.welcomeButton {
+    background-color: #296CFB;
+    border: none;
+    color: white;
+    margin-top: 1em;
+    padding: 1em 2em;
+}
+
+#midRightButton {
+    background-color: white;
+    color: #296CFB;
+    border: 1px solid #296CFB;
+    margin-left: .6em;
+    padding: .9em 2em;
+}
+
+span.brandName {
+    color: #296CFB;
+}
+
+body > main > div#welcomeMainGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: .5em;
+}
+
+    body > main > div#welcomeMainGrid > div.mainGridCol {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+        /* Upper part */
+
+body > main > div#welcomeMainGrid > div.mainGridCol > div#welcomeUpperLeft,
+body > main > div#welcomeMainGrid > div.mainGridCol > div#welcomeUpperRight {
+    display: inline-block;
+}
+
+body > main > div#welcomeMainGrid > div.mainGridCol > div#welcomeUpperLeft {
+    max-width: 80%;
+    margin: 1em auto;
+    padding: 1.5em 2.4em;
+}
+
+    body > main > div#welcomeMainGrid > div.mainGridCol > div#welcomeUpperLeft > p {
+        text-align: left;
+    }
+
+body > main > div#welcomeMainGrid > div.mainGridCol > div#welcomeUpperRight {
+    background: url('UpskillAssets/Welcome_GreenUpperBackground.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 1.5em;
+}
+
+            body > main > div#welcomeMainGrid > div.mainGridCol > div#welcomeUpperRight > img {
+                display: inline-block;
+                max-width: 40%;
+                margin: 1em auto;
+            }
+
+        /* Mid part */
+
+    body > main > div#welcomeMainGrid > div.mainGridCol > div#midPartLeft {
+        background-image: url('UpSkillAssets/Welcome_MidBlueBackground.svg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding: 1.5em;
+    }
+
+        body > main > div#welcomeMainGrid > div.mainGridCol > div#midPartLeft > img {
+            display: inline-block;
+            max-width: 40%;
+            margin: 1em auto;
+        }
+
+    body > main > div#welcomeMainGrid > div.mainGridCol > div#midPartRight {
+        margin: .5em 1.5em;
+        padding: 2em;
+    }
+
+        body > main > div#welcomeMainGrid > div.mainGridCol > div#midPartRight > h1,
+        body > main > div#welcomeMainGrid > div.mainGridCol > div#midPartRight > p {
+            text-align: right;
+        }
+
+    body > main > div#welcomeMainGrid > div.mainGridCol > div#lowerLeft {
+        margin: .5em 1.5em;
+        padding: 2em;
+    }
+
+        body > main > div#welcomeMainGrid > div.mainGridCol > div#lowerLeft > form {
+            display: grid;
+            grid-template-columns: 1fr;
+        }
+
+
+body > main > div#welcomeMainGrid > div.mainGridCol > div#lowerRight {
+    background-image: url('UpSkillAssets/Welcome_LowerRightGreenBackground.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 1.5em;
+}
+
+    body > main > div#welcomeMainGrid > div.mainGridCol > div#lowerRight > img {
+        display: inline-block;
+        max-width: 40%;
+        margin: 1em auto;
+    }
