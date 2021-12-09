@@ -41,7 +41,7 @@
         public string CompanyLogoUrl { get; set; }
 
         [DataType(DataType.Currency)]
-        [Range(typeof(decimal), "0.00", "9999.00")]
+        [Range(typeof(decimal), "0", "9999")]
         public decimal PricePerSession { get; set; }
 
         [Required(ErrorMessage = nameof(VideoUrl) + RequiredErrorMessage)]

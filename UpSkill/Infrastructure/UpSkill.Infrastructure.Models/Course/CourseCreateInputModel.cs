@@ -79,7 +79,7 @@
         [Display(Name = "Skills To Learn")]
         public string SkillsLearn { get; set; }
 
-        [Range(typeof(decimal), "0.00", "9999.00")]
+        [Range(typeof(decimal), "0", "9999")]
         [DataType(DataType.Currency)]
         public decimal Price { get; set; }
 
