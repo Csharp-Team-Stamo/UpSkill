@@ -1,74 +1,16 @@
 ﻿@inject NavigationManager NavigationManager
 
-    <footer class="footer-card">
-        <img src="/images/footer/footer-background.svg" class="background-img" />
-        <img src="/images/footer/UpSkill-logo -white.svg" class="upskill-img" />
-        <div class="row">
-            <div class="div-info col-4">
-                Upskill gives everyone the opportunity to grow professionally and develop into a specialist in every field.
-                <button class="footer-get-started-btn" @onclick="@(() => NavigationManager.NavigateTo("/registration"))">
-                    <div class="footer-get-started-btn-text">
-                        Get Started
-                    </div>
-                </button>
-            </div>
+<div class="footer-container">
+    <div>
+        1
+    </div>
+    <div style="background-color: white;"></div>
+    <div>
+        <div class="footer-bottom-text">
+            © UpSkill 2021
         </div>
-        <div class="div-company">
-            <div class="div-title-text">
-                Company
-            </div>
-        </div>
-        <a href="" class="div-about-us">
-            <div class="div-content-text">
-                About us
-            </div>
-        </a>
-        <a href="" class="div-contact-us">
-            <div class="div-content-text">
-                Contact us
-            </div>
-        </a>
-        <a href="" class="div-privacy-policy">
-            <div class="div-content-text">
-                Privacy Policy
-            </div>
-        </a>
-        <div class="div-service">
-            <div class="div-title-text">
-                Services
-            </div>
-        </div>
-        <a href="/courses" class="div-courses">
-            <div class="div-content-text">
-                Courses
-            </div>
-        </a>
-        <a href="/coaches" class="div-coaches">
-            <div class="div-content-text">
-                Coaches
-            </div>
-        </a>
-        <button onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})" class="div-requests btn btn-link">
-            <div class="div-content-text">
-                Requests
-            </div>
-        </button>
-        <a href="https://www.facebook.com/upskillbd">
-            <img src="/images/footer/facebook-logo.svg" class="facebook-logo-img" />
-        </a>
-        <a href="https://www.instagram.com/up_skills_/">
-            <img src="/images/footer/instagram-logo.svg" class="instagram-logo-img" />
-        </a>
-        <a href="https://www.linkedin.com/company/upskills/">
-            <img src="/images/footer/linkin-logo.svg" class="linkin-logo-img" />
-        </a>
-        <div class="footer-bottom-background">
-            <div class="footer-bottom-text">
-                UpSkill 2021
-            </div>
-            <img src="/images/footer/iconmonstr-copyright-2.svg" alt="Alternate Text" class="footer-bottom-img-copyright" />
-        </div>
-    </footer>
+    </div>
+</div>
 
 @code {
 
