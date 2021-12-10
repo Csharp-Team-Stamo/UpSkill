@@ -1,9 +1,10 @@
 ﻿@page "/admin/coach/all"
 @layout AdminNoMenuLayout
 
-@if (allCoaches.Count() <= 0)
+@if (allCoaches == null)
 {
-    <div class="mx-auto">
+    <div class="spinner"></div>
+    @*<div class="mx-auto">
         <p>There are currently no coaches to show.</p>
         <div class="col-sm-12 col-md-6 col-lg-4 mb-2 p-md-2 p-lg-5" style="position: relative;">
             <input type="image"
@@ -12,7 +13,7 @@
                    alt="Add Button"
                    @onclick="ShowPopup">
         </div>
-    </div>
+    </div>*@
 }
 else
 {
@@ -40,8 +41,7 @@ else
 }
 
 @code {
-    private IEnumerable<AdminCoachListingServiceModel> allCoaches =
-        new List<AdminCoachListingServiceModel>();
+    private IEnumerable<AdminCoachListingServiceModel> allCoaches;
 
     private bool show = false;
 
