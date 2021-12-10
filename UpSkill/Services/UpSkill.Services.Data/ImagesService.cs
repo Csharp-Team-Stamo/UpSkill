@@ -4,22 +4,32 @@
     using System.Collections.Generic;
     using System.Net.Http;
     using System.Threading.Tasks;
+    using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using UpSkill.Services.Data.Contracts;
     public class ImagesService : IimagesService
     {
+        private readonly IConfiguration configuration;
+
+        public ImagesService(IConfiguration configuration)
+        {
+            this.configuration = configuration;
+        }
         public async Task<string> RemoveImgBackground(string url)
         {
             var client = new HttpClient();
+            var host = configuration["ExternalProviders:RapidAPI:Host"];
+            var key = configuration["ExternalProviders:RapidAPI:RemoveBGKey"];
+
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
                 RequestUri = new Uri("https://background-removal.p.rapidapi.com/remove"),
                 Headers =
                            {
-                               { "x-rapidapi-host", "background-removal.p.rapidapi.com" },
-                               { "x-rapidapi-key", "2f76c9f9f4msh5cc1987d48e8820p184929jsn59aaeadeea6c" },
+                               { "x-rapidapi-host", host },
+                               { "x-rapidapi-key", key },
                            },
                 Content = new FormUrlEncodedContent(new Dictionary<string, string>
                            {
