@@ -16,7 +16,8 @@
                 .Instance(x => x.WithData(CategoriesTestData.GetCategories()))
                 .Calling(x => x.GetAllNames())
                 .ShouldReturn()
-                .Ok(x => x.WithModelOfType<ICollection<string>>());
+                .ResultOfType<ICollection<string>>();
+                
         }
     }
 }
