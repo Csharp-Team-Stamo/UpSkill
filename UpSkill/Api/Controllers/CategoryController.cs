@@ -16,9 +16,9 @@
         }
 
         [HttpGet("GetAllNames")]
-        public ActionResult<ICollection<string>> GetAllNames()
+        public ICollection<string> GetAllNames()
         {
-            return Ok(categoriesService.GetAllNames());
+            return categoriesService.GetAllNames();
         }
     }
 }
