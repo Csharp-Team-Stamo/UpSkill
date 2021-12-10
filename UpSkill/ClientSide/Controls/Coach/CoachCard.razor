@@ -53,11 +53,11 @@
 
                 @if (Coach.IsCoachSessionPending)
                 {
-                    <button href="" class="coach-btn">Pending</button>
+                    <button href="" class="coach-btn" title="you can have only one active session">Pending</button>
                 }
                 else if (Coach.IsFeedbackNeeded)
                 {
-                    <button href="" class="coach-btn feedback">Feedback</button>
+                    <button href="" class="coach-btn feedback" title="give feedback to book a new session">Feedback</button>
                 }
                 else if (Coach.IsNotFirstCoachSession)
                 {
