@@ -19,33 +19,32 @@
 }
 
 .div-info {
-    font: normal normal 18px/25px Montserrat;
+    font: normal normal 15px/28px Montserrat;
     color: #FFFFFF;
     text-align: left;
     margin: 10%;
+    margin-right: 30%;
 }
 
 .footer-get-started-btn {
-    background: #FFFFFF;
-}
-
-.footer-get-started-btn-text {
-    font: bold 51% Montserrat;
-    letter-spacing: 1.1px;
+    border-radius: 0px;
+    background-color: #FFFFFF;
     color: #0B2969;
+    width: 8em;
+    height: 2.5rem;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    margin-top: -1.5rem;
+    border: none;
+    font: normal normal 600 20px/35px Montserrat;
+    letter-spacing: 1.1px;
 }
 
 .footer-bottom-text {
     text-align: center;
     letter-spacing: 0px;
     color: #FFFFFF;
-}
-
-.footer-bottom-img-copyright {
-    position: absolute;
-    top: 96%;
-    left: 45%;
-    width: 1%;
 }
 
 .div-company {
