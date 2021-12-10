@@ -9,6 +9,7 @@
     using Infrastructure.Models.Category;
     using Infrastructure.Models.Coach;
     using Contracts;
+    using UpSkill.Services.Data.Contracts;
 
     public class AdminCoachService : IAdminCoachService
     {
@@ -19,6 +20,7 @@
         private readonly IDeletableEntityRepository<CoachLanguage> coachLanguagesRepo;
         private readonly IDeletableEntityRepository<CoachOwner> coachOwnerRepo;
         private readonly IDeletableEntityRepository<LiveSession> sessionRepo;
+        private readonly IimagesService iimagesService;
 
         public AdminCoachService(
             IAdminCategoryService categoryService,
@@ -27,7 +29,8 @@
             IDeletableEntityRepository<CoachEmployee> coachEmployeeRepo,
             IDeletableEntityRepository<CoachLanguage> coachLanguagesRepo,
             IDeletableEntityRepository<CoachOwner> coachOwnerRepo,
-            IDeletableEntityRepository<LiveSession> sessionRepo)
+            IDeletableEntityRepository<LiveSession> sessionRepo,
+            IimagesService iimagesService)
         {
             this.categoryService = categoryService;
             this.coachRepo = coachRepo;
@@ -36,6 +39,7 @@
             this.coachLanguagesRepo = coachLanguagesRepo;
             this.coachOwnerRepo = coachOwnerRepo;
             this.sessionRepo = sessionRepo;
+            this.iimagesService = iimagesService;
         }
 
         public async Task<Coach> Create(CoachCreateInputModel coachInput)
@@ -55,7 +59,7 @@
                                      .All()
                                      .FirstOrDefaultAsync(l => l.Id == coachInput.LanguageId);
 
-            var coach = CreateCoach(coachInput, category);
+            var coach = await CreateCoach(coachInput, category);
 
             await this.coachRepo.AddAsync(coach);
 
@@ -279,14 +283,19 @@
         private async Task<Category> GetCategory(int id)
             => await this.categoryService.GetCategory(id);
 
-        private Coach CreateCoach(CoachCreateInputModel coachInput, Category category)
-            => new()
+        private async Task<Coach> CreateCoach(CoachCreateInputModel coachInput, Category category)
+        {
+            var noBGimage = await this
+                .iimagesService
+                .RemoveImgBackground(coachInput.AvatarImgUrl);
+
+            return new()
             {
                 Category = category,
                 CategoryId = category.Id,
                 FullName = coachInput.FullName,
                 Email = coachInput.Email,
-                AvatarImgUrl = coachInput.AvatarImgUrl,
+                AvatarImgUrl = noBGimage,
                 CompanyName = coachInput.CompanyName,
                 CompanyLogoUrl = coachInput.CompanyLogoUrl,
                 PricePerSession = coachInput.PricePerSession,
@@ -297,6 +306,7 @@
                 ResourcesCount = coachInput.ResourcesCount,
                 VideoUrl = coachInput.VideoUrl
             };
+        }
 
         private async Task<int> AddLanguageTEMP(Coach coach, Language language)
         {

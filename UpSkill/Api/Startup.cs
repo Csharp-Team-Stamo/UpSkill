@@ -122,7 +122,8 @@
                     .AddTransient<ILanguagesService, LanguagesService>()
                     .AddTransient<ILectureService, LectureService>()
                     .AddTransient<IOwnerService, OwnerService>()
-                    .AddTransient<IStatisticsService, StatisticsService>();
+                    .AddTransient<IStatisticsService, StatisticsService>()
+                    .AddTransient<IimagesService, ImagesService>();
                         
             services.Configure<SendGridEmailSenderOptions>(options =>
             {

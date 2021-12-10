@@ -26,7 +26,7 @@
             </div>
         </div>
         @if (user.IsAuthenticated().Result
-    && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
+   && user.Role().Result == GlobalConstants.BusinessOwnerRoleName)
         {
             if (IsCoachAdded())
             {   //ToDo Should I delete it from the mapping table ' UpSkill.Data.Common.Models.EmployeeCourse.cs'  as well. Same thing and in CourseCard.razor
@@ -44,8 +44,8 @@
             }
         }
         else if (
-            user.Role().Result == GlobalConstants.EmployeeRoleName && 
-            (NavigationManager.Uri.EndsWith("Coaches") || 
+            user.Role().Result == GlobalConstants.EmployeeRoleName &&
+            (NavigationManager.Uri.EndsWith("Coaches") ||
             NavigationManager.Uri.EndsWith("Dashboard")))
         {
             <div class="text-center">
@@ -114,6 +114,9 @@
     [Parameter]
     public static EventCallback<bool> ReceivedResult { get; set; }
 
+     object reference;
+
+
     protected override void OnInitialized()
     {
         CalendlyPrefilledUriParams = Coach.CalendlyUrl + "?name=" + user.FullName().Result + "&email=" + user.Email().Result;
@@ -128,7 +131,11 @@
         {
             BackgroundColor = "#EAF0FF";
         }
+
+        reference =  DotNetObjectReference.Create(this);
     }
+
+    public int MyProperty { get; set; }
 
     protected override void OnAfterRender(bool firstRender)
     {
@@ -158,9 +165,15 @@
         BackgroundColor = "#FFFFFF";
     }
 
+    public static void RefreshAfterNewSession()
+    {
+
+    }
+
     private void ShowRemoveCoachPopup(bool show)
     {
         showRemoveCoachModal = show;
+
     }
 
     private bool IsCoachAdded()
