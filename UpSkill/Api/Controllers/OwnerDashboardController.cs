@@ -48,7 +48,7 @@
 
             if(ownerId == null)
             {
-                return Forbid("The User is not an Owner.");
+                return BadRequest("The User is not an Owner.");
             }
 
             var invoiceInfo = await this.ownerService
