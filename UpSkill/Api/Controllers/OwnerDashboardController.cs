@@ -29,7 +29,7 @@
         public async Task<ActionResult<OwnerInvoiceDetailsModel>> GetInvoiceInfo(
             string userId, int monthNum)
         {
-            if(userId == null ||
+            if(string.IsNullOrWhiteSpace(userId) ||
                 monthNum <= 0 ||
                 monthNum > 12)
             {
