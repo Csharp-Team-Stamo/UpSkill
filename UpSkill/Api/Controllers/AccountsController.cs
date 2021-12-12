@@ -61,7 +61,9 @@ namespace UpSkill.Api.Controllers
                 return BadRequest(response);
             }
 
-            if (!this.accountService.IsEmailAvailable(input.Email))
+            bool emailExists = await this.accountService.EmailExists(input.Email);
+
+            if (emailExists)
             {
                 var errors = new List<string>() { GlobalConstants.Errors.EmailIsTaken };
                 AddErrors(response, errors);

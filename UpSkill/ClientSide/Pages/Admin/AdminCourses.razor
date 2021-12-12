@@ -1,9 +1,10 @@
 ﻿@page "/admin/course/all"
 @layout AdminNoMenuLayout
 
-@if (allCourses.Count() <= 0)
+@if (allCourses == null)
 {
-    <div class="mx-auto">
+    <div class="spinner"></div>
+    @*<div class="mx-auto">
         <p>There are currently no courses to show.</p>
         <div class="col-sm-12 col-md-6 col-lg-4 mb-2 p-md-2 p-lg-5" style="position: relative;">
             <input type="image"
@@ -13,7 +14,7 @@
                    alt="Add Button"
                    @onclick="ShowPopup">
         </div>
-    </div>
+    </div>*@
 }
 else
 {
@@ -45,8 +46,8 @@ else
 }
 
 @code {
-    private IEnumerable<AdminCourseListingServiceModel> allCourses =
-        new List<AdminCourseListingServiceModel>();
+    private IEnumerable<AdminCourseListingServiceModel> allCourses;
+    // = new List<AdminCourseListingServiceModel>();
 
     private bool show = false;
 
