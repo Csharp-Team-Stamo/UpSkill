@@ -22,24 +22,42 @@
     </div>
 
     <div class="form-group row">
-        <label for="imageurl" class="col-md-2 col-form-label">Image URL</label>
+        <label for="price" class="col-md-2 col-form-label">Price</label>
         <div class="col-md-10">
-            <InputText id="imageUrl" class="form-control" @bind-Value="editModel.ImageUrl" />
-            <ValidationMessage For="@(() => editModel.ImageUrl)" />
+            <InputNumber id="price" class="form-control" @bind-Value="editModel.Price" />
+            <ValidationMessage For="@(() => editModel.Price)" />
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="CategoryId" class="col-md-2 col-form-label">Category</label>
+        <label for="skillslearn" class="col-md-2 col-form-label">Skills To Learn</label>
         <div class="col-md-10">
-            <InputSelect id="categoryId" class="form-control" @bind-Value="editModel.CategoryId">
-                <option>@editModel.CategoryName</option>
-                @foreach (var category in CategoriesInDb)
-                {
-                    <option value="@category.Id">@category.Name</option>
-                }
-            </InputSelect>
-            <ValidationMessage For="@(() => editModel.CategoryId)" />
+            <InputText id="skillslearn" class="form-control" @bind-Value="editModel.SkillsLearn" />
+            <ValidationMessage For="@(() => editModel.SkillsLearn)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="durationinhrs" class="col-md-2 col-form-label">Duration In Hours</label>
+        <div class="col-md-10">
+            <InputText id="durationinhrs" class="form-control" @bind-Value="editModel.DurationInHours" />
+            <ValidationMessage For="@(() => editModel.DurationInHours)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="lecturescount" class="col-md-2 col-form-label">Lectures Count</label>
+        <div class="col-md-10">
+            <InputText id="lecturescount" class="form-control" @bind-Value="editModel.LecturesCount" />
+            <ValidationMessage For="@(() => editModel.LecturesCount)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="imageurl" class="col-md-2 col-form-label">Image URL</label>
+        <div class="col-md-10">
+            <InputText id="imageUrl" class="form-control" @bind-Value="editModel.ImageUrl" />
+            <ValidationMessage For="@(() => editModel.ImageUrl)" />
         </div>
     </div>
 
@@ -52,6 +70,22 @@
     </div>
 
     <div class="form-group row">
+        <label for="authorimgurl" class="col-md-2 col-form-label">Author Image URL</label>
+        <div class="col-md-10">
+            <InputText id="authorimgurl" class="form-control" @bind-Value="editModel.AuthorImageUrl" />
+            <ValidationMessage For="@(() => editModel.AuthorImageUrl)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="authorcompanyname" class="col-md-2 col-form-label">Author Company Name</label>
+        <div class="col-md-10">
+            <InputText id="authorcompanyname" class="form-control" @bind-Value="editModel.CompanyName" />
+            <ValidationMessage For="@(() => editModel.CompanyName)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
         <label for="@editModel.CompanyLogoUrl" class="col-md-2 col-form-label">Author Company Logo URL</label>
         <div class="col-md-10">
             <InputText id="authorcompany" class="form-control" @bind-Value="editModel.CompanyLogoUrl" />
@@ -60,18 +94,38 @@
     </div>
 
     <div class="form-group row">
-        <label for="price" class="col-md-2 col-form-label">Price</label>
-        <div class="col-md-10">
-            <InputNumber id="price" class="form-control" @bind-Value="editModel.Price" />
-            <ValidationMessage For="@(() => editModel.Price)" />
-        </div>
-    </div>
-
-    <div class="form-group row">
         <label for="videourl" class="col-md-2 col-form-label">Video URL</label>
         <div class="col-md-10">
             <InputText id="videourl" class="form-control" @bind-Value="editModel.VideoUrl" />
             <ValidationMessage For="@(() => editModel.VideoUrl)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="CategoryId" class="col-md-2 col-form-label">Category</label>
+        <div class="col-md-10">
+            <InputSelect id="categoryId" class="form-control" @bind-Value="editModel.CategoryId">
+                <option>---Select Category---</option>
+                @foreach (var category in CategoriesInDb)
+                {
+                    <option value="@category.Id">@category.Name</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => editModel.CategoryId)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="languageid" class="col-md-2 col-form-label">Language</label>
+        <div class="col-md-10">
+            <InputSelect id="languageid" class="form-control" @bind-Value="editModel.LanguageId">
+                <option>---Select Language---</option>
+                @foreach (var language in LanguagesInDb)
+                {
+                    <option value="@language.Id">@language.Name</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => editModel.LanguageId)" />
         </div>
     </div>
 
