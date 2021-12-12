@@ -6,6 +6,7 @@
     using Microsoft.AspNetCore.Components;
     using UpSkill.Infrastructure.Models.Category;
     using UpSkill.Infrastructure.Models.Coach;
+    using UpSkill.Infrastructure.Models.Language;
 
     public partial class AdminCoachEdit : ComponentBase
     {
@@ -13,6 +14,9 @@
 
         public IEnumerable<AdminCategoryListingServiceModel> CategoriesInDb { get; set; } =
             new List<AdminCategoryListingServiceModel>();
+
+        public IEnumerable<LanguageListingServiceModel> LanguagesInDb { get; set; } =
+            new List<LanguageListingServiceModel>();
 
         [Parameter]
         public string Id { get; set; }
@@ -23,7 +27,12 @@
                 .GetFromJsonAsync<CoachEditInputModel>($"/admin/coach/edit/{Id}");
 
             this.CategoriesInDb = await this.Client
-            .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>("/admin/category/all");
+            .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>
+            ("/admin/category/all");
+
+            this.LanguagesInDb = await this.Client
+                .GetFromJsonAsync<IEnumerable<LanguageListingServiceModel>>
+                ("/admin/languages/all");
         }
 
         public async Task Edit()

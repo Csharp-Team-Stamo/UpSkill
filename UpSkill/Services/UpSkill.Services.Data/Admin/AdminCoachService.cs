@@ -146,10 +146,7 @@
                 return null;
             }
 
-            coachToEdit.FullName = editInput.FullName;
-            coachToEdit.AvatarImgUrl = editInput.ImageUrl;
-            coachToEdit.PricePerSession = editInput.PricePerSession;
-            coachToEdit.CompanyName = editInput.Company;
+            ImplementEdits(coachToEdit, editInput);
             
             if(coachToEdit.Category.Id != editInput.CategoryId)
             {
@@ -195,6 +192,21 @@
         //    await this.coachVotesRepo.SaveChangesAsync();
         //}
 
+        private void ImplementEdits(Coach coachToEdit, CoachEditInputModel editInput)
+        {
+            coachToEdit.FullName = editInput.FullName;
+            coachToEdit.AvatarImgUrl = editInput.AvatarImgUrl;
+            coachToEdit.Email = editInput.Email;
+            coachToEdit.CompanyName = editInput.CompanyName;
+            coachToEdit.CompanyLogoUrl = editInput.CompanyLogoUrl;
+            coachToEdit.VideoUrl = editInput.VideoUrl;
+            coachToEdit.SessionDescription = editInput.SessionDescription;
+            coachToEdit.SkillsLearn = editInput.SkillsLearn;
+            coachToEdit.DiscussionDurationInMinutes = editInput.DiscussionDurationInMin;
+            coachToEdit.ResourcesCount = editInput.ResourcesCount;
+            coachToEdit.PricePerSession = editInput.PricePerSession;
+            coachToEdit.CalendlyPopupUrl = editInput.CalendlyPopupUrl;
+        }
         private async Task DeleteCoachLiveSession(string coachId)
         {
             var liveSession = await this.sessionRepo
@@ -356,12 +368,18 @@
             => new()
             {
                 Id = coachInDb.Id,
-                Company = coachInDb.CompanyName,
                 FullName = coachInDb.FullName,
-                ImageUrl = coachInDb.AvatarImgUrl,
+                AvatarImgUrl = coachInDb.AvatarImgUrl,
+                Email = coachInDb.Email,
+                CompanyName = coachInDb.CompanyName,
+                CompanyLogoUrl = coachInDb.CompanyLogoUrl,
+                VideoUrl = coachInDb.VideoUrl,
+                SessionDescription = coachInDb.SessionDescription,
+                SkillsLearn = coachInDb.SkillsLearn,
+                DiscussionDurationInMin = coachInDb.DiscussionDurationInMinutes,
+                ResourcesCount = coachInDb.ResourcesCount,
                 PricePerSession = coachInDb.PricePerSession,
-                CategoryId = coachInDb.Category.Id,
-                CategoryName = coachInDb.Category.Name
+                CalendlyPopupUrl = coachInDb.CalendlyPopupUrl
             };
     }
 }
