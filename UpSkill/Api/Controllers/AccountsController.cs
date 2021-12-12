@@ -84,14 +84,17 @@ namespace UpSkill.Api.Controllers
             return StatusCode(201, response);
         }
 
-        private static void AddErrors(RegistrationResponseModel response, IEnumerable<string> errors)
+        private static void AddErrors
+            (RegistrationResponseModel response, 
+            IEnumerable<string> errors)
         {
             response.Errors = errors;
             response.IsSuccessfulRegistration = false;
         }
 
         [HttpPost("Request-reset-password")]
-        public async Task<IActionResult> RequestResetPassword([FromBody] UserForgottenPasswordRequestModel input)
+        public async Task<IActionResult> RequestResetPassword
+            ([FromBody] UserForgottenPasswordRequestModel input)
         {
             var user = await userManager.FindByEmailAsync(input.Email);
 
@@ -107,7 +110,8 @@ namespace UpSkill.Api.Controllers
         }
 
         [HttpPost("Reset-password")]
-        public async Task<IActionResult> ResetPassword([FromBody] UserConfirmPassRequestModel input)
+        public async Task<IActionResult> ResetPassword
+            ([FromBody] UserConfirmPassRequestModel input)
         {
             if (!input.Password.Equals(input.ConfirmPassword))
             {
@@ -116,7 +120,8 @@ namespace UpSkill.Api.Controllers
 
             var user = userManager.FindByEmailAsync(input.Email).Result;
             var escapedPlusSymbolToken = input.ResetToken.Replace(" ", "+");
-            var result = await userManager.ResetPasswordAsync(user, escapedPlusSymbolToken, input.Password);
+            var result = await userManager
+                .ResetPasswordAsync(user, escapedPlusSymbolToken, input.Password);
 
             if (!result.Succeeded)
             {
@@ -129,8 +134,11 @@ namespace UpSkill.Api.Controllers
 
             if (!await userManager.IsEmailConfirmedAsync(user))
             {
-                var confirmEmailToken = await userManager.GenerateEmailConfirmationTokenAsync(user);
-                await userManager.ConfirmEmailAsync(user, confirmEmailToken);
+                var confirmEmailToken = await userManager
+                    .GenerateEmailConfirmationTokenAsync(user);
+
+                await userManager
+                    .ConfirmEmailAsync(user, confirmEmailToken);
             }
 
             return Ok();
@@ -140,9 +148,10 @@ namespace UpSkill.Api.Controllers
         public async Task<IActionResult> Login(
         [FromBody] UserAuthenticationModel userData)
         {
-            var user = await this.userManager.FindByEmailAsync(userData.Email);
-            var unauthorizedResponse = new UserAuthenticationResponseModel();
+            var user = await this.userManager
+                .FindByEmailAsync(userData.Email);
 
+            var unauthorizedResponse = new UserAuthenticationResponseModel();
 
             if (user == null ||
                 !await this.userManager
@@ -214,7 +223,9 @@ namespace UpSkill.Api.Controllers
                 issuer: this.jwtSettings["validIssuer"],
                 audience: this.jwtSettings["validAudience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(Convert.ToDouble(this.jwtSettings["expiryInMinutes"])),
+                expires: DateTime
+                        .Now
+                        .AddMinutes(Convert.ToDouble(this.jwtSettings["expiryInMinutes"])),
                 signingCredentials: signingCredentials);
     }
 }
