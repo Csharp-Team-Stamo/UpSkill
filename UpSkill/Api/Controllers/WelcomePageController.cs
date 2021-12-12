@@ -30,7 +30,10 @@
                 return BadRequest();
             }
 
-            if(this.accountsService.IsEmailAvailable(input.Email) == false)
+            bool emailExists = await this.accountsService
+                                         .EmailExists(input.Email);
+
+            if(emailExists)
             {
                 return BadRequest("You already have an UpSkill account.");
             }
