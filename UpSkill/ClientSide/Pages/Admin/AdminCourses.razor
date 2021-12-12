@@ -4,17 +4,6 @@
 @if (allCourses == null)
 {
     <div class="spinner"></div>
-    @*<div class="mx-auto">
-        <p>There are currently no courses to show.</p>
-        <div class="col-sm-12 col-md-6 col-lg-4 mb-2 p-md-2 p-lg-5" style="position: relative;">
-            <input type="image"
-                   src="images/PlusButton.svg"
-                   style="position: absolute;
-                   top: 40%;"
-                   alt="Add Button"
-                   @onclick="ShowPopup">
-        </div>
-    </div>*@
 }
 else
 {
@@ -37,9 +26,6 @@ else
     </div>
 }
 
-
-
-
 @if (show)
 {
     NavigationManager.NavigateTo("/adminCourse");
@@ -47,14 +33,14 @@ else
 
 @code {
     private IEnumerable<AdminCourseListingServiceModel> allCourses;
-    // = new List<AdminCourseListingServiceModel>();
 
     private bool show = false;
 
     protected override async Task OnInitializedAsync()
     {
         allCourses = await Client
-            .GetFromJsonAsync<IEnumerable<AdminCourseListingServiceModel>>("admin/course/all");
+            .GetFromJsonAsync<IEnumerable<AdminCourseListingServiceModel>>
+            ("admin/course/all");
     }
 
     private void ShowPopup()
@@ -62,12 +48,8 @@ else
         show = true;
     }
 
-    //private void SetShowValue(bool value)
-    //{
-    //    show = value;
-    //}
-
-    private void GetUpdatedCourses(IEnumerable<AdminCourseListingServiceModel> updatedCourses)
+    private void GetUpdatedCourses
+        (IEnumerable<AdminCourseListingServiceModel> updatedCourses)
     {
         allCourses = updatedCourses;
     }

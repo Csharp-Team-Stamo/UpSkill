@@ -70,7 +70,8 @@ namespace UpSkill.Api.Controllers
                 return BadRequest(response);
             }
 
-            var result = await this.accountService.Register(input.FullName, input.Email, input.Password, input.CompanyName);
+            var result = await this.accountService
+                .Register(input.FullName, input.Email, input.Password, input.CompanyName);
 
             if (!result.Succeeded)
             {

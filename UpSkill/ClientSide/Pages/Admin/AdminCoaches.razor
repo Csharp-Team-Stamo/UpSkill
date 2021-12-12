@@ -35,8 +35,6 @@ else
 
     private bool show = false;
 
-    // private bool stateChanged;
-
     protected override async Task OnInitializedAsync()
     {
         allCoaches = await Client
@@ -44,7 +42,8 @@ else
         ("/admin/coach/all");
     }
 
-    private void GetUpdatedCoaches(IEnumerable<AdminCoachListingServiceModel> updatedCoahces)
+    private void GetUpdatedCoaches
+        (IEnumerable<AdminCoachListingServiceModel> updatedCoahces)
     {
         allCoaches = updatedCoahces;
     }

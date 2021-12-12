@@ -46,8 +46,6 @@ else
     </div>
 }
 
-
-
 @if (show)
 {
     <AdminLanguageAddModal 
@@ -78,7 +76,8 @@ else
         show = value;
     }
 
-    private void GetUpdatedLanguages(IEnumerable<LanguageListingServiceModel> value)
+    private void GetUpdatedLanguages
+        (IEnumerable<LanguageListingServiceModel> value)
     {
         allLanguages = value;
     }
