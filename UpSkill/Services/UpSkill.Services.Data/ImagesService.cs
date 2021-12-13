@@ -5,6 +5,7 @@
     using System.Net.Http;
     using System.Threading.Tasks;
     using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
@@ -33,7 +34,7 @@
 
             var request = new HttpRequestMessage
             {
-                Method = HttpMethod.Post,
+                Method = System.Net.Http.HttpMethod.Post,
                 RequestUri = new Uri("https://background-removal.p.rapidapi.com/remove"),
                 Headers =
                            {
@@ -57,12 +58,13 @@
 
             var uploadParams = new ImageUploadParams()
             {
-                File = new FileDescription(@"https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg"),
+                File = new FileDescription($"{imgUrl}"),
                 PublicId = "olympic_flag"
             };
             var uploadResult = cloudinary.Upload(uploadParams);
+            var urlResult = uploadResult.SecureUrl.ToString();
 
-            return imgUrl;
+            return urlResult;
         }
     }
 }
