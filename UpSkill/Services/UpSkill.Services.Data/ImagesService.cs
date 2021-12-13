@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
     using CloudinaryDotNet;
@@ -13,20 +15,24 @@
     public class ImagesService : IimagesService
     {
         private readonly IConfiguration configuration;
+        private readonly ICloudinaryService cloudinaryService;
 
-        public ImagesService(IConfiguration configuration)
+        public ImagesService(
+            IConfiguration configuration,
+            ICloudinaryService cloudinaryService)
         {
             this.configuration = configuration;
+            this.cloudinaryService = cloudinaryService;
         }
         public async Task<string> RemoveImgBackground(string url)
         {
 
-            Account account = new Account(
-                                        "upskill",
-                                        "644326433628125",
-                                        "BUU64O9HlUEvDc9iFGd8TZvJ50k");
+            var imgName = url.Split("/", StringSplitOptions.None).Last();
+            var dateAdded = DateTime.UtcNow.ToString("d", CultureInfo.GetCultureInfo("nl-NL"));
+            var name = imgName + dateAdded;
 
-            Cloudinary cloudinary = new Cloudinary(account);
+
+            var cloudinaryClient = cloudinaryService.GetCloudinaryClient();
 
             var client = new HttpClient();
             var host = configuration["ExternalProviders:RapidAPI:Host"];
@@ -59,9 +65,9 @@
             var uploadParams = new ImageUploadParams()
             {
                 File = new FileDescription($"{imgUrl}"),
-                PublicId = "olympic_flag"
+                PublicId = name
             };
-            var uploadResult = cloudinary.Upload(uploadParams);
+            var uploadResult = cloudinaryClient.Upload(uploadParams);
             var urlResult = uploadResult.SecureUrl.ToString();
 
             return urlResult;
