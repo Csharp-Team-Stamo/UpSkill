@@ -15,9 +15,9 @@ namespace UpSkill.Services.Data
         public Cloudinary GetCloudinaryClient()
         {
             Account account = new(
-                configuration["Cloudinary:CloudName"],
-                configuration["Cloudinary:ApiKey"],
-                configuration["Cloudinary:ApiSecret"]);
+                configuration["ExternalProviders:Cloudinary:CloudName"],
+                configuration["ExternalProviders:Cloudinary:ApiKey"],
+                configuration["ExternalProviders:Cloudinary:ApiSecret"]);
 
             return new (account);
 
