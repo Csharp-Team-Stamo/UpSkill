@@ -56,13 +56,12 @@ namespace UpSkil.Tests.Integration.Data
                 FullName = "Valid Coach",
             };
 
-
         public static Course GetCourse()
             => new()
             {
-              Id = 1,
-              Name = "validCourse",
-              Price = 50
+                Id = 1,
+                Name = "validCourse",
+                Price = 50
             };
 
         public static EmployeeCourse GetEmployeeCourses()
@@ -83,33 +82,3 @@ namespace UpSkil.Tests.Integration.Data
             };
     }
 }
-
-//invoiceInfo.MonthlyCoursesToPay = await this.coursesRepo
-//                .All()
-//                .Where(ec =>
-//                            ec.Student.Owner.Id == ownerId &&
-//                            ec.CreatedOn.Month == monthNum)
-//                .Select(ec => new CourseInvoiceModel
-//                {
-//                    CourseId = ec.Course.Id,
-//                    EmployeeId = ec.Student.Id,
-//                    CourseName = ec.Course.Name,
-//                    IssueDate = ec.CreatedOn,
-//                    Price = ec.Course.Price
-//                })
-//                .ToListAsync();
-
-//invoiceInfo.MonthlySessionsToPay = await this.sessionRepo
-//    .All()
-//    .Where(s =>
-//                s.Student.Owner.Id == ownerId &&
-//                s.End.Month == monthNum)
-//    .Select(s => new LiveSessionInvoiceModel
-//    {
-//        SessionId = s.Id,
-//        EmployeeId = s.Student.Id,
-//        CoachName = s.Coach.FullName,
-//        Price = s.Price,
-//        IssueDate = s.End
-//    })
-//    .ToListAsync();

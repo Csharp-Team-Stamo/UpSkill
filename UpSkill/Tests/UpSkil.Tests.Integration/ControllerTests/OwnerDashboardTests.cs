@@ -1,14 +1,11 @@
 ﻿
 namespace UpSkil.Tests.Integration.ControllerTests
 {
-    using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Mvc;
     using MyTested.AspNetCore.Mvc;
     using UpSkil.Tests.Integration.Data;
     using UpSkill.Api.Controllers;
     using UpSkill.Infrastructure.Models.Owner;
     using Xunit;
-
     public class OwnerDashboardTests : MyController<OwnerDashboardController>
     {
         [Fact]
@@ -38,7 +35,6 @@ namespace UpSkil.Tests.Integration.ControllerTests
         [Fact]
         public void IfUserIsNotOwnerReturnBadRequrest()
         {
-            
             Instance(x => x.WithData(OwnerDashboardTestData.GetValidUser(), OwnerDashboardTestData.GetValidOwner()))
             .Calling(x => x.GetInvoiceInfo(OwnerDashboardTestData.validUserId, OwnerDashboardTestData.validMonth))
             .ShouldHave()
@@ -51,7 +47,6 @@ namespace UpSkil.Tests.Integration.ControllerTests
         [Fact]
         public void OnCorrectInputShouldReturnOwnerInvoiceDetailsModel()
         {
-
             Instance(x =>
             x.WithData(
                 OwnerDashboardTestData.GetValidUserWhoIsOwner(),
@@ -73,7 +68,7 @@ namespace UpSkil.Tests.Integration.ControllerTests
         [InlineData(null, 1)]
         [InlineData("", 1)]
         [InlineData(OwnerDashboardTestData.validUserId, OwnerDashboardTestData.invalidMonth)]
-        [InlineData(OwnerDashboardTestData.validUserId, 13)]
+        [InlineData(OwnerDashboardTestData.validUserId, -1)]
         [InlineData(OwnerDashboardTestData.validUserId, 0)]
         public void IfUserIdIsNullShouldReturnBadRequest(string userId, int month)
         {
