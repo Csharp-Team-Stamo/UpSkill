@@ -29,7 +29,7 @@
         public async Task<ActionResult<OwnerInvoiceDetailsModel>> GetInvoiceInfo(
             string userId, int monthNum)
         {
-            if(userId == null ||
+            if(string.IsNullOrWhiteSpace(userId) ||
                 monthNum <= 0 ||
                 monthNum > 12)
             {
@@ -48,7 +48,7 @@
 
             if(ownerId == null)
             {
-                return Forbid("The User is not an Owner.");
+                return BadRequest("The User is not an Owner.");
             }
 
             var invoiceInfo = await this.ownerService

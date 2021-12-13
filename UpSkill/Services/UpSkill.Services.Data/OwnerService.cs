@@ -73,9 +73,15 @@
 
         public async Task<string> GetOwnerId(string userId)
         {
+            //Owner owner = new();
             var owner = await this.ownerRepository
                 .All()
                 .SingleOrDefaultAsync(u => u.UserId == userId);
+
+            if (owner == null)
+            {
+                return null;
+            }
 
             return owner.Id;
         }
