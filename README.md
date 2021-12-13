@@ -9,3 +9,5 @@ The key features of UpSkill.co will enable the corporate employees to:
 - Access a wide range of high-curated professional courses designed by established professionals and academics in their respective fields.
 - Book and conduct sessions with professional business and lifestyle coaches over a video streaming connection.
 We rely on your team to act as a trusted technology advisor with a depth of knowledge, experience, and strategic insights. You should facilitate the execution of the project plan, project scope, and all technical aspects for the successful realization of the product in accordance with the business goals and needs of UpSkill.co
+
+UpSkill is a Single-Page, Progressive Web Application, built with the help of technologies like MS ASP.NET Core Web API and Blazor WebAssembly.
