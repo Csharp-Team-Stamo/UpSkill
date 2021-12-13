@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Net.Http;
     using System.Threading.Tasks;
+    using CloudinaryDotNet;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
@@ -18,6 +19,14 @@
         }
         public async Task<string> RemoveImgBackground(string url)
         {
+
+            Account account = new Account(
+                                        "upskill",
+                                        "644326433628125",
+                                        "BUU64O9HlUEvDc9iFGd8TZvJ50k");
+
+            Cloudinary cloudinary = new Cloudinary(account);
+
             var client = new HttpClient();
             var host = configuration["ExternalProviders:RapidAPI:Host"];
             var key = configuration["ExternalProviders:RapidAPI:RemoveBGKey"];
@@ -45,6 +54,13 @@
                 var body = await response.Content.ReadAsStringAsync();
                 imgUrl = JObject.Parse(body)["response"]["image_url"].ToString();
             }
+
+            var uploadParams = new ImageUploadParams()
+            {
+                File = new FileDescription(@"https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg"),
+                PublicId = "olympic_flag"
+            };
+            var uploadResult = cloudinary.Upload(uploadParams);
 
             return imgUrl;
         }
