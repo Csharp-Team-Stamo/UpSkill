@@ -111,6 +111,84 @@
                 deleteResult;
         }
 
+        
+
+        public async Task<int?> Edit(CourseEditInputModel input)
+        {
+            var courseToEdit = this.courseRepo
+                .All()
+                .FirstOrDefault(c => c.Id == input.Id);
+
+            if(courseToEdit == null)
+            {
+                return null;
+            }
+
+            ImplementEdits(courseToEdit, input);
+
+            if(courseToEdit.CategoryId != input.CategoryId)
+            {
+                courseToEdit.Category = await this.GetCategory(input.CategoryId);
+                courseToEdit.CategoryId = input.CategoryId;
+            }
+
+            if(courseToEdit.LanguageId != input.LanguageId)
+            {
+                courseToEdit.Language = await this.GetLanguage(input.LanguageId);
+                courseToEdit.LanguageId = input.LanguageId;
+            }
+
+            this.courseRepo.Update(courseToEdit);
+
+            var editResult = await this.courseRepo.SaveChangesAsync();
+
+            return editResult <= 0 ?
+                null :
+                courseToEdit.Id;
+        }
+
+        public async Task<CourseEditInputModel> GetCourse(int id)
+            => await this.courseRepo
+            .All()
+            .Select(c => new CourseEditInputModel
+            {
+                Id = c.Id,
+                AuthorFullName = c.AuthorFullName,
+                AuthorImageUrl = c.AuthorImageUrl,
+                CompanyLogoUrl = c.CompanyLogoUrl,
+                CompanyName = c.CompanyName,
+                Description = c.Description,
+                DurationInHours = c.CourseDurationInHours,
+                ImageUrl = c.ImageUrl,
+                LecturesCount = c.LecturesCount,
+                Name = c.Name,
+                Price = c.Price,
+                SkillsLearn = c.SkillsLearn,
+                VideoUrl = c.VideoUrl
+            })
+            .SingleOrDefaultAsync(c => c.Id == id);
+
+        public async Task<CourseDetailsServiceModel> GetCourseDetails(int id)
+            => await this.courseRepo
+                            .All()
+                            .Select(c => new CourseDetailsServiceModel
+                            {
+                                Id = c.Id,
+                                Name = c.Name,
+                                ImageUrl = c.ImageUrl,
+                                Description = c.Description,
+                                AuthorFullName = c.AuthorFullName,
+                                CompanyLogoUrl = c.CompanyLogoUrl,
+                                Category = new CategoryDetailsServiceModel
+                                {
+                                    Id = c.Category.Id,
+                                    Name = c.Category.Name
+                                },
+                                Price = c.Price,
+                                VideoUrl = c.VideoUrl
+                            })
+                            .SingleOrDefaultAsync(c => c.Id == id);
+
         private async Task DeleteInEmployeeCoursesTable(int courseId)
         {
             var employeeCourses = await this.employeeCourseRepo
@@ -118,7 +196,7 @@
                 .Where(ec => ec.Id == courseId)
                 .ToListAsync();
 
-            if(employeeCourses.Any() == false)
+            if (employeeCourses.Any() == false)
             {
                 return;
             }
@@ -135,7 +213,7 @@
                 .Where(cv => cv.Course.Id == courseId)
                 .ToListAsync();
 
-            if(courseVotes.Any() == false)
+            if (courseVotes.Any() == false)
             {
                 return;
             }
@@ -152,7 +230,7 @@
                 .Where(c => c.Id == courseId)
                 .ToListAsync();
 
-            if(courseOwners.Any() == false)
+            if (courseOwners.Any() == false)
             {
                 return;
             }
@@ -162,68 +240,20 @@
             await this.courseOwnersRepo.SaveChangesAsync();
         }
 
-        public async Task<int?> Edit(CourseEditInputModel input)
+        private void ImplementEdits(Course courseToEdit, CourseEditInputModel input)
         {
-            var courseToEdit = this.courseRepo
-                .All()
-                .FirstOrDefault(c => c.Id == input.Id);
-
-            if(courseToEdit == null)
-            {
-                return null;
-            }
-
             courseToEdit.Name = input.Name;
             courseToEdit.Description = input.Description;
-            courseToEdit.ImageUrl = input.ImageUrl;
             courseToEdit.Price = input.Price;
+            courseToEdit.SkillsLearn = input.SkillsLearn;
+            courseToEdit.CourseDurationInHours = input.DurationInHours;
+            courseToEdit.LecturesCount = input.LecturesCount;
+            courseToEdit.ImageUrl = input.ImageUrl;
             courseToEdit.AuthorFullName = input.AuthorFullName;
+            courseToEdit.AuthorImageUrl = input.AuthorImageUrl;
+            courseToEdit.CompanyName = input.CompanyName;
             courseToEdit.CompanyLogoUrl = input.CompanyLogoUrl;
             courseToEdit.VideoUrl = input.VideoUrl;
-
-            if(courseToEdit.CategoryId != input.CategoryId)
-            {
-                courseToEdit.Category = await this.GetCategory(input.CategoryId);
-                courseToEdit.CategoryId = input.CategoryId;
-            }
-
-            this.courseRepo.Update(courseToEdit);
-            var editResult = await this.courseRepo.SaveChangesAsync();
-
-            return editResult <= 0 ?
-                null :
-                courseToEdit.Id;
-        }
-
-        public async Task<Course> GetCourse(int id)
-            => await this.courseRepo
-            .All()
-            .Include(c => c.Category)
-            .FirstOrDefaultAsync(c => c.Id == id);
-
-        public async Task<CourseDetailsServiceModel> GetCourseDetails(int id)
-        {
-            var course = await this.courseRepo
-                                   .All()
-                                   .Select(c => new CourseDetailsServiceModel
-                                   {
-                                       Id = c.Id,
-                                       Name = c.Name,
-                                       ImageUrl = c.ImageUrl,
-                                       Description = c.Description,
-                                       AuthorFullName = c.AuthorFullName,
-                                       CompanyLogoUrl = c.CompanyLogoUrl,
-                                       Category = new CategoryDetailsServiceModel
-                                       {
-                                           Id = c.Category.Id,
-                                           Name = c.Category.Name
-                                       },
-                                       Price = c.Price,
-                                       VideoUrl = c.VideoUrl
-                                   })
-                                   .FirstOrDefaultAsync(c => c.Id == id);
-
-            return course;
         }
 
         private async Task<Category> GetCategory(int id)

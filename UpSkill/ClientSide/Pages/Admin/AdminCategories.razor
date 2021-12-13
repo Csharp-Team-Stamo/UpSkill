@@ -3,12 +3,9 @@
 
 @using UpSkill.Infrastructure.Models.Category
 
-@if (allCategories.Count() <= 0)
+@if (allCategories == null)
 {
-    <div class="mx-auto">
-        <p>There currently are no categories to show</p>
-        <div class="add-btn" @onclick="ShowPopup">+</div>
-    </div>
+    <div class="spinner"></div>
 }
 else
 {
@@ -52,12 +49,14 @@ else
 
 @if (show)
 {
-    <AdminCategoryAddModal SetShow="SetShowValue" GetUpdatedCategories="GetUpdatedCategories"></AdminCategoryAddModal>
+    <AdminCategoryAddModal 
+                           SetShow="SetShowValue" 
+                           GetUpdatedCategories="GetUpdatedCategories">
+    </AdminCategoryAddModal>
 }
 
 @code {
-    private IEnumerable<AdminCategoryListingServiceModel> allCategories =
-        new List<AdminCategoryListingServiceModel>();
+    private IEnumerable<AdminCategoryListingServiceModel> allCategories;
 
     private bool show = false;
 
