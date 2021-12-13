@@ -10,12 +10,16 @@ else
     <div class="row">
         <CoursesTopCard></CoursesTopCard>
 
-        @foreach (var course in allCourses)
-        {
-            <AdminCourseCard Course="course" ChangeState="GetUpdatedCourses"></AdminCourseCard>
-        }
+        <div id="courseCatalogGrid">
+            @foreach (var course in allCourses)
+            {
+                <AdminCourseCard Course="course"
+                                 ChangeState="GetUpdatedCourses">
+                </AdminCourseCard>
+            }
+        </div>
 
-        <div class="col-sm-12 col-md-6 col-lg-4 mb-2 p-md-2 p-lg-5" style="position: relative;">
+        <div id="addCourseButton" class="col-sm-12 col-md-6 col-lg-4 mb-2 p-md-2 p-lg-5" style="position: relative;">
             <input type="image"
                    src="images/PlusButton.svg"
                    style="position: absolute;
