@@ -30,10 +30,13 @@
             this.configuration = configuration;
         }
 
-        public bool IsEmailAvailable(string email)
-        {
-            return !this.userManager.Users.Any(x => x.Email == email) == true;
-        }
+        public async Task<bool> EmailExists(string email)
+            => await this.userManager.FindByEmailAsync(email) != null;
+
+        //public bool IsEmailAvailable(string email)
+        //{
+        //    return !this.userManager.Users.Any(x => x.Email == email) == true;
+        //}
 
         public async Task<IdentityResult> Register(string fullName, string email, string password, string companyName)
         {

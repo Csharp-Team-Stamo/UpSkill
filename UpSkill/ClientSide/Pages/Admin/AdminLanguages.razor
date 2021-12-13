@@ -3,12 +3,9 @@
 
 @using UpSkill.Infrastructure.Models.Language
 
-@if (allLanguages.Count() <= 0)
+@if (allLanguages == null)
 {
-    <div class="mx-auto">
-        <p>There are currently no languages to show.</p>
-        <div class="add-btn" @onclick="ShowPopup">+</div>
-    </div>
+    <div class="spinner"></div>
 }
 else
 {
@@ -49,16 +46,16 @@ else
     </div>
 }
 
-
-
 @if (show)
 {
-    <AdminLanguageAddModal SetShow="SetShowValue" GetUpdatedLanguages="GetUpdatedLanguages"></AdminLanguageAddModal>
+    <AdminLanguageAddModal 
+                           SetShow="SetShowValue" 
+                           GetUpdatedLanguages="GetUpdatedLanguages">
+    </AdminLanguageAddModal>
 }
 
 @code {
-    private IEnumerable<LanguageListingServiceModel> allLanguages =
-        new List<LanguageListingServiceModel>();
+    private IEnumerable<LanguageListingServiceModel> allLanguages;
 
     private bool show = false;
 
@@ -79,7 +76,8 @@ else
         show = value;
     }
 
-    private void GetUpdatedLanguages(IEnumerable<LanguageListingServiceModel> value)
+    private void GetUpdatedLanguages
+        (IEnumerable<LanguageListingServiceModel> value)
     {
         allLanguages = value;
     }

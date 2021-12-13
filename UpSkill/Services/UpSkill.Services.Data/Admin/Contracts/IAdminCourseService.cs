@@ -9,7 +9,7 @@
     {
         Task<int?> Create(CourseCreateInputModel input);
         Task<int?> Edit(CourseEditInputModel input);
-        Task<Course> GetCourse(int id);
+        Task<CourseEditInputModel> GetCourse(int id);
 
         Task<CourseDetailsServiceModel> GetCourseDetails(int id);
         Task<IEnumerable<AdminCourseListingServiceModel>> All();

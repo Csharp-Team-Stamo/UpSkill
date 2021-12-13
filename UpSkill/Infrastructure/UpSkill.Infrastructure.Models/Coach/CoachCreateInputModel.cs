@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Common.Attributes;
+    using Newtonsoft.Json.Serialization;
 
     public class CoachCreateInputModel
     {
@@ -13,7 +14,8 @@
         private const int SessionSkillsMinLen = 10;
         private const int SessionSkillsMaxLen = 150;
 
-        [Required(ErrorMessage = nameof(CategoryId) + RequiredErrorMessage)]
+        [Required]
+        [Range(1, 100, ErrorMessage = "Category" + RequiredErrorMessage)]
         [Display(Name = "Category Id")]
         public int CategoryId { get; set; }
 
@@ -41,7 +43,7 @@
         public string CompanyLogoUrl { get; set; }
 
         [DataType(DataType.Currency)]
-        [Range(typeof(decimal), "0.00", "9999.00")]
+        [Range(typeof(decimal), "0", "9999")]
         public decimal PricePerSession { get; set; }
 
         [Required(ErrorMessage = nameof(VideoUrl) + RequiredErrorMessage)]
@@ -53,7 +55,8 @@
         [Display(Name = "Calendly URL")]
         public string CalendlyPopupUrl { get; set; }
 
-        [Required(ErrorMessage = nameof(LanguageId) + RequiredErrorMessage)]
+        [Required]
+        [Range(1,100, ErrorMessage = "Language" + RequiredErrorMessage)]
         public int LanguageId { get; set; }
 
         [Required(ErrorMessage = nameof(SessionDescription) + RequiredErrorMessage)]

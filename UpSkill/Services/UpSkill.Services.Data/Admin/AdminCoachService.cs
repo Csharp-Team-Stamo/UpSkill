@@ -9,6 +9,7 @@
     using Infrastructure.Models.Category;
     using Infrastructure.Models.Coach;
     using Contracts;
+    using UpSkill.Services.Data.Contracts;
 
     public class AdminCoachService : IAdminCoachService
     {
@@ -19,6 +20,7 @@
         private readonly IDeletableEntityRepository<CoachLanguage> coachLanguagesRepo;
         private readonly IDeletableEntityRepository<CoachOwner> coachOwnerRepo;
         private readonly IDeletableEntityRepository<LiveSession> sessionRepo;
+        private readonly IimagesService iimagesService;
 
         public AdminCoachService(
             IAdminCategoryService categoryService,
@@ -27,7 +29,8 @@
             IDeletableEntityRepository<CoachEmployee> coachEmployeeRepo,
             IDeletableEntityRepository<CoachLanguage> coachLanguagesRepo,
             IDeletableEntityRepository<CoachOwner> coachOwnerRepo,
-            IDeletableEntityRepository<LiveSession> sessionRepo)
+            IDeletableEntityRepository<LiveSession> sessionRepo,
+            IimagesService iimagesService)
         {
             this.categoryService = categoryService;
             this.coachRepo = coachRepo;
@@ -36,6 +39,7 @@
             this.coachLanguagesRepo = coachLanguagesRepo;
             this.coachOwnerRepo = coachOwnerRepo;
             this.sessionRepo = sessionRepo;
+            this.iimagesService = iimagesService;
         }
 
         public async Task<Coach> Create(CoachCreateInputModel coachInput)
@@ -55,7 +59,7 @@
                                      .All()
                                      .FirstOrDefaultAsync(l => l.Id == coachInput.LanguageId);
 
-            var coach = CreateCoach(coachInput, category);
+            var coach = await CreateCoach(coachInput, category);
 
             await this.coachRepo.AddAsync(coach);
 
@@ -142,10 +146,13 @@
                 return null;
             }
 
-            coachToEdit.FullName = editInput.FullName;
-            coachToEdit.AvatarImgUrl = editInput.ImageUrl;
-            coachToEdit.PricePerSession = editInput.PricePerSession;
-            coachToEdit.CompanyName = editInput.Company;
+            ImplementEdits(coachToEdit, editInput);
+
+            if(coachToEdit.AvatarImgUrl != editInput.AvatarImgUrl)
+            {
+                coachToEdit.AvatarImgUrl = await this.iimagesService
+                    .RemoveImgBackground(editInput.AvatarImgUrl);
+            }
             
             if(coachToEdit.Category.Id != editInput.CategoryId)
             {
@@ -191,6 +198,20 @@
         //    await this.coachVotesRepo.SaveChangesAsync();
         //}
 
+        private void ImplementEdits(Coach coachToEdit, CoachEditInputModel editInput)
+        {
+            coachToEdit.FullName = editInput.FullName;
+            coachToEdit.Email = editInput.Email;
+            coachToEdit.CompanyName = editInput.CompanyName;
+            coachToEdit.CompanyLogoUrl = editInput.CompanyLogoUrl;
+            coachToEdit.VideoUrl = editInput.VideoUrl;
+            coachToEdit.SessionDescription = editInput.SessionDescription;
+            coachToEdit.SkillsLearn = editInput.SkillsLearn;
+            coachToEdit.DiscussionDurationInMinutes = editInput.DiscussionDurationInMin;
+            coachToEdit.ResourcesCount = editInput.ResourcesCount;
+            coachToEdit.PricePerSession = editInput.PricePerSession;
+            coachToEdit.CalendlyPopupUrl = editInput.CalendlyPopupUrl;
+        }
         private async Task DeleteCoachLiveSession(string coachId)
         {
             var liveSession = await this.sessionRepo
@@ -267,6 +288,12 @@
 
             var editModel = ConvertToEditModel(coachToEdit);
 
+            var coachLanguage = await this.coachLanguagesRepo
+                .All()
+                .SingleOrDefaultAsync(cl => cl.CoachId == id);
+
+            editModel.LanguageId = coachLanguage.LanguageId;
+
             return editModel;
         }
 
@@ -279,14 +306,19 @@
         private async Task<Category> GetCategory(int id)
             => await this.categoryService.GetCategory(id);
 
-        private Coach CreateCoach(CoachCreateInputModel coachInput, Category category)
-            => new()
+        private async Task<Coach> CreateCoach(CoachCreateInputModel coachInput, Category category)
+        {
+            var noBGimage = await this
+                .iimagesService
+                .RemoveImgBackground(coachInput.AvatarImgUrl);
+
+            return new()
             {
                 Category = category,
                 CategoryId = category.Id,
                 FullName = coachInput.FullName,
                 Email = coachInput.Email,
-                AvatarImgUrl = coachInput.AvatarImgUrl,
+                AvatarImgUrl = noBGimage,
                 CompanyName = coachInput.CompanyName,
                 CompanyLogoUrl = coachInput.CompanyLogoUrl,
                 PricePerSession = coachInput.PricePerSession,
@@ -297,6 +329,7 @@
                 ResourcesCount = coachInput.ResourcesCount,
                 VideoUrl = coachInput.VideoUrl
             };
+        }
 
         private async Task<int> AddLanguageTEMP(Coach coach, Language language)
         {
@@ -343,15 +376,26 @@
                 .ToListAsync();
 
         private static CoachEditInputModel ConvertToEditModel(Coach coachInDb)
-            => new()
+        {
+            var editInput = new CoachEditInputModel
             {
                 Id = coachInDb.Id,
-                Company = coachInDb.CompanyName,
                 FullName = coachInDb.FullName,
-                ImageUrl = coachInDb.AvatarImgUrl,
+                AvatarImgUrl = coachInDb.AvatarImgUrl,
+                Email = coachInDb.Email,
+                CompanyName = coachInDb.CompanyName,
+                CompanyLogoUrl = coachInDb.CompanyLogoUrl,
+                VideoUrl = coachInDb.VideoUrl,
+                SessionDescription = coachInDb.SessionDescription,
+                SkillsLearn = coachInDb.SkillsLearn,
+                DiscussionDurationInMin = coachInDb.DiscussionDurationInMinutes,
+                ResourcesCount = coachInDb.ResourcesCount,
                 PricePerSession = coachInDb.PricePerSession,
-                CategoryId = coachInDb.Category.Id,
-                CategoryName = coachInDb.Category.Name
+                CalendlyPopupUrl = coachInDb.CalendlyPopupUrl,
+                CategoryId = coachInDb.CategoryId
             };
+
+            return editInput;
+        }
     }
 }

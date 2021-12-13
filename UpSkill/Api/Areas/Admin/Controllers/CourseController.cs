@@ -59,7 +59,8 @@
                 return BadRequest();
             }
 
-            var courseDetails = await this.courseService.GetCourseDetails(id);
+            var courseDetails = await this.courseService
+                .GetCourseDetails(id);
 
             return courseDetails;
         }
@@ -81,23 +82,9 @@
 
             // var allCategories = await this.categoryService.GetAll();
 
-            var editModel = new CourseEditInputModel
-            {
-                Id = courseInDb.Id,
-                CompanyLogoUrl = courseInDb.CompanyLogoUrl,
-                AuthorFullName = courseInDb.AuthorFullName,
-                Name = courseInDb.Name,
-                Description = courseInDb.Description,
-                ImageUrl = courseInDb.ImageUrl,
-                Price = courseInDb.Price,
-                VideoUrl = courseInDb.VideoUrl,
-                CategoryId = courseInDb.Category.Id,
-                CategoryName = courseInDb.Category.Name
-            };
-
             // editModel.AllCategories = await this.categoryService.GetAll();
 
-            return editModel;
+            return courseInDb;
         }
 
         [HttpPut("Edit")]

@@ -1,52 +1,100 @@
 ﻿@using UpSkill.Infrastructure.Models.Course
 
-<div class="col-sm-12 col-md-6 col-lg-4 p-4 p-md-3 p-lg-5">
-    <article class="resource-card shadow">
-        <div class="resource-top d-flex justify-content-center align-items-center">
-            <img class="card-img-top resource-image" src="images/course-marketing.png" alt="@Course.Name">
-            <p class="resource-title position-absolute mx-auto">@Course.Name</p>
-        </div>
-        <div class="card-body">
-            <div class="row px-4 pb-1">
-                <p class="resource col-sm-12 col-md-6 text-left pl-md-2 pr-md-0">
-                    <span class="resource-name d-md-block">@Course.CategoryName</span>
-                    <span class="resource-price d-md-block">@Course.FormattedPrice&euro; per person</span>
-                </p>
-                <p class="author col-sm-12 col-md-6 text-md-right text-sm-left pr-md-2 pl-md-0">
-                    <span class="resource-author d-md-block">@Course.AuthorFullName</span>
-                    <img class="company-logo img-responsive" src="images/logo-google.png" alt="@Course.AuthorFullName company logo">
-                </p>
+<div class="card custom-course-card container mb-5" style="width: 20rem;">
+    <div class="card-img-top course-img-top-custom">
+        <img class="img-custom" src="@Course.ImageUrl" />
+        <div class="course-title-in-image">@Course.Name</div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="course-profession col-6">
+                @Course.CategoryName
             </div>
-
-            @if (Course.IsDeleted == false)
-            {
-                <div class="row">
-                    <button @onclick="@(() => RemoveCourse(Course.Id))" class="btn action mx-auto">Remove</button>
-                </div>
-            }
+            <div class="course-name col-6 text-right">
+                @Course.AuthorFullName
+            </div>
         </div>
-    </article>
+        <div class="row">
+            <div class="course-price col-6">
+                @Course.FormattedPrice&euro; per person
+            </div>
+            <div class="col-6 text-right">
+                <img class="course-company-logo" src="@Course.AuthorCompanyLogo" />
+            </div>
+        </div>
+        <div class="text-center">
+            <button @onclick="() => RemoveCourse(Course.Id)" class="course-btn">
+                <span class="course-btn-text">
+                    Remove
+                </span>
+            </button>
+        </div>
+    </div>
 </div>
 
-@code {
-    [Parameter]
-    public AdminCourseListingServiceModel Course { get; set; }
+        @*my newer attempt*@
+        <!--<div class="card" style="width: 20rem;">
+            <img class="card-img-top" src="@Course.ImageUrl" alt="@Course.Name Illustration">
+            <div class="centered">
+                <h3 class="card-title">@Course.Name</h3>
+            </div>
 
-    [Parameter]
-    public EventCallback<IEnumerable<AdminCourseListingServiceModel>> ChangeState { get; set; }
+            <div class="card-body">-->
+        @*<h5 class="card-title">@</h5>*@
+        <!--<p class="card-text">@Course.CategoryName</p>
+                <p class="card-text">@Course.FormattedPrice&euro; per person</p>
+                <img src="@Course.AuthorCompanyLogo" alt="@Course.AuthorFullName company logo" />
+                <a @onclick="() => RemoveCourse(Course.Id)" class="btn upskillButton">Remove</a>
+            </div>
+        </div>-->
+        @*the oldest one*@
+        @*<div class="col-sm-12 col-md-6 col-lg-4 p-4 p-md-3 p-lg-5">
+                <article class="resource-card shadow">
+                    <div class="resource-top d-flex justify-content-center align-items-center">
+                        <img class="card-img-top resource-image" src="images/course-marketing.png" alt="@Course.Name">
+                        <p class="resource-title position-absolute mx-auto">@Course.Name</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row px-4 pb-1">
+                            <p class="resource col-sm-12 col-md-6 text-left pl-md-2 pr-md-0">
+                                <span class="resource-name d-md-block">@Course.CategoryName</span>
+                                <span class="resource-price d-md-block">@Course.FormattedPrice&euro; per person</span>
+                            </p>
+                            <p class="author col-sm-12 col-md-6 text-md-right text-sm-left pr-md-2 pl-md-0">
+                                <span class="resource-author d-md-block">@Course.AuthorFullName</span>
+                                <img class="company-logo img-responsive" src="images/logo-google.png" alt="@Course.AuthorFullName company logo">
+                            </p>
+                        </div>
 
-    private async Task RemoveCourse(int courseId)
-    {
-        var response = await Client
-            .DeleteAsync($"/admin/course/delete/{courseId}");
+                        @if (Course.IsDeleted == false)
+                        {
+                            <div class="row">
+                                <button @onclick="@(() => RemoveCourse(Course.Id))" class="btn action mx-auto">Remove</button>
+                            </div>
+                        }
+                    </div>
+                </article>
+            </div>*@
 
-        if(response.IsSuccessStatusCode)
-        {
-            var updatedCourses = await Client
-            .GetFromJsonAsync<IEnumerable<AdminCourseListingServiceModel>>
-            ("/admin/course/all");
+        @code {
+            [Parameter]
+            public AdminCourseListingServiceModel Course { get; set; }
 
-            await ChangeState.InvokeAsync(updatedCourses);
+            [Parameter]
+            public EventCallback<IEnumerable<AdminCourseListingServiceModel>> ChangeState { get; set; }
+
+            private async Task RemoveCourse(int courseId)
+            {
+                var response = await Client
+                    .DeleteAsync($"/admin/course/delete/{courseId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var updatedCourses = await Client
+                    .GetFromJsonAsync<IEnumerable<AdminCourseListingServiceModel>>
+                    ("/admin/course/all");
+
+                    await ChangeState.InvokeAsync(updatedCourses);
+                }
+            }
         }
-    }
-}
