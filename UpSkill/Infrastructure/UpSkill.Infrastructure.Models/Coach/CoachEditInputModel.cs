@@ -44,8 +44,8 @@
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
 
-        [Required]
-        [Range(1, 100, ErrorMessage = "Language" + RequiredErrorMessage)]
+        //[Required]
+        //[Range(1, 100, ErrorMessage = "Language" + RequiredErrorMessage)]
         public int LanguageId { get; set; }
         public string LanguageName { get; set; }
 

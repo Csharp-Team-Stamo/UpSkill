@@ -1,5 +1,6 @@
 ﻿namespace UpSkill.ClientSide.Pages.Admin
 {
+    using System;
     using System.Collections.Generic;
     using System.Net.Http.Json;
     using System.Threading.Tasks;
@@ -24,7 +25,8 @@
         protected override async Task OnInitializedAsync()
         {
             this.editInput = await this.Client
-                .GetFromJsonAsync<CoachEditInputModel>($"/admin/coach/edit/{Id}");
+                .GetFromJsonAsync<CoachEditInputModel>
+                ($"/admin/coach/edit/{Id}");
 
             this.CategoriesInDb = await this.Client
             .GetFromJsonAsync<IEnumerable<AdminCategoryListingServiceModel>>
@@ -32,12 +34,15 @@
 
             this.LanguagesInDb = await this.Client
                 .GetFromJsonAsync<IEnumerable<LanguageListingServiceModel>>
-                ("/admin/languages/all");
+                ("/admin/language/all");
+
+            Console.WriteLine(string.Join(", ", this.LanguagesInDb));
         }
 
         public async Task Edit()
         {
-            var response = await this.Client.PutAsJsonAsync("/admin/coach/edit", editInput);
+            var response = await this.Client
+                .PutAsJsonAsync("/admin/coach/edit", editInput);
 
             if (response.IsSuccessStatusCode)
             {

@@ -147,6 +147,12 @@
             }
 
             ImplementEdits(coachToEdit, editInput);
+
+            if(coachToEdit.AvatarImgUrl != editInput.AvatarImgUrl)
+            {
+                coachToEdit.AvatarImgUrl = await this.iimagesService
+                    .RemoveImgBackground(editInput.AvatarImgUrl);
+            }
             
             if(coachToEdit.Category.Id != editInput.CategoryId)
             {
@@ -195,7 +201,6 @@
         private void ImplementEdits(Coach coachToEdit, CoachEditInputModel editInput)
         {
             coachToEdit.FullName = editInput.FullName;
-            coachToEdit.AvatarImgUrl = editInput.AvatarImgUrl;
             coachToEdit.Email = editInput.Email;
             coachToEdit.CompanyName = editInput.CompanyName;
             coachToEdit.CompanyLogoUrl = editInput.CompanyLogoUrl;
@@ -283,6 +288,12 @@
 
             var editModel = ConvertToEditModel(coachToEdit);
 
+            var coachLanguage = await this.coachLanguagesRepo
+                .All()
+                .SingleOrDefaultAsync(cl => cl.CoachId == id);
+
+            editModel.LanguageId = coachLanguage.LanguageId;
+
             return editModel;
         }
 
@@ -365,7 +376,8 @@
                 .ToListAsync();
 
         private static CoachEditInputModel ConvertToEditModel(Coach coachInDb)
-            => new()
+        {
+            var editInput = new CoachEditInputModel
             {
                 Id = coachInDb.Id,
                 FullName = coachInDb.FullName,
@@ -379,7 +391,11 @@
                 DiscussionDurationInMin = coachInDb.DiscussionDurationInMinutes,
                 ResourcesCount = coachInDb.ResourcesCount,
                 PricePerSession = coachInDb.PricePerSession,
-                CalendlyPopupUrl = coachInDb.CalendlyPopupUrl
+                CalendlyPopupUrl = coachInDb.CalendlyPopupUrl,
+                CategoryId = coachInDb.CategoryId
             };
+
+            return editInput;
+        }
     }
 }

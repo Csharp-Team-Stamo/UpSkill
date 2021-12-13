@@ -91,7 +91,8 @@
                 return BadRequest();
             }
 
-            var editResult = await this.coachService.ExecuteEdit(editInput);
+            var editResult = await this.coachService
+                .ExecuteEdit(editInput);
 
             if(editResult == null)
             {
