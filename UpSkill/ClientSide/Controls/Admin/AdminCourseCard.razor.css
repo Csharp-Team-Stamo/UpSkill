@@ -1,13 +1,114 @@
-﻿/* Specicifity issues  */
+﻿.course-title-in-image {
+    position: relative;
+    top: -55%;
+    font: 800 120% Montserrat;
+    color: #FFFFFF;
+}
 
-article.resource-card {
-    font: normal normal medium 18px/22px Montserrat;
+.course-company-logo {
+    max-width: 80%;
+    max-height: 80%;
+}
+
+.course-profession {
+    font: normal bold 70% Montserrat;
+    letter-spacing: 0.7px;
+    color: #000000;
+    opacity: 1;
+}
+
+.course-name {
+    font: 75% Montserrat;
+    letter-spacing: 0.7px;
+    color: #000000;
+    opacity: 1;
+}
+
+.course-price {
+    font: 65% Montserrat;
+    letter-spacing: 0.7px;
+    color: #296CFB;
+    opacity: 1;
+}
+
+.course-btn {
+    background: #296CFB 0% 0% no-repeat padding-box;
+    border: none;
+    margin-top: 1em;
+    opacity: 1;
+    width: 50%;
+}
+
+.course-btn-text {
+    font: 95% Montserrat;
+    letter-spacing: 1.1px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.custom-course-card {
+    box-shadow: 0px 3px 10px #00000029;
+}
+
+.img-custom {
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+
+div.course-img-top{
+    width: 100%;
+}
+
+.course-img-top-custom {
+    height: 150px;
+    /*width: 287px;*/
+    position: relative;
+    left: -6%;
+}
+
+
+/*My newer attempt*/
+
+/*div#courseCatalogGrid is the parent*/
+
+/*div.card > img.card-img-top {
+    height: 100%;
+}
+
+div.card-body > div.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: .5em;
+    background-color: rgba(230, 230, 255, .7);
+}
+
+div.card > div.card-body > img{
+    display: inline-block;
+    max-width: 20%;
+}
+
+div.card-body > a.upskillButton {
+    color: white;
+    background-color: #296cfb;
+    border-radius: 1px;
+}*/
+
+
+/*Oldest version*/
+
+/* Specicifity issues  */
+
+/*article.resource-card {
+    font: normal normal medium 18px/22px Montserrat;*/
     /* text-align: center; */
-    letter-spacing: 0.9px;
+    /*letter-spacing: 0.9px;*/
     /* left: 150px; */
     /* width: 450px; */
     /* height: 450px; */
-    background: #FFFFFF 0% 0% no-repeat padding-box;
+    /*background: #FFFFFF 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 10px #00000029;
 }
 
@@ -50,9 +151,9 @@ button.btn.action {
     border-radius: 0;
     text-align: center;
     font: normal normal bold 22px/27px Montserrat;
-    letter-spacing: 1.1px;
+    letter-spacing: 1.1px;*/
     /* left: 300px; */
     /* width: 150px; */
     /* height: 50px; */
-    background: #296CFB 0% 0% no-repeat padding-box;
-}
+    /*background: #296CFB 0% 0% no-repeat padding-box;
+}*/

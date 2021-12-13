@@ -16,24 +16,32 @@
     <div class="form-group row">
         <label for="imageurl" class="col-md-2 col-form-label">Image URL</label>
         <div class="col-md-10">
-            <InputText id="imageurl" class="form-control" @bind-Value="editInput.ImageUrl" />
-            <ValidationMessage For="@(() => editInput.ImageUrl)" />
+            <InputText id="imageurl" class="form-control" @bind-Value="editInput.AvatarImgUrl" />
+            <ValidationMessage For="@(() => editInput.AvatarImgUrl)" />
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="company" class="col-md-2 col-form-label">Company</label>
+        <label for="email" class="col-md-2 col-form-label">Email</label>
         <div class="col-md-10">
-            <InputText id="company" class="form-control" @bind-Value="editInput.Company" />
-            <ValidationMessage For="@(() => editInput.Company)" />
+            <InputText id="email" class="form-control" @bind-Value="editInput.Email" />
+            <ValidationMessage For="@(() => editInput.Email)" />
         </div>
     </div>
 
     <div class="form-group row">
-        <label for="pricepersession" class="col-md-2 col-form-label">Price per Session</label>
+        <label for="companyname" class="col-md-2 col-form-label">Company Name</label>
         <div class="col-md-10">
-            <InputNumber id="pricepersession" class="form-control" @bind-Value="editInput.PricePerSession" />
-            <ValidationMessage For="@(() => editInput.PricePerSession)" />
+            <InputText id="companyname" class="form-control" @bind-Value="editInput.CompanyName" />
+            <ValidationMessage For="@(() => editInput.CompanyName)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="companylogourl" class="col-md-2 col-form-label">Company Logo URL</label>
+        <div class="col-md-10">
+            <InputText id="companylogourl" class="form-control" @bind-Value="editInput.CompanyLogoUrl" />
+            <ValidationMessage For="@(() => editInput.CompanyLogoUrl)" />
         </div>
     </div>
 
@@ -48,6 +56,76 @@
                 }
             </InputSelect>
             <ValidationMessage For="@(() => editInput.CategoryId)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="languageId" class="col-md-2 col-form-label">Language</label>
+        <div class="col-md-10">
+            <InputSelect id="languageId" class="form-control" @bind-Value="editInput.LanguageId">
+                <option>@editInput.LanguageName</option>
+                @foreach (var language in LanguagesInDb)
+                {
+                    <option value="@language.Id">@language.Name</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => editInput.LanguageId)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="videourl" class="col-md-2 col-form-label">Video URL</label>
+        <div class="col-md-10">
+            <InputText id="videourl" class="form-control" @bind-Value="editInput.VideoUrl" />
+            <ValidationMessage For="@(() => editInput.VideoUrl)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="sessiondescription" class="col-md-2 col-form-label">Session Description</label>
+        <div class="col-md-10">
+            <InputText id="sessiondescription" class="form-control" @bind-Value="editInput.SessionDescription" />
+            <ValidationMessage For="@(() => editInput.SessionDescription)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="skillslearn" class="col-md-2 col-form-label">Skills To Learn</label>
+        <div class="col-md-10">
+            <InputText id="skillslearn" class="form-control" @bind-Value="editInput.SkillsLearn" />
+            <ValidationMessage For="@(() => editInput.SkillsLearn)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="discussionduration" class="col-md-2 col-form-label">Discussion Duration</label>
+        <div class="col-md-10">
+            <InputText id="discussionduration" class="form-control" @bind-Value="editInput.DiscussionDurationInMin" />
+            <ValidationMessage For="@(() => editInput.DiscussionDurationInMin)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="resourcescount" class="col-md-2 col-form-label">Resources Count</label>
+        <div class="col-md-10">
+            <InputText id="resourcescount" class="form-control" @bind-Value="editInput.ResourcesCount" />
+            <ValidationMessage For="@(() => editInput.ResourcesCount)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="pricepersession" class="col-md-2 col-form-label">Price per Session</label>
+        <div class="col-md-10">
+            <InputNumber id="pricepersession" class="form-control" @bind-Value="editInput.PricePerSession" />
+            <ValidationMessage For="@(() => editInput.PricePerSession)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="calendlyurl" class="col-md-2 col-form-label">Calendly URL</label>
+        <div class="col-md-10">
+            <InputText id="calendlyurl" class="form-control" @bind-Value="editInput.CalendlyPopupUrl" />
+            <ValidationMessage For="@(() => editInput.CalendlyPopupUrl)" />
         </div>
     </div>
 
