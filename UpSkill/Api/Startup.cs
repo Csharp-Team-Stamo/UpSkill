@@ -1,6 +1,7 @@
 ﻿namespace UpSkill.Api
 {
     using System.Text;
+    using CloudinaryDotNet;
     using Data;
     using Data.Common.Repositories;
     using Data.Models;
@@ -75,6 +76,7 @@
             });
 
 
+
             // services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             //.AddMicrosoftIdentityWebApi(Configuration.GetSection("AzureAd"));
 
@@ -123,8 +125,9 @@
                     .AddTransient<ILectureService, LectureService>()
                     .AddTransient<IOwnerService, OwnerService>()
                     .AddTransient<IStatisticsService, StatisticsService>()
-                    .AddTransient<IimagesService, ImagesService>();
-                        
+                    .AddTransient<IimagesService, ImagesService>()
+                    .AddTransient<ICloudinaryService, CloudinaryService>();
+
             services.Configure<SendGridEmailSenderOptions>(options =>
             {
                 options.ApiKey = Configuration["ExternalProviders:SendGrid:ApiKey"];

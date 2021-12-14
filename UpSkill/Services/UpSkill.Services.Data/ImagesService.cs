@@ -2,8 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
+    using System.Linq;
     using System.Net.Http;
     using System.Threading.Tasks;
+    using CloudinaryDotNet;
+    using CloudinaryDotNet.Actions;
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
@@ -11,20 +15,32 @@
     public class ImagesService : IimagesService
     {
         private readonly IConfiguration configuration;
+        private readonly ICloudinaryService cloudinaryService;
 
-        public ImagesService(IConfiguration configuration)
+        public ImagesService(
+            IConfiguration configuration,
+            ICloudinaryService cloudinaryService)
         {
             this.configuration = configuration;
+            this.cloudinaryService = cloudinaryService;
         }
         public async Task<string> RemoveImgBackground(string url)
         {
+
+            var imgName = url.Split("/", StringSplitOptions.None).Last();
+            var dateAdded = DateTime.UtcNow.ToString("d", CultureInfo.GetCultureInfo("nl-NL"));
+            var name = imgName + dateAdded;
+
+
+            var cloudinaryClient = cloudinaryService.GetCloudinaryClient();
+
             var client = new HttpClient();
             var host = configuration["ExternalProviders:RapidAPI:Host"];
             var key = configuration["ExternalProviders:RapidAPI:RemoveBGKey"];
 
             var request = new HttpRequestMessage
             {
-                Method = HttpMethod.Post,
+                Method = System.Net.Http.HttpMethod.Post,
                 RequestUri = new Uri("https://background-removal.p.rapidapi.com/remove"),
                 Headers =
                            {
@@ -46,7 +62,15 @@
                 imgUrl = JObject.Parse(body)["response"]["image_url"].ToString();
             }
 
-            return imgUrl;
+            var uploadParams = new ImageUploadParams()
+            {
+                File = new FileDescription($"{imgUrl}"),
+                PublicId = name
+            };
+            var uploadResult = cloudinaryClient.Upload(uploadParams);
+            var urlResult = uploadResult.SecureUrl.ToString();
+
+            return urlResult;
         }
     }
 }
