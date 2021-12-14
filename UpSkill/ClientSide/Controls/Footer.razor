@@ -1,75 +1,116 @@
 ﻿@inject NavigationManager NavigationManager
 
-    <footer class="footer-card">
-        <img src="/images/footer/footer-background.svg" class="background-img" />
-        <img src="/images/footer/UpSkill-logo -white.svg" class="upskill-img" />
-        <div class="row">
-            <div class="div-info col-4">
-                Upskill gives everyone the opportunity to grow professionally and develop into a specialist in every field.
-                <button class="footer-get-started-btn" @onclick="@(() => NavigationManager.NavigateTo("/registration"))">
-                    <div class="footer-get-started-btn-text">
-                        Get Started
-                    </div>
-                </button>
+<div class="footer-container">
+    <div class="row1-container">
+        <div style="display: flex;
+                    align-content: stretch;
+                    flex-direction: column;
+                    justify-content: center;
+                ">
+            <div style="text-align: center;
+                        margin-top: 19%;
+                        margin-left: 7%;">
+                <div class="upskill-img-text">
+                    <img src="/images/footer/UpSkill-logo -white.svg" />
+                    upskill
+                </div>
+                <div class="div-info">
+                    Upskill gives everyone the opportunity to grow professionally and develop into a specialist in every field.
+                </div>
+                <AuthorizeView>
+                    <NotAuthorized>
+                        <div style="text-align: left;
+                                margin-left: 10%;">
+                            <button class="footer-get-started-btn" @onclick="@(() => NavigationManager.NavigateTo("/registration"))">Get Started</button>
+                        </div>
+                    </NotAuthorized>
+                </AuthorizeView>
             </div>
         </div>
-        <div class="div-company">
-            <div class="div-title-text">
-                Company
+        <div>
+            <div style="text-align: left;
+                        margin-top: 75%;">
+                <div class="div-company">
+                    Company
+                </div>
+                <div style="
+                            margin: -3%;
+                            margin-top: 6%">
+                    <button class="custom-btn">
+                        About us
+                    </button>
+                </div>
+                <div style="
+                            margin: -3%;
+                            margin-top: 6%">
+                    <button class="custom-btn">
+                        Contact us
+                    </button>
+                </div>
+                <div style="
+                            margin: -3%;
+                            margin-top: 6%">
+                    <button class="custom-btn">
+                        Privacy Policy
+                    </button>
+                </div>
             </div>
         </div>
-        <a href="" class="div-about-us">
-            <div class="div-content-text">
-                About us
-            </div>
-        </a>
-        <a href="" class="div-contact-us">
-            <div class="div-content-text">
-                Contact us
-            </div>
-        </a>
-        <a href="" class="div-privacy-policy">
-            <div class="div-content-text">
-                Privacy Policy
-            </div>
-        </a>
-        <div class="div-service">
-            <div class="div-title-text">
-                Services
+        <div>
+            <div style="text-align: left;
+                        margin-top: 75%;">
+                <div class="div-company">
+                    Services
+                </div>
+                <div style="
+                            margin: -3%;
+                            margin-top: 6%">
+                    <button class="custom-btn" @onclick="@(() => NavigationManager.NavigateTo("/Courses-catalog"))">
+                        Courses
+                    </button>
+                </div>
+                <div style="
+                            margin: -3%;
+                            margin-top: 6%">
+                    <button class="custom-btn" @onclick="@(() => NavigationManager.NavigateTo("/Coaches-catalog"))">
+                        Coaches
+                    </button>
+                </div>
+                <div style="
+                            margin: -3%;
+                            margin-top: 6%">
+                    <button class="custom-btn" onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})">
+                        Requests
+                    </button>
+                </div>
             </div>
         </div>
-        <a href="/courses" class="div-courses">
-            <div class="div-content-text">
-                Courses
+        <div>
+            <div style="margin-top: 187%;
+                        text-align: left;
+                        margin-left: 45%;">
+                <div style=" margin: 10%;">
+                    <a href="https://www.facebook.com/upskillbd">
+                        <img src="/images/footer/facebook-logo.svg" class="my-img" />
+                    </a>
+                </div>
+                <div style=" margin: 10%;">
+                    <a href="https://www.instagram.com/up_skills_/">
+                        <img src="/images/footer/instagram-logo.svg" class="my-img" />
+                    </a>
+                </div>
+                <div style=" margin: 10%;">
+                    <a href="https://www.linkedin.com/company/upskills/">
+                        <img id="my-img" src="/images/footer/linkin-logo.svg" class="my-img" />
+                    </a>
+                </div>
             </div>
-        </a>
-        <a href="/coaches" class="div-coaches">
-            <div class="div-content-text">
-                Coaches
-            </div>
-        </a>
-        <button onclick="document.getElementById('demo').scrollIntoView({behavior:'smooth'})" class="div-requests btn btn-link">
-            <div class="div-content-text">
-                Requests
-            </div>
-        </button>
-        <a href="https://www.facebook.com/upskillbd">
-            <img src="/images/footer/facebook-logo.svg" class="facebook-logo-img" />
-        </a>
-        <a href="https://www.instagram.com/up_skills_/">
-            <img src="/images/footer/instagram-logo.svg" class="instagram-logo-img" />
-        </a>
-        <a href="https://www.linkedin.com/company/upskills/">
-            <img src="/images/footer/linkin-logo.svg" class="linkin-logo-img" />
-        </a>
-        <div class="footer-bottom-background">
-            <div class="footer-bottom-text">
-                UpSkill 2021
-            </div>
-            <img src="/images/footer/iconmonstr-copyright-2.svg" alt="Alternate Text" class="footer-bottom-img-copyright" />
         </div>
-    </footer>
-
-@code {
-
-}
+    </div>
+    <div style="background-color: white;"></div>
+    <div>
+        <div class="footer-bottom-text">
+            © UpSkill 2021
+        </div>
+    </div>
+</div>

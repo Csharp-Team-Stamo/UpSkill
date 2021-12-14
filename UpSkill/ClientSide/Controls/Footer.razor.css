@@ -1,146 +1,87 @@
-﻿
-.footer {
-    position: absolute;
-    bottom: 0px;
-    left: 0px;
-    width: 100%;
+﻿.footer-container {
+    height: 400px;
+    background: url('/images/footer/footer-background.svg');
+    display: grid;
+    grid-template-rows: 15fr 1px 1fr;
 }
 
-.footer-card {
-    position: relative
-}
-
-.background-img {
-    width: 100%;
-    position: relative
-}
-
-.upskill-img {
-    position: absolute;
-    top: 19%;
-    left: 5%;
-    width: 5%;
+.row1-container {
+    display: grid;
+    grid-template-columns: 5fr 2fr 2fr 1fr;
 }
 
 .upskill-img-text {
-    position: absolute;
-    top: 26%;
-    left: 11%;
-    font: normal normal bold 45px/55px Montserrat;
+    font: bold 175% Montserrat;
     letter-spacing: 2.25px;
     color: #FFFFFF;
-}
-
-.logo-div {
-    position: absolute
+    text-align: left;
+    margin-left: 10%;
 }
 
 .div-info {
-    position: absolute;
-    top: 32%;
-    left: 4%;
-    font: 172% Montserrat;
+    font: normal normal 14px/20px Montserrat;
     color: #FFFFFF;
+    text-align: left;
+    margin: 6%;
+    margin-right: 44%;
+    margin-left: 10%;
 }
 
 .footer-get-started-btn {
-    position: absolute;
-    top: 123%;
-    left: 3%;
-    height: 23%;
-    width: 41%;
-    background: #FFFFFF;
-}
-
-.footer-get-started-btn-text {
-    font: bold 51% Montserrat;
-    letter-spacing: 1.1px;
+    border-radius: 0px;
+    background-color: #FFFFFF;
     color: #0B2969;
+    width: 11em;
+    height: 2.5rem;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    font: normal normal 600 12px/28px Montserrat;
+    letter-spacing: 1.1px;
 }
 
-.footer-bottom-background {
-    background-color: #0B2969;
+    .footer-get-started-btn:hover {
+        background-color: aliceblue;
+    }
+
+.div-company {
+    font: bold 20px Montserrat;
+    letter-spacing: 1.1px;
+    color: #FFFFFF;
+    margin-right: 8%;
 }
+
+.custom-btn {
+    background-color: unset;
+    color: #FFFFFF;
+    width: 9em;
+    height: 2.5rem;
+    text-align: left;
+    margin-top: -1.5rem;
+    border: none;
+    font: 14px Montserrat;
+    outline: none;
+    cursor: pointer;
+}
+
+    .custom-btn:hover {
+        font: bold 17px Montserrat;
+        transition-duration: 0.4s;
+    }
+
+.my-img {
+    width: 30%;
+    transition-duration: 0.4s;
+}
+
+    .my-img:hover {
+        width: 35%;
+    }
+
 
 .footer-bottom-text {
     text-align: center;
     letter-spacing: 0px;
     color: #FFFFFF;
-}
-
-.footer-bottom-img-copyright {
-    position: absolute;
-    top: 96%;
-    left: 45%;
-    width: 1%;
-}
-.div-company {
-    position: absolute;
-    top: 41%;
-    left: 54%;
-}
-.div-title-text {
-    text-align: left;
-    font: normal normal bold 22px/27px Montserrat;
-    letter-spacing: 1.1px;
-    color: #FFFFFF;
-}
-.div-service {
-    position: absolute;
-    top: 41%;
-    left: 77%;
-}
-.div-content-text {
-    text-align: left;
-    font: normal normal medium 22px/27px Montserrat;
-    letter-spacing: 1.1px;
-    color: #FFFFFF;
-}
-.div-about-us {
-    position: absolute;
-    top: 56%;
-    left: 54%;
-}
-.div-contact-us {
-    position: absolute;
-    top: 66%;
-    left: 54%;
-}
-.div-privacy-policy {
-    position: absolute;
-    top: 76%;
-    left: 54%;
-}
-.div-courses {
-    position: absolute;
-    top: 56%;
-    left: 77%;
-}
-.div-coaches {
-    position: absolute;
-    top: 66%;
-    left: 77%;
-}
-.div-requests {
-    position: absolute;
-    top: 76%;
-    left: 76%;
-}
-.facebook-logo-img {
-    position: absolute;
-    top: 56%;
-    left: 97%;
-    width: 2%;
-}
-.instagram-logo-img {
-    position: absolute;
-    top: 66%;
-    left: 97%;
-    width: 2%;
-}
-.linkin-logo-img {
-    position: absolute;
-    top: 76%;
-    left: 97%;
-    width: 2%;
 }
