@@ -361,7 +361,7 @@
         //}
 
         private CoachLanguage CreateCoachLanguageEntity(Coach coach, Language language)
-            => new CoachLanguage
+            => new ()
             {
                 Language = language,
                 LanguageId = language.Id,

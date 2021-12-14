@@ -13,14 +13,10 @@
     public class CoachesController : ControllerBase
     {
         private readonly ICoachesService coachesService;
-        private readonly IOptions<CalendlyOptions> options;
-        private readonly IHttpClientFactory clientFactory;
 
-        public CoachesController(ICoachesService coachesService, IOptions<CalendlyOptions> options, IHttpClientFactory clientFactory)
+        public CoachesController(ICoachesService coachesService)
         {
             this.coachesService = coachesService;
-            this.options = options;
-            this.clientFactory = clientFactory;
         }
 
         [HttpGet("GetByIdAsync")]

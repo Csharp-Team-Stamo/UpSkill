@@ -16,16 +16,16 @@
             this.applicationUserService = applicationUserService;
         }
 
-        [HttpGet("GetById/{userId}")]
-        public EditApplicationUserModel GetById(string userId)
+        [HttpGet("GetByIdAsync/{userId}")]
+        public async Task<EditApplicationUserModel> GetByIdAsync(string userId)
         {
-            return applicationUserService.GetById(userId);
+            return await applicationUserService.GetByIdAsync(userId);
         }
 
-        [HttpPut("Update")]
-        public async Task Update(EditApplicationUserModel model)
+        [HttpPut("UpdateAsync")]
+        public async Task UpdateAsync(EditApplicationUserModel model)
         {
-           await applicationUserService.UpdateUser(model);
+           await applicationUserService.UpdateUserAsync(model);
         }
     }
 }

@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using Contracts;
     using Infrastructure.Models.ApplicationUser;
+    using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
 
@@ -16,9 +17,9 @@
             this.appUserRepository = appUserRepository;
         }
 
-        public EditApplicationUserModel GetById(string userId)
+        public async Task<EditApplicationUserModel> GetByIdAsync(string userId)
         {
-            return appUserRepository.All().Where(x => x.Id == userId).Select(x => new EditApplicationUserModel
+            return await appUserRepository.All().Where(x => x.Id == userId).Select(x => new EditApplicationUserModel
             {
                 Id = x.Id,
                 FullName = x.FullName,
@@ -26,12 +27,12 @@
                 Email = x.Email,
                 ImageToBase64 = x.ImageToBase64,
                 Summary = x.Summary,
-            }).FirstOrDefault();
+            }).FirstOrDefaultAsync();
         }
 
-        public async Task UpdateUser(EditApplicationUserModel model)
+        public async Task UpdateUserAsync(EditApplicationUserModel model)
         {
-            var userToUpdate = appUserRepository.All().FirstOrDefault(x => x.Id == model.Id);
+            var userToUpdate = await appUserRepository.All().FirstOrDefaultAsync(x => x.Id == model.Id);
 
             userToUpdate.FullName = model.FullName;
             userToUpdate.ImageToBase64 = model.ImageToBase64;

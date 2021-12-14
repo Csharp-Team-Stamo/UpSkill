@@ -5,8 +5,8 @@
 
     public interface IApplicationUserService
     {
-        EditApplicationUserModel GetById(string userId);
+        Task<EditApplicationUserModel> GetByIdAsync(string userId);
 
-        Task UpdateUser(EditApplicationUserModel model);
+        Task UpdateUserAsync(EditApplicationUserModel model);
     }
 }
