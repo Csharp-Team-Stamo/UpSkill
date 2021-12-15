@@ -4,7 +4,7 @@ UpSkill Corp. is building the ultimate learning platform. We power the personal 
 Our vision is to enable millions of people around the world to have access to high-quality educational content and real-live training and coaching led by top professionals.
 
 Project Objectives:
-The main objective is the development and maintenance of a high-availability, real-time eLearning platform (UpSkill.co) providing end-user access via web and mobile interfaces. The solution will introduce innovations both in the online learning process and the business model.
+The main objective is the development and maintenance of a high-availability, real-time e-Learning platform (UpSkill.co) providing end-user access via web and mobile interfaces. The solution will introduce innovations both in the online learning process and the business model.
 The key features of UpSkill.co will enable the corporate employees to:
 - Access a wide range of high-curated professional courses designed by established professionals and academics in their respective fields.
 - Book and conduct sessions with professional business and lifestyle coaches over a video streaming connection.
