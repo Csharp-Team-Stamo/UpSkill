@@ -59,7 +59,7 @@ UpSkill is a Single-Page, Progressive Web Application. We built it with the help
 
 - .NET 5
 - Docker
-- 
+
 Server-Side:
 
 - ASP.NET Core Web API
