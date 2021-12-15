@@ -8,6 +8,7 @@
     public interface IAdminCategoryService
     {
         Task<Category> GetCategory(int id);
+        Task<CategoryEditInputModel> GetCategoryToEdit(int id);
         Task<CategoryDetailsServiceModel> GetCategoryDetails(int id);
         Task<int?> CreateCategory(CategoryCreateInputModel categoryInput);
         Task<IEnumerable<AdminCategoryListingServiceModel>> GetAll();

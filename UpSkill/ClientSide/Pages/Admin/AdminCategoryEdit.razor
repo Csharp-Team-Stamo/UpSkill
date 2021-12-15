@@ -1,0 +1,46 @@
+﻿@page "/admin/category/edit/{Id:int}"
+
+@using UpSkill.Infrastructure.Models.Category
+
+<EditForm Model="editInput" OnValidSubmit="Edit" class="card card-body bg-light mt-5">
+    <DataAnnotationsValidator />
+
+    <div class="form-group row">
+        <label for="name" class="col-md-2 col-form-label">Name</label>
+        <div class="col-md-10">
+            <InputText id="name" class="form-control" @bind-Value="editInput.Name" />
+            <ValidationMessage For="@(() => editInput.Name)" />
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-primary">Edit Category</button>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    private CategoryEditInputModel editInput;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        editInput = await this.Client
+        .GetFromJsonAsync<CategoryEditInputModel>
+        ($"/admin/category/edit/{Id}");
+    }
+
+    public async Task Edit()
+    {
+        var response = await this.Client
+                .PutAsJsonAsync("/admin/category/edit", editInput);
+
+        if (response.IsSuccessStatusCode)
+        {
+            NavigationManager.NavigateTo("/admin/category/all");
+        }
+    }
+}

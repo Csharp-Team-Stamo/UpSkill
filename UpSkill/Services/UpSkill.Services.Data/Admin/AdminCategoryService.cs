@@ -50,7 +50,17 @@
         public async Task<Category> GetCategory(int id)
             => await this.categoryRepo
                          .All()
-                         .FirstOrDefaultAsync(c => c.Id == id);
+                         .SingleOrDefaultAsync(c => c.Id == id);
+
+        public async Task<CategoryEditInputModel> GetCategoryToEdit(int id)
+            => await this.categoryRepo
+                         .All()
+                         .Select(c => new CategoryEditInputModel
+                         {
+                             Id = c.Id,
+                             Name = c.Name
+                         })
+                         .SingleOrDefaultAsync(c => c.Id == id);
 
         public async Task<CategoryDetailsServiceModel> GetCategoryDetails(int id)
         {
@@ -68,7 +78,9 @@
 
         public async Task<int?> Edit(CategoryEditInputModel editInput)
         {
-            var categoryToEdit = await this.GetCategory(editInput.Id);
+            var categoryToEdit = await this.categoryRepo
+                .All()
+                .SingleOrDefaultAsync(c => c.Id == editInput.Id);
 
             if(categoryToEdit == null)
             {

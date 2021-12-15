@@ -35,7 +35,8 @@
         }
 
         [HttpGet("All")]
-        public async Task<ActionResult<IEnumerable<AdminCategoryListingServiceModel>>> All()
+        public async Task<ActionResult<IEnumerable<AdminCategoryListingServiceModel>>> 
+            All()
         {
             var allCategories = await this
                 .categoryService
@@ -48,6 +49,44 @@
 
             return new List<AdminCategoryListingServiceModel>
                 (allCategories);
+        }
+
+        [HttpGet("Edit/{id}")]
+        public async Task<ActionResult<CategoryEditInputModel>> Edit(int id)
+        {
+            if(id <= 0)
+            {
+                return BadRequest("Valid Category Id is required.");
+            }
+
+            var categoryToEdit = await this.categoryService
+                .GetCategoryToEdit(id);
+
+            if(categoryToEdit == null)
+            {
+                return NotFound($"No category with Id {id} was found.");
+            }
+
+            return categoryToEdit;
+        }
+
+        [HttpPut("Edit")]
+        public async Task<ActionResult> Edit(CategoryEditInputModel editInput)
+        {
+            if(ModelState.IsValid == false)
+            {
+                return BadRequest("Please fill in all required fields.");
+            }
+
+            var editResult = await this.categoryService
+                                       .Edit(editInput);
+
+            if(editResult == null)
+            {
+                return StatusCode(505);
+            }
+
+            return StatusCode(200);
         }
     }
 }
