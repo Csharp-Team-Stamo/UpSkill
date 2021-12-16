@@ -67,3 +67,35 @@
     position: relative;
     left: -6%;
 }
+
+.row-name-and-cat {
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.row-price-and-logo {
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.left-container {
+    display: flex;
+    min-height: 2rem;
+    align-items: flex-start;
+    justify-content: initial;
+    text-align: start;
+}
+.right-container {
+    display: flex;
+    min-height: 2rem;
+    align-items: flex-start;
+    justify-content: end;
+    text-align: end;
+}
+
+.logo-container {
+    min-height: 2rem;
+    max-height: 2rem;
+}

@@ -67,8 +67,11 @@
                 File = new FileDescription($"{imgUrl}"),
                 PublicId = name
             };
-            var uploadResult = cloudinaryClient.Upload(uploadParams);
-            var urlResult = uploadResult.SecureUrl.ToString();
+
+            var urlResult = cloudinaryClient
+                .Upload(uploadParams)
+                .SecureUrl
+                .ToString();
 
             return urlResult;
         }
