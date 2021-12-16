@@ -13,14 +13,15 @@
 
         Task<CourseDescriptionModel> GetByIdAsync(int courseId);
 
-        CoursesListingCatalogModel GetAllByOwnerId(string ownerId);
+        Task<CoursesListingCatalogModel> GetAllByOwnerId(string ownerId);
 
         Task<List<CourseInListCatalogModel>> GetAllEnrolledByEmployeeIdAsync(string employeeId);
 
-        CoursesListingCatalogModel GetAll(string ownerId);
+        Task<CoursesListingCatalogModel> GetAll(string ownerId);
 
         Task RemoveCourseFromOwnerCoursesCollectionAsync(int courseId, string ownerId);
 
-        PagedList<CourseDashboardStatItemModel> GetDashboardCourses(string ownerId, int month, TableEntityParameters parameters);
+        Task<PagedList<CourseDashboardStatItemModel>> GetDashboardCourses(string ownerId, int month,
+            TableEntityParameters parameters);
     }
 }

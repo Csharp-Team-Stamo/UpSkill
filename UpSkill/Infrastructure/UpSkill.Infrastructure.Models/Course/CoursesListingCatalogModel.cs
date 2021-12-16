@@ -1,6 +1,7 @@
 ﻿namespace UpSkill.Infrastructure.Models.Course
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public class CoursesListingCatalogModel
     {
@@ -8,6 +9,6 @@
 
         public ICollection<int> OwnerCourseCollectionIds { get; set; } = new List<int>();
 
-        public ICollection<CourseInListCatalogModel> Courses { get; set; } = new List<CourseInListCatalogModel>();
+        public List<CourseInListCatalogModel> Courses { get; set; } = new List<CourseInListCatalogModel>();
     }
 }

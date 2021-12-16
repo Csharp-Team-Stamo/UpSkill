@@ -45,10 +45,10 @@
         }
 
         [HttpGet("GetOwnerCoursesStatistics")]
-        public IActionResult GetOwnerCoursesStatistics([FromQuery] string ownerId, string month, [FromQuery] TableEntityParameters parameters)
+        public async Task<IActionResult> GetOwnerCoursesStatistics([FromQuery] string ownerId, string month, [FromQuery] TableEntityParameters parameters)
         {
             var monthAsInt = int.Parse(month);
-            var courses = this.coursesService.GetDashboardCourses(ownerId, monthAsInt, parameters);
+            var courses = await this.coursesService.GetDashboardCourses(ownerId, monthAsInt, parameters);
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(courses.MetaData));
 
             return Ok(courses);

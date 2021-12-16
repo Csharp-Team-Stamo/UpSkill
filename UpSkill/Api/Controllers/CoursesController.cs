@@ -28,15 +28,15 @@
         }
 
         [HttpGet("GetAllByOwnerId")]
-        public CoursesListingCatalogModel GetAllByOwnerId([FromQuery] string ownerId)
+        public async Task<CoursesListingCatalogModel> GetAllByOwnerId([FromQuery] string ownerId)
         {
-            return coursesService.GetAllByOwnerId(ownerId);
+            return await coursesService.GetAllByOwnerId(ownerId);
         }
 
         [HttpGet("GetAll")]
-        public CoursesListingCatalogModel GetAll([FromQuery] string ownerId)
+        public async Task<CoursesListingCatalogModel> GetAll([FromQuery] string ownerId)
         {
-            return coursesService.GetAll(ownerId);
+            return await coursesService.GetAll(ownerId);
         }
 
         [HttpPost("AddCourseInOwnerCoursesCollectionAsync")]

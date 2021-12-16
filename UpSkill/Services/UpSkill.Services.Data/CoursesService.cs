@@ -56,13 +56,13 @@
             return course;
         }
 
-        public CoursesListingCatalogModel GetAllByOwnerId(string ownerId)
+        public async Task<CoursesListingCatalogModel> GetAllByOwnerId(string ownerId)
         {
             return new CoursesListingCatalogModel
             {
                 OwnerId = ownerId,
-                OwnerCourseCollectionIds = OwnerCourseCollectionIds(ownerId),
-                Courses = coursesOwnerRepository
+                OwnerCourseCollectionIds = await OwnerCourseCollectionIds(ownerId),
+                Courses = await coursesOwnerRepository
                 .All()
                 .Where(x => x.OwnerId == ownerId)
                 .Select(x => new CourseInListCatalogModel
@@ -74,7 +74,7 @@
                     CompanyLogoUrl = x.Course.CompanyLogoUrl,
                     ImageUrl = x.Course.ImageUrl,
                     PricePerPerson = x.Course.Price,
-                }).ToList()
+                }).ToListAsync()
             };
         }
 
@@ -93,13 +93,13 @@
                 }).ToListAsync();
         }
 
-        public CoursesListingCatalogModel GetAll(string ownerId)
+        public async Task<CoursesListingCatalogModel> GetAll(string ownerId)
         {
             return new CoursesListingCatalogModel
             {
                 OwnerId = ownerId,
-                OwnerCourseCollectionIds = OwnerCourseCollectionIds(ownerId),
-                Courses = coursesRepository.All().Select(x => new CourseInListCatalogModel
+                OwnerCourseCollectionIds = await OwnerCourseCollectionIds(ownerId),
+                Courses = await coursesRepository.All().Select(x => new CourseInListCatalogModel
                 {
                     Id = x.Id,
                     AuthorFullName = x.AuthorFullName,
@@ -109,7 +109,7 @@
                     ImageUrl = x.ImageUrl,
                     LanguageName = x.Language.Name,
                     PricePerPerson = x.Price,
-                }).ToList()
+                }).ToListAsync()
             };
         }
 
@@ -122,22 +122,23 @@
             await coursesOwnerRepository.SaveChangesAsync();
         }
 
-        private List<int> OwnerCourseCollectionIds(string ownerId)
+        public async Task<PagedList<CourseDashboardStatItemModel>> GetDashboardCourses(string ownerId, int month,
+            TableEntityParameters parameters)
         {
-            return coursesOwnerRepository.All().Where(x => x.OwnerId == ownerId)
-                .Select(x => x.CourseId)
-                .ToList();
-        }
-
-        public PagedList<CourseDashboardStatItemModel> GetDashboardCourses(string ownerId, int month, TableEntityParameters parameters)
-        {
-            var courses = this.employeeCoursesRepository.All()
+            var courses = await this.employeeCoursesRepository.All()
                 .Where(x => x.Student.OwnerId == ownerId && x.EndDate.Month == month)
                 .GroupBy(x => x.Course.Name)
                 .Select(x => new CourseDashboardStatItemModel { Name = x.Key, Enrolled = x.Count() })
-                .ToList();
+                .ToListAsync();
 
             return PagedList<CourseDashboardStatItemModel>.ToPagedList(courses, parameters.PageNumber, parameters.PageSize);
+        }
+
+        private async Task<List<int>> OwnerCourseCollectionIds(string ownerId)
+        {
+            return await coursesOwnerRepository.All().Where(x => x.OwnerId == ownerId)
+                .Select(x => x.CourseId)
+                .ToListAsync();
         }
     }
 }
