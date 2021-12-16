@@ -27,7 +27,6 @@
 .coach-btn {
     background: #296CFB 0% 0% no-repeat padding-box;
     border: 2px solid #296CFB;
-    margin-top: 1em;
     opacity: 1;
     color: white;
     padding: 0.25em;
@@ -82,14 +81,14 @@
 
 .left-container {
     display: flex;
-    min-height: 2rem;
+    min-height: 3rem;
     align-items: flex-start;
     justify-content: initial;
     text-align: start;
 }
 .right-container {
     display: flex;
-    min-height: 2rem;
+    min-height: 3rem;
     align-items: flex-start;
     justify-content: end;
     text-align: end;
