@@ -161,7 +161,7 @@ namespace UpSkill.Api.Controllers
                 return Unauthorized(unauthorizedResponse);
             }
 
-            var userToken = GetToken(user);
+            var userToken = await GetToken(user);
 
             var authenticationResponse = new UserAuthenticationResponseModel
             {
@@ -172,10 +172,10 @@ namespace UpSkill.Api.Controllers
             return Ok(authenticationResponse);
         }
 
-        private string GetToken(ApplicationUser user)
+        private async Task<string> GetToken(ApplicationUser user)
         {
             var signingCredentials = GetSigningCredentials();
-            var claims = GetClaims(user);
+            var claims = await GetClaims(user);
             var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
 
             return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
@@ -189,7 +189,7 @@ namespace UpSkill.Api.Controllers
             return new SigningCredentials(secret, SecurityAlgorithms.HmacSha256);
         }
 
-        private IList<Claim> GetClaims(ApplicationUser user)
+        private async Task<IList<Claim>> GetClaims(ApplicationUser user)
         {
             var claims = this.userManager.GetClaimsAsync(user);
             var claimsAsList = new List<Claim>(claims.Result);
@@ -198,7 +198,7 @@ namespace UpSkill.Api.Controllers
             claimsAsList.Add(new Claim("Id", user.Id));
             claimsAsList.Add(new Claim("FullName", user.FullName));
             claimsAsList.Add(new Claim("CompanyId", user.CompanyId.ToString()));
-            claimsAsList.Add(new Claim("CompanyName", companyService.GetName(user.CompanyId)));
+            claimsAsList.Add(new Claim("CompanyName", await companyService.GetName(user.CompanyId)));
 
             var ownerId = string.Empty;
 

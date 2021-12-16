@@ -1,9 +1,11 @@
 ﻿namespace UpSkill.Services.Data
 {
     using System.Linq;
+    using System.Threading.Tasks;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
     using Contracts;
+    using Microsoft.EntityFrameworkCore;
 
     public class CompanyService : ICompanyService
     {
@@ -14,14 +16,18 @@
             this.companyRepo = companyRepo;
         }
 
-        public bool Exists(string companyName) => 
-            this.companyRepo
-            .AllAsNoTracking()
-            .FirstOrDefault(x => x.Name == companyName) != null ? true : false;
+        public async Task<bool> Exists(string companyName)
+        {
+            return await this.companyRepo
+                .AllAsNoTracking()
+                .FirstOrDefaultAsync(x => x.Name == companyName) != null ? true : false;
+        }
 
-        public string GetName(int id)
-        => this.companyRepo
-            .AllAsNoTracking()
-            .FirstOrDefault(x => x.Id == id).Name;
+        public async Task<string> GetName(int id)
+        {
+            return await this.companyRepo
+                .AllAsNoTracking()
+                .Where(x => x.Id == id).Select(x => x.Name).FirstOrDefaultAsync();
+        }
     }
 }
