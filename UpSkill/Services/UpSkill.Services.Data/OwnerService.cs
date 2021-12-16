@@ -1,6 +1,5 @@
 ﻿namespace UpSkill.Services.Data
 {
-    using System;
     using System.Linq;
     using System.Threading.Tasks;
     using Contracts;
@@ -26,9 +25,10 @@
             this.sessionRepo = sessionRepo;
         }
 
-        public string GetId(string userId)
+        public async Task<string> GetId(string userId)
         {
-            return ownerRepository.All().FirstOrDefault(x => x.UserId == userId)?.Id;
+            return await ownerRepository.All().Where(x => x.UserId == userId)?.Select(x => x.Id)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<OwnerInvoiceDetailsModel> GetInvoiceInfo(string ownerId, int monthNum)

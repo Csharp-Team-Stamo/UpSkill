@@ -29,9 +29,9 @@ namespace UpSkill.Api.Controllers
         }
 
         [HttpGet("GetCollectionByCompanyId")]
-        public IActionResult GetCollectionByCompanyId([FromQuery]string companyId, [FromQuery] TableEntityParameters parameters)
+        public async Task<IActionResult> GetCollectionByCompanyId([FromQuery]string companyId, [FromQuery] TableEntityParameters parameters)
         {
-            var employees = employeesService.GetByCompanyId(companyId, parameters);
+            var employees = await employeesService.GetByCompanyId(companyId, parameters);
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(employees.MetaData));
 
             return Ok(employees);

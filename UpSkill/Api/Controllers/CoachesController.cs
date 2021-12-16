@@ -1,12 +1,9 @@
 ﻿namespace UpSkill.Api.Controllers
 {
-    using System.Net.Http;
     using System.Threading.Tasks;
     using Infrastructure.Models.Coach;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Options;
     using Services.Data.Contracts;
-    using UpSkill.Services.Data;
 
     [Route("[controller]")]
     [ApiController]

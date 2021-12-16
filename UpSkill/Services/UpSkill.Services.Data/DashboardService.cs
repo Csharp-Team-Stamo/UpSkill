@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using Contracts;
     using Infrastructure.Models.Dashboard;
+    using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
 
@@ -38,13 +39,13 @@
             };
         }
 
-        public OwnerDashboardStatisticsModel GetOwnerDashboardStats(string ownerId)
+        public async Task<OwnerDashboardStatisticsModel> GetOwnerDashboardStats(string ownerId)
         {
             return  new OwnerDashboardStatisticsModel
             {
-                Coaches = this.coachOwnerRepository.AllAsNoTracking().Where(x => x.OwnerId == ownerId).Count(),
-                Courses = this.courseOwnerRepository.AllAsNoTracking().Where(x => x.OwnerId == ownerId).Count(),
-                Employees = this.employeeRepository.AllAsNoTracking().Where(x => x.OwnerId == ownerId).Count()
+                Coaches = await this.coachOwnerRepository.AllAsNoTracking().Where(x => x.OwnerId == ownerId).CountAsync(),
+                Courses = await this.courseOwnerRepository.AllAsNoTracking().Where(x => x.OwnerId == ownerId).CountAsync(),
+                Employees = await this.employeeRepository.AllAsNoTracking().Where(x => x.OwnerId == ownerId).CountAsync()
             };
         }
     }

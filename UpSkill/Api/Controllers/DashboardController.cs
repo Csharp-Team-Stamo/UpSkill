@@ -6,7 +6,6 @@
     using Newtonsoft.Json;
     using Services.Data.Contracts;
     using Infrastructure.Common.Pagination;
-    using UpSkill.Services.Data.Paging;
 
     [Route("[controller]")]
     [ApiController]
@@ -39,9 +38,9 @@
 
 
         [HttpGet("GetOwnerStatistics")]
-        public  OwnerDashboardStatisticsModel GetOwnerDashboardStats([FromQuery]string ownerId)
+        public async Task<OwnerDashboardStatisticsModel> GetOwnerDashboardStats([FromQuery]string ownerId)
         {
-            return dashboardService.GetOwnerDashboardStats(ownerId);
+            return await dashboardService.GetOwnerDashboardStats(ownerId);
         }
 
         [HttpGet("GetOwnerCoursesStatistics")]

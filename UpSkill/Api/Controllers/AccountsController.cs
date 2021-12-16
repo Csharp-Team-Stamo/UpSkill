@@ -204,11 +204,11 @@ namespace UpSkill.Api.Controllers
 
             if (claims.Result.Any(x => x.Value == "Owner"))
             {
-                 ownerId = this.ownerService.GetId(user.Id);
+                 ownerId = await this.ownerService.GetId(user.Id);
             }
             else if (claims.Result.Any(x => x.Value == "Employee"))
             {
-                ownerId = this.employeesService.GetOwnerIdByAppUserId(user.Id);
+                ownerId = await this.employeesService.GetOwnerIdByAppUserId(user.Id);
             }
 
             claimsAsList.Add(new Claim("OwnerId", ownerId));

@@ -50,10 +50,11 @@
             return  await this.employeeRepository.All().Where(x => x.UserId == userId).Select(x => x.Id).FirstOrDefaultAsync();
         }
 
-        public PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, TableEntityParameters parameters)
+        public async Task<PagedList<AddEmployeeFormModel>> GetByCompanyId(string companyId,
+            TableEntityParameters parameters)
         {
-            var employees = employeeRepository.All().Where(x => x.User.CompanyId == int.Parse(companyId)).Select(x =>
-               new AddEmployeeFormModel { FullName = x.User.FullName, Email = x.User.Email, }).ToList();
+            var employees = await employeeRepository.All().Where(x => x.User.CompanyId == int.Parse(companyId)).Select(x =>
+               new AddEmployeeFormModel { FullName = x.User.FullName, Email = x.User.Email, }).ToListAsync();
 
             return PagedList<AddEmployeeFormModel>.ToPagedList(employees, parameters.PageNumber, parameters.PageSize);
         }
@@ -91,9 +92,9 @@
             };
         }
 
-        public string GetOwnerIdByAppUserId(string userId)
+        public async Task<string> GetOwnerIdByAppUserId(string userId)
         {
-            return this.employeeRepository.AllAsNoTracking().FirstOrDefault(x => x.UserId == userId).OwnerId;
+            return await this.employeeRepository.AllAsNoTracking().Where(x => x.UserId == userId).Select(x => x.OwnerId).FirstOrDefaultAsync();
         }
 
         public async Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees)
@@ -124,7 +125,7 @@
                     var emp = new Employee
                     {
                         UserId = user.Id,
-                        OwnerId = ownerService.GetId(employeeModel.UserId),
+                        OwnerId = await ownerService.GetId(employeeModel.UserId),
                     };
 
                     await employeeRepository.AddAsync(emp);

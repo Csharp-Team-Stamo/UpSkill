@@ -9,7 +9,6 @@
     using CloudinaryDotNet;
     using CloudinaryDotNet.Actions;
     using Microsoft.Extensions.Configuration;
-    using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
     using Contracts;
     public class ImagesService : IimagesService

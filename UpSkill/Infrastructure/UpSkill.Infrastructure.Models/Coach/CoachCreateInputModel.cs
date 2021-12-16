@@ -2,7 +2,6 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Common.Attributes;
-    using Newtonsoft.Json.Serialization;
 
     public class CoachCreateInputModel
     {

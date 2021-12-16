@@ -1,7 +1,6 @@
 ﻿namespace UpSkill.Infrastructure.Models.Course
 {
     using System.Collections.Generic;
-    using System.Threading.Tasks;
 
     public class CoursesListingCatalogModel
     {

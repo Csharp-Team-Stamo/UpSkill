@@ -11,11 +11,11 @@
     {
         Task<EmployeeAchievementsModel> GetEmployeeAchievementsInfoAsync(string employeeId);
 
-        string GetOwnerIdByAppUserId(string userId);
+        Task<string> GetOwnerIdByAppUserId(string userId);
 
         Task<string> GetEmployeeIdByAppUserIdAsync(string userId);
 
-        PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, TableEntityParameters parameters);
+        Task<PagedList<AddEmployeeFormModel>> GetByCompanyId(string companyId, TableEntityParameters parameters);
 
         Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees);
 

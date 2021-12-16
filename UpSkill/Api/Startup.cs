@@ -1,7 +1,6 @@
 ﻿namespace UpSkill.Api
 {
     using System.Text;
-    using CloudinaryDotNet;
     using Data;
     using Data.Common.Repositories;
     using Data.Models;

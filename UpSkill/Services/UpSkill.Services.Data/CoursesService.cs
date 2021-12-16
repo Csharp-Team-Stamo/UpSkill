@@ -126,7 +126,7 @@
             TableEntityParameters parameters)
         {
             var courses = await this.employeeCoursesRepository.All()
-                .Where(x => x.Student.OwnerId == ownerId && x.EndDate.Month == month)
+                .Where(x => x.Student.OwnerId == ownerId && x.EnrollDate.Month == month)
                 .GroupBy(x => x.Course.Name)
                 .Select(x => new CourseDashboardStatItemModel { Name = x.Key, Enrolled = x.Count() })
                 .ToListAsync();

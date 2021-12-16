@@ -1,6 +1,7 @@
 ﻿namespace UpSkill.Api.Controllers
 {
     using System.Collections.Generic;
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using Services.Data.Contracts;
 
@@ -16,9 +17,9 @@
         }
 
         [HttpGet("GetAll")]
-        public ICollection<string> GetAll()
+        public async Task<ICollection<string>> GetAll()
         {
-           return languagesService.GetAll();
+           return await languagesService.GetAll();
         }
     }
 }
