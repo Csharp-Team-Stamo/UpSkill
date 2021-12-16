@@ -9,19 +9,19 @@
         <img class="img-custom" src="@Coach.ImageUrl" />
     </div>
     <div class="card-body">
-        <div class="row">
-            <div class="coach-profession col-6">
+        <div class="row row-name-and-cat">
+            <div class="coach-profession col-6 left-container">
                 @Coach.CategoryName
             </div>
-            <div class="coach-name col-6 text-right">
+            <div class="coach-name col-6 text-right right-container">
                 @Coach.FullName
             </div>
         </div>
         <div class="row">
-            <div class="coah-price col-6">
+            <div class="coah-price col-6 left-container">
                 @Coach.PricePerSession.ToString("##,##")€ per session
             </div>
-            <div class="col-6 text-right">
+            <div class="col-6 text-right logo-container right-container">
                 <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
             </div>
         </div>

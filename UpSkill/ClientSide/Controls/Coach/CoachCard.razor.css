@@ -27,7 +27,6 @@
 .coach-btn {
     background: #296CFB 0% 0% no-repeat padding-box;
     border: 2px solid #296CFB;
-    margin-top: 1em;
     opacity: 1;
     color: white;
     padding: 0.25em;
@@ -66,4 +65,36 @@
     padding-left: 10px;
     position: relative;
     left: -6%;
+}
+
+.row-name-and-cat {
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.row-price-and-logo {
+    min-height: 3rem;
+    display: flex;
+    align-items: center;
+}
+
+.left-container {
+    display: flex;
+    min-height: 3rem;
+    align-items: flex-start;
+    justify-content: initial;
+    text-align: start;
+}
+.right-container {
+    display: flex;
+    min-height: 3rem;
+    align-items: flex-start;
+    justify-content: end;
+    text-align: end;
+}
+
+.logo-container {
+    min-height: 2rem;
+    max-height: 2rem;
 }
