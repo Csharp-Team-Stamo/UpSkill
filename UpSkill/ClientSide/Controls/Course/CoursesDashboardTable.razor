@@ -133,6 +133,8 @@
             parameters.PageNumber = MetaData.CurrentPage + 1;
             var pagingResponse = await DashboardService
                 .GetOwnerCoursesStatsAsync(user.OwnerId().Result, month.ToString(), parameters);
+            MetaData = pagingResponse.MetaData;
+
             courses.AddRange(pagingResponse.Items);
             courses = courses.OrderBy(x => x.Name).ToList();
         }

@@ -34,7 +34,7 @@ else
                     </tr>
                 }
             <tr class="text-center">
-                @if (employeesParameters.PageSize >= MetaData.TotalCount)
+                @if (MetaData.TotalCount <= employeesParameters.PageSize)
                 {
                 <td colspan="3">
                     <span style="color: dimgray;">
@@ -42,7 +42,7 @@ else
                     </span>
                 </td>
                 }
-                else if (employeesParameters.PageNumber >= MetaData.TotalPages)
+                else if (employeesParameters.PageNumber >= MetaData.TotalPages && MetaData.TotalCount >= employeesParameters.PageSize)
                 {
                 <td class="" colspan="3">
                     <span @onclick="ShowLess" style="color: #16D696; cursor:pointer">
@@ -98,6 +98,7 @@ else
         {
             employeesParameters.PageNumber = MetaData.CurrentPage + 1;
             var pagingResponse = await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result, employeesParameters);
+            MetaData = pagingResponse.MetaData;
             employeesModel.AddRange(pagingResponse.Items);
             employeesModel = employeesModel.OrderBy(x => x.FullName).ToList();
         }
