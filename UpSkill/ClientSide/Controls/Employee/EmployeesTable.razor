@@ -34,21 +34,29 @@ else
                     </tr>
                 }
             <tr class="text-center">
-                @if (employeesParameters.PageNumber >= MetaData.TotalPages)
+                @if (employeesParameters.PageSize >= MetaData.TotalCount)
                 {
-                    <td class="" colspan="3" >
-                        <span  @onclick="ShowLess" style="color: #16D696; cursor:pointer">
-                            Show less
-                        </span>
-                    </td>
+                <td colspan="3">
+                    <span style="color: dimgray;">
+                        Show more (@employeesParameters.PageSize)(@MetaData.TotalCount)
+                    </span>
+                </td>
+                }
+                else if (employeesParameters.PageNumber >= MetaData.TotalPages)
+                {
+                <td class="" colspan="3">
+                    <span @onclick="ShowLess" style="color: #16D696; cursor:pointer">
+                        Show less
+                    </span>
+                </td>
                 }
                 else
                 {
-                    <td  colspan="3" >
-                        <span @onclick="ViewMore" style="color: #16D696; cursor: pointer;">
+                <td colspan="3">
+                    <span @onclick="ViewMore" style="color: #16D696; cursor: pointer;">
                         Show more
-                        </span>
-                    </td>
+                    </span>
+                </td>
                 }
             </tr>
             </tbody>
