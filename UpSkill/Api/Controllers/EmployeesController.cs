@@ -8,7 +8,7 @@ namespace UpSkill.Api.Controllers
     using Newtonsoft.Json;
     using Services.Data.Contracts;
     using Infrastructure.Common.Pagination;
-    using UpSkill.Infrastructure.Models.Course;
+    using Infrastructure.Models.Course;
 
     [Route("/[controller]")]
     [ApiController]
@@ -40,15 +40,15 @@ namespace UpSkill.Api.Controllers
         [HttpPost("EnrollToCourseAsync")]
         public async Task EnrollToCourseAsync(int courseId, string appUserId)
         {
-            var employeeId = employeesService.GetEmployeeIdByAppUserId(appUserId);
+            var employeeId = await employeesService.GetEmployeeIdByAppUserIdAsync(appUserId);
 
            await employeesService.EnrollToCourseAsync(courseId, employeeId);
         }
 
         [HttpGet("IsEmployeeEnrolledToCourse")]
-        public bool IsEmployeeEnrolledToCourse(string appUserId, int courseId)
+        public async Task<bool> IsEmployeeEnrolledToCourse(string appUserId, int courseId)
         {
-            var employeeId = employeesService.GetEmployeeIdByAppUserId(appUserId);
+            var employeeId = await employeesService.GetEmployeeIdByAppUserIdAsync(appUserId);
 
             return employeesService.IsEmployeeEnrolledForCourse(employeeId, courseId);
         }
@@ -56,7 +56,7 @@ namespace UpSkill.Api.Controllers
         [HttpGet("GetAchievementsModelAsync")]
         public async Task<EmployeeAchievementsModel> GetAchievementsModelAsync(string userId)
         {
-            var employeeId = employeesService.GetEmployeeIdByAppUserId(userId);
+            var employeeId = await employeesService.GetEmployeeIdByAppUserIdAsync(userId);
 
             return await employeesService.GetEmployeeAchievementsInfoAsync(employeeId);
         }

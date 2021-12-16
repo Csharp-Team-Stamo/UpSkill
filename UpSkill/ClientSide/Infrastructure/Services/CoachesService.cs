@@ -20,7 +20,7 @@
 
         public async Task<CoachesListingCatalogModel> GetAllAsync(string ownerId)
         {
-           return await httpClient.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAll?ownerId={ownerId}");
+           return await httpClient.GetFromJsonAsync<CoachesListingCatalogModel>($"/coaches/GetAllAsync?ownerId={ownerId}");
         }
 
         public async Task<CoachesListingCatalogModel> GetAllByEmployeeIdAsync(string ownerId, string userId)
@@ -31,7 +31,7 @@
                 ["userId"] = userId
             };
 
-            var response = await httpClient.GetAsync(QueryHelpers.AddQueryString("/Coaches/GetAllByEmployeeId", queryStringParam));
+            var response = await httpClient.GetAsync(QueryHelpers.AddQueryString("/Coaches/GetAllByEmployeeIdAsync", queryStringParam));
             var content = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<CoachesListingCatalogModel>(content);
 
@@ -45,7 +45,7 @@
                 ["ownerId"] = ownerId,
             };
 
-            var response = await httpClient.GetAsync(QueryHelpers.AddQueryString("/Coaches/GetAllByOwnerId", queryStringParam));
+            var response = await httpClient.GetAsync(QueryHelpers.AddQueryString("/Coaches/GetAllByOwnerIdAsync", queryStringParam));
             var content = await response.Content.ReadAsStringAsync();
             var result = JsonConvert.DeserializeObject<CoachesListingCatalogModel>(content);
 

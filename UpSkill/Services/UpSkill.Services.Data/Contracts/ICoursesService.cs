@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Infrastructure.Models.Course;
-    using UpSkill.Infrastructure.Common.Pagination;
-    using UpSkill.Infrastructure.Models.Dashboard;
-    using UpSkill.Services.Data.Paging;
+    using Infrastructure.Common.Pagination;
+    using Infrastructure.Models.Dashboard;
+    using Paging;
 
     public interface ICoursesService
     {

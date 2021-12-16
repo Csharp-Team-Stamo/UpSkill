@@ -5,7 +5,7 @@
     using Infrastructure.Common.Pagination;
     using Infrastructure.Models.Employee;
     using Paging;
-    using UpSkill.Infrastructure.Models.Course;
+    using Infrastructure.Models.Course;
 
     public interface IEmployeesService
     {
@@ -13,7 +13,7 @@
 
         string GetOwnerIdByAppUserId(string userId);
 
-        string GetEmployeeIdByAppUserId(string userId);
+        Task<string> GetEmployeeIdByAppUserIdAsync(string userId);
 
         PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, TableEntityParameters parameters);
 

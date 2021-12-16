@@ -14,8 +14,8 @@
     using Infrastructure.Common.Pagination;
     using Microsoft.EntityFrameworkCore;
     using Paging;
-    using UpSkill.Infrastructure.Models.Course;
-    using UpSkill.Infrastructure.Models.Lecture;
+    using Infrastructure.Models.Course;
+    using Infrastructure.Models.Lecture;
 
     public class EmployeesService : IEmployeesService
     {
@@ -45,9 +45,9 @@
             this.courseRepo = courseRepo;
         }
 
-        public string GetEmployeeIdByAppUserId(string userId)
+        public async Task<string> GetEmployeeIdByAppUserIdAsync(string userId)
         {
-            return this.employeeRepository.AllAsNoTracking().FirstOrDefault(x => x.UserId == userId).Id;
+            return  await this.employeeRepository.All().Where(x => x.UserId == userId).Select(x => x.Id).FirstOrDefaultAsync();
         }
 
         public PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, TableEntityParameters parameters)

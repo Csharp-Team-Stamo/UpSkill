@@ -34,7 +34,7 @@
             return new EmployeeDashboardModel
             {
                 Courses = await coursesService.GetAllEnrolledByEmployeeIdAsync(employeeId),
-                Coaches = await coachesService.GetAllWithExistingSessions(employeeId)
+                Coaches = await coachesService.GetAllWithExistingSessionsAsync(employeeId)
             };
         }
 

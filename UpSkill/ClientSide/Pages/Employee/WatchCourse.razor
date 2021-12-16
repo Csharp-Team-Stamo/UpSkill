@@ -89,14 +89,14 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        this.courseDetails = await this.Client
+        courseDetails = await Client
             .GetFromJsonAsync<CourseWatchDetailsModel>
             ($"/employees/getcoursebyid/{Id}");
     }
 
     private async Task GetLectureDetails(int lectureId)
     {
-        this.lectureDetails = await this.Client
+        lectureDetails = await Client
         .GetFromJsonAsync<LectureDetailsModel>
         ($"/courses/getlecturebyId/{courseDetails.CourseId}/{lectureId}");
     }

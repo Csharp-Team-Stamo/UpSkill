@@ -7,7 +7,7 @@
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Owner;
+    using Infrastructure.Models.Owner;
 
     public class OwnerService : IOwnerService
     {

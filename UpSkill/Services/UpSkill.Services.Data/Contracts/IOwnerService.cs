@@ -1,7 +1,7 @@
 ﻿namespace UpSkill.Services.Data.Contracts
 {
     using System.Threading.Tasks;
-    using UpSkill.Infrastructure.Models.Owner;
+    using Infrastructure.Models.Owner;
 
     public interface IOwnerService
     {

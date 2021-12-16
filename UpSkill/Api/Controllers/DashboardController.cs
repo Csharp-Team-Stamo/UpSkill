@@ -5,7 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
     using Services.Data.Contracts;
-    using UpSkill.Infrastructure.Common.Pagination;
+    using Infrastructure.Common.Pagination;
     using UpSkill.Services.Data.Paging;
 
     [Route("[controller]")]
@@ -32,7 +32,7 @@
         [HttpGet("GetEpEmployeeDashboardInfoAsync")]
         public async Task<EmployeeDashboardModel> GetEpEmployeeDashboardInfoAsync(string appUserId)
         {
-            var employeeId = employeesService.GetEmployeeIdByAppUserId(appUserId);
+            var employeeId = await employeesService.GetEmployeeIdByAppUserIdAsync(appUserId);
 
             return await dashboardService.GetEmployeeDashboardInfoByIdAsync(employeeId);
         }
@@ -56,13 +56,13 @@
 
 
         [HttpGet("GetOwnerCoachesStatistics")]
-        public IActionResult GetOwnerCoachesStatistics([FromQuery] string ownerId, string month, [FromQuery] TableEntityParameters parameters)
+        public async Task<IActionResult> GetOwnerCoachesStatistics([FromQuery] string ownerId, string month, [FromQuery] TableEntityParameters parameters)
         {
             var monthAsInt = int.Parse(month);
-            var courses = this.coachesService.GetDashboardCoaches(ownerId, monthAsInt, parameters);
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(courses.MetaData));
+            var coaches = await this.coachesService.GetDashboardCoaches(ownerId, monthAsInt, parameters);
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(coaches.MetaData));
 
-            return Ok(courses);
+            return Ok(coaches);
         }
     }
 }

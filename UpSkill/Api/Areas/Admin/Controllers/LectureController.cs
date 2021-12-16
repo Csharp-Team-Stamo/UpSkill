@@ -2,7 +2,7 @@
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using UpSkill.Infrastructure.Models.Lecture;
+    using Infrastructure.Models.Lecture;
     using UpSkill.Services.Data.Admin.Contracts;
 
     public class LectureController : AdminController

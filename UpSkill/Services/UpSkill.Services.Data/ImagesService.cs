@@ -11,7 +11,7 @@
     using Microsoft.Extensions.Configuration;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-    using UpSkill.Services.Data.Contracts;
+    using Contracts;
     public class ImagesService : IimagesService
     {
         private readonly IConfiguration configuration;

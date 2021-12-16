@@ -4,7 +4,7 @@
     using Infrastructure.Models.Course;
     using Microsoft.AspNetCore.Mvc;
     using Services.Data.Contracts;
-    using UpSkill.Infrastructure.Models.Lecture;
+    using Infrastructure.Models.Lecture;
 
     [Route("[controller]")]
     [ApiController]

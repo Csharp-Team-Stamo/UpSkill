@@ -1,7 +1,7 @@
 ﻿namespace UpSkill.Services.Data.Admin.Contracts
 {
     using System.Threading.Tasks;
-    using UpSkill.Infrastructure.Models.Company;
+    using Infrastructure.Models.Company;
 
     public interface IAdminCompanyService
     {

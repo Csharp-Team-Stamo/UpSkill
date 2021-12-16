@@ -21,7 +21,7 @@
         <tbody>
             @foreach (var company in allClients)
             {
-                if (this.adminCompanyName != company.Name)
+                if (adminCompanyName != company.Name)
                 {
                     <tr class=" border-bottom-0 underline">
                         <td class="text-left pl-4 font-weight-bold cell-left" 
@@ -63,7 +63,7 @@
 
     void GetCompName()
     {
-        this.adminCompanyName = User.CompanyName().Result;
+        adminCompanyName = User.CompanyName().Result;
     }
         
 
@@ -73,7 +73,7 @@
             .GetFromJsonAsync<IEnumerable<AdminCompanyListingModel>>
             ("/admin/statistics/getallclients");
 
-        this.GetCompName();
+        GetCompName();
     }
 
     private void ShowPopup()

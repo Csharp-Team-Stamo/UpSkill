@@ -6,8 +6,8 @@
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
-    using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Owner;
+    using Data.Models;
+    using Infrastructure.Models.Owner;
     using UpSkill.Services.Data.Contracts;
 
     [Route("/[controller]")]

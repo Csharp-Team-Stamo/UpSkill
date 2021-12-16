@@ -6,8 +6,8 @@ namespace UpSkill.Services.Data
 
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Coach.Sessions;
-    using UpSkill.Services.Data.Contracts;
+    using Infrastructure.Models.Coach.Sessions;
+    using Contracts;
 
     public class CoachSessionsService : ICoachSessionsService
     {

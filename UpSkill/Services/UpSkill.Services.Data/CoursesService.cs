@@ -8,9 +8,9 @@
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Common.Pagination;
-    using UpSkill.Infrastructure.Models.Dashboard;
-    using UpSkill.Services.Data.Paging;
+    using Infrastructure.Common.Pagination;
+    using Infrastructure.Models.Dashboard;
+    using Paging;
 
     public class CoursesService : ICoursesService
     {
