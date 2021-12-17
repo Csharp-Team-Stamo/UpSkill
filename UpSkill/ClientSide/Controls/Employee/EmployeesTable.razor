@@ -33,32 +33,32 @@ else
                         </td>
                     </tr>
                 }
-            <tr class="text-center">
-                @if (MetaData.TotalCount <= employeesParameters.PageSize)
-                {
-                <td colspan="3">
-                    <span style="color: dimgray;">
-                        Show more (@employeesParameters.PageSize)(@MetaData.TotalCount)
-                    </span>
-                </td>
-                }
-                else if (employeesParameters.PageNumber >= MetaData.TotalPages && MetaData.TotalCount >= employeesParameters.PageSize)
-                {
-                <td class="" colspan="3">
-                    <span @onclick="ShowLess" style="color: #16D696; cursor:pointer">
-                        Show less
-                    </span>
-                </td>
-                }
-                else
-                {
-                <td colspan="3">
-                    <span @onclick="ViewMore" style="color: #16D696; cursor: pointer;">
-                        Show more
-                    </span>
-                </td>
-                }
-            </tr>
+                <tr class="text-center">
+                    @if (MetaData.TotalCount <= employeesParameters.PageSize)
+                    {
+                        <td colspan="3">
+                            <span style="color: dimgray;">
+                                Show more (@employeesParameters.PageSize)(@MetaData.TotalCount)
+                            </span>
+                        </td>
+                    }
+                    else if (employeesParameters.PageNumber >= MetaData.TotalPages && MetaData.TotalCount >= employeesParameters.PageSize)
+                    {
+                        <td class="" colspan="3">
+                            <span @onclick="ShowLess" style="color: #16D696; cursor:pointer">
+                                Show less
+                            </span>
+                        </td>
+                    }
+                    else
+                    {
+                        <td colspan="3">
+                            <span @onclick="ViewMore" style="color: #16D696; cursor: pointer;">
+                                Show more
+                            </span>
+                        </td>
+                    }
+                </tr>
             </tbody>
         </table>
     </div>
@@ -81,15 +81,18 @@ else
     private List<AddEmployeeFormModel> employeesModel;
 
     public MetaData MetaData { get; set; } = new MetaData();
-    private TableEntityParameters employeesParameters = new ();
+    private TableEntityParameters employeesParameters = new();
 
     protected override async Task OnInitializedAsync()
     {
-        var pagingResponse = await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result, employeesParameters);
+        var pagingResponse = await EmployeesService
+            .GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result, employeesParameters);
         employeesModel = pagingResponse.Items;
         MetaData = pagingResponse.MetaData;
 
-        employeesModel = employeesModel.OrderBy(x => x.FullName).ToList();
+        employeesModel = employeesModel
+            .OrderBy(x => x.FullName)
+            .ToList();
     }
 
     private async Task ViewMore()
@@ -100,7 +103,9 @@ else
             var pagingResponse = await EmployeesService.GetCollectionFromDbByCompanyIdAsync(user.CompanyId().Result, employeesParameters);
             MetaData = pagingResponse.MetaData;
             employeesModel.AddRange(pagingResponse.Items);
-            employeesModel = employeesModel.OrderBy(x => x.FullName).ToList();
+            employeesModel = employeesModel
+                .OrderBy(x => x.FullName)
+                .ToList();
         }
     }
 
@@ -108,7 +113,10 @@ else
     {
         employeesParameters.PageNumber = 1;
         MetaData.CurrentPage = 1;
-        employeesModel = employeesModel.Take(MetaData.PageSize).OrderBy(x => x.FullName).ToList();
+        employeesModel = employeesModel
+            .Take(MetaData.PageSize)
+            .OrderBy(x => x.FullName)
+            .ToList();
     }
 
     private void ShowPopup()

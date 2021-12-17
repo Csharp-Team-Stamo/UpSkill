@@ -52,13 +52,14 @@
 
         public PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, TableEntityParameters parameters)
         {
-            var employees = employeeRepository.All()
+            var employees = employeeRepository
+                .All()
                 .Where(x => x.User.CompanyId == int.Parse(companyId))
-                .Select(x =>
-               new AddEmployeeFormModel 
-               { FullName = x.User.FullName,
-                 Email = x.User.Email, 
-               })
+                .Select(x => new AddEmployeeFormModel
+                {
+                    FullName = x.User.FullName,
+                    Email = x.User.Email,
+                })
                 .OrderBy(x => x.FullName)
                 .ToList();
 

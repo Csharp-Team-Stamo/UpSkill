@@ -123,7 +123,9 @@
            .GetOwnerCoursesStatsAsync(user.OwnerId().Result, month.ToString(), parameters);
         courses = pagingResponse.Items;
         MetaData = pagingResponse.MetaData;
-        courses = courses.OrderBy(x => x.Name).ToList();
+        courses = courses
+            .OrderBy(x => x.Name)
+            .ToList();
     }
 
     private async Task ViewMore()
@@ -136,7 +138,9 @@
             MetaData = pagingResponse.MetaData;
 
             courses.AddRange(pagingResponse.Items);
-            courses = courses.OrderBy(x => x.Name).ToList();
+            courses = courses
+                .OrderBy(x => x.Name)
+                .ToList();
         }
     }
 
