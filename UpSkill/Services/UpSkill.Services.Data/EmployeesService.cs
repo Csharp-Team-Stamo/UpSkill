@@ -87,7 +87,7 @@
                             .FirstOrDefault()
                             .End.
                             ToString("d"),
-                        SessionsCompleted = x.LiveSessions.Count(x => x.StudentId == employeeId).ToString(),
+                        SessionsCompleted = x.LiveSessions.Count(liveSession => liveSession.StudentId == employeeId).ToString(),
                     }).ToListAsync(),
             };
         }

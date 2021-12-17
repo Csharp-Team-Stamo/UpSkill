@@ -67,6 +67,7 @@
                     PricePerSession = x.Coach.PricePerSession,
                 }).ToListAsync()
             };
+
             return result;
         }
 
