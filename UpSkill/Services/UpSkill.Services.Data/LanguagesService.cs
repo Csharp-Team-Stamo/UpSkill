@@ -2,7 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Contracts;
+    using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
 
@@ -15,9 +17,9 @@
             this.languageRepository = languageRepository;
         }
 
-        public ICollection<string> GetAll()
+        public async Task<ICollection<string>> GetAll()
         {
-            return languageRepository.All().Select(x => x.Name).ToList();
+            return await languageRepository.All().Select(x => x.Name).ToListAsync();
         }
     }
 }

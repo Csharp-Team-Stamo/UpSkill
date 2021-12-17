@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using MyTested.AspNetCore.Mvc;
-    using UpSkil.Tests.Integration.Data;
+    using Data;
     using UpSkill.Api.Controllers;
     using Xunit;
    public class LanguagesControllerTests

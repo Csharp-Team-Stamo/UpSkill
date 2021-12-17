@@ -11,6 +11,7 @@
     using Infrastructure.Common;
     using Contracts;
     using System;
+    using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
 
     public class AccountsService : IAccountsService
@@ -40,9 +41,9 @@
 
         public async Task<IdentityResult> Register(string fullName, string email, string password, string companyName)
         {
-            var company = this.companyRepo
+            var company = await this.companyRepo
                 .All()
-                .FirstOrDefault(x => x.Name == companyName);
+                .FirstOrDefaultAsync(x => x.Name == companyName);
 
             if (company == null)
             {

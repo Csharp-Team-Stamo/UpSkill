@@ -1,26 +1,19 @@
 ﻿namespace UpSkill.Api.Controllers
 {
-    using System.Net.Http;
     using System.Threading.Tasks;
     using Infrastructure.Models.Coach;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Options;
     using Services.Data.Contracts;
-    using UpSkill.Services.Data;
 
     [Route("[controller]")]
     [ApiController]
     public class CoachesController : ControllerBase
     {
         private readonly ICoachesService coachesService;
-        private readonly IOptions<CalendlyOptions> options;
-        private readonly IHttpClientFactory clientFactory;
 
-        public CoachesController(ICoachesService coachesService, IOptions<CalendlyOptions> options, IHttpClientFactory clientFactory)
+        public CoachesController(ICoachesService coachesService)
         {
             this.coachesService = coachesService;
-            this.options = options;
-            this.clientFactory = clientFactory;
         }
 
         [HttpGet("GetByIdAsync")]
@@ -29,22 +22,22 @@
             return await coachesService.GetByIdAsync(coachId);
         }
 
-        [HttpGet("GetAllByOwnerId")]
-        public CoachesListingCatalogModel GetAllByOwnerId([FromQuery] string ownerId)
+        [HttpGet("GetAllByOwnerIdAsync")]
+        public async Task<CoachesListingCatalogModel> GetAllByOwnerIdAsync([FromQuery] string ownerId)
         {
-            return coachesService.GetAllByOwnerId(ownerId);
+            return await coachesService.GetAllByOwnerIdAsync(ownerId);
         }
 
-        [HttpGet("GetAllByEmployeeId")]
-        public CoachesListingCatalogModel GetAllByEmployeeId([FromQuery] string ownerId, [FromQuery] string userId)
+        [HttpGet("GetAllByEmployeeIdAsync")]
+        public async Task<CoachesListingCatalogModel> GetAllByEmployeeIdAsync([FromQuery] string ownerId, [FromQuery] string userId)
         {
-            return coachesService.GetAllByEmployeeId(ownerId, userId);
+            return await coachesService.GetAllByEmployeeIdAsync(ownerId, userId);
         }
 
-        [HttpGet("GetAll")]
-        public CoachesListingCatalogModel GetAll([FromQuery] string ownerId)
+        [HttpGet("GetAllAsync")]
+        public async Task<CoachesListingCatalogModel> GetAllAsync([FromQuery] string ownerId)
         {
-            return coachesService.GetAll(ownerId);
+            return await coachesService.GetAllAsync(ownerId);
         }
 
         [HttpPost("AddCoachInOwnerCoachesCollectionAsync")]

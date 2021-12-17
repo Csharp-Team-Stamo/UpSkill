@@ -8,6 +8,6 @@
 
         public ICollection<int> OwnerCourseCollectionIds { get; set; } = new List<int>();
 
-        public ICollection<CourseInListCatalogModel> Courses { get; set; } = new List<CourseInListCatalogModel>();
+        public List<CourseInListCatalogModel> Courses { get; set; } = new List<CourseInListCatalogModel>();
     }
 }

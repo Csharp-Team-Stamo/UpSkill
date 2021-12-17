@@ -2,8 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Course;
+    using Infrastructure.Models.Course;
 
     public interface IAdminCourseService
     {

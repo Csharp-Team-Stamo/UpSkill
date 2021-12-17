@@ -9,33 +9,33 @@
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Common.Pagination;
-    using UpSkill.Infrastructure.Models.Dashboard;
-    using UpSkill.Services.Data.Paging;
+    using Infrastructure.Common.Pagination;
+    using Infrastructure.Models.Dashboard;
+    using Paging;
 
     public class CoachesService : ICoachesService
     {
         private readonly IDeletableEntityRepository<Coach> coachesRepository;
         private readonly IDeletableEntityRepository<CoachOwner> coachesOwnerRepository;
-        private readonly IDeletableEntityRepository<Employee> employeeRepository;
         private readonly IDeletableEntityRepository<LiveSession> liveSessionsRepository;
+        private readonly IEmployeesService employeesService;
 
         public CoachesService(
             IDeletableEntityRepository<Coach> coachesRepository,
             IDeletableEntityRepository<CoachOwner> coachesOwnerRepository,
-            IDeletableEntityRepository<Employee> employeeRepository,
-            IDeletableEntityRepository<LiveSession> liveSessionsRepository)
+            IDeletableEntityRepository<LiveSession> liveSessionsRepository
+            , IEmployeesService employeesService)
         {
             this.coachesRepository = coachesRepository;
             this.coachesOwnerRepository = coachesOwnerRepository;
-            this.employeeRepository = employeeRepository;
             this.liveSessionsRepository = liveSessionsRepository;
+            this.employeesService = employeesService;
         }
 
-        public Task<CoachDescriptionModel> GetByIdAsync(string coachId)
+        public async Task<CoachDescriptionModel> GetByIdAsync(string coachId)
         {
 
-            return coachesRepository.All().Where(x => x.Id == coachId).Select(x => new CoachDescriptionModel
+            return await coachesRepository.All().Where(x => x.Id == coachId).Select(x => new CoachDescriptionModel
             {
                 Id = x.Id,
                 FullName = x.FullName,
@@ -50,12 +50,12 @@
             }).FirstOrDefaultAsync();
         }
 
-        public CoachesListingCatalogModel GetAllByOwnerId(string ownerId)
+        public async Task<CoachesListingCatalogModel> GetAllByOwnerIdAsync(string ownerId)
         {
-             var result = new CoachesListingCatalogModel
+            var result = new CoachesListingCatalogModel
             {
-                OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
-                Coaches = coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CoachInListCatalogModel
+                OwnerCoachCollectionIds = await GetOwnerCoachCollectionIdsAsync(ownerId),
+                Coaches = await coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CoachInListCatalogModel
                 {
                     Id = x.Coach.Id,
                     FullName = x.Coach.FullName,
@@ -65,19 +65,20 @@
                     CompanyLogoUrl = x.Coach.CompanyLogoUrl,
                     CalendlyUrl = x.Coach.CalendlyPopupUrl,
                     PricePerSession = x.Coach.PricePerSession,
-                }).ToList()
+                }).ToListAsync()
             };
+
             return result;
         }
 
-        public CoachesListingCatalogModel GetAllByEmployeeId(string ownerId, string userId)
+        public async Task<CoachesListingCatalogModel> GetAllByEmployeeIdAsync(string ownerId, string userId)
         {
-            var employeeId = employeeRepository.All().FirstOrDefault(x => x.UserId == userId).Id;
+            var employeeId = await employeesService.GetEmployeeIdByAppUserIdAsync(userId);
 
             var result = new CoachesListingCatalogModel
             {
-                OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
-                Coaches = coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CoachInListCatalogModel
+                OwnerCoachCollectionIds = await GetOwnerCoachCollectionIdsAsync(ownerId),
+                Coaches = await coachesOwnerRepository.All().Where(x => x.OwnerId == ownerId).Select(x => new CoachInListCatalogModel
                 {
                     Id = x.Coach.Id,
                     FullName = x.Coach.FullName,
@@ -87,19 +88,19 @@
                     CompanyLogoUrl = x.Coach.CompanyLogoUrl,
                     CalendlyUrl = x.Coach.CalendlyPopupUrl,
                     PricePerSession = x.Coach.PricePerSession,
-                    IsFeedbackNeeded = x.Coach.LiveSessions.Any(x => x.StudentId == employeeId && x.GivenFeedback == false),
-                    IsCoachSessionPending = x.Coach.LiveSessions.Any(x => x.StudentId == employeeId && x.Start > System.DateTime.UtcNow),
-                    IsNotFirstCoachSession = x.Coach.LiveSessions.Any(x => x.StudentId == employeeId)
-                }).ToList()
+                    IsFeedbackNeeded = x.Coach.LiveSessions.Any(liveSession => liveSession.StudentId == employeeId && liveSession.GivenFeedback == false),
+                    IsCoachSessionPending = x.Coach.LiveSessions.Any(liveSession => liveSession.StudentId == employeeId && liveSession.Start > DateTime.UtcNow),
+                    IsNotFirstCoachSession = x.Coach.LiveSessions.Any(liveSession => liveSession.StudentId == employeeId)
+                }).ToListAsync()
             };
 
             return result;
         }
 
-        public async Task<ICollection<CoachInListCatalogModel>> GetAllWithExistingSessions(string employeeId)
+        public async Task<ICollection<CoachInListCatalogModel>> GetAllWithExistingSessionsAsync(string employeeId)
         {
             return await this.coachesRepository.All()
-                .Where(ls => ls.LiveSessions.Any(ls => ls.StudentId == employeeId))
+                .Where(c => c.LiveSessions.Any(ls => ls.StudentId == employeeId))
                 .Select(x => new CoachInListCatalogModel
                 {
                     Id = x.Id,
@@ -110,19 +111,19 @@
                     CompanyLogoUrl = x.CompanyLogoUrl,
                     CalendlyUrl = x.CalendlyPopupUrl,
                     PricePerSession = x.PricePerSession,
-                    IsFeedbackNeeded = x.LiveSessions.Any(x => x.StudentId == employeeId && x.GivenFeedback == false),
-                    IsCoachSessionPending = x.LiveSessions.Any(x => x.StudentId == employeeId && x.Start > System.DateTime.UtcNow),
-                    IsNotFirstCoachSession = x.LiveSessions.Any(x => x.StudentId == employeeId)
+                    IsFeedbackNeeded = x.LiveSessions.Any(liveSession => liveSession.StudentId == employeeId && liveSession.GivenFeedback == false),
+                    IsCoachSessionPending = x.LiveSessions.Any(liveSession => liveSession.StudentId == employeeId && liveSession.Start > DateTime.UtcNow),
+                    IsNotFirstCoachSession = x.LiveSessions.Any(liveSession => liveSession.StudentId == employeeId)
                 })
                 .ToListAsync();
         }
 
-        public CoachesListingCatalogModel GetAll(string ownerId)
+        public async Task<CoachesListingCatalogModel> GetAllAsync(string ownerId)
         {
             return new CoachesListingCatalogModel
             {
-                OwnerCoachCollectionIds = OwnerCoachCollectionIds(ownerId),
-                Coaches = coachesRepository.All().Select(x => new CoachInListCatalogModel
+                OwnerCoachCollectionIds = await GetOwnerCoachCollectionIdsAsync(ownerId),
+                Coaches = await coachesRepository.All().Select(x => new CoachInListCatalogModel
                 {
                     Id = x.Id,
                     FullName = x.FullName,
@@ -132,7 +133,7 @@
                     CompanyLogoUrl = x.CompanyLogoUrl,
                     PricePerSession = x.PricePerSession,
                     Languages = x.Languages.Select(cl => cl.Language.Name).ToList(),
-                }).ToList()
+                }).ToListAsync()
             };
         }
 
@@ -151,23 +152,24 @@
             await coachesOwnerRepository.SaveChangesAsync();
         }
 
-        private List<string> OwnerCoachCollectionIds(string ownerId)
+        public async Task<PagedList<CoachDashboardStatItemModel>> GetDashboardCoaches(string ownerId, int month,
+            TableEntityParameters parameters)
+        {
+            var coaches = await this.liveSessionsRepository.All()
+             .Where(x => x.Student.OwnerId == ownerId && x.End.Month == month)
+             .GroupBy(x => x.Coach.FullName)
+             .Select(x => new CoachDashboardStatItemModel { Name = x.Key, Sessions = x.Count() })
+             .ToListAsync();
+
+            return PagedList<CoachDashboardStatItemModel>.ToPagedList(coaches, parameters.PageNumber, parameters.PageSize);
+        }
+
+        private Task<List<string>> GetOwnerCoachCollectionIdsAsync(string ownerId)
         {
             return coachesOwnerRepository.All()
                 .Where(x => x.OwnerId == ownerId)
                 .Select(x => x.CoachId)
-                .ToList();
-        }
-
-        public PagedList<CoachDashboardStatItemModel> GetDashboardCoaches(string ownerId, int month, TableEntityParameters parameters)
-        {
-            var coaches = this.liveSessionsRepository.All()
-             .Where(x => x.Student.OwnerId == ownerId && x.End.Month == month)
-             .GroupBy(x => x.Coach.FullName)
-             .Select(x => new CoachDashboardStatItemModel { Name = x.Key, Sessions = x.Count() })
-             .ToList();
-
-            return PagedList<CoachDashboardStatItemModel>.ToPagedList(coaches, parameters.PageNumber, parameters.PageSize);
+                .ToListAsync();
         }
     }
 }

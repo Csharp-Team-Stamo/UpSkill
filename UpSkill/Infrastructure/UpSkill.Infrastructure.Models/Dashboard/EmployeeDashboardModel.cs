@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using Course;
-    using UpSkill.Infrastructure.Models.Coach;
+    using Coach;
 
     public class EmployeeDashboardModel
     {

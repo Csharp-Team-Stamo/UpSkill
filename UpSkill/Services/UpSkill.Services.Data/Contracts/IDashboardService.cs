@@ -6,6 +6,6 @@
     public interface IDashboardService
     {
         Task<EmployeeDashboardModel> GetEmployeeDashboardInfoByIdAsync(string employeeId);
-        OwnerDashboardStatisticsModel GetOwnerDashboardStats(string ownerId);
+        Task<OwnerDashboardStatisticsModel> GetOwnerDashboardStats(string ownerId);
     }
 }

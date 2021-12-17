@@ -5,8 +5,7 @@
     using Microsoft.AspNetCore.Mvc;
     using Newtonsoft.Json;
     using Services.Data.Contracts;
-    using UpSkill.Infrastructure.Common.Pagination;
-    using UpSkill.Services.Data.Paging;
+    using Infrastructure.Common.Pagination;
 
     [Route("[controller]")]
     [ApiController]
@@ -32,23 +31,23 @@
         [HttpGet("GetEpEmployeeDashboardInfoAsync")]
         public async Task<EmployeeDashboardModel> GetEpEmployeeDashboardInfoAsync(string appUserId)
         {
-            var employeeId = employeesService.GetEmployeeIdByAppUserId(appUserId);
+            var employeeId = await employeesService.GetEmployeeIdByAppUserIdAsync(appUserId);
 
             return await dashboardService.GetEmployeeDashboardInfoByIdAsync(employeeId);
         }
 
 
         [HttpGet("GetOwnerStatistics")]
-        public  OwnerDashboardStatisticsModel GetOwnerDashboardStats([FromQuery]string ownerId)
+        public async Task<OwnerDashboardStatisticsModel> GetOwnerDashboardStats([FromQuery]string ownerId)
         {
-            return dashboardService.GetOwnerDashboardStats(ownerId);
+            return await dashboardService.GetOwnerDashboardStats(ownerId);
         }
 
         [HttpGet("GetOwnerCoursesStatistics")]
-        public IActionResult GetOwnerCoursesStatistics([FromQuery] string ownerId, string month, [FromQuery] TableEntityParameters parameters)
+        public async Task<IActionResult> GetOwnerCoursesStatistics([FromQuery] string ownerId, string month, [FromQuery] TableEntityParameters parameters)
         {
             var monthAsInt = int.Parse(month);
-            var courses = this.coursesService.GetDashboardCourses(ownerId, monthAsInt, parameters);
+            var courses = await this.coursesService.GetDashboardCourses(ownerId, monthAsInt, parameters);
             Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(courses.MetaData));
 
             return Ok(courses);
@@ -56,13 +55,13 @@
 
 
         [HttpGet("GetOwnerCoachesStatistics")]
-        public IActionResult GetOwnerCoachesStatistics([FromQuery] string ownerId, string month, [FromQuery] TableEntityParameters parameters)
+        public async Task<IActionResult> GetOwnerCoachesStatistics([FromQuery] string ownerId, string month, [FromQuery] TableEntityParameters parameters)
         {
             var monthAsInt = int.Parse(month);
-            var courses = this.coachesService.GetDashboardCoaches(ownerId, monthAsInt, parameters);
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(courses.MetaData));
+            var coaches = await this.coachesService.GetDashboardCoaches(ownerId, monthAsInt, parameters);
+            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(coaches.MetaData));
 
-            return Ok(courses);
+            return Ok(coaches);
         }
     }
 }

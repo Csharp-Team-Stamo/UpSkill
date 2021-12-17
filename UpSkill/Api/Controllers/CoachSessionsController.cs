@@ -6,7 +6,7 @@
     using Microsoft.Extensions.Options;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
-    using UpSkill.Infrastructure.Models.Coach.Sessions;
+    using Infrastructure.Models.Coach.Sessions;
     using UpSkill.Services.Data;
     using UpSkill.Services.Data.Contracts;
 

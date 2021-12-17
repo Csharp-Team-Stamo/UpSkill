@@ -6,8 +6,9 @@ namespace UpSkill.Services.Data
 
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Coach.Sessions;
-    using UpSkill.Services.Data.Contracts;
+    using Infrastructure.Models.Coach.Sessions;
+    using Contracts;
+    using Microsoft.EntityFrameworkCore;
 
     public class CoachSessionsService : ICoachSessionsService
     {
@@ -33,9 +34,12 @@ namespace UpSkill.Services.Data
 
         public async Task AddSession(CoachSessionEventResponseModel session, CoachSessionInviteeResponseModel invitee, string coachCalendlyUri)
         {
-            var userId = this.userRepository.All().FirstOrDefault(x => x.Email == invitee.Email).Id;
-            var coach = this.coachRepository.All().FirstOrDefault(x => x.CalendlyPopupUrl == coachCalendlyUri);
-            var student = this.employeeRepository.All().FirstOrDefault(x => x.UserId == userId);
+            //var userId = this.userRepository.All().FirstOrDefault(x => x.Email == invitee.Email).Id;
+
+            var userId = await this.userRepository.All().Where(x => x.Email == invitee.Email).Select(x => x.Id).FirstOrDefaultAsync();
+
+            var coach = await this.coachRepository.All().FirstOrDefaultAsync(x => x.CalendlyPopupUrl == coachCalendlyUri);
+            var student = await this.employeeRepository.All().FirstOrDefaultAsync(x => x.UserId == userId);
 
             var coachSession = new LiveSession()
             {

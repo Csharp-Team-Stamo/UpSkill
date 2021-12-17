@@ -5,8 +5,8 @@
     using Microsoft.EntityFrameworkCore;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Lecture;
-    using UpSkill.Services.Data.Contracts;
+    using Infrastructure.Models.Lecture;
+    using Contracts;
 
     public class LectureService : ILectureService
     {

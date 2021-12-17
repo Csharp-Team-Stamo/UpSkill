@@ -5,17 +5,17 @@
     using Infrastructure.Common.Pagination;
     using Infrastructure.Models.Employee;
     using Paging;
-    using UpSkill.Infrastructure.Models.Course;
+    using Infrastructure.Models.Course;
 
     public interface IEmployeesService
     {
         Task<EmployeeAchievementsModel> GetEmployeeAchievementsInfoAsync(string employeeId);
 
-        string GetOwnerIdByAppUserId(string userId);
+        Task<string> GetOwnerIdByAppUserId(string userId);
 
-        string GetEmployeeIdByAppUserId(string userId);
+        Task<string> GetEmployeeIdByAppUserIdAsync(string userId);
 
-        PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, TableEntityParameters parameters);
+        Task<PagedList<AddEmployeeFormModel>> GetByCompanyId(string companyId, TableEntityParameters parameters);
 
         Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees);
 

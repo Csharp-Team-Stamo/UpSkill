@@ -3,27 +3,28 @@
     using System.Collections.Generic;
     using System.Threading.Tasks;
     using Infrastructure.Models.Coach;
-    using UpSkill.Infrastructure.Common.Pagination;
-    using UpSkill.Infrastructure.Models.Dashboard;
-    using UpSkill.Services.Data.Paging;
+    using Infrastructure.Common.Pagination;
+    using Infrastructure.Models.Dashboard;
+    using Paging;
 
     public interface ICoachesService
     {
         Task<CoachDescriptionModel> GetByIdAsync(string coachId);
 
-        CoachesListingCatalogModel GetAllByOwnerId(string ownerId);
+        Task<CoachesListingCatalogModel> GetAllByOwnerIdAsync(string ownerId);
 
-        CoachesListingCatalogModel GetAllByEmployeeId(string ownerId, string userId);
+        Task<CoachesListingCatalogModel> GetAllByEmployeeIdAsync(string ownerId, string userId);
 
-        CoachesListingCatalogModel GetAll(string ownerId);
+        Task<ICollection<CoachInListCatalogModel>> GetAllWithExistingSessionsAsync(string employeeId);
 
-        Task<ICollection<CoachInListCatalogModel>> GetAllWithExistingSessions(string employeeId);
+        Task<CoachesListingCatalogModel> GetAllAsync(string ownerId);
 
         Task AddCoachInOwnerCoachesCollectionAsync(string coachId, string ownerId);
 
         Task RemoveCoachFromOwnerCoachCollectionAsync(string coachId, string ownerId);
 
-        PagedList<CoachDashboardStatItemModel> GetDashboardCoaches(string ownerId, int month, TableEntityParameters parameters);
+        Task<PagedList<CoachDashboardStatItemModel>> GetDashboardCoaches(string ownerId, int month,
+            TableEntityParameters parameters);
 
     }
 

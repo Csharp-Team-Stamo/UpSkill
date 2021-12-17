@@ -8,7 +8,7 @@
     using UpSkill.Data.Models;
     using Infrastructure.Models.Category;
     using Infrastructure.Models.Course;
-    using UpSkill.Services.Data.Admin.Contracts;
+    using Contracts;
 
     public class AdminCourseService : IAdminCourseService
     {

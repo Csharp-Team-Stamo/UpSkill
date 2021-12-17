@@ -3,8 +3,8 @@
     using System.Threading.Tasks;
     using UpSkill.Data.Common.Repositories;
     using UpSkill.Data.Models;
-    using UpSkill.Infrastructure.Models.Company;
-    using UpSkill.Services.Data.Admin.Contracts;
+    using Infrastructure.Models.Company;
+    using Contracts;
 
     public class AdminCompanyService : IAdminCompanyService
     {

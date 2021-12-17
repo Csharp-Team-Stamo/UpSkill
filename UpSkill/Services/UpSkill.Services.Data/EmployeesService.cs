@@ -14,8 +14,8 @@
     using Infrastructure.Common.Pagination;
     using Microsoft.EntityFrameworkCore;
     using Paging;
-    using UpSkill.Infrastructure.Models.Course;
-    using UpSkill.Infrastructure.Models.Lecture;
+    using Infrastructure.Models.Course;
+    using Infrastructure.Models.Lecture;
 
     public class EmployeesService : IEmployeesService
     {
@@ -45,14 +45,15 @@
             this.courseRepo = courseRepo;
         }
 
-        public string GetEmployeeIdByAppUserId(string userId)
+        public async Task<string> GetEmployeeIdByAppUserIdAsync(string userId)
         {
-            return this.employeeRepository.AllAsNoTracking().FirstOrDefault(x => x.UserId == userId).Id;
+            return  await this.employeeRepository.All().Where(x => x.UserId == userId).Select(x => x.Id).FirstOrDefaultAsync();
         }
 
-        public PagedList<AddEmployeeFormModel> GetByCompanyId(string companyId, TableEntityParameters parameters)
+        public async Task<PagedList<AddEmployeeFormModel>> GetByCompanyId(string companyId,
+            TableEntityParameters parameters)
         {
-            var employees = employeeRepository
+            var employees = await employeeRepository
                 .All()
                 .Where(x => x.User.CompanyId == int.Parse(companyId))
                 .Select(x => new AddEmployeeFormModel
@@ -61,7 +62,7 @@
                     Email = x.User.Email,
                 })
                 .OrderBy(x => x.FullName)
-                .ToList();
+                .ToListAsync();
 
             return PagedList<AddEmployeeFormModel>.ToPagedList(employees, parameters.PageNumber, parameters.PageSize);
         }
@@ -94,14 +95,14 @@
                             .FirstOrDefault()
                             .End.
                             ToString("d"),
-                        SessionsCompleted = x.LiveSessions.Count(x => x.StudentId == employeeId).ToString(),
+                        SessionsCompleted = x.LiveSessions.Count(liveSession => liveSession.StudentId == employeeId).ToString(),
                     }).ToListAsync(),
             };
         }
 
-        public string GetOwnerIdByAppUserId(string userId)
+        public async Task<string> GetOwnerIdByAppUserId(string userId)
         {
-            return this.employeeRepository.AllAsNoTracking().FirstOrDefault(x => x.UserId == userId).OwnerId;
+            return await this.employeeRepository.AllAsNoTracking().Where(x => x.UserId == userId).Select(x => x.OwnerId).FirstOrDefaultAsync();
         }
 
         public async Task<ICollection<string>> SaveEmployeesCollectionAsync(ICollection<AddEmployeeFormModel> employees)
@@ -132,7 +133,7 @@
                     var emp = new Employee
                     {
                         UserId = user.Id,
-                        OwnerId = ownerService.GetId(employeeModel.UserId),
+                        OwnerId = await ownerService.GetId(employeeModel.UserId),
                     };
 
                     await employeeRepository.AddAsync(emp);

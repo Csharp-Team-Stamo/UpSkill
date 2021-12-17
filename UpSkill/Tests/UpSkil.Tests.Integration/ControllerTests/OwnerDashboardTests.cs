@@ -2,7 +2,7 @@
 namespace UpSkil.Tests.Integration.ControllerTests
 {
     using MyTested.AspNetCore.Mvc;
-    using UpSkil.Tests.Integration.Data;
+    using Data;
     using UpSkill.Api.Controllers;
     using UpSkill.Infrastructure.Models.Owner;
     using Xunit;

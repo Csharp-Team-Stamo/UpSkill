@@ -1,9 +1,11 @@
 ﻿namespace UpSkill.Services.Data.Contracts
 {
+    using System.Threading.Tasks;
+
     public interface ICompanyService
     {
-        bool Exists(string companyName);
+        Task<bool> Exists(string companyName);
 
-        string GetName(int id);
+        Task<string> GetName(int id);
     }
 }

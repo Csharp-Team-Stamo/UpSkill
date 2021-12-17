@@ -47,7 +47,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        categoryNames = await Client.GetFromJsonAsync<ICollection<string>>("Category/GetAllNames");
+        categoryNames = await Client.GetFromJsonAsync<ICollection<string>>("Category/GetAllNamesAsync");
         languages = await Client.GetFromJsonAsync<ICollection<string>>("Languages/GetAll");
     }
 

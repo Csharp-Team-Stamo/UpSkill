@@ -91,8 +91,8 @@ else
     [CascadingParameter]
     public Task<AuthenticationState> user { get; set; }
 
-    public string userId => this.user.Id().Result;
-    private string userName => this.user.FullName().Result;
+    public string userId => user.Id().Result;
+    private string userName => user.FullName().Result;
 
     protected override async Task OnInitializedAsync()
     {
@@ -106,7 +106,7 @@ else
 
     private async Task GetInvoice(string userId, int monthNum)
     {
-        this.invoiceModel = await this.Client
+        invoiceModel = await Client
         .GetFromJsonAsync<OwnerInvoiceDetailsModel>
         ($"/ownerdashboard/GetInvoiceInfo/{userId}/{monthNum}");
     }
