@@ -132,6 +132,7 @@
             parameters.PageNumber = MetaData.CurrentPage + 1;
             var pagingResponse = await DashboardService
                 .GetOwnerCoachesStatsAsync(user.OwnerId().Result, month.ToString(), parameters);
+            MetaData = pagingResponse.MetaData;
             coaches.AddRange(pagingResponse.Items);
             coaches = coaches.OrderBy(x => x.Name).ToList();
         }
