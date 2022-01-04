@@ -62,39 +62,44 @@
         <img class="card-img-top img-background" src="/images/coach.png" alt="Card image cap">
     }
 
-    <div class="card-body">
-        <div class="row">
-            <div class="coach-profession col-6">
-                @Coach.CategoryName
-            </div>
-            <div class="coach-name col-6 text-right">
-                @Coach.FullName
-            </div>
+<div class="card-body">
+    <div class="row">
+        <div class="coach-profession col-6">
+            @Coach.CategoryName
         </div>
-        <div class="row">
-            <div class="coah-price col-6">
-                @Coach.FormattedPrice€ per person
-            </div>
-            <div class="col-6 text-right">
-                <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
-            </div>
+        <div class="coach-name col-6 text-right">
+            @Coach.FullName
         </div>
-
-        @if (Coach.IsDeleted == false)
-        {
-            <div class="text-center">
-                <button @onclick="@(() => RemoveCoach(Coach.Id))" class="coach-btn">
-                    <span class="coach-btn-text">Remove</span>
-                </button>
-            </div>
-        }
     </div>
+    <div class="row">
+        <div class="coah-price col-6">
+            @Coach.FormattedPrice€ per person
+        </div>
+        <div class="col-6 text-right">
+            <img class="coach-company-logo" src="@Coach.CompanyLogoUrl" />
+        </div>
+    </div>
+
+    @if (Coach.IsDeleted == false)
+    {
+        <div class="buttons">
+            <button @onclick="@(() => RemoveCoach(Coach.Id))" class="coach-btn">
+                <span class="coach-btn-text">Remove</span>
+            </button>
+
+            <button @onclick="@(() => EditCoach(Coach.Id))" class="coach-btn">
+                <span class="coach-btn-text">Edit</span>
+            </button>
+        </div>
+    }
+
+</div>
 </div>
 
 @code {
     [Parameter]
     public AdminCoachListingServiceModel Coach { get; set; }
-    
+
     [Parameter]
     public EventCallback<IEnumerable<AdminCoachListingServiceModel>> ChangeState { get; set; }
 
@@ -112,5 +117,10 @@
 
             await ChangeState.InvokeAsync(updatedCoaches);
         }
+    }
+
+    private async Task EditCoach(string coachId)
+    {
+        NavigationManager.NavigateTo($"/admin/coach/edit/{coachId}");
     }
 }
