@@ -47,3 +47,9 @@
     background: #1CC18A 0% 0% no-repeat padding-box;
     opacity: 1;
 }
+
+.buttons{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
